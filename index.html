@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>UNWH - University ERP</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-blur">  <!-- default theme -->
+
+    <div class="theme-toggle">
+        <a href="#" class="theme-link" data-theme="dark">Dark</a> / 
+        <!-----
+        <a href="#" class="theme-link" data-theme="blur">Blur</a> / --> 
+        <a href="#" class="theme-link active" data-theme="light">Light</a>
+    </div>
+
+    <div class="container d-flex flex-column align-items-center justify-content-center min-vh-100 py-4 py-md-5">
+        
+        <div class="text-center mb-4 mb-md-5">
+            <div class="logo">
+                <span class="graduation-cap">🎓</span>
+            </div>
+            <h1 class="university-name">UNWH</h1>
+            <p class="erp-title">University ERP</p>
+            <p class="greeting" id="greeting">Good Night</p>
+        </div>
+
+        <div class="login-card">
+            <div class="card-body p-4 p-md-5">
+                <h4 class="text-center mb-4 login-heading">
+                    <span class="hand-emoji">👋</span> Enter Your Login Details.
+                </h4>
+
+                <form>
+                    <div class="mb-4 position-relative">
+                        <input type="text" class="form-control form-control-lg" placeholder="Username or Email" required>
+                        <span class="input-icon user-icon">👤</span>
+                    </div>
+
+                    <div class="mb-4 position-relative">
+                        <input type="password" id="passwordInput" class="form-control form-control-lg" placeholder="Password" required>
+                        <span class="input-icon eye-icon" id="togglePassword">👁️</span>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember Me</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg login-btn w-100 w-md-auto">
+                            Login →
+                        </button>
+                    </div>
+                </form>
+
+                <div class="text-center quick-menu-section mt-3">
+                    <a href="#" class="quick-link d-block d-md-inline">← Student Register</a>
+                    <span class="mx-2 text-muted d-none d-md-inline">|</span>
+                    <a href="#" class="quick-link d-block d-md-inline mt-2 mt-md-0">I forgot my password →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-menu-box mt-4 mt-md-5">
+            <div class="quick-menu-title">Quick Menu</div>
+            <div class="quick-items">
+                <a href="#" class="quick-item">Student Registration</a>
+                <a href="#" class="quick-item">Find Registration</a>
+                <a href="#" class="quick-item">Certificate Verification</a>
+            </div>
+        </div>
+
+        <footer class="mt-4 mt-md-5 text-center copyright">
+            © SoftSolution by Shubham Kumar 
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Password toggle
+        const togglePassword = document.querySelector('#togglePassword');
+        const passwordInput = document.querySelector('#passwordInput');
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.textContent = type === 'password' ? '👁️' : '🙈';
+            });
+        }
+
+        // Auto Greeting
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            let greeting = "Good Night";
+            if (hour >= 5 && hour < 12) greeting = "Good Morning";
+            else if (hour >= 12 && hour < 17) greeting = "Good Afternoon";
+            else if (hour >= 17 && hour < 21) greeting = "Good Evening";
+            document.getElementById('greeting').textContent = greeting;
+        }
+        updateGreeting();
+        setInterval(updateGreeting, 3600000);
+
+        // Theme Switch
+        const themeLinks = document.querySelectorAll('.theme-link');
+        const body = document.body;
+
+        themeLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active from all
+                themeLinks.forEach(l => l.classList.remove('active'));
+                // Add active to clicked
+                this.classList.add('active');
+
+                const theme = this.getAttribute('data-theme');
+                
+                // Remove all theme classes first
+                body.classList.remove('theme-light', 'theme-dark', 'theme-blur');
+                
+                // Add selected theme class
+                body.classList.add(`theme-${theme}`);
+            });
+        });
+    </script>
+</body>
+</html>
