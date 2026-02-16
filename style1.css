@@ -1,0 +1,194 @@
+body {
+    background-color: #f4f7f6;
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.custom-blue-nav { background-color: #2c68a4; }
+.search-box { max-width: 350px; }
+.profile-img { width: 35px; height: 35px; border-radius: 50%; margin-left: 15px; }
+
+/* --- UPDATED TOOLBAR FOR WRAPPING & 15 ITEMS ROW --- */
+.toolbar-container { 
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: flex-start; 
+    background: white;
+}
+
+.toolbar-item { 
+    flex: 0 0 auto; 
+    padding: 10px 2px; 
+    color: #555; 
+    width: calc(100% / 15); 
+    min-width: 85px; 
+    border-right: 1px solid #eee; 
+    border-bottom: 1px solid #eee; 
+    position: relative; 
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Mobile aur Tablet ke liye settings */
+@media (max-width: 1300px) {
+    .toolbar-item { width: 12.5%; }
+}
+
+@media (max-width: 992px) {
+    .toolbar-item { width: 20%; }
+}
+
+@media (max-width: 768px) {
+    .toolbar-item { width: 25%; }
+}
+
+.toolbar-item i { display: block; font-size: 1.1rem; margin-bottom: 3px; color: #2c68a4; }
+.toolbar-item p { font-size: 10px; margin: 0; font-weight: bold; }
+.toolbar-item.active { border-bottom: 3px solid #2c68a4; color: #2c68a4; background: #f9f9f9; }
+
+/* --- Dashboard Stat Cards Section Start --- */
+.stat-card { 
+    border-radius: 12px; /* Pehle 4px tha, ab rounded look hai */
+    padding: 15px 10px; 
+    text-align: center; 
+    color: white; 
+    margin-bottom: 10px; 
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth 3D transition */
+    position: relative;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Subtle 3D base shadow */
+    cursor: pointer;
+}
+
+/* 3D Hover Effect */
+.stat-card:hover {
+    transform: translateY(-7px) scale(1.02); /* Card upar uthega */
+    box-shadow: 0 12px 20px rgba(0,0,0,0.2); /* Deep shadow on hover */
+}
+
+/* Background Shine Effect on Hover */
+.stat-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+    transition: 0.5s;
+    pointer-events: none;
+}
+.stat-card:hover::after {
+    left: 120%;
+}
+
+.stat-card h2 { 
+    font-size: 1.8rem; /* Size chota kiya professional look ke liye */
+    margin: 0; 
+    font-weight: 800; 
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2); 
+}
+
+.stat-card p { 
+    font-size: 0.85rem; /* Text size adjust kiya */
+    margin: 0; 
+    font-weight: 500;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Modern Colors with Gradients for 3D Feel */
+.pink-card { background: linear-gradient(135deg, #ff4b6b, #ff708b); }
+.teal-card { background: linear-gradient(135deg, #008080, #00a0a0); }
+.green-card { background: linear-gradient(135deg, #43a047, #66bb6a); }
+.orange-card { background: linear-gradient(135deg, #c07d00, #e69b00); }
+.red-card { background: linear-gradient(135deg, #f44336, #ff6659); }
+.blue-card { background: linear-gradient(135deg, #3f51b5, #5c6bc0); }
+
+/* Mobile Responsiveness Fine-tuning */
+@media (max-width: 576px) {
+    .stat-card { padding: 12px 5px; }
+    .stat-card h2 { font-size: 1.5rem; }
+    .stat-card p { font-size: 0.75rem; }
+}
+/* --- Dashboard Stat Cards Section End --- */
+/* Sidebar Menu */
+.menu-title {
+    color: #2c68a4;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+.menu-title i { margin-right: 10px; width: 25px; text-align: center; }
+.menu-list { list-style: none; padding: 0 0 0 35px; margin-bottom: 20px; }
+.menu-list li { padding: 3px 0; }
+.menu-list li a { text-decoration: none; color: #777; font-size: 0.95rem; display: block; }
+.menu-list li a:hover { color: #2c68a4; padding-left: 5px; transition: 0.2s; }
+.offcanvas { width: 320px !important; }
+
+/* --- FIXED DROPDOWN LOGIC --- */
+.hover-dropdown-list {
+    position: absolute;
+    top: 100%;
+    background: white;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    min-width: 170px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 9999; /* Cards ke upar dikhane ke liye */
+}
+
+/* Default: Center alignment */
+.toolbar-item .hover-dropdown-list {
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+}
+
+/* Dashboard (First Item): Left alignment */
+.toolbar-item:first-child .hover-dropdown-list {
+    left: 0;
+    transform: translateX(0) translateY(10px);
+}
+
+/* Upload Download (Last Item): Right alignment */
+.toolbar-item:last-child .hover-dropdown-list {
+    left: auto;
+    right: 0;
+    transform: translateX(0) translateY(10px);
+}
+
+/* Hover effects */
+.toolbar-item:hover .hover-dropdown-list {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Transform adjustment on hover */
+.toolbar-item:hover .hover-dropdown-list {
+    transform: translateX(-50%) translateY(0); /* Default middle items */
+}
+.toolbar-item:first-child:hover .hover-dropdown-list {
+    transform: translateX(0) translateY(0); /* First item */
+}
+.toolbar-item:last-child:hover .hover-dropdown-list {
+    transform: translateX(0) translateY(0); /* Last item */
+}
+
+.hover-dropdown-list li { padding: 8px 15px; border-bottom: 1px solid #f8f9fa; }
+.hover-dropdown-list li:last-child { border-bottom: none; }
+.hover-dropdown-list li a { text-decoration: none; color: #555; font-size: 13px; display: block; white-space: nowrap; }
+.hover-dropdown-list li:hover { background-color: #f1f5f9; }
+.hover-dropdown-list li:hover a { color: #2c68a4; }
+.overflow-visible { overflow: visible !important; }

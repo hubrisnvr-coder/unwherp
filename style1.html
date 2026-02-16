@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University ERP Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-dark custom-blue-nav py-1">
+        <div class="container-fluid px-3">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-graduation-cap text-warning fs-4 me-2"></i>
+                <span class="navbar-brand mb-0 h1 fw-normal">University ERP</span>
+                
+                <button class="btn text-white ms-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+                    <i class="fas fa-list-ul fs-5"></i>
+                </button>
+            </div>
+            
+            <div class="d-flex align-items-center flex-grow-1 justify-content-center px-4">
+                <div class="input-group search-box d-none d-md-flex">
+                    <input type="text" class="form-control form-control-sm" placeholder="Search Students...">
+                    <button class="btn btn-light btn-sm" type="button"><i class="fas fa-search text-primary"></i></button>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center text-white">
+                <i class="fas fa-globe me-3 pointer"></i>
+                <div class="dropdown me-3">
+    <span class="dropdown-toggle pointer" data-bs-toggle="dropdown">Admin Control</span>
+    <ul class="dropdown-menu dropdown-menu-end shadow" style="min-width: 250px; max-height: 80vh; overflow-y: auto;">
+        <li><a class="dropdown-item" href="users.html"><i class="fas fa-users me-2 text-primary"></i> Users</a></li>
+        <li><a class="dropdown-item" href="roles.html"><i class="fas fa-certificate me-2 text-primary"></i> Roles & Permission</a></li>
+        <li><hr class="dropdown-divider"></li>
+        
+        <li><a class="dropdown-item" href="general-settings.html"><i class="fas fa-cog me-2 text-primary"></i> General & Branding Setting</a></li>
+        <li><a class="dropdown-item" href="online-reg.html"><i class="fas fa-edit me-2 text-primary"></i> Online Registration</a></li>
+        <li><a class="dropdown-item" href="remote-class.html"><i class="fas fa-video me-2 text-primary"></i> Meeting-Remote Class</a></li>
+        <li><a class="dropdown-item" href="sms-setting.html"><i class="fas fa-mobile-alt me-2 text-primary"></i> SMS Setting</a></li>
+        <li><a class="dropdown-item" href="email-setting.html"><i class="fas fa-envelope me-2 text-primary"></i> E-Mail Setting</a></li>
+        <li><a class="dropdown-item" href="alert-setting.html"><i class="fas fa-bell me-2 text-primary"></i> Alert Templating Setting</a></li>
+        <li><a class="dropdown-item" href="payment-gateway.html"><i class="fas fa-dollar-sign me-2 text-primary"></i> Payment Gateway</a></li>
+        <li><hr class="dropdown-divider"></li>
+        
+        <li><a class="dropdown-item" href="cache-clear.html"><i class="fas fa-eraser me-2 text-primary"></i> Cache Clear Now</a></li>
+        <li><a class="dropdown-item" href="user-activity.html"><i class="fas fa-history me-2 text-primary"></i> User Activity</a></li>
+        <li><a class="dropdown-item" href="db-backup.html"><i class="fas fa-database me-2 text-primary"></i> Database Backup</a></li>
+        <li><a class="dropdown-item" href="cron-job.html"><i class="fas fa-sync me-2 text-primary"></i> Automation / Cron Job</a></li>
+        <li><a class="dropdown-item" href="dev-guide.html"><i class="fas fa-question-circle me-2 text-primary"></i> Developer Guide</a></li>
+        <li><hr class="dropdown-divider"></li>
+        
+        <li class="dropdown-header fw-bold text-dark">TOUCH WITH DEVELOPER</li>
+        <li><a class="dropdown-item" href="mailto:support@example.com"><i class="fas fa-envelope me-2 text-primary"></i> Email</a></li>
+        <li><a class="dropdown-item" href="https://wa.me/123456789"><i class="fab fa-whatsapp me-2 text-success"></i> WhatsApp</a></li>
+        <li><a class="dropdown-item" href="skype:username?chat"><i class="fab fa-skype me-2 text-info"></i> Skype</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="license.html"><i class="fas fa-certificate me-2 text-primary"></i> License Info</a></li>
+    </ul>
+</div>
+                <div class="dropdown">
+    <div class="d-flex align-items-center pointer dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" 
+         style="border-left: 1px solid rgba(255,255,255,0.15); padding-left: 15px; transition: all 0.3s ease;">
+        <div class="position-relative">
+            <img src="https://plus.unsplash.com/premium_photo-1682089806994-abcccbaa953a?w=500&auto=format&fit=crop&q=60" 
+                 class="rounded-circle border border-2 border-white" 
+                 alt="User" 
+                 style="width: 40px; height: 40px; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+            <span class="position-absolute bottom-0 end-0 bg-success border border-2 border-white rounded-circle" 
+                  style="width: 12px; height: 12px; box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);"></span>
+        </div>
+    </div>
+    
+    <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-3" 
+        style="min-width: 260px; border-radius: 15px; overflow: hidden; animation: fadeIn 0.3s ease;">
+        
+        <li class="px-4 py-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+            <div class="text-center">
+                <img src="https://plus.unsplash.com/premium_photo-1682089806994-abcccbaa953a?w=500&auto=format&fit=crop&q=60" 
+                     class="rounded-circle border border-3 border-white mb-2 shadow-sm" 
+                     alt="User" 
+                     style="width: 65px; height: 65px; object-fit: cover;">
+                <h6 class="mb-0 fw-bold text-dark" style="letter-spacing: 0.5px;">Ananya Sharma</h6>
+                <small class="text-primary fw-semibold" style="font-size: 11px; text-transform: uppercase;">Super Admin</small>
+            </div>
+        </li>
+        
+        <div class="py-2">
+            <li>
+                <a class="dropdown-item px-4 py-2" href="profile.html" style="font-size: 14px; transition: 0.2s;">
+                    <i class="fas fa-user-circle me-3 text-primary" style="width: 15px;"></i> My Profile
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item px-4 py-2" href="change-password.html" style="font-size: 14px; transition: 0.2s;">
+                    <i class="fas fa-shield-alt me-3 text-warning" style="width: 15px;"></i> Security Settings
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item px-4 py-2" href="activity-log.html" style="font-size: 14px; transition: 0.2s;">
+                    <i class="fas fa-history me-3 text-info" style="width: 15px;"></i> Login Activity
+                </a>
+            </li>
+            
+            <li><hr class="dropdown-divider mx-3 my-2" style="opacity: 0.1;"></li>
+            
+            <li>
+                <a class="dropdown-item px-4 py-2 text-danger fw-bold" href="logout.html" style="font-size: 14px; transition: 0.2s;">
+                    <i class="fas fa-power-off me-3"></i> Sign Out
+                </a>
+            </li>
+        </div>
+    </ul>
+</div>
+
+<style>
+    .dropdown-item:hover {
+        background-color: #f0f7ff !important;
+        color: #0d6efd !important;
+        padding-left: 28px !important; /* Slight push effect on hover */
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+            </div>
+        </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+        <div class="offcanvas-header border-bottom bg-light">
+            <h5 class="offcanvas-title text-primary fw-bold" id="sidebarMenuLabel">Main Navigation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <h6 class="menu-title"><i class="fas fa-users"></i> Student</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Detail</a></li>
+                        <li><a href="#">Registration</a></li>
+                        <li><a href="#">Bulk Import</a></li>
+                        <li><a href="#">Transfer</a></li>
+                        <li><a href="#">Documents</a></li>
+                        <li><a href="#">Notes</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-user-shield"></i> Guardian</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Detail</a></li>
+                        <li><a href="#">Registration</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-user-tie"></i> Staff</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Detail</a></li>
+                        <li><a href="#">Registration</a></li>
+                        <li><a href="#">Bulk Import</a></li>
+                        <li><a href="#">Documents</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-calendar-check"></i> Attendance</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Regular Attendance</a></li>
+                        <li><a href="#">Subject Attendance</a></li>
+                        <li><a href="#">Staff Attendance</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <h6 class="menu-title border-top pt-3"><i class="fas fa-calculator"></i> Account</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Quick Receive</a></li>
+                        <li><a href="#">Collect Fees</a></li>
+                        <li><a href="#">Balance Fees</a></li>
+                        <li><a href="#">Add Fees</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a href="#">Add Salary</a></li>
+                        <li><a href="#">Pay Salary</a></li>
+                        <li><a href="#">Balance Salary</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a href="#">Transaction Ledgers</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-book"></i> Library</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Books Detail</a></li>
+                        <li><a href="#">Student Member</a></li>
+                        <li><a href="#">Staff Member</a></li>
+                        <li><a href="#">Issue History</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <h6 class="menu-title border-top pt-3"><i class="fas fa-chart-line"></i> Examination</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Exam Schedule</a></li>
+                        <li><a href="#">Mark Ledger</a></li>
+                        <li><a href="#">Admit Card</a></li>
+                        <li><a href="#">Routine</a></li>
+                        <li><a href="#">MarkSheet/Score</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-certificate"></i> Certificate</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Issue</a></li>
+                        <li><a href="#">Issue History</a></li>
+                        <li><a href="#">Attendance</a></li>
+                        <li><a href="#">Transfer</a></li>
+                        <li><a href="#">Course Completion</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <h6 class="menu-title border-top pt-3"><i class="fas fa-bus"></i> Transport</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">User History</a></li>
+                        <li><a href="#">Route</a></li>
+                        <li><a href="#">Vehicle</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-bed"></i> Hostel</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Resident</a></li>
+                        <li><a href="#">Hostel Detail</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-bullhorn"></i> Alert</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">User Notice</a></li>
+                        <li><a href="#">Send SMS/Email</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-th-large"></i> More</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Meeting/OnlineClass</a></li>
+                        <li><a href="#">Assignment</a></li>
+                        <li><a href="#">Upload/Download</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white border-bottom shadow-sm overflow-visible">
+    <div class="d-flex text-center toolbar-container py-2">
+        
+        <div class="toolbar-item active">
+            <i class="fas fa-tachometer-alt"></i><p>Dashboard</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Overview</a></li>
+                <li><a href="#">Statistics</a></li>
+                <li><a href="#">Analytic Reports</a></li>
+                <li><a href="#">User Activity</a></li>
+                <li><a href="#">Live Monitoring</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-globe"></i><p>Web CMS</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Banner Settings</a></li>
+                <li><a href="#">News & Events</a></li>
+                <li><a href="#">Gallery Update</a></li>
+                <li><a href="#">Menu Manager</a></li>
+                <li><a href="#">Page Content</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-comment"></i><p>Front Desk</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Visitor Book</a></li>
+                <li><a href="#">Phone Logs</a></li>
+                <li><a href="#">Enquiry List</a></li>
+                <li><a href="#">Complaints</a></li>
+                <li><a href="#">Postal Dispatch</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-users"></i><p>Student & Staff</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Admission Form</a></li>
+                <li><a href="#">Staff Directory</a></li>
+                <li><a href="#">ID Cards</a></li>
+                <li><a href="#">User Roles</a></li>
+                <li><a href="#">Birthdays</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-calculator"></i><p>Account</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Fee Collection</a></li>
+                <li><a href="#">Expense Detail</a></li>
+                <li><a href="#">Profit & Loss</a></li>
+                <li><a href="#">Tax Settings</a></li>
+                <li><a href="#">Invoice List</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-shopping-cart"></i><p>Inventory</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Item Stock</a></li>
+                <li><a href="#">Suppliers</a></li>
+                <li><a href="#">Issue Item</a></li>
+                <li><a href="#">Purchase Order</a></li>
+                <li><a href="#">Inventory Category</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-book"></i><p>Library</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Book List</a></li>
+                <li><a href="#">Issue-Return</a></li>
+                <li><a href="#">Members</a></li>
+                <li><a href="#">Late Fine</a></li>
+                <li><a href="#">E-Books</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-calendar-check"></i><p>Attendance</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Mark Attendance</a></li>
+                <li><a href="#">Leave Requests</a></li>
+                <li><a href="#">Monthly Report</a></li>
+                <li><a href="#">Holiday List</a></li>
+                <li><a href="#">Biometric Log</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-chart-line"></i><p>Exam</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Exam Schedule</a></li>
+                <li><a href="#">Grade Master</a></li>
+                <li><a href="#">Admit Card</a></li>
+                <li><a href="#">Result Entry</a></li>
+                <li><a href="#">Rank List</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-certificate"></i><p>Certificate</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Generate TC</a></li>
+                <li><a href="#">Student Certificate</a></li>
+                <li><a href="#">Staff ID Card</a></li>
+                <li><a href="#">Study Certificate</a></li>
+                <li><a href="#">Character Cert.</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-bed"></i><p>Hostel</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Room Type</a></li>
+                <li><a href="#">Hostel List</a></li>
+                <li><a href="#">Allocation</a></li>
+                <li><a href="#">Meal Plan</a></li>
+                <li><a href="#">Room Availability</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-bus"></i><p>Transport</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Route Master</a></li>
+                <li><a href="#">Vehicles</a></li>
+                <li><a href="#">Driver Info</a></li>
+                <li><a href="#">Pickup Points</a></li>
+                <li><a href="#">Fuel Logs</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-tasks"></i><p>Assignment</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Add Assignment</a></li>
+                <li><a href="#">Submission List</a></li>
+                <li><a href="#">Pending Tasks</a></li>
+                <li><a href="#">Evaluation</a></li>
+                <li><a href="#">Resource Share</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-file-alt"></i><p>Application</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Leave Application</a></li>
+                <li><a href="#">Admission Request</a></li>
+                <li><a href="#">Document Request</a></li>
+                <li><a href="#">Complaints</a></li>
+                <li><a href="#">Status Tracking</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-upload"></i><p>Upload Download</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Syllabus Upload</a></li>
+                <li><a href="#">Assignment Download</a></li>
+                <li><a href="#">Old Papers</a></li>
+                <li><a href="#">Study Material</a></li>
+                <li><a href="#">Notice Circulars</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+    <!--- ynha se card wala code sure ho rha hai -->
+    <div class="container-fluid mt-3 px-4">
+    <div class="row g-3">
+        <div class="col-6 col-md-4 col-lg-2">
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="stat-card pink-card">
+                    <h2>0</h2>
+                    <p><i class="fas fa-user-graduate me-1"></i> Students</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="stat-card teal-card">
+                    <h2>0</h2>
+                    <p><i class="fas fa-chalkboard-teacher me-1"></i> Staff</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="stat-card green-card">
+                    <h2>0</h2>
+                    <p><i class="fas fa-book me-1"></i> Books</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="stat-card orange-card">
+                    <h2>0</h2>
+                    <p><i class="fas fa-file-alt me-1"></i> Exams</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="stat-card red-card">
+                    <h2>0</h2>
+                    <p><i class="fas fa-hotel me-1"></i> Hostel Bed</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <a href="https://youtube.com" style="text-decoration: none; color: inherit;">
+                <div class="stat-card blue-card">
+                    <h2>0</h2>
+                    <p><i class="fas fa-bus me-1"></i> Vehicle</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+    <!--- ynha se card wala code sure ho rha hai -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
