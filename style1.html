@@ -27,40 +27,57 @@
                     <button class="btn btn-light btn-sm" type="button"><i class="fas fa-search text-primary"></i></button>
                 </div>
             </div>
-
+           <!--- yanha se admin control wala porsen sure ho rha hai-->
             <div class="d-flex align-items-center text-white">
-                <i class="fas fa-globe me-3 pointer"></i>
-                <div class="dropdown me-3">
-    <span class="dropdown-toggle pointer" data-bs-toggle="dropdown">Admin Control</span>
-    <ul class="dropdown-menu dropdown-menu-end shadow" style="min-width: 250px; max-height: 80vh; overflow-y: auto;">
-        <li><a class="dropdown-item" href="users.html"><i class="fas fa-users me-2 text-primary"></i> Users</a></li>
-        <li><a class="dropdown-item" href="roles.html"><i class="fas fa-certificate me-2 text-primary"></i> Roles & Permission</a></li>
-        <li><hr class="dropdown-divider"></li>
-        
-        <li><a class="dropdown-item" href="general-settings.html"><i class="fas fa-cog me-2 text-primary"></i> General & Branding Setting</a></li>
-        <li><a class="dropdown-item" href="online-reg.html"><i class="fas fa-edit me-2 text-primary"></i> Online Registration</a></li>
-        <li><a class="dropdown-item" href="remote-class.html"><i class="fas fa-video me-2 text-primary"></i> Meeting-Remote Class</a></li>
-        <li><a class="dropdown-item" href="sms-setting.html"><i class="fas fa-mobile-alt me-2 text-primary"></i> SMS Setting</a></li>
-        <li><a class="dropdown-item" href="email-setting.html"><i class="fas fa-envelope me-2 text-primary"></i> E-Mail Setting</a></li>
-        <li><a class="dropdown-item" href="alert-setting.html"><i class="fas fa-bell me-2 text-primary"></i> Alert Templating Setting</a></li>
-        <li><a class="dropdown-item" href="payment-gateway.html"><i class="fas fa-dollar-sign me-2 text-primary"></i> Payment Gateway</a></li>
-        <li><hr class="dropdown-divider"></li>
-        
-        <li><a class="dropdown-item" href="cache-clear.html"><i class="fas fa-eraser me-2 text-primary"></i> Cache Clear Now</a></li>
-        <li><a class="dropdown-item" href="user-activity.html"><i class="fas fa-history me-2 text-primary"></i> User Activity</a></li>
-        <li><a class="dropdown-item" href="db-backup.html"><i class="fas fa-database me-2 text-primary"></i> Database Backup</a></li>
-        <li><a class="dropdown-item" href="cron-job.html"><i class="fas fa-sync me-2 text-primary"></i> Automation / Cron Job</a></li>
-        <li><a class="dropdown-item" href="dev-guide.html"><i class="fas fa-question-circle me-2 text-primary"></i> Developer Guide</a></li>
-        <li><hr class="dropdown-divider"></li>
-        
-        <li class="dropdown-header fw-bold text-dark">TOUCH WITH DEVELOPER</li>
-        <li><a class="dropdown-item" href="mailto:support@example.com"><i class="fas fa-envelope me-2 text-primary"></i> Email</a></li>
-        <li><a class="dropdown-item" href="https://wa.me/123456789"><i class="fab fa-whatsapp me-2 text-success"></i> WhatsApp</a></li>
-        <li><a class="dropdown-item" href="skype:username?chat"><i class="fab fa-skype me-2 text-info"></i> Skype</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="license.html"><i class="fas fa-certificate me-2 text-primary"></i> License Info</a></li>
-    </ul>
+    <i class="fas fa-globe me-3 pointer"></i>
+    
+    <div class="dropdown me-3">
+        <a class="admin-btn dropdown-toggle pointer" href="#" role="button" id="adminDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user-shield me-2"></i> Admin Control
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end shadow custom-admin-dropdown" aria-labelledby="adminDropdown">
+            <li><a class="dropdown-item" href="users.html"><i class="fas fa-users me-2 text-primary"></i> Users</a></li>
+            <li><a class="dropdown-item" href="roles.html"><i class="fas fa-certificate me-2 text-primary"></i> Roles & Permission</a></li>
+            <li><hr class="dropdown-divider"></li>
+            
+            <li><a class="dropdown-item" href="general-settings.html"><i class="fas fa-cog me-2 text-primary"></i> General & Branding Setting</a></li>
+            <li><a class="dropdown-item" href="online-reg.html"><i class="fas fa-edit me-2 text-primary"></i> Online Registration</a></li>
+            <li><a class="dropdown-item" href="remote-class.html"><i class="fas fa-video me-2 text-primary"></i> Meeting-Remote Class</a></li>
+            <li><a class="dropdown-item" href="sms-setting.html"><i class="fas fa-mobile-alt me-2 text-primary"></i> SMS Setting</a></li>
+            <li><a class="dropdown-item" href="email-setting.html"><i class="fas fa-envelope me-2 text-primary"></i> E-Mail Setting</a></li>
+            <li><a class="dropdown-item" href="alert-setting.html"><i class="fas fa-bell me-2 text-primary"></i> Alert Templating Setting</a></li>
+            <li><a class="dropdown-item" href="payment-gateway.html"><i class="fas fa-dollar-sign me-2 text-primary"></i> Payment Gateway</a></li>
+            <li><hr class="dropdown-divider"></li>
+            
+            <li><a class="dropdown-item" href="cache-clear.html"><i class="fas fa-eraser me-2 text-primary"></i> Cache Clear Now</a></li>
+            <li><a class="dropdown-item" href="user-activity.html"><i class="fas fa-history me-2 text-primary"></i> User Activity</a></li>
+            <li><a class="dropdown-item" href="db-backup.html"><i class="fas fa-database me-2 text-primary"></i> Database Backup</a></li>
+            <li><a class="dropdown-item" href="cron-job.html"><i class="fas fa-sync me-2 text-primary"></i> Automation / Cron Job</a></li>
+            <li><a class="dropdown-item" href="dev-guide.html"><i class="fas fa-question-circle me-2 text-primary"></i> Developer Guide</a></li>
+            <li><hr class="dropdown-divider"></li>
+            
+            <li class="dropdown-header fw-bold text-dark">TOUCH WITH DEVELOPER</li>
+            <li><a class="dropdown-item" href="mailto:support@example.com"><i class="fas fa-envelope me-2 text-primary"></i> Email</a></li>
+            <li><a class="dropdown-item" href="https://wa.me/123456789"><i class="fab fa-whatsapp me-2 text-success"></i> WhatsApp</a></li>
+            <li><a class="dropdown-item" href="skype:username?chat"><i class="fab fa-skype me-2 text-info"></i> Skype</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="license.html"><i class="fas fa-certificate me-2 text-primary"></i> License Info</a></li>
+        </ul>
+    </div>
 </div>
+
+<script>
+    // Agar mobile par click karne par dropdown close hone mein dikkat ho toh ye chota sa fix:
+    document.querySelectorAll('.custom-admin-dropdown .dropdown-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const dropdownEl = document.getElementById('adminDropdown');
+            const bsDropdown = bootstrap.Dropdown.getInstance(dropdownEl);
+            if(bsDropdown) bsDropdown.hide();
+        });
+    });
+</script>
+<!--ynaha par admin control wala code poora ho rha hai-->
                 <div class="dropdown">
     <div class="d-flex align-items-center pointer dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" 
          style="border-left: 1px solid rgba(255,255,255,0.15); padding-left: 15px; transition: all 0.3s ease;">
