@@ -47,6 +47,13 @@ body {
 .toolbar-item p { font-size: 10px; margin: 0; font-weight: bold; }
 .toolbar-item.active { border-bottom: 3px solid #2c68a4; color: #2c68a4; background: #f9f9f9; }
 
+/* ynha se mobile hide karna hai toolbar*/
+/* Mobile aur Tablet par poore section ko hide karne ke liye */
+@media (max-width: 991px) {
+    section:has(.toolbar-container) {
+        display: none !important;
+    }
+}
 /* --- Dashboard Stat Cards Section Start --- */
 .stat-card { 
     border-radius: 12px; /* Pehle 4px tha, ab rounded look hai */
