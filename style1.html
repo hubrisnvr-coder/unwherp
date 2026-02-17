@@ -470,7 +470,659 @@
         </div>
     </div>
 </div>
-    <!--- ynha se card wala code sure ho rha hai -->
+    <!--- ynha se card wala code poora ho rha hai -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!--- yanha se midd  wala card wala posern admission enquiry  dalke dekh rha hu ki kaisa lagega  -->
+    <div class="container-fluid mt-4 px-4">
+    <div class="row g-4">
+        <div class="col-lg-8 col-12">
+            <div class="uni-analytics-card shadow-sm">
+                <div class="uni-card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i> Admission Flow (Current Session)</h5>
+                    <select class="form-select form-select-sm w-auto" id="php-session-filter">
+                        <option>2025-26</option>
+                        <option>2024-25</option>
+                    </select>
+                </div>
+                <div class="uni-card-body">
+                    <div class="row text-center">
+                        <div class="col-6 border-end">
+                            <h3 class="text-primary fw-bold" id="php-enquiry-count">1,240</h3>
+                            <p class="text-muted mb-0"><i class="fas fa-headset me-1"></i> Total Enquiries</p>
+                            <div class="progress mt-2" style="height: 6px;">
+                                <div class="progress-bar bg-primary" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="text-success fw-bold" id="php-confirm-count">485</h3>
+                            <p class="text-muted mb-0"><i class="fas fa-user-check me-1"></i> Confirmed Admissions</p>
+                            <div class="progress mt-2" style="height: 6px;">
+                                <div class="progress-bar bg-success" style="width: 39%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-light rounded d-flex justify-content-between align-items-center">
+                        <span class="small text-secondary fw-bold">Conversion Rate: <span class="text-dark">39.1%</span></span>
+                        <a href="#" class="btn btn-link btn-sm text-decoration-none">View Detailed Report</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-12">
+            <div class="uni-analytics-card shadow-sm h-100">
+                <div class="uni-card-header">
+                    <h5 class="mb-0"><i class="fas fa-graduation-cap me-2"></i> Seats Availability</h5>
+                </div>
+                <div class="uni-card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            B.Tech CS <span class="badge bg-danger rounded-pill">5 Seats Left</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            MBA (Finance) <span class="badge bg-warning text-dark rounded-pill">12 Seats Left</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            B.Arch <span class="badge bg-success rounded-pill">40 Seats Left</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!--- yanha se midd  wala card enquiry or admission  wala posern poora ho rha hai  -->
+    <!--ynha se bhi midd wala chart student wala porsen sure ho rha hai -->
+    <div class="container-fluid mt-4 px-4">
+    <div class="row g-4">
+        
+        <div class="col-12 col-xl-8">
+            <div class="erp-final-card shadow-sm h-100">
+                <div class="erp-card-header d-flex justify-content-between align-items-center bg-white border-0 pt-3 px-4">
+                    <div>
+                        <h5 class="mb-0 fw-bold text-dark"><i class="fas fa-user-graduate me-2 text-primary"></i>Student Attendance Trends</h5>
+                        <small class="text-muted">Monthly Average Attendance (%)</small>
+                    </div>
+                    <div class="dropdown">
+                        <select class="form-select form-select-sm border-0 bg-light" id="php-dept-filter">
+                            <option>All Departments</option>
+                            <option>B.Tech</option>
+                            <option>MBA</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="erp-card-body px-4 pb-4">
+                    <div class="chart-wrapper" style="position: relative; height:320px; width:100%">
+                        <canvas id="studentAttendanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-4">
+            <div class="erp-final-card shadow-sm h-100">
+                <div class="erp-card-header bg-white border-0 pt-3 px-4">
+                    <h5 class="mb-0 fw-bold text-dark"><i class="fas fa-user-tie me-2 text-info"></i>Faculty Presence</h5>
+                    <small class="text-muted">Today: <?php echo date('d M, Y'); ?></small>
+                </div>
+                <div class="erp-card-body px-4">
+                    <div class="attendance-stat-card mb-3 p-3 rounded-4 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box bg-soft-primary text-primary me-3">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-bold">142 / 150</h6>
+                                <small class="text-muted">Professors Present</small>
+                            </div>
+                        </div>
+                        <span class="badge rounded-pill bg-success-light text-success">94%</span>
+                    </div>
+
+                    <div class="attendance-stat-card mb-4 p-3 rounded-4 d-flex align-items-center justify-content-between bg-soft-danger">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box bg-danger text-white me-3">
+                                <i class="fas fa-calendar-times"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-bold">08</h6>
+                                <small class="text-muted">On Leave</small>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-link text-danger fw-bold text-decoration-none p-0">Details</button>
+                    </div>
+
+                    <div class="dept-summary mt-4">
+                        <p class="small fw-bold text-uppercase text-muted mb-3">Department-wise (Today)</p>
+                        <div class="progress-item mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span class="small">Engineering</span>
+                                <span class="small fw-bold">98%</span>
+                            </div>
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar bg-primary" style="width: 98%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span class="small">Pharmacy</span>
+                                <span class="small fw-bold">75%</span>
+                            </div>
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar bg-warning" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--ynha se bhi midd wala chart wala porsen poora ho rha hai  -->
+    <!--ynha se fee cart wala porsen sure ho rha hai  -->
+    <div class="container-fluid mt-4 px-4">
+    <div class="row g-4">
+        
+        <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+            <h4 class="fw-bold text-dark mb-0">Financial Overview</h4>
+            <div class="dropdown">
+                <button class="btn btn-white shadow-sm dropdown-toggle erp-dropdown-btn" type="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-calendar-check me-2"></i>Session: 2025-26
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                    <li><a class="dropdown-item active" href="#">2025-26</a></li>
+                    <li><a class="dropdown-item" href="#">2024-25</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-xl-4">
+            <a href="student_list.php" class="text-decoration-none">
+                <div class="fee-stat-card shadow-sm p-4 bg-primary text-white position-relative overflow-hidden">
+                    <div class="position-relative z-index-1">
+                        <h6 class="text-uppercase small fw-bold opacity-75">Total Students</h6>
+                        <h2 class="fw-bold mb-1">4,250</h2>
+                        <p class="mb-0 small"><i class="fas fa-arrow-up me-1"></i> 12% more than last session</p>
+                    </div>
+                    <i class="fas fa-users card-bg-icon"></i>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-12 col-md-6 col-xl-4">
+            <a href="pending_fees.php" class="text-decoration-none">
+                <div class="fee-stat-card shadow-sm p-4 bg-danger text-white position-relative overflow-hidden">
+                    <div class="position-relative z-index-1">
+                        <h6 class="text-uppercase small fw-bold opacity-75">Dues Reminder</h6>
+                        <h2 class="fw-bold mb-1">₹ 18.5L</h2>
+                        <p class="mb-0 small">95 Students have pending dues</p>
+                    </div>
+                    <i class="fas fa-exclamation-circle card-bg-icon"></i>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-12 col-xl-8">
+            <div class="erp-final-card shadow-sm h-100">
+                <div class="erp-card-header d-flex justify-content-between align-items-center bg-white border-0 pt-3 px-4">
+                    <div>
+                        <h5 class="mb-0 fw-bold text-dark"><i class="fas fa-chart-bar me-2 text-warning"></i>Dept. Fee Dues Cart</h5>
+                        <small class="text-muted">Breakdown of pending fees by department</small>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill px-3">Download Report</button>
+                </div>
+                <div class="erp-card-body px-4 pb-4">
+                    <div style="height: 300px;">
+                        <canvas id="deptFeeCart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-4">
+            <div class="erp-final-card shadow-sm h-100">
+                <div class="erp-card-header bg-white border-0 pt-3 px-4">
+                    <h5 class="mb-0 fw-bold text-dark"><i class="fas fa-bell me-2 text-danger"></i>Auto-Reminder Settings</h5>
+                </div>
+                <div class="erp-card-body px-4">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                            <div>
+                                <h6 class="mb-0 fw-bold">WhatsApp Reminder</h6>
+                                <small class="text-muted">Send auto-alerts to parents</small>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" checked>
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                            <div>
+                                <h6 class="mb-0 fw-bold">Email Notifications</h6>
+                                <small class="text-muted">Weekly pending fee reports</small>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary w-100 py-2 mt-3 fw-bold shadow-sm">
+                            <i class="fas fa-paper-plane me-2"></i>Send Manual Alerts Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+    <!--ynha se bhi fee reminder chart wala porsen poora ho rha hai  -->
+    <!--ynha se placement cart wala porsen sure ho rha hai   -->
+    <div class="container-fluid mt-4 px-4 pb-5">
+    <div class="row g-4">
+        <div class="col-12">
+            <h4 class="fw-bold text-dark mb-0"><i class="fas fa-briefcase me-2 text-primary"></i>Placement & Internship Cell</h4>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="placement-card p-4 shadow-sm border-0 rounded-4 bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="icon-circle bg-soft-success text-success"><i class="fas fa-building"></i></div>
+                    <span class="badge bg-soft-success text-success rounded-pill">This Session</span>
+                </div>
+                <h6 class="text-muted small fw-bold text-uppercase">Companies Visited</h6>
+                <h2 class="fw-bold mb-0">128</h2>
+                <p class="text-success small mt-2 mb-0"><i class="fas fa-caret-up"></i> +12 new this month</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="placement-card p-4 shadow-sm border-0 rounded-4 bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="icon-circle bg-soft-primary text-primary"><i class="fas fa-user-check"></i></div>
+                    <span class="badge bg-soft-primary text-primary rounded-pill">Placed Students</span>
+                </div>
+                <h6 class="text-muted small fw-bold text-uppercase">Total Placed</h6>
+                <h2 class="fw-bold mb-0">842</h2>
+                <p class="text-primary small mt-2 mb-0"><i class="fas fa-users"></i> 78% Placement Rate</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="placement-card p-4 shadow-sm border-0 rounded-4 bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="icon-circle bg-soft-warning text-warning"><i class="fas fa-money-bill-wave"></i></div>
+                    <span class="badge bg-soft-warning text-warning rounded-pill">Top Package</span>
+                </div>
+                <h6 class="text-muted small fw-bold text-uppercase">Highest CTC</h6>
+                <h2 class="fw-bold mb-0">₹ 42.5 LPA</h2>
+                <p class="text-warning small mt-2 mb-0"><i class="fas fa-trophy"></i> New record this year!</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-8">
+            <div class="erp-final-card shadow-sm h-100 bg-white p-4 rounded-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold mb-0">Monthly Placement Trend</h5>
+                    <select class="form-select form-select-sm w-auto border-0 bg-light">
+                        <option>Session 2025-26</option>
+                        <option>Session 2024-25</option>
+                    </select>
+                </div>
+                <div style="height: 300px;">
+                    <canvas id="placementTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-4">
+            <div class="erp-final-card shadow-sm h-100 bg-white p-4 rounded-4">
+                <h5 class="fw-bold mb-4">Recent Visits</h5>
+                <div class="company-list">
+                    <div class="d-flex align-items-center mb-3 p-2 border-bottom">
+                        <img src="https://logo.clearbit.com/google.com" width="40" class="rounded me-3">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0 fw-bold">Google</h6>
+                            <small class="text-muted">Software Engineer Role</small>
+                        </div>
+                        <span class="badge bg-light text-dark">5 Selected</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-3 p-2 border-bottom">
+                        <img src="https://logo.clearbit.com/microsoft.com" width="40" class="rounded me-3">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0 fw-bold">Microsoft</h6>
+                            <small class="text-muted">Data Analyst Role</small>
+                        </div>
+                        <span class="badge bg-light text-dark">3 Selected</span>
+                    </div>
+                    <div class="d-flex align-items-center p-2">
+                        <img src="https://logo.clearbit.com/amazon.com" width="40" class="rounded me-3">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0 fw-bold">Amazon</h6>
+                            <small class="text-muted">Cloud Intern</small>
+                        </div>
+                        <span class="badge bg-light text-dark">12 Selected</span>
+                    </div>
+                </div>
+                <a href="placement_management.php" class="btn btn-outline-primary w-100 mt-3 rounded-pill">Manage Placement Page</a>
+            </div>
+        </div>
+    </div>
+</div>
+    <!--ynha par jo cart wala porse sure hua tha vo poora ho rha hai  -->
+
+    <!--ynha par complent ticket wala porsen sure ho rha hai   -->
+    <div class="container-fluid mt-4 px-4 pb-5">
+    <div class="row g-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h4 class="fw-bold text-dark mb-0"><i class="fas fa-ticket-alt me-2 text-danger"></i>Grievance & Support Hub</h4>
+            <span class="badge bg-danger pulse-animation px-3">Live Monitoring</span>
+        </div>
+
+        <div class="col-12 col-md-3">
+            <div class="grievance-card p-3 shadow-sm rounded-4 bg-white border-start border-danger border-4">
+                <h6 class="text-muted small fw-bold">Open Tickets</h6>
+                <div class="d-flex align-items-center">
+                    <h2 class="fw-bold mb-0 me-2">24</h2>
+                    <span class="text-danger small"><i class="fas fa-clock"></i> Urgent</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3">
+            <div class="grievance-card p-3 shadow-sm rounded-4 bg-white border-start border-warning border-4">
+                <h6 class="text-muted small fw-bold">In Progress</h6>
+                <h2 class="fw-bold mb-0">12</h2>
+            </div>
+        </div>
+        <div class="col-12 col-md-3">
+            <div class="grievance-card p-3 shadow-sm rounded-4 bg-white border-start border-success border-4">
+                <h6 class="text-muted small fw-bold">Resolved (This Month)</h6>
+                <h2 class="fw-bold mb-0">145</h2>
+            </div>
+        </div>
+        <div class="col-12 col-md-3">
+            <div class="grievance-card p-3 shadow-sm rounded-4 bg-white border-start border-info border-4">
+                <h6 class="text-muted small fw-bold">Avg. Resolve Time</h6>
+                <h2 class="fw-bold mb-0">4.2h</h2>
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-5">
+            <div class="erp-final-card shadow-sm h-100 bg-white p-4 rounded-4">
+                <h5 class="fw-bold mb-4">Complaints by Department</h5>
+                <div style="height: 250px;">
+                    <canvas id="grievanceCategoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-7">
+            <div class="erp-final-card shadow-sm h-100 bg-white p-4 rounded-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Recent Tickets</h5>
+                    <button class="btn btn-sm btn-light">View All Tickets</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr class="small text-uppercase">
+                                <th>Ticket ID</th>
+                                <th>Raised By</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="small">
+                            <tr>
+                                <td class="fw-bold">#TK-882</td>
+                                <td>Rahul (Student)</td>
+                                <td><span class="badge bg-soft-info text-info">Hostel</span></td>
+                                <td><span class="badge bg-danger">Open</span></td>
+                                <td><button class="btn btn-sm btn-primary">View</button></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">#TK-881</td>
+                                <td>Mr. Verma (Warden)</td>
+                                <td><span class="badge bg-soft-warning text-warning">Mess</span></td>
+                                <td><span class="badge bg-warning text-dark">Processing</span></td>
+                                <td><button class="btn btn-sm btn-primary">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!--ynha par complent ticket wala posen poora ho rha hai  -->
+    <!-- ynah se js aa rhi hai cart wali  faculty attendance wali -->
+     <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const attendanceCtx = document.getElementById('studentAttendanceChart').getContext('2d');
+    
+    // Creating Gradient for the Chart
+    const attendanceGradient = attendanceCtx.createLinearGradient(0, 0, 0, 400);
+    attendanceGradient.addColorStop(0, 'rgba(78, 115, 223, 0.2)');
+    attendanceGradient.addColorStop(1, 'rgba(78, 115, 223, 0)');
+
+    const attendanceData = {
+        labels: ['July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'],
+        datasets: [{
+            label: 'Avg Attendance %',
+            data: [85, 88, 76, 92, 89, 82, 95, 91], // PHP se dynamic data yahan aayega
+            backgroundColor: attendanceGradient,
+            borderColor: '#4e73df',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: '#fff',
+            pointBorderColor: '#4e73df',
+            pointRadius: 4,
+            pointHoverRadius: 6
+        }]
+    };
+
+    new Chart(attendanceCtx, {
+        type: 'line',
+        data: attendanceData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#1f2937',
+                    padding: 12,
+                    titleFont: { size: 14 },
+                    callbacks: {
+                        label: function(context) {
+                            return `Attendance: ${context.raw}%`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    min: 50,
+                    max: 100,
+                    ticks: { callback: value => value + '%' },
+                    grid: { borderDash: [5, 5], color: '#e5e7eb' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+});
+</script>
+     <!-- ynah se js poori ho rhi hai cart wali  faculty attendance wali -->
+      <!-- ynah se js sure ho rhi hai fee reminder cart wali  -->
+       <script>
+       document.addEventListener("DOMContentLoaded", function() {
+    const deptCtx = document.getElementById('deptFeeCart').getContext('2d');
+    
+    new Chart(deptCtx, {
+        type: 'bar', // 'bar' is best to compare departments
+        data: {
+            labels: ['B.Tech', 'MBA', 'Pharmacy', 'B.Arch', 'Science'],
+            datasets: [{
+                label: 'Pending Fee (Lakhs)',
+                data: [8.5, 4.2, 3.1, 1.8, 0.9], // PHP values go here
+                backgroundColor: [
+                    '#4e73df', '#1cc88a', '#f6c23e', '#e74a3b', '#36b9cc'
+                ],
+                borderRadius: 10,
+                barThickness: 30
+            }]
+        },
+        options: {
+            indexAxis: 'y', // Makes it a horizontal bar chart
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: { grid: { display: false }, ticks: { callback: v => '₹' + v + 'L' } },
+                y: { grid: { display: false } }
+            }
+        }
+    });
+});
+</script>
+       <!-- ynah se js poori ho rhi hai cart wali fee reminder wali  -->
+        <!-- ynah se js sure ho rhi hai placement cart wali  -->
+         <script>
+         document.addEventListener("DOMContentLoaded", function() {
+    const placementCtx = document.getElementById('placementTrendChart').getContext('2d');
+    
+    new Chart(placementCtx, {
+        type: 'line',
+        data: {
+            labels: ['July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'],
+            datasets: [{
+                label: 'Students Placed',
+                data: [45, 120, 250, 180, 310, 95, 410, 380], 
+                borderColor: '#0d6efd',
+                backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { borderDash: [5, 5] } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+});
+</script>
+         <!-- ynah par placement chart wali js poori ho rhi hai  -->
+
+          <!-- ynah par complent ticket erasing  wali js poori ho rhi hai  -->
+           <script>
+           document.addEventListener("DOMContentLoaded", function() {
+    const grievanceCtx = document.getElementById('grievanceCategoryChart').getContext('2d');
+    
+    new Chart(grievanceCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Hostel', 'Mess', 'Exam Cell', 'Library', 'Accounts'],
+            datasets: [{
+                data: [35, 25, 15, 10, 15], // Real data from DB
+                backgroundColor: ['#ff6b6b', '#fcc419', '#339af0', '#51cf66', '#845ef7'],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } }
+            },
+            cutout: '70%'
+        }
+    });
+});
+</script>
+           <!-- ynah par complent ticket erasing chart wali js poori ho rhi hai  -->
+
+            <!-- ye footer wala porsen yanha se sure hota hai  -->
+             <footer class="premium-erp-footer mt-5">
+    <div class="footer-glass-wrap container-fluid px-4 py-3">
+        <div class="row align-items-center g-3">
+            
+            <div class="col-12 col-lg-3 text-center text-lg-start">
+                <div class="d-flex align-items-center justify-content-center justify-content-lg-start">
+                    <div class="footer-logo-circle me-2">S</div>
+                    <div>
+                        <p class="mb-0 fw-bold text-dark brand-name">SoftSolution</p>
+                        <small class="text-muted">&copy; 2025-26 All Rights Reserved</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-5">
+                <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+                    <div class="status-pill">
+                        <span class="live-dot"></span>
+                        <span class="status-text">SYSTEM LIVE</span>
+                    </div>
+                    <div class="v-line d-none d-lg-block"></div>
+                    <div class="clock-display">
+                        <i class="far fa-clock me-2 text-primary"></i>
+                        <span id="erpLiveTime">00:00:00 AM</span>
+                    </div>
+                    <div class="v-line d-none d-lg-block"></div>
+                    <div class="version-badge shadow-sm">v4.0.2-Stable</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
+                    <div class="support-box">
+                        <a href="tel:+919876543210" class="support-item text-decoration-none">
+                            <i class="fas fa-phone-alt text-success"></i>
+                            <span>+91 98765 43210</span>
+                        </a>
+                        <a href="mailto:support@softsolution.com" class="support-item text-decoration-none border-start ps-3">
+                            <i class="fas fa-envelope text-info"></i>
+                            <span>support@softsolution.com</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+<script>
+    /* --- Live Clock Function --- */
+    function updateERPTimer() {
+        const timeDisplay = document.getElementById("erpLiveTime");
+        const now = new Date();
+        timeDisplay.textContent = now.toLocaleTimeString([], { 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit', 
+            hour12: true 
+        });
+    }
+    setInterval(updateERPTimer, 1000);
+    updateERPTimer();
+</script>
+  <!-- ynha par footer wala porsen poora hota hai  -->
 </body>
 </html>
