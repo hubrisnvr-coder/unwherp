@@ -62,7 +62,7 @@ body.theme-blur .login-card { background: rgba(30,41,59,0.35); border: 1px solid
 .theme-link { text-decoration: none; color: inherit; }
 .theme-link.active { font-weight: 600; }
 
-.copyright { font-size: 0.85rem; color: #94a3b8; }
+.copyright { font-size: 0.85rem; color: #e2e8f0; }
 .hand-emoji { font-size: 1.3rem; margin-right: 8px; }
 
 /* RESPONSIVE */
