@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Manager - Full List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        /* Top Navigation Bar */
+        .top-nav {
+            background: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .home-link { text-decoration: none; color: #337ab7; font-size: 14px; font-weight: 500; }
+        .settings-btn { background: #f0ad4e; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        .settings-btn:hover { background: #ec971f; }
+
+        /* Page Header Title */
+        .page-header { text-align: center; color: #337ab7; font-weight: bold; padding: 20px 0; font-size: 18px; }
+        .page-header span { color: #999; font-weight: normal; }
+
+        /* Table Design */
+        .table-responsive { padding: 0 15px; }
+        .menu-table { width: 100%; background: white; border: 1px solid #ddd; }
+        .menu-table th { 
+            background: #d9edf7; color: #31708f; padding: 12px; 
+            border: 1px solid #bce8f1; text-align: center; 
+            font-size: 14px; text-transform: uppercase;
+            border-top: 2px solid #d9534f; /* Red top border */
+        }
+        .menu-table td { border: 1px solid #ddd; padding: 12px; vertical-align: middle; color: #555; font-size: 14px; }
+
+        /* Status Badge */
+        .status-badge {
+            background-color: #5cb85c; color: white; padding: 4px 10px;
+            border-radius: 3px; font-size: 12px; font-weight: normal;
+        }
+
+        /* Clickable Action Button */
+        .btn-action {
+            background-color: #337ab7; color: white; border: none;
+            padding: 6px 12px; border-radius: 3px; cursor: pointer;
+            transition: all 0.2s; display: inline-flex; align-items: center;
+        }
+        .btn-action:hover { background-color: #23527c; transform: translateY(-1px); }
+        .btn-action:active { transform: translateY(1px); }
+
+        .text-center { text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        <div>
+            <a href="index.html" class="home-link"><i class="fa fa-home"></i> Home</a> 
+            <span class="text-muted"><i class="fa fa-angle-right mx-1"></i> Menu</span>
+        </div>
+        <button class="settings-btn" title="Settings"><i class="fa fa-cog"></i></button>
+    </div>
+
+    <div class="container-fluid">
+        <div class="page-header">Menu Manager <span>» List</span></div>
+
+        <div class="table-responsive">
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>TITLE</th>
+                        <th style="width: 15%;">RANK</th>
+                        <th style="width: 15%;">STATUS</th>
+                        <th style="width: 10%;">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>WELCOME PAGE</td>
+                        <td class="text-center">1</td>
+                        <td class="text-center"><span class="status-badge">Active</span></td>
+                        <td class="text-center">
+                            <button class="btn-action" onclick="handleEdit('WELCOME PAGE')">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>TOP NAV</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center"><span class="status-badge">Active</span></td>
+                        <td class="text-center">
+                            <button class="btn-action" onclick="handleEdit('TOP NAV')">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>MAIN NAVIGATION</td>
+                        <td class="text-center">20</td>
+                        <td class="text-center"><span class="status-badge">Active</span></td>
+                        <td class="text-center">
+                            <button class="btn-action" onclick="handleEdit('MAIN NAVIGATION')">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>STICKY NAVIGATION</td>
+                        <td class="text-center">30</td>
+                        <td class="text-center"><span class="status-badge">Active</span></td>
+                        <td class="text-center">
+                            <button class="btn-action" onclick="handleEdit('STICKY NAVIGATION')">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>USEFUL LINKS</td>
+                        <td class="text-center">40</td>
+                        <td class="text-center"><span class="status-badge">Active</span></td>
+                        <td class="text-center">
+                            <button class="btn-action" onclick="handleEdit('USEFUL LINKS')">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>FOOTER</td>
+                        <td class="text-center">50</td>
+                        <td class="text-center"><span class="status-badge">Active</span></td>
+                        <td class="text-center">
+                            <button class="btn-action" onclick="handleEdit('FOOTER')">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Button click functionality
+        function handleEdit(title) {
+            console.log("Editing Menu: " + title);
+            alert("Aap '" + title + "' ko edit karne wale hain.");
+            // Link page logic yahan add karein:
+            // window.location.href = 'edit-menu-page.html?name=' + encodeURIComponent(title);
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
