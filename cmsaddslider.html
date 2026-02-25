@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider Manager - Add</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Arial, sans-serif; }
+        .top-breadcrumb { background: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; }
+        .home-link { text-decoration: none; color: #337ab7; font-size: 14px; }
+        .settings-btn { background: #f0ad4e; color: white; padding: 5px 10px; border-radius: 4px; border: none; }
+        .page-header { text-align: center; color: #337ab7; font-weight: bold; padding: 15px; font-size: 18px; }
+
+        .form-section { background: #fff; border: 1px solid #ddd; border-radius: 2px; }
+        .form-row { display: flex; border-bottom: 1px solid #eee; align-items: stretch; }
+        .form-label-side { background: #f1f3f4; width: 220px; padding: 12px 15px; font-weight: bold; font-size: 12px; color: #555; text-align: right; border-right: 1px solid #ddd; text-transform: uppercase; display: flex; align-items: center; justify-content: flex-end; }
+        .form-input-side { flex: 1; padding: 10px 15px; }
+        .form-control, .form-select { border-radius: 0; border: 1px solid #ccc; font-size: 14px; }
+        .form-control:focus { box-shadow: none; border-color: #337ab7; }
+
+        .form-footer { background: #f1f3f4; padding: 15px; text-align: right; border-top: 1px solid #ddd; display: flex; justify-content: flex-end; gap: 5px; }
+        .a-btn-form { text-decoration: none; padding: 6px 15px; font-size: 14px; color: white !important; border-radius: 3px; display: inline-flex; align-items: center; gap: 8px; }
+        .a-gray { background-color: #999; }
+        .a-dark-blue { background-color: #337ab7; }
+        
+        @media (max-width: 768px) { .form-row { flex-direction: column; } .form-label-side { width: 100%; text-align: left; justify-content: flex-start; } }
+    </style>
+</head>
+<body>
+
+    <div class="top-breadcrumb">
+        <div><a href="#" class="home-link"><i class="fa fa-home"></i> Home</a> <span class="text-muted">» Slider</span></div>
+        <button class="settings-btn"><i class="fa fa-cog"></i></button>
+    </div>
+
+    <div class="container-fluid mt-3">
+        <div class="page-header">Slider Manager <span>» Add</span></div>
+        
+        <div class="text-center mb-3">
+            <a href="slider-list.html" class="a-btn-form a-dark-blue"><i class="fa fa-list"></i> All Slider</a>
+        </div>
+
+        <form class="form-section shadow-sm mb-5">
+            <div class="form-row">
+                <div class="form-label-side">Slider Title</div>
+                <div class="form-input-side"><input type="text" class="form-control" placeholder=""></div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-label-side">Description</div>
+                <div class="form-input-side"><textarea class="form-control" rows="4" placeholder="Description"></textarea></div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-label-side">Image</div>
+                <div class="form-input-side">
+                    <input type="file" class="form-control mb-1">
+                    <small class="text-primary"><i class="fa fa-question-circle"></i> Recommended Image Size: 1349px X 475px(72dpi)</small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-label-side">Target Link</div>
+                <div class="form-input-side"><input type="text" class="form-control" placeholder="URL"></div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-label-side">Button Text</div>
+                <div class="form-input-side"><input type="text" class="form-control" placeholder="Button Text"></div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-label-side">Target Page</div>
+                <div class="form-input-side">
+                    <select class="form-select">
+                        <option>Choose Target Page</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-label-side">Slider Rank</div>
+                <div class="form-input-side"><input type="number" class="form-control" value="10" style="width: 100px;"></div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-label-side">Status</div>
+                <div class="form-input-side">
+                    <label class="me-3"><input type="radio" name="status" checked> Active</label>
+                    <label><input type="radio" name="status"> Inactive</label>
+                </div>
+            </div>
+
+            <div class="form-footer">
+                <a href="#" class="a-btn-form a-gray"><i class="fa fa-undo"></i> Reset</a>
+                <a href="#" class="a-btn-form a-dark-blue" onclick="document.forms[0].submit()"><i class="fa fa-save"></i> Submit</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
