@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master CMS - ERP Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { margin: 0; display: flex; height: 100vh; overflow: hidden; background-color: #f4f7f6; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        /* Sidebar Styling */
+        .sidebar { width: 260px; height: 100vh; background: #fff; border-right: 1px solid #e0e0e0; overflow-y: auto; flex-shrink: 0; scrollbar-width: thin; }
+        .sidebar::-webkit-scrollbar { width: 5px; }
+        .sidebar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
+        .nav-link-custom { padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; color: #555; text-decoration: none; font-size: 13.5px; border-bottom: 1px solid #f8f8f8; transition: 0.2s; }
+        .nav-link-custom:hover, .active-link { background: #f8f9fa; color: #337ab7; font-weight: 600; border-right: 4px solid #337ab7; }
+        
+        .icon-box { width: 25px; text-align: center; margin-right: 12px; color: #556080; font-size: 14px; }
+        
+        /* Submenu Styling */
+        .submenu { list-style: none; padding: 0; background: #fafafa; display: none; }
+        .submenu li a { padding: 8px 15px 8px 52px; display: block; color: #777; font-size: 13px; text-decoration: none; border-bottom: 1px solid #eee; transition: 0.2s; }
+        .submenu li a:hover { color: #337ab7; background: #f0f0f0; }
+
+        /* Main Content */
+        .main-content { flex-grow: 1; height: 100vh; }
+        iframe { width: 100%; height: 100%; border: none; }
+        
+        .small-arrow { font-size: 10px; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="nav-container">
+        
+        <a href="../index.html" class="nav-link-custom">
+            <span><i class="fa-solid fa-right-left icon-box"></i> IMS Dashboard</span>
+        </a>
+
+        <a href="cms2.html" target="content_area" class="nav-link-custom active-link">
+            <span><i class="fa-solid fa-gauge-high icon-box"></i> CMS Dashboard</span>
+            <i class="fa-solid fa-caret-left"></i>
+        </a>
+
+        <a href="../style1.html" target="content_area" class="nav-link-custom">
+            <span><i class="fa-solid fa-chart-line icon-box"></i> Analytic</span>
+        </a>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-gear icon-box"></i> Settings</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="general_settings.html" target="content_area">General Settings</a></li>
+                <li><a href="style1.html" target="content_area">System Config</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-copy icon-box"></i> Menu & Pages</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">Add Page</a></li>
+                <li><a href="#" target="content_area">Manage Menu</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-image icon-box"></i> Slider</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">Slider List</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-list-ul icon-box"></i> Notice</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">View Notices</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-newspaper icon-box"></i> Blog Post</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">Add New Post</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-calendar-days icon-box"></i> Events</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">Manage Events</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-layer-group icon-box"></i> Course/Services</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">Services List</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-camera icon-box"></i> Gallery</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">Photo Gallery</a></li>
+                <li><a href="#" target="content_area">Video Gallery</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-download icon-box"></i> Download</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">Files List</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-question icon-box"></i> Faq</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">Faq List</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-compass icon-box"></i> Counters</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">Manage Counters</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-award icon-box"></i> Client/Award</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">Awards List</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-comment icon-box"></i> Testimonial</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">User Feedback</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-user-doctor icon-box"></i> Staff</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">Team Members</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-dollar-sign icon-box"></i> Pricing</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">Price Plans</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-user-plus icon-box"></i> Registration</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">New Users</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-address-book icon-box"></i> Contact Manager</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">Inbox Queries</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link-custom dropdown-btn">
+                <span><i class="fa-solid fa-mobile-screen icon-box"></i> Alert/Notification</span>
+                <i class="fa-solid fa-chevron-down small-arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="#" target="content_area">View Logs</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="main-content">
+    <iframe name="content_area" src="cms2.html"></iframe>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // Dropdown Toggle
+        $('.dropdown-btn').click(function(){ 
+            $(this).next('.submenu').slideToggle(200); 
+            // Rotation arrow effect (optional)
+            $(this).find('.fa-chevron-down').toggleClass('fa-rotate-180');
+        });
+
+        // Active Link Handler
+        $('.nav-link-custom, .submenu li a').click(function(){ 
+            if(!$(this).hasClass('dropdown-btn')){
+                $('.nav-link-custom, .submenu li a').removeClass('active-link');
+                $(this).addClass('active-link');
+                
+                // Sidebar highlight removal for sub-items
+                if($(this).closest('.submenu').length > 0) {
+                     $(this).closest('.nav-item').find('.nav-link-custom').addClass('active-link');
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
