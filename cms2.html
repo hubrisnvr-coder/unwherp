@@ -10,28 +10,28 @@
 
         body { 
             background: #eef2f7; 
-            padding: 25px; 
+            padding: 15px; /* Padding kam ki */
             font-family: 'Outfit', sans-serif; 
         }
 
         /* Home > Dashboard Text */
         .breadcrumb-box {
             background: white;
-            padding: 10px 20px;
-            border-radius: 10px;
+            padding: 8px 15px; /* Size kam kiya */
+            border-radius: 8px;
             display: inline-block;
             box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
-            font-size: 14px;
+            margin-bottom: 15px; /* Gap kam kiya */
+            font-size: 13px;
             font-weight: 600;
             color: #32325d;
         }
 
-        /* Card Styling - Size Reduced */
+        /* Card Styling - Further Reduced */
         .stat-card { 
-            border-radius: 15px; /* Thoda kam kiya */
+            border-radius: 12px; 
             color: white; 
-            padding: 15px 10px; /* SIZE KAM KARNE KE LIYE PADDING GHATAYI */
+            padding: 12px 5px; /* Padding aur kam kar di */
             text-align: center; 
             position: relative;
             border: 1px solid rgba(255,255,255,0.2);
@@ -43,39 +43,39 @@
 
         /* Glow & Lift Effect */
         .stat-card:hover { 
-            transform: translateY(-8px) scale(1.03); 
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transform: translateY(-5px) scale(1.02); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             filter: brightness(1.1);
         }
 
-        /* Icon Animation - Size Reduced */
+        /* Icon Animation - Compact */
         .stat-card i { 
-            font-size: 24px; /* ICON SIZE KAM KIYA */
-            margin-bottom: 10px; 
+            font-size: 20px; /* Icon aur chota kiya */
+            margin-bottom: 5px; 
             display: block;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.2));
             transition: 0.5s;
         }
         .stat-card:hover i {
-            transform: rotateY(360deg) scale(1.2);
+            transform: rotateY(360deg) scale(1.1);
         }
 
-        /* Number & Text Styling - Size Reduced */
+        /* Number & Text Styling - Compact */
         .stat-card h3 { 
-            font-size: 22px; /* NUMBER SIZE KAM KIYA */
+            font-size: 18px; /* Number chota kiya */
             margin: 0; 
             font-weight: 800;
         }
         .stat-card p { 
-            font-size: 11px; /* TEXT SIZE KAM KIYA */
-            margin-top: 5px;
+            font-size: 10px; /* Text chota kiya */
+            margin-top: 2px;
             text-transform: uppercase; 
             font-weight: 600; 
             letter-spacing: 1px;
             opacity: 0.85;
         }
 
-        /* Background Gradients - Ultra Vivid */
+        /* Background Gradients */
         .bg-slider { background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%); }
         .bg-pages  { background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%); }
         .bg-blogs  { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
@@ -89,34 +89,31 @@
         .bg-staff  { background: linear-gradient(135deg, #f85032 0%, #f16c20 100%); }
         .bg-award  { background: linear-gradient(135deg, #434343 0%, #000000 100%); }
 
-        /* Background Decorative Circles */
+        /* Decorative Circles - Scaled down */
         .stat-card::before {
-            content: ""; position: absolute; top: -15px; right: -15px;
-            width: 60px; height: 60px; background: rgba(255,255,255,0.15);
+            content: ""; position: absolute; top: -10px; right: -10px;
+            width: 45px; height: 45px; background: rgba(255,255,255,0.15);
             border-radius: 50%; z-index: 0;
         }
 
-        /* Contact Message Section - Modern White */
+        /* Contact Box - Tightened */
         .contact-box {
             background: white;
-            border-radius: 20px;
+            border-radius: 15px;
             border: none;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: 0.3s;
         }
-        .contact-box:hover { box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
         .btn-view {
             background: #5e72e4; color: white; border-radius: 30px;
-            padding: 8px 25px; font-weight: 600; border: none; transition: 0.3s;
+            padding: 5px 15px; font-size: 12px; font-weight: 600; border: none;
         }
-        .btn-view:hover { background: #32325d; transform: scale(1.05); }
 
-        /* Mobile Optimization */
+        /* Mobile */
         @media (max-width: 576px) {
-            .stat-card { padding: 15px 5px; border-radius: 12px; }
-            .stat-card h3 { font-size: 18px; }
-            .stat-card i { font-size: 20px; }
-            .row.g-3 { --bs-gutter-x: 10px; --bs-gutter-y: 10px; }
+            .stat-card { padding: 10px 5px; }
+            .stat-card h3 { font-size: 16px; }
+            .stat-card i { font-size: 18px; }
+            .row.g-3 { --bs-gutter-x: 8px; --bs-gutter-y: 8px; }
         }
     </style>
 </head>
@@ -124,107 +121,32 @@
 
     <div class="container-fluid">
         <div class="breadcrumb-box">
-            <i class="fa fa-home text-primary"></i> Home <i class="fa fa-chevron-right mx-2 text-muted" style="font-size: 10px;"></i> Dashboard
+            <i class="fa fa-home text-primary"></i> Home <i class="fa fa-chevron-right mx-2 text-muted" style="font-size: 8px;"></i> Dashboard
         </div>
 
         <div class="row g-3">
-            <div class="col-6 col-sm-4 col-md-2">
-                <div class="stat-card bg-slider">
-                    <i class="fa-regular fa-image"></i>
-                    <h3>0</h3>
-                    <p>Slider</p>
-                </div>
-            </div>
-            <div class="col-6 col-sm-4 col-md-2">
-                <div class="stat-card bg-pages">
-                    <i class="fa-regular fa-copy"></i>
-                    <h3>15</h3>
-                    <p>Pages</p>
-                </div>
-            </div>
-            <div class="col-6 col-sm-4 col-md-2">
-                <div class="stat-card bg-blogs">
-                    <i class="fa-solid fa-pen-nib"></i>
-                    <h3>0</h3>
-                    <p>Blog Posts</p>
-                </div>
-            </div>
-            <div class="col-6 col-sm-4 col-md-2">
-                <div class="stat-card bg-notice">
-                    <i class="fa-solid fa-bell"></i>
-                    <h3>0</h3>
-                    <p>Notice</p>
-                </div>
-            </div>
-            <div class="col-6 col-sm-4 col-md-2">
-                <div class="stat-card bg-events">
-                    <i class="fa-regular fa-calendar-check"></i>
-                    <h3>0</h3>
-                    <p>Events</p>
-                </div>
-            </div>
-            <div class="col-6 col-sm-4 col-md-2">
-                <div class="stat-card bg-service">
-                    <i class="fa-solid fa-briefcase"></i>
-                    <h3>0</h3>
-                    <p>Services</p>
-                </div>
-            </div>
-             
-            <div class="col-6 col-sm-4 col-md-2">
-                <div class="stat-card bg-gallery">
-                    <i class="fa-solid fa-camera-retro"></i>
-                    <h3>0</h3>
-                    <p>Gallery</p>
-                </div>
-            </div>
-            <div class="col-6 col-sm-4 col-md-2">
-                <div class="stat-card bg-down">
-                    <i class="fa-solid fa-cloud-arrow-down"></i>
-                    <h3>0</h3>
-                    <p>Download</p>
-                </div>
-            </div>
-            <div class="col-6 col-sm-4 col-md-2">
-                <div class="stat-card bg-faq">
-                    <i class="fa-solid fa-circle-question"></i>
-                    <h3>0</h3>
-                    <p>FAQ</p>
-                </div>
-            </div>
-            <div class="col-6 col-sm-4 col-md-2">
-                <div class="stat-card bg-test">
-                    <i class="fa-solid fa-comments"></i>
-                    <h3>0</h3>
-                    <p>Testimonial</p>
-                </div>
-            </div>
-            <div class="col-6 col-sm-4 col-md-2">
-                <div class="stat-card bg-staff">
-                    <i class="fa-solid fa-user-tie"></i>
-                    <h3>0</h3>
-                    <p>Staffs</p>
-                </div>
-            </div>
-            <div class="col-6 col-sm-4 col-md-2">
-                <div class="stat-card bg-award">
-                    <i class="fa-solid fa-trophy"></i>
-                    <h3>0</h3>
-                    <p>Client / Award</p>
-                </div>
-            </div>
+            <div class="col-6 col-sm-4 col-md-2"><div class="stat-card bg-slider"><i class="fa-regular fa-image"></i><h3>0</h3><p>Slider</p></div></div>
+            <div class="col-6 col-sm-4 col-md-2"><div class="stat-card bg-pages"><i class="fa-regular fa-copy"></i><h3>15</h3><p>Pages</p></div></div>
+            <div class="col-6 col-sm-4 col-md-2"><div class="stat-card bg-blogs"><i class="fa-solid fa-pen-nib"></i><h3>0</h3><p>Blog Posts</p></div></div>
+            <div class="col-6 col-sm-4 col-md-2"><div class="stat-card bg-notice"><i class="fa-solid fa-bell"></i><h3>0</h3><p>Notice</p></div></div>
+            <div class="col-6 col-sm-4 col-md-2"><div class="stat-card bg-events"><i class="fa-regular fa-calendar-check"></i><h3>0</h3><p>Events</p></div></div>
+            <div class="col-6 col-sm-4 col-md-2"><div class="stat-card bg-service"><i class="fa-solid fa-briefcase"></i><h3>0</h3><p>Services</p></div></div>
+            <div class="col-6 col-sm-4 col-md-2"><div class="stat-card bg-gallery"><i class="fa-solid fa-camera-retro"></i><h3>0</h3><p>Gallery</p></div></div>
+            <div class="col-6 col-sm-4 col-md-2"><div class="stat-card bg-down"><i class="fa-solid fa-cloud-arrow-down"></i><h3>0</h3><p>Download</p></div></div>
+            <div class="col-6 col-sm-4 col-md-2"><div class="stat-card bg-faq"><i class="fa-solid fa-circle-question"></i><h3>0</h3><p>FAQ</p></div></div>
+            <div class="col-6 col-sm-4 col-md-2"><div class="stat-card bg-test"><i class="fa-solid fa-comments"></i><h3>0</h3><p>Testimonial</p></div></div>
+            <div class="col-6 col-sm-4 col-md-2"><div class="stat-card bg-staff"><i class="fa-solid fa-user-tie"></i><h3>0</h3><p>Staffs</p></div></div>
+            <div class="col-6 col-sm-4 col-md-2"><div class="stat-card bg-award"><i class="fa-solid fa-trophy"></i><h3>0</h3><p>Client / Award</p></div></div>
         </div>
 
-        <div class="card contact-box mt-4">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center py-4 border-0">
-                <h5 class="mb-0 fw-bold text-dark">Recent Contact Message</h5>
-                <button class="btn btn-danger rounded-pill px-4 btn-sm fw-bold shadow">Contact Us</button>
+        <div class="card contact-box mt-3">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-0">
+                <h6 class="mb-0 fw-bold text-dark">Recent Contact Message</h6>
+                <button class="btn btn-danger rounded-pill px-3 btn-sm fw-bold shadow">Contact Us</button>
             </div>
-            <div class="card-body text-center py-5">
-                <p class="text-muted mb-4">No recent messages to display.</p>
-                <a href="#" class="btn-view text-decoration-none">
-                    View All Messages
-                </a>
+            <div class="card-body text-center py-4">
+                <p class="text-muted mb-2 small">No recent messages.</p>
+                <a href="#" class="btn-view text-decoration-none">View All</a>
             </div>
         </div>
     </div>
