@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonial Manager - Add Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        /* Breadcrumb Header */
+        .erp-header-nav {
+            background: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .erp-header-nav a { text-decoration: none; color: #337ab7; font-size: 13px; font-weight: 500; }
+        .setting-gear { background: #f0ad4e; color: white !important; padding: 6px 10px; border-radius: 4px; text-decoration: none; }
+
+        /* Page Title */
+        .erp-title { text-align: center; color: #337ab7; font-weight: bold; padding: 15px; font-size: 16px; margin-bottom: 0; }
+        .erp-title span { color: #999; font-weight: normal; font-size: 14px; }
+
+        /* Navigation Button (Anchor) */
+        .btn-list-view { 
+            text-decoration: none !important; background-color: #337ab7; color: white !important; 
+            padding: 7px 18px; border-radius: 3px; font-size: 13px; display: inline-flex; align-items: center; gap: 8px; 
+        }
+
+        /* Form Styling */
+        .form-container-erp { background: #fff; border: 1px solid #ddd; border-radius: 2px; margin-top: 10px; margin-bottom: 50px; }
+        .row-group { display: flex; border-bottom: 1px solid #eee; min-height: 48px; flex-wrap: wrap; }
+        
+        .label-cell { 
+            background: #f1f3f4; width: 220px; padding: 12px 15px; 
+            font-weight: bold; font-size: 11px; color: #555; 
+            text-align: right; border-right: 1px solid #ddd; 
+            display: flex; align-items: center; justify-content: flex-end;
+            text-transform: uppercase;
+        }
+        .input-cell { flex: 1; padding: 10px 15px; display: flex; align-items: center; min-width: 300px; }
+        .half-input-cell { flex: 1; display: flex; align-items: center; min-width: 300px; border-right: 1px solid #eee; }
+
+        .form-control { border-radius: 0; border: 1px solid #ccc; font-size: 13px; padding: 6px 12px; }
+        .form-control:focus { box-shadow: none; border-color: #337ab7; }
+
+        /* Red Mandatory Line */
+        .required-line { border-left: 2px solid red !important; }
+
+        .img-tip { font-size: 12px; color: #888; margin-top: 6px; display: flex; align-items: center; gap: 6px; }
+
+        /* Footer Buttons */
+        .erp-footer { background: #f1f3f4; padding: 15px; text-align: center; border-top: 1px solid #ddd; display: flex; justify-content: center; gap: 10px; }
+        .action-a-btn { text-decoration: none; padding: 8px 25px; font-size: 13px; color: white !important; border-radius: 3px; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .btn-gray { background: #999; }
+        .btn-navy { background: #286090; }
+
+        @media (max-width: 992px) { .row-group { flex-direction: column; } .label-cell { width: 100%; text-align: left; justify-content: flex-start; } .half-input-cell { border-right: none; border-bottom: 1px solid #eee; } }
+    </style>
+</head>
+<body>
+
+    <div class="erp-header-nav">
+        <div>
+            <a href="#"><i class="fa fa-home"></i> Home</a> 
+            <span class="text-muted" style="font-size: 12px;"> <i class="fa fa-angle-right mx-1"></i> Testimonial</span>
+        </div>
+        <a href="#" class="setting-gear"><i class="fa fa-cog"></i></a>
+    </div>
+
+    <div class="container-fluid mt-2">
+        <h2 class="erp-title">Testimonial Manager <span>» Add form</span></h2>
+        
+        <div class="text-center mb-2">
+            <a href="testimonial-list.html" class="btn-list-view"><i class="fa fa-list"></i> All Testimonial</a>
+        </div>
+
+        <div class="form-container-erp shadow-sm">
+            
+            <div class="row-group">
+                <div class="label-cell">Full Name</div>
+                <div class="input-cell">
+                    <input type="text" class="form-control w-100 required-line" placeholder="">
+                </div>
+            </div>
+
+            <div class="row-group">
+                <div class="label-cell">Testimonial</div>
+                <div class="input-cell">
+                    <textarea class="form-control w-100 required-line" rows="4" placeholder="Comment"></textarea>
+                </div>
+            </div>
+
+            <div class="row-group">
+                <div class="half-input-cell">
+                    <div class="label-cell">Email</div>
+                    <div class="input-cell"><input type="email" class="form-control w-100"></div>
+                </div>
+                <div class="half-input-cell">
+                    <div class="label-cell">Address</div>
+                    <div class="input-cell"><input type="text" class="form-control w-100"></div>
+                </div>
+            </div>
+
+            <div class="row-group">
+                <div class="half-input-cell">
+                    <div class="label-cell">Office</div>
+                    <div class="input-cell"><input type="text" class="form-control w-100"></div>
+                </div>
+                <div class="half-input-cell">
+                    <div class="label-cell">Designation</div>
+                    <div class="input-cell"><input type="text" class="form-control w-100"></div>
+                </div>
+            </div>
+
+            <div class="row-group">
+                <div class="label-cell">Link</div>
+                <div class="input-cell">
+                    <input type="text" class="form-control w-100" placeholder="">
+                </div>
+            </div>
+
+            <div class="row-group">
+                <div class="label-cell">Image</div>
+                <div class="input-cell">
+                    <div class="w-100">
+                        <input type="file" class="form-control w-100">
+                        <div class="img-tip">
+                            <i class="fa fa-question-circle text-info"></i> Recomended Minimum Image Size 81px X 81px(72dpi)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-group">
+                <div class="label-cell">Status</div>
+                <div class="input-cell">
+                    <div class="d-flex gap-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="st_active" checked>
+                            <label class="form-check-label" for="st_active" style="font-size: 13px;">Active</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="st_inactive">
+                            <label class="form-check-label" for="st_inactive" style="font-size: 13px;">Inactive</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="erp-footer">
+                <a href="javascript:void(0)" class="action-a-btn btn-gray" onclick="window.location.reload();">
+                    <i class="fa fa-undo"></i> Reset
+                </a>
+                <a href="javascript:void(0)" class="action-a-btn btn-navy" onclick="alert('Testimonial Added Successfully!')">
+                    <i class="fa fa-save"></i> Submit
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
