@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact List Manager - List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        /* Top Navigation / Breadcrumb */
+        .erp-nav-header {
+            background: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .erp-nav-header a { text-decoration: none; color: #337ab7; font-size: 13px; font-weight: 500; }
+        .settings-gear { background: #f0ad4e; color: white !important; padding: 6px 10px; border-radius: 4px; text-decoration: none; }
+
+        /* Main Page Heading */
+        .erp-page-title { text-align: center; color: #337ab7; font-weight: bold; padding: 15px; font-size: 15px; margin-bottom: 0; }
+        .erp-page-title span { color: #999; font-weight: normal; font-size: 14px; }
+
+        /* Filter Section Strip */
+        .filter-banner { 
+            border: 1px solid #ddd; background: #fff; padding: 10px; 
+            text-align: center; margin: 10px 15px; border-radius: 2px;
+            cursor: pointer; display: block; text-decoration: none; 
+            color: #337ab7; font-weight: bold; font-size: 15px;
+        }
+
+        /* List Blue Header Bar */
+        .list-header-bar {
+            background: #337ab7; color: white; padding: 10px 20px;
+            margin: 20px 15px 0 15px; font-size: 14px; border-radius: 3px 3px 0 0;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+
+        /* Instruction Info Strip */
+        .info-strip {
+            background: #286090; color: white; padding: 12px 20px;
+            margin: 0 15px; font-size: 13px; border-bottom: 1px solid #1d4568;
+        }
+
+        /* Data Table Styling */
+        .table-wrapper { padding: 0 15px; }
+        .erp-data-table { width: 100%; border-collapse: collapse; background: white; border: 1px solid #ddd; }
+        .erp-data-table th { 
+            background: #eef7fb; color: #31708f; padding: 12px 10px; 
+            border: 1px solid #bce8f1; text-align: center; 
+            border-top: 2px solid #d9534f; /* ERP Signature Red Top Line */
+            font-size: 13px; text-transform: uppercase;
+        }
+        .erp-data-table td { border: 1px solid #ddd; padding: 15px 10px; font-size: 13px; color: #333; }
+        .no-records { text-align: left; padding-left: 20px !important; color: #666; font-style: normal; }
+    </style>
+</head>
+<body>
+
+    <div class="erp-nav-header">
+        <div>
+            <a href="#"><i class="fa fa-home"></i> Home</a> 
+            <span class="text-muted" style="font-size: 11px;"> <i class="fa fa-angle-right mx-1"></i> Contact List</span>
+        </div>
+        <a href="#" class="settings-gear"><i class="fa fa-cog"></i></a>
+    </div>
+
+    <div class="container-fluid p-0">
+        <h2 class="erp-page-title">Conact List Manager <span>» List</span></h2>
+        
+        <a href="javascript:void(0);" class="filter-banner shadow-sm" onclick="alert('Filter Contacts Message')">
+            <i class="fa fa-angle-double-right" style="color: #f0ad4e;"></i> Filter Contact Us Message <i class="fa fa-filter"></i>
+        </a>
+
+        <div class="list-header-bar">
+            <i class="fa fa-list"></i> Contact Us Message List
+        </div>
+
+        <div class="info-strip">
+            Contact Us Message Record list on table. Filter Contact Us Message using the filter.
+        </div>
+
+        <div class="table-wrapper">
+            <table class="erp-data-table shadow-sm">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">SN</th>
+                        <th style="width: 45%;">DETAIL</th>
+                        <th style="width: 20%;">DATE</th>
+                        <th style="width: 20%;">VIEWSTATUS</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5" class="no-records py-3">No data fount.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
