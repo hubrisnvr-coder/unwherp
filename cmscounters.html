@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter Manager - List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        /* Top Navigation Bar */
+        .nav-header-erp {
+            background: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-header-erp a { text-decoration: none; color: #337ab7; font-size: 13px; font-weight: 500; }
+        .gear-link { background: #f0ad4e; color: white !important; padding: 5px 10px; border-radius: 4px; text-decoration: none; }
+
+        /* Page Title */
+        .page-title-center { text-align: center; color: #337ab7; font-weight: bold; padding: 15px; font-size: 17px; margin-bottom: 0; }
+        .page-title-center span { color: #999; font-weight: normal; font-size: 14px; }
+
+        /* Button Styling (Using Anchor Tags) */
+        .flex-btn-row { display: flex; justify-content: center; gap: 5px; margin-bottom: 12px; flex-wrap: wrap; }
+        .btn-anchor-custom { 
+            text-decoration: none !important; padding: 6px 14px; font-size: 13px; color: white !important; 
+            border-radius: 3px; display: inline-flex; align-items: center; gap: 6px; 
+        }
+        .bg-blue { background-color: #337ab7; }
+        .bg-dark-blue { background-color: #286090; }
+        .bg-orange { background-color: #f0ad4e; }
+        .bg-red { background-color: #d9534f; }
+
+        /* Filter Section */
+        .filter-strip-btn { 
+            border: 1px solid #ddd; background: #fff; padding: 12px; 
+            text-align: center; margin: 15px 0; border-radius: 2px;
+            cursor: pointer; display: block; text-decoration: none; color: #337ab7; font-weight: bold;
+        }
+
+        /* Table Design matching erp32.png */
+        .table-container-erp { padding: 0 5px; }
+        .list-data-table { width: 100%; border-collapse: collapse; background: white; border: 1px solid #ddd; }
+        .list-data-table th { 
+            background: #d9edf7; color: #31708f; padding: 10px; 
+            border: 1px solid #bce8f1; text-align: center; 
+            border-top: 2px solid #d9534f; /* Required Red Top Border */
+            font-size: 13px; text-transform: uppercase;
+        }
+        .list-data-table td { border: 1px solid #ddd; padding: 15px 10px; font-size: 14px; color: #333; }
+
+        .no-data-msg { color: #333; font-size: 14px; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <div class="nav-header-erp">
+        <div>
+            <a href="#"><i class="fa fa-home"></i> Home</a> 
+            <span class="text-muted" style="font-size: 12px;"> <i class="fa fa-angle-right mx-1"></i> Counter</span>
+        </div>
+        <a href="#" class="gear-link"><i class="fa fa-cog"></i></a>
+    </div>
+
+    <div class="container-fluid mt-3">
+        <h2 class="page-title-center">Counter Manager <span>» List</span></h2>
+        
+        <div class="flex-btn-row mt-3">
+            <a href="#" class="btn-anchor-custom bg-blue"><i class="fa fa-list"></i> All Counter</a>
+            <a href="cmsaddnewcounters.html" class="btn-anchor-custom bg-dark-blue"><i class="fa fa-plus"></i> Add Counter</a>
+        </div>
+
+        <a href="javascript:void(0);" class="filter-strip-btn shadow-sm" onclick="alert('Filter Counter Opened!')">
+            <i class="fa fa-angle-double-right"></i> Filter Counter <i class="fa fa-filter"></i>
+        </a>
+
+        <div class="flex-btn-row">
+            <a href="#" class="btn-anchor-custom bg-blue"><i class="fa fa-check"></i> Active</a>
+            <a href="#" class="btn-anchor-custom bg-orange"><i class="fa fa-times"></i> In-Active</a>
+            <a href="#" class="btn-anchor-custom bg-red"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+
+        <div class="table-container-erp">
+            <table class="list-data-table shadow-sm">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;"><input type="checkbox" id="selectAll"></th>
+                        <th>TITLE</th>
+                        <th>COUNTER</th>
+                        <th>TYPE</th>
+                        <th>RANK</th>
+                        <th>STATUS</th>
+                        <th style="width: 80px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="7" class="no-data-msg">No data found.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Checkbox toggle logic
+        document.getElementById('selectAll').onclick = function() {
+            let items = document.querySelectorAll('input[type="checkbox"]');
+            items.forEach(i => i.checked = this.checked);
+        }
+    </script>
+
+</body>
+</html>
