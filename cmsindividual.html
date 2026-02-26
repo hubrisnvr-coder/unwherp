@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS / Email Manager - Individual Messaging</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, sans-serif; font-size: 13px; }
+        
+        /* Top Header Icon bar */
+        .erp-top-header {
+            background: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd;
+            display: flex; justify-content: flex-end; align-items: center;
+        }
+        .settings-gear-btn { background: #f0ad4e; color: white !important; padding: 6px 10px; border-radius: 4px; text-decoration: none; }
+
+        /* Page Title */
+        .page-header-title { text-align: center; color: #337ab7; font-weight: bold; padding: 15px; font-size: 15px; margin-bottom: 0; }
+        .page-header-title span { color: #999; font-weight: normal; font-size: 14px; }
+
+        /* Navigation Buttons */
+        .nav-btn-container { display: flex; justify-content: center; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; }
+        .erp-nav-btn { 
+            text-decoration: none !important; padding: 8px 16px; font-size: 13px; color: white !important; 
+            border-radius: 3px; display: inline-flex; align-items: center; gap: 7px; background-color: #337ab7;
+        }
+
+        /* Form Main Box */
+        .form-card-erp { background: #fff; border: 1px solid #ddd; margin: 0 15px; border-radius: 2px; position: relative; }
+        
+        /* Form Title Strip */
+        .form-strip-header { 
+            border-bottom: 1px solid #ddd; padding: 12px; text-align: center; 
+            color: #337ab7; font-weight: bold; font-size: 15px; background: #fff;
+        }
+
+        /* Form Row Layout */
+        .form-row-custom { display: flex; border-bottom: 1px solid #eee; min-height: 45px; }
+        .label-box { 
+            background: #f1f3f4; width: 180px; padding: 10px 15px; 
+            font-weight: bold; font-size: 11px; color: #555; 
+            text-align: right; border-right: 1px solid #ddd; 
+            display: flex; align-items: center; justify-content: flex-end;
+            text-transform: uppercase;
+        }
+        .input-box { flex: 1; padding: 8px 15px; display: flex; align-items: center; gap: 20px; }
+
+        /* Input Controls */
+        .erp-input-field { 
+            width: 100%; border: 1px solid #ccc; font-size: 13px; 
+            padding: 5px 10px; height: 32px; border-radius: 1px;
+        }
+        .erp-textarea { height: 250px; resize: none; padding-top: 10px; }
+
+        /* Footer Action Buttons */
+        .form-action-footer { background: #f1f3f4; padding: 15px; text-align: center; display: flex; justify-content: center; gap: 10px; }
+        .footer-btn-a { text-decoration: none; padding: 7px 25px; font-size: 14px; color: white !important; border-radius: 3px; display: inline-flex; align-items: center; gap: 8px; }
+        .bg-reset { background: #999; }
+        .bg-send { background: #286090; }
+    </style>
+</head>
+<body>
+
+    <div class="erp-top-header">
+        <a href="#" class="settings-gear-btn"><i class="fa fa-cog"></i></a>
+    </div>
+
+    <div class="container-fluid mt-2">
+        <h2 class="page-header-title">SMS / Email Manager <span>» Individual Messaging</span></h2>
+        
+        <div class="nav-btn-container mt-3">
+            <a href="cmscontactdetail.html" class="erp-nav-btn"><i class="fa fa-list"></i> Detail</a>
+            <a href="cmsstaff.html" class="erp-nav-btn"><i class="fa fa-user-tie"></i> Staff</a>
+            <a href="cmscontactgroup.html" class="erp-nav-btn"><i class="fa fa-users"></i> Contact Group</a>
+            <a href="#" class="erp-nav-btn"><i class="fa fa-plus"></i> Individual</a>
+            <a href="cmssubscribers.html" class="erp-nav-btn"><i class="fa fa-envelope"></i> Subscribers</a>
+        </div>
+
+        <div class="form-card-erp shadow-sm">
+            <div class="form-strip-header">
+                <i class="fa fa-plus" style="font-size: 12px; color: #337ab7;"></i> SMS / Email
+            </div>
+
+            <div class="form-row-custom">
+                <div class="label-box">Type</div>
+                <div class="input-box">
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                        <input type="radio" name="msg_type" checked> SMS
+                    </label>
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 5px; color: #666;">
+                        <input type="radio" name="msg_type"> E-mail
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-row-custom">
+                <div class="label-box">Number</div>
+                <div class="input-box">
+                    <input type="text" class="erp-input-field">
+                </div>
+            </div>
+
+            <div class="form-row-custom" style="border-bottom: none;">
+                <div class="label-box" style="align-items: flex-start; padding-top: 15px;">Message</div>
+                <div class="input-box">
+                    <textarea class="erp-input-field erp-textarea"></textarea>
+                </div>
+            </div>
+
+            <div class="form-action-footer">
+                <a href="javascript:void(0)" class="footer-btn-a bg-reset" onclick="window.location.reload();">
+                    <i class="fa fa-undo"></i> Reset
+                </a>
+                <a href="javascript:void(0)" class="footer-btn-a bg-send" onclick="alert('Message Sent Successfully!')">
+                    <i class="fa fa-save"></i> Send
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
