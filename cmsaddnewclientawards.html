@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client/Award Manager - Add Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        /* Breadcrumb Top Bar */
+        .erp-header {
+            background: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .erp-header a { text-decoration: none; color: #337ab7; font-size: 13px; font-weight: 500; }
+        .gear-btn { background: #f0ad4e; color: white !important; padding: 6px 10px; border-radius: 4px; text-decoration: none; }
+
+        /* Page Main Title */
+        .main-title-box { text-align: center; color: #337ab7; font-weight: bold; padding: 15px; font-size: 16px; margin-bottom: 0; }
+        .main-title-box span { color: #999; font-weight: normal; font-size: 14px; }
+
+        /* Anchor Buttons */
+        .btn-blue-anchor { 
+            text-decoration: none !important; background-color: #337ab7; color: white !important; 
+            padding: 7px 18px; border-radius: 3px; font-size: 13px; display: inline-flex; align-items: center; gap: 8px; 
+        }
+
+        /* Form Container Box */
+        .form-card-erp { background: #fff; border: 1px solid #ddd; border-radius: 2px; margin-top: 10px; margin-bottom: 40px; }
+        .row-erp { display: flex; border-bottom: 1px solid #eee; min-height: 48px; }
+        .label-side { 
+            background: #f1f3f4; width: 220px; padding: 12px 15px; 
+            font-weight: bold; font-size: 11px; color: #555; 
+            text-align: right; border-right: 1px solid #ddd; 
+            display: flex; align-items: center; justify-content: flex-end;
+            text-transform: uppercase;
+        }
+        .input-side { flex: 1; padding: 10px 15px; display: flex; flex-direction: column; justify-content: center; }
+        
+        .form-control { border-radius: 0; border: 1px solid #ccc; font-size: 13px; padding: 6px 12px; }
+        .form-control:focus { box-shadow: none; border-color: #337ab7; }
+
+        /* Red Mandatory Border */
+        .red-line-input { border-left: 2px solid red !important; }
+
+        .img-info { font-size: 12px; color: #777; margin-top: 5px; display: flex; align-items: center; gap: 5px; }
+
+        /* Footer Footer Style */
+        .form-footer-erp { background: #f1f3f4; padding: 15px; text-align: center; border-top: 1px solid #ddd; display: flex; justify-content: center; gap: 10px; }
+        .footer-a-btn { text-decoration: none; padding: 8px 25px; font-size: 13px; color: white !important; border-radius: 3px; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .bg-gray-reset { background: #999; }
+        .bg-blue-submit { background: #286090; }
+        .footer-a-btn:hover { opacity: 0.9; }
+
+        @media (max-width: 768px) { .row-erp { flex-direction: column; } .label-side { width: 100%; text-align: left; justify-content: flex-start; } }
+    </style>
+</head>
+<body>
+
+    <div class="erp-header">
+        <div>
+            <a href="#"><i class="fa fa-home"></i> Home</a> 
+            <span class="text-muted" style="font-size: 12px;"> <i class="fa fa-angle-right mx-1"></i> Client</span>
+        </div>
+        <a href="#" class="gear-btn"><i class="fa fa-cog"></i></a>
+    </div>
+
+    <div class="container-fluid mt-2">
+        <h2 class="main-title-box">Client/Award Manager <span>Add</span></h2>
+        
+        <div class="text-center mb-2">
+            <a href="client-list.html" class="btn-blue-anchor"><i class="fa fa-list"></i> All Client/Award</a>
+        </div>
+
+        <div class="form-card-erp shadow-sm">
+            
+            <div class="row-erp">
+                <div class="label-side">Title</div>
+                <div class="input-side">
+                    <input type="text" class="form-control w-100 red-line-input" placeholder="">
+                </div>
+            </div>
+
+            <div class="row-erp">
+                <div class="label-side">Image</div>
+                <div class="input-side">
+                    <input type="file" class="form-control w-100">
+                    <div class="img-info">
+                        <i class="fa fa-question-circle text-info"></i> Recomended Image Size 224px X 124px(72dpi)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-erp">
+                <div class="label-side">Target Link</div>
+                <div class="input-side">
+                    <input type="text" class="form-control w-100" placeholder="URL">
+                </div>
+            </div>
+
+            <div class="row-erp">
+                <div class="label-side">Rank</div>
+                <div class="input-side">
+                    <input type="number" class="form-control w-100 red-line-input" value="10">
+                </div>
+            </div>
+
+            <div class="row-erp">
+                <div class="label-side">Status</div>
+                <div class="input-side">
+                    <div class="d-flex gap-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status_radio" id="active" checked>
+                            <label class="form-check-label" for="active" style="font-size: 13px;">Active</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status_radio" id="inactive">
+                            <label class="form-check-label" for="inactive" style="font-size: 13px;">Inactive</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-footer-erp">
+                <a href="javascript:void(0)" class="footer-a-btn bg-gray-reset" onclick="window.location.reload();">
+                    <i class="fa fa-undo"></i> Reset
+                </a>
+                <a href="javascript:void(0)" class="footer-a-btn bg-blue-submit" onclick="alert('Client/Award Data Submitted!')">
+                    <i class="fa fa-save"></i> Submit
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
