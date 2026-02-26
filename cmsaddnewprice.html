@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Manager - Add Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        /* Breadcrumb Header */
+        .erp-header-nav {
+            background: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .erp-header-nav a { text-decoration: none; color: #337ab7; font-size: 13px; font-weight: 500; }
+        .gear-btn { background: #f0ad4e; color: white !important; padding: 6px 10px; border-radius: 4px; text-decoration: none; }
+
+        /* Page Heading */
+        .page-title-erp { text-align: center; color: #337ab7; font-weight: bold; padding: 15px; font-size: 16px; margin-bottom: 0; }
+        .page-title-erp span { color: #999; font-weight: normal; font-size: 14px; }
+
+        /* Navigation Action Button */
+        .btn-all-pricing { 
+            text-decoration: none !important; background-color: #337ab7; color: white !important; 
+            padding: 7px 18px; border-radius: 3px; font-size: 13px; display: inline-flex; align-items: center; gap: 8px; 
+        }
+
+        /* Form Layout matching erp41.png */
+        .form-box-erp { background: #fff; border: 1px solid #ddd; border-radius: 2px; margin-top: 10px; margin-bottom: 50px; }
+        .form-row-custom { display: flex; border-bottom: 1px solid #eee; min-height: 48px; flex-wrap: wrap; }
+        
+        .label-cell { 
+            background: #f1f3f4; width: 180px; padding: 10px 15px; 
+            font-weight: bold; font-size: 11px; color: #555; 
+            text-align: right; border-right: 1px solid #ddd; 
+            display: flex; align-items: center; justify-content: flex-end;
+            text-transform: uppercase;
+        }
+        .input-cell { flex: 1; padding: 8px 15px; display: flex; align-items: center; min-width: 250px; }
+        
+        /* Three Column Grid for Price/Term */
+        .grid-col-3 { flex: 1; display: flex; align-items: center; border-right: 1px solid #eee; }
+
+        .form-control-erp { 
+            width: 100%; border-radius: 0; border: 1px solid #ccc; 
+            font-size: 13px; padding: 5px 10px; height: 34px;
+        }
+        .form-control-erp:focus { border-color: #337ab7; outline: none; box-shadow: none; }
+        
+        /* Mandatory Red Line */
+        .req-field { border-left: 2px solid red !important; }
+
+        /* Footer Buttons */
+        .form-footer-actions { background: #f1f3f4; padding: 15px; text-align: center; border-top: 1px solid #ddd; display: flex; justify-content: center; gap: 10px; }
+        .erp-footer-btn { text-decoration: none; padding: 8px 25px; font-size: 13px; color: white !important; border-radius: 3px; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-gray-reset { background: #999; }
+        .btn-navy-submit { background: #286090; }
+
+        @media (max-width: 992px) { .form-row-custom { flex-direction: column; } .label-cell { width: 100%; text-align: left; justify-content: flex-start; } .grid-col-3 { border-right: none; border-bottom: 1px solid #eee; } }
+    </style>
+</head>
+<body>
+
+    <div class="erp-header-nav">
+        <div>
+            <a href="#"><i class="fa fa-home"></i> Home</a> 
+            <span class="text-muted" style="font-size: 12px;"> <i class="fa fa-angle-right mx-1"></i> Pricing</span>
+        </div>
+        <a href="#" class="gear-btn"><i class="fa fa-cog"></i></a>
+    </div>
+
+    <div class="container-fluid mt-2">
+        <h2 class="page-title-erp">Pricing Manager <span>» Add form</span></h2>
+        
+        <div class="text-center mb-2">
+            <a href="pricing-list.html" class="btn-all-pricing"><i class="fa fa-list"></i> All Pricing</a>
+        </div>
+
+        <div class="form-box-erp shadow-sm">
+            
+            <div class="form-row-custom">
+                <div class="label-cell">Title</div>
+                <div class="input-cell"><input type="text" class="form-control-erp"></div>
+            </div>
+
+            <div class="form-row-custom">
+                <div class="grid-col-3">
+                    <div class="label-cell">New Price</div>
+                    <div class="input-cell"><input type="number" class="form-control-erp" placeholder="0"></div>
+                </div>
+                <div class="grid-col-3">
+                    <div class="label-cell">Old Price</div>
+                    <div class="input-cell"><input type="number" class="form-control-erp"></div>
+                </div>
+                <div class="grid-col-3" style="border-right: none;">
+                    <div class="label-cell">Term</div>
+                    <div class="input-cell"><input type="text" class="form-control-erp" placeholder="Monthly/Fixed"></div>
+                </div>
+            </div>
+
+            <div class="form-row-custom">
+                <div class="label-cell">Description</div>
+                <div class="input-cell">
+                    <textarea class="form-control-erp" rows="6" placeholder="Description"></textarea>
+                </div>
+            </div>
+
+            <div class="form-row-custom">
+                <div class="label-cell">Image</div>
+                <div class="input-cell">
+                    <input type="file" class="form-control-erp" style="padding-top: 4px;">
+                </div>
+            </div>
+
+            <div class="form-row-custom">
+                <div class="label-cell">Tag</div>
+                <div class="input-cell">
+                    <input type="text" class="form-control-erp" value="Best" style="max-width: 400px;">
+                    <div class="ms-3" style="width: 150px; height: 15px; background: black;"></div> </div>
+            </div>
+
+            <div class="form-row-custom">
+                <div class="label-cell">Target Link</div>
+                <div class="input-cell"><input type="text" class="form-control-erp" placeholder="URL"></div>
+            </div>
+
+            <div class="form-row-custom">
+                <div class="label-cell">Button Text</div>
+                <div class="input-cell"><input type="text" class="form-control-erp" placeholder="Button Text"></div>
+            </div>
+
+            <div class="form-row-custom">
+                <div class="label-cell">Target Page</div>
+                <div class="input-cell">
+                    <select class="form-control-erp">
+                        <option>Choose Target Page</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row-custom">
+                <div class="label-cell">Rank</div>
+                <div class="input-cell">
+                    <input type="number" class="form-control-erp req-field" value="10" style="max-width: 100px;">
+                </div>
+            </div>
+
+            <div class="form-row-custom">
+                <div class="label-cell">Status</div>
+                <div class="input-cell">
+                    <div class="d-flex gap-3">
+                        <label class="d-flex align-items-center gap-2" style="font-size: 13px;">
+                            <input type="radio" name="status" checked> Active
+                        </label>
+                        <label class="d-flex align-items-center gap-2" style="font-size: 13px;">
+                            <input type="radio" name="status"> Inactive
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-footer-actions">
+                <a href="javascript:void(0)" class="erp-footer-btn btn-gray-reset" onclick="window.location.reload();">
+                    <i class="fa fa-undo"></i> Reset
+                </a>
+                <a href="javascript:void(0)" class="erp-footer-btn btn-navy-submit" onclick="alert('Pricing Plan Saved!')">
+                    <i class="fa fa-save"></i> Submit
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
