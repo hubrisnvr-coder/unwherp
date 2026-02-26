@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postal Exchange Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+        }
+
+        /* Header Navigation Styles */
+        .breadcrumb-container {
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        .breadcrumb-container a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        .breadcrumb-container span {
+            color: #999;
+        }
+
+        /* Top Button Bar */
+        .top-nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        .btn-custom {
+            border-radius: 4px;
+            padding: 5px 12px;
+            font-size: 13px;
+            color: white !important;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        .btn-detail { background-color: #5cb85c; }
+        .btn-new { background-color: #337ab7; }
+        .btn-type { background-color: #337ab7; }
+        .btn-postal { background-color: #5cb85c; }
+        .btn-visitor { background-color: #337ab7; }
+
+        /* Filter Section */
+        .filter-section {
+            border: 1px solid #ddd;
+            background: white;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #337ab7;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* Action Buttons (Active/Delete) */
+        .action-bar {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .btn-sm-custom {
+            padding: 2px 10px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background: white;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+        .table {
+            margin-bottom: 0;
+        }
+        .table thead th {
+            background-color: #e3f2fd;
+            color: #337ab7;
+            text-align: center;
+            border-bottom: 2px solid #ff0000; /* Red line as seen in screenshot */
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 13px;
+            border-right: 1px solid #ddd;
+        }
+        .no-data {
+            padding: 10px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        /* Settings Icon */
+        .settings-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: #f0ad4e;
+            color: white;
+            padding: 5px 8px;
+            border-radius: 4px;
+        }
+        /* yanha se navbar or footer wali css sure ho rhi hai  */
+           /* Navbar or toolbar or footer wali css  */
+
+body {
+    background-color: #f4f7f6;
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.custom-blue-nav { background-color: #2c68a4; }
+.search-box { max-width: 350px; }
+.profile-img { width: 35px; height: 35px; border-radius: 50%; margin-left: 15px; }
+
+/* -- admin control ke liye css ynha se sure ho rhi hai */
+/* 1. Admin Control Capsule Button */
+.admin-btn {
+    background: linear-gradient(45deg, #2c68a4, #3a86d4); /* Professional Blue Gradient */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 5px 14px;
+    border-radius: 4px; /* ERP style square-ish rounded corners */
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    color: white !important;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.admin-btn:hover {
+    background: #ffffff;
+    color: #2c68a4 !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* 2. Dropdown Card Container */
+.custom-admin-dropdown {
+    background-color: #ffffff;
+    border: 1px solid #d1d9e6;
+    border-radius: 8px;
+    padding: 5px; /* Kam padding taaki compact lage */
+    margin-top: 8px !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+    min-width: 260px;
+}
+
+/* 3. List Items (Compact & Small Font) */
+.custom-admin-dropdown .dropdown-item {
+    padding: 4px 10px; /* Gap kam kar diya */
+    border-radius: 4px;
+    font-size: 12.5px; /* Font size chota kiya */
+    color: #444; /* Dark Grey text */
+    margin-bottom: 1px; /* Items ke beech ka gap minimum */
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+/* Icon color inside list */
+.custom-admin-dropdown .dropdown-item i {
+    width: 20px; /* Icons align rahenge */
+    font-size: 13px;
+    color: #2c68a4; /* Primary theme color */
+}
+
+/* Hover Effect */
+.custom-admin-dropdown .dropdown-item:hover {
+    background-color: #eef4ff; /* Light blue background on hover */
+    color: #1a4a7a; /* Darker blue text on hover */
+}
+
+/* Divider color */
+.custom-admin-dropdown .dropdown-divider {
+    margin: 4px 0;
+    border-top: 1px solid #ebebeb;
+}
+
+/* Header styling */
+.custom-admin-dropdown .dropdown-header {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: #888;
+    padding: 8px 10px 4px;
+}
+
+/* 4. Mobile Responsiveness (Poori screen cover karega) */
+@media (max-width: 768px) {
+    .custom-admin-dropdown {
+        position: fixed !important;
+        top: 55px !important;
+        left: 10px !important;
+        right: 10px !important;
+        width: auto !important;
+        max-height: 80vh; 
+        overflow-y: auto;
+        z-index: 9999;
+    }
+}
+/* -- admin control ke liye css ynha se poori ho rhi hai */
+
+/* --- UPDATED TOOLBAR FOR WRAPPING & 15 ITEMS ROW --- */
+.toolbar-container { 
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: flex-start; 
+    background: white;
+}
+
+.toolbar-item { 
+    flex: 0 0 auto; 
+    padding: 10px 2px; 
+    color: #555; 
+    width: calc(100% / 15); 
+    min-width: 85px; 
+    border-right: 1px solid #eee; 
+    border-bottom: 1px solid #eee; 
+    position: relative; 
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Mobile aur Tablet ke liye settings */
+@media (max-width: 1300px) {
+    .toolbar-item { width: 12.5%; }
+}
+
+@media (max-width: 992px) {
+    .toolbar-item { width: 20%; }
+}
+
+@media (max-width: 768px) {
+    .toolbar-item { width: 25%; }
+}
+
+.toolbar-item i { display: block; font-size: 1.1rem; margin-bottom: 3px; color: #2c68a4; }
+.toolbar-item p { font-size: 10px; margin: 0; font-weight: bold; }
+.toolbar-item.active { border-bottom: 3px solid #2c68a4; color: #2c68a4; background: #f9f9f9; }
+
+/* ynha se mobile hide karna hai toolbar*/
+/* Mobile aur Tablet par poore section ko hide karne ke liye */
+@media (max-width: 991px) {
+    section:has(.toolbar-container) {
+        display: none !important;
+    }
+}
+
+/* Sidebar Menu */
+.menu-title {
+    color: #2c68a4;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+.menu-title i { margin-right: 10px; width: 25px; text-align: center; }
+.menu-list { list-style: none; padding: 0 0 0 35px; margin-bottom: 20px; }
+.menu-list li { padding: 3px 0; }
+.menu-list li a { text-decoration: none; color: #777; font-size: 0.95rem; display: block; }
+.menu-list li a:hover { color: #2c68a4; padding-left: 5px; transition: 0.2s; }
+.offcanvas { width: 320px !important; }
+
+/* --- FIXED DROPDOWN LOGIC --- */
+.hover-dropdown-list {
+    position: absolute;
+    top: 100%;
+    background: white;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    min-width: 170px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 9999; /* Cards ke upar dikhane ke liye */
+}
+
+/* Default: Center alignment */
+.toolbar-item .hover-dropdown-list {
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+}
+
+/* Dashboard (First Item): Left alignment */
+.toolbar-item:first-child .hover-dropdown-list {
+    left: 0;
+    transform: translateX(0) translateY(10px);
+}
+
+/* Upload Download (Last Item): Right alignment */
+.toolbar-item:last-child .hover-dropdown-list {
+    left: auto;
+    right: 0;
+    transform: translateX(0) translateY(10px);
+}
+
+/* Hover effects */
+.toolbar-item:hover .hover-dropdown-list {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Transform adjustment on hover */
+.toolbar-item:hover .hover-dropdown-list {
+    transform: translateX(-50%) translateY(0); /* Default middle items */
+}
+.toolbar-item:first-child:hover .hover-dropdown-list {
+    transform: translateX(0) translateY(0); /* First item */
+}
+.toolbar-item:last-child:hover .hover-dropdown-list {
+    transform: translateX(0) translateY(0); /* Last item */
+}
+
+.hover-dropdown-list li { padding: 8px 15px; border-bottom: 1px solid #f8f9fa; }
+.hover-dropdown-list li:last-child { border-bottom: none; }
+.hover-dropdown-list li a { text-decoration: none; color: #555; font-size: 13px; display: block; white-space: nowrap; }
+.hover-dropdown-list li:hover { background-color: #f1f5f9; }
+.hover-dropdown-list li:hover a { color: #2c68a4; }
+.overflow-visible { overflow: visible !important; }
+
+/* --- yanha par navbar or toolbar wali css poori ho rhi hai  --- */
+
+ 
+
+
+/* --- yanha se footer wali css sure ho rhi hai  --- */
+.premium-erp-footer {
+    background: #f8f9fc;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    width: 100%;
+}
+
+.footer-glass-wrap {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.04);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Branding Logo Icon */
+.footer-logo-circle {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(78, 115, 223, 0.3);
+}
+
+.brand-name {
+    letter-spacing: 0.5px;
+    font-size: 1.05rem;
+}
+
+/* Live Status Pill with Blinking Effect */
+.status-pill {
+    background: #f0fff4;
+    color: #2f855a;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    border: 1px solid #c6f6d5;
+}
+
+.live-dot {
+    height: 8px;
+    width: 8px;
+    background-color: #38a169;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    position: relative;
+}
+
+.live-dot::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border-radius: inherit;
+    animation: status-ripple 1.5s ease-out infinite;
+}
+
+@keyframes status-ripple {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Clock & Version Styling */
+.clock-display {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-weight: 700;
+    color: #2d3748;
+    font-size: 0.95rem;
+    background: #f7fafc;
+    padding: 5px 12px;
+    border-radius: 8px;
+    border: 1px solid #edf2f7;
+}
+
+.version-badge {
+    background: #2d3748;
+    color: #ffffff;
+    padding: 4px 12px;
+    border-radius: 7px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.v-line {
+    width: 1.5px;
+    height: 24px;
+    background: #e2e8f0;
+}
+
+/* Support Box Styling */
+.support-item {
+    font-size: 12.5px;
+    color: #4a5568;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+}
+
+.support-item:hover {
+    color: #4e73df;
+    transform: translateY(-1px);
+}
+
+.support-item i {
+    font-size: 14px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+/* Responsiveness */
+@media (max-width: 991px) {
+    .footer-glass-wrap {
+        border-radius: 0;
+        padding-bottom: 20px;
+    }
+}
+/* yanha par footer wali css poori ho rhi hai  */
+        /* yanha se navbar or footer wali css poori ho rhi hai */
+    </style>
+</head>
+<body>
+    
+<!--yanha se navbar wala porsen sure ho rha hai-->
+<Section>
+    <nav class="navbar navbar-dark custom-blue-nav py-1">
+        <div class="container-fluid px-3">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-graduation-cap text-warning fs-4 me-2"></i>
+                <span class="navbar-brand mb-0 h1 fw-normal">University ERP</span>
+                
+                <button class="btn text-white ms-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+                    <i class="fas fa-list-ul fs-5"></i>
+                </button>
+            </div>
+            
+            <div class="d-flex align-items-center flex-grow-1 justify-content-center px-4">
+                <div class="input-group search-box d-none d-md-flex">
+                    <input type="text" class="form-control form-control-sm" placeholder="Search...">
+                    <button class="btn btn-light btn-sm" type="button"><i class="fas fa-search text-primary"></i></button>
+                </div>
+            </div>
+           <!--- yanha se admin control wala porsen sure ho rha hai-->
+            <div class="d-flex align-items-center text-white">
+    <i class="fas fa-globe me-3 pointer"></i>
+    
+    <div class="dropdown me-3">
+        <a class="admin-btn dropdown-toggle pointer" href="#" role="button" id="adminDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user-shield me-2"></i> Admin Control
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end shadow custom-admin-dropdown" aria-labelledby="adminDropdown">
+            <li class="d-lg-none d-flex justify-content-between align-items-center px-3 py-2 border-bottom mb-2 bg-light sticky-top" style="border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                <span class="fw-bold text-dark small">Admin Control Menu</span>
+                <button type="button" class="btn-close" style="font-size: 0.7rem;" data-bs-toggle="dropdown" aria-label="Close"></button>
+            </li>
+            
+            <li><a class="dropdown-item" href="users.html"><i class="fas fa-users me-2 text-primary"></i> Users</a></li>
+            <li><a class="dropdown-item" href="roles.html"><i class="fas fa-certificate me-2 text-primary"></i> Roles & Permission</a></li>
+            <li><hr class="dropdown-divider"></li>
+            
+            <li><a class="dropdown-item" href="general-settings.html"><i class="fas fa-cog me-2 text-primary"></i> General & Branding Setting</a></li>
+            <li><a class="dropdown-item" href="online-reg.html"><i class="fas fa-edit me-2 text-primary"></i> Online Registration</a></li>
+            <li><a class="dropdown-item" href="remote-class.html"><i class="fas fa-video me-2 text-primary"></i> Meeting-Remote Class</a></li>
+            <li><a class="dropdown-item" href="sms-setting.html"><i class="fas fa-mobile-alt me-2 text-primary"></i> SMS Setting</a></li>
+            <li><a class="dropdown-item" href="email-setting.html"><i class="fas fa-envelope me-2 text-primary"></i> E-Mail Setting</a></li>
+            <li><a class="dropdown-item" href="alert-setting.html"><i class="fas fa-bell me-2 text-primary"></i> Alert Templating Setting</a></li>
+            <li><a class="dropdown-item" href="payment-gateway.html"><i class="fas fa-dollar-sign me-2 text-primary"></i> Payment Gateway</a></li>
+            <li><hr class="dropdown-divider"></li>
+            
+            <li><a class="dropdown-item" href="cache-clear.html"><i class="fas fa-eraser me-2 text-primary"></i> Cache Clear Now</a></li>
+            <li><a class="dropdown-item" href="user-activity.html"><i class="fas fa-history me-2 text-primary"></i> User Activity</a></li>
+            <li><a class="dropdown-item" href="db-backup.html"><i class="fas fa-database me-2 text-primary"></i> Database Backup</a></li>
+            <li><a class="dropdown-item" href="cron-job.html"><i class="fas fa-sync me-2 text-primary"></i> Automation / Cron Job</a></li>
+            <li><a class="dropdown-item" href="dev-guide.html"><i class="fas fa-question-circle me-2 text-primary"></i> Developer Guide</a></li>
+            <li><hr class="dropdown-divider"></li>
+            
+            <li class="dropdown-header fw-bold text-dark">TOUCH WITH DEVELOPER</li>
+            <li><a class="dropdown-item" href="mailto:support@example.com"><i class="fas fa-envelope me-2 text-primary"></i> Email</a></li>
+            <li><a class="dropdown-item" href="https://wa.me/123456789"><i class="fab fa-whatsapp me-2 text-success"></i> WhatsApp</a></li>
+            <li><a class="dropdown-item" href="skype:username?chat"><i class="fab fa-skype me-2 text-info"></i> Skype</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="license.html"><i class="fas fa-certificate me-2 text-primary"></i> License Info</a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.custom-admin-dropdown .dropdown-item, .btn-close').forEach(item => {
+        item.addEventListener('click', () => {
+            const dropdownEl = document.getElementById('adminDropdown');
+            const bsDropdown = bootstrap.Dropdown.getInstance(dropdownEl);
+            if(bsDropdown) bsDropdown.hide();
+        });
+    });
+</script>
+<!--ynaha par admin control wala code poora ho rha hai-->
+                <div class="dropdown">
+    <div class="d-flex align-items-center pointer dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" 
+         style="border-left: 1px solid rgba(255,255,255,0.15); padding-left: 15px; transition: all 0.3s ease;">
+        <div class="position-relative">
+            <img src="https://plus.unsplash.com/premium_photo-1682089806994-abcccbaa953a?w=500&auto=format&fit=crop&q=60" 
+                 class="rounded-circle border border-2 border-white" 
+                 alt="User" 
+                 style="width: 40px; height: 40px; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+            <span class="position-absolute bottom-0 end-0 bg-success border border-2 border-white rounded-circle" 
+                  style="width: 12px; height: 12px; box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);"></span>
+        </div>
+    </div>
+    
+    <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-3" 
+        style="min-width: 260px; border-radius: 15px; overflow: hidden; animation: fadeIn 0.3s ease;">
+        
+        <li class="px-4 py-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+            <div class="text-center">
+                <img src="https://plus.unsplash.com/premium_photo-1682089806994-abcccbaa953a?w=500&auto=format&fit=crop&q=60" 
+                     class="rounded-circle border border-3 border-white mb-2 shadow-sm" 
+                     alt="User" 
+                     style="width: 65px; height: 65px; object-fit: cover;">
+                <h6 class="mb-0 fw-bold text-dark" style="letter-spacing: 0.5px;">Ananya Sharma</h6>
+                <small class="text-primary fw-semibold" style="font-size: 11px; text-transform: uppercase;">Super Admin</small>
+            </div>
+        </li>
+        
+        <div class="py-2">
+            <li>
+                <a class="dropdown-item px-4 py-2" href="profile.html" style="font-size: 14px; transition: 0.2s;">
+                    <i class="fas fa-user-circle me-3 text-primary" style="width: 15px;"></i> My Profile
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item px-4 py-2" href="change-password.html" style="font-size: 14px; transition: 0.2s;">
+                    <i class="fas fa-shield-alt me-3 text-warning" style="width: 15px;"></i> Security Settings
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item px-4 py-2" href="activity-log.html" style="font-size: 14px; transition: 0.2s;">
+                    <i class="fas fa-history me-3 text-info" style="width: 15px;"></i> Login Activity
+                </a>
+            </li>
+            
+            <li><hr class="dropdown-divider mx-3 my-2" style="opacity: 0.1;"></li>
+            
+            <li>
+                <a class="dropdown-item px-4 py-2 text-danger fw-bold" href="logout.html" style="font-size: 14px; transition: 0.2s;">
+                    <i class="fas fa-power-off me-3"></i> Sign Out
+                </a>
+            </li>
+        </div>
+    </ul>
+</div>
+
+<style>
+    .dropdown-item:hover {
+        background-color: #f0f7ff !important;
+        color: #0d6efd !important;
+        padding-left: 28px !important; /* Slight push effect on hover */
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+            </div>
+        </div>
+    </nav>
+<!--yanha se main navigation ka porsen sure ho gya hai jo left side mai aata hai three dot par -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+        <div class="offcanvas-header border-bottom bg-light">
+            <h5 class="offcanvas-title text-primary fw-bold" id="sidebarMenuLabel">Main Navigation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <h6 class="menu-title"><i class="fas fa-users"></i> Student</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Detail</a></li>
+                        <li><a href="#">Registration</a></li>
+                        <li><a href="#">Bulk Import</a></li>
+                        <li><a href="#">Transfer</a></li>
+                        <li><a href="#">Documents</a></li>
+                        <li><a href="#">Notes</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-user-shield"></i> Guardian</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Detail</a></li>
+                        <li><a href="#">Registration</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-user-tie"></i> Staff</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Detail</a></li>
+                        <li><a href="#">Registration</a></li>
+                        <li><a href="#">Bulk Import</a></li>
+                        <li><a href="#">Documents</a></li>
+                        <li><a href="#">Notes</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-calendar-check"></i> Attendance</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Regular Attendance</a></li>
+                        <li><a href="#">Subject Attendance</a></li>
+                        <li><a href="#">Staff Attendance</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <h6 class="menu-title border-top pt-3"><i class="fas fa-calculator"></i> Account</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Quick Receive</a></li>
+                        <li><a href="#">Collect Fees</a></li>
+                        <li><a href="#">Balance Fees</a></li>
+                        <li><a href="#">Add Fees</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a href="#">Add Salary</a></li>
+                        <li><a href="#">Pay Salary</a></li>
+                        <li><a href="#">Balance Salary</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a href="#">Transaction Ledgers</a></li>
+                        <li><a href="#">Bank AC</a></li>
+                        <li><a href="#">Bank Transaction</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-book"></i> Library</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Books Detail</a></li>
+                        <li><a href="#">Student Member</a></li>
+                        <li><a href="#">Staff Member</a></li>
+                        <li><a href="#">Issue History</a></li>
+                        <li><a href="#">Return Period Over</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <h6 class="menu-title border-top pt-3"><i class="fas fa-chart-line"></i> Examination</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Exam Schedule</a></li>
+                        <li><a href="#">Mark Ledger</a></li>
+                        <li><a href="#">Admit Card</a></li>
+                        <li><a href="#">Routine</a></li>
+                        <li><a href="#">MarkSheet/Score</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-certificate"></i> Certificate</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Issue</a></li>
+                        <li><a href="#">Issue History</a></li>
+                        <li><a href="#">Attendance</a></li>
+                        <li><a href="#">Transfer</a></li>
+                        <li><a href="#">Course Completion</a></li>
+                        <li><a href="#">Character</a></li>
+                        <li><a href="#">Bonafide</a></li>
+                        <li><a href="#">Generate</a></li>
+                        <li><a href="#">Templating</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <h6 class="menu-title border-top pt-3"><i class="fas fa-bus"></i> Transport</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">User History</a></li>
+                        <li><a href="#">Traveller/User</a></li>
+                        <li><a href="#">Route</a></li>
+                        <li><a href="#">Vehicle</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-bed"></i> Hostel</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Resident</a></li>
+                        <li><a href="#">Resident History</a></li>
+                        <li><a href="#">Hostel Detail</a></li>
+                        <li><a href="#">Food & Meal</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-bullhorn"></i> Alert</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">User Notice</a></li>
+                        <li><a href="#">Send SMS/Email</a></li>
+                        <li><a href="#">Alert Templating</a></li>
+                    </ul>
+
+                    <h6 class="menu-title mt-3"><i class="fas fa-th-large"></i> More</h6>
+                    <ul class="menu-list">
+                        <li><a href="#">Meeting/OnlineClass</a></li>
+                        <li><a href="#">Assignment</a></li>
+                        <li><a href="#">Upload/Download</a></li>
+                        <li><a href="#">Help</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </Section>
+    <!--yanha par navbar wala porsen poora ho gya hai  -->
+<!---yanha se toolbar wala porsen start ho gya hai -->
+<section>
+
+    <div class="bg-white border-bottom shadow-sm overflow-visible">
+    <div class="d-flex text-center toolbar-container py-2">
+        <div class="toolbar-item active">
+            <i class="fas fa-tachometer-alt"></i><p>Dashboard</p>
+            <!--
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Shubham kumar </a></li>
+                <li><a href="#">Statistics</a></li>
+                <li><a href="#">Analytic Reports</a></li>
+                <li><a href="#">User Activity</a></li>
+                <li><a href="#">Live Monitoring</a></li>
+            </ul>
+            -->
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-globe"></i><p>Web CMS</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="cms.html">CMS Deshboard</a></li>
+                <!--
+                <li><a href="#">News & Events</a></li>
+                <li><a href="#">Gallery Update</a></li>
+                <li><a href="#">Menu Manager</a></li>
+                <li><a href="#">Page Content</a></li>
+            </ul>
+            -->
+        </div>
+        <div class="toolbar-item">
+            <i class="fas fa-comment"></i><p>Front Desk</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Postal Exchange</a></li>
+                <li><a href="#">Visitor Log</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-users"></i><p>Student & Staff</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Student</a></li>
+                <li><a href="#">Guardian</a></li>
+                <li><a href="#">Staff</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-calculator"></i><p>Account</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Fee Collection</a></li>
+                <li><a href="#">Fee Report</a></li>
+                <li><a href="#">Ledger & Transaction</a></li>
+                <li><a href="#">Separate Banking</a></li>
+                <li><a href="#">Payroll</a></li>
+                <li><a href="#">Account Report</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-shopping-cart"></i><p>Inventory</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Class Assets</a></li>
+                <li><a href="#">Product/Assets</a></li>
+                <li><a href="#">Customer</a></li>
+                <li><a href="#">Vendor</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-book"></i><p>Library</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Books</a></li>
+                <li><a href="#">Members</a></li>
+                <li><a href="#">Book Request</a></li>
+                <li><a href="#">Issue History</a></li>
+                <li><a href="#">Return Period Over</a></li>
+                <li><a href="#">Circulation Setting</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-calendar-check"></i><p>Attendance</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Student Attendance</a></li>
+                <li><a href="#">Staff Attendance</a></li>
+                <li><a href="#">Attendance Report</a></li>
+                <li><a href="#">Monthly Report</a></li>
+                <li><a href="#">Monthly Calendar</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-chart-line"></i><p>Exam</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Offline-Manual Exam</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-certificate"></i><p>Certificate</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Issue Certificate</a></li>
+                <li><a href="#">Attendance Certificate</a></li>
+                <li><a href="#">Transfer Certificate</a></li>
+                <li><a href="#">Character Certificate</a></li>
+                <li><a href="#">Bonafide Certificate</a></li>
+                <li><a href="#">Course Completion Certificate</a></li>
+                <li><a href="#">Nirgam Utara</a></li>
+                <li><a href="#">Provisional Certificate</a></li>
+                <li><a href="#">Testimonial Certificate</a></li>
+                <li><a href="#">MoI Certificate</a></li>
+                <li><a href="#">Transcript Certificate</a></li>
+                <li><a href="#">Issue History</a></li>
+                <li><a href="#">Custom Print</a></li>
+                <li><a href="#">Certificate template</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-bed"></i><p>Hostel</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Resident</a></li>
+                <li><a href="#">Hostel</a></li>
+                <li><a href="#">Food & Meal</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-bus"></i><p>Transport</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Traveller/User</a></li>
+                <li><a href="#">Route</a></li>
+                <li><a href="#">Vehicle</a></li>
+            </ul>
+        </div>
+        <div class="toolbar-item">
+            <i class="fas fa-tasks"></i><p>Assignment</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Add Assignment</a></li>
+                <li><a href="#">Submission List</a></li>
+                <li><a href="#">Pending Tasks</a></li>
+                <li><a href="#">Evaluation</a></li>
+                <li><a href="#">Resource Share</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-file-alt"></i><p>Application</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Leave Application</a></li>
+                <li><a href="#">Admission Request</a></li>
+                <li><a href="#">Document Request</a></li>
+                <li><a href="#">Complaints</a></li>
+                <li><a href="#">Status Tracking</a></li>
+            </ul>
+        </div>
+
+        <div class="toolbar-item">
+            <i class="fas fa-upload"></i><p>Upload Download</p>
+            <ul class="hover-dropdown-list">
+                <li><a href="#">Syllabus Upload</a></li>
+                <li><a href="#">Assignment Download</a></li>
+                <li><a href="#">Old Papers</a></li>
+                <li><a href="#">Study Material</a></li>
+                <li><a href="#">Notice Circulars</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!---yanha se toolbar wala section poora ho gya hai -->
+
+
+    
+
+    <div class="container-fluid">
+        <div class="breadcrumb-container">
+            <a href="#">Postal Exchange Manager</a> <span>» Detail</span>
+        </div>
+
+        <div class="top-nav-buttons">
+            <a href="javascript:void(0)" class="btn-custom btn-detail" onclick="handleAction('Detail')">
+                <i class="fa fa-list me-1"></i> Detail
+            </a>
+            <a href="javascript:void(0)" class="btn-custom btn-new" onclick="handleAction('New Exchange')">
+                <i class="fa fa-plus me-1"></i> New Exchange
+            </a>
+            <a href="javascript:void(0)" class="btn-custom btn-type" onclick="handleAction('Exchange Type')">
+                <i class="fa fa-list-ul me-1"></i> Exchange Type
+            </a>
+            <a href="javascript:void(0)" class="btn-custom btn-postal" onclick="handleAction('Postal Exchange')">
+                <i class="fa fa-envelope me-1"></i> Postal Exchange
+            </a>
+            <a href="javascript:void(0)" class="btn-custom btn-visitor" onclick="handleAction('Visitor Log')">
+                <i class="fa fa-history me-1"></i> Visitor Log
+            </a>
+        </div>
+
+        <div class="filter-section" onclick="alert('Filter Toggle Clicked')">
+            <i class="fa fa-angle-double-right"></i> Filter Postal Exchange <i class="fa fa-filter"></i>
+        </div>
+
+        <div class="action-bar">
+            <button class="btn btn-primary btn-sm-custom" onclick="handleAction('Active')"><i class="fa fa-check"></i> Active</button>
+            <button class="btn btn-warning btn-sm-custom text-white" onclick="handleAction('In-Active')"><i class="fa fa-times"></i> In-Active</button>
+            <button class="btn btn-danger btn-sm-custom" onclick="handleAction('Delete')"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+
+        <div class="table-container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;"><input type="checkbox"></th>
+                        <th>S.N.</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Ref</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Subject</th>
+                        <th>File</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="10" class="no-data">
+                            No Postal Exchange data found. Please Filter Postal Exchange to show.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function handleAction(actionName) {
+            console.log("Action Triggered: " + actionName);
+            alert("Aapne '" + actionName + "' button par click kiya hai.");
+        }
+    </script>
+<!--
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+-->
+</body>
+</html>
