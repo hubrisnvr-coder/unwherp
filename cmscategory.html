@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Manager - List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        /* Breadcrumb Style */
+        .top-nav-breadcrumb {
+            background: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .breadcrumb-link { text-decoration: none; color: #337ab7; font-size: 13px; font-weight: 500; }
+        .breadcrumb-link i { margin-right: 5px; }
+        .cog-btn { background: #f0ad4e; color: white; border: none; padding: 5px 10px; border-radius: 4px; text-decoration: none; font-size: 14px; }
+
+        /* Page Title Header */
+        .page-title-header { text-align: center; color: #337ab7; font-weight: bold; padding: 15px; font-size: 18px; }
+        .page-title-header span { color: #999; font-weight: normal; font-size: 15px; }
+
+        /* Buttons Styling (Anchor Tags) */
+        .action-btns-row { display: flex; justify-content: center; gap: 5px; margin-bottom: 15px; flex-wrap: wrap; }
+        .a-btn-custom { 
+            text-decoration: none !important; padding: 6px 15px; font-size: 13px; color: white !important; 
+            border-radius: 3px; display: inline-flex; align-items: center; gap: 6px; 
+        }
+        .btn-blue { background-color: #337ab7; }
+        .btn-dark-blue { background-color: #286090; }
+        .btn-orange { background-color: #f0ad4e; }
+        .btn-red { background-color: #d9534f; }
+
+        /* Filter Category Section */
+        .filter-section { 
+            border: 1px solid #ddd; background: #fff; padding: 12px; 
+            text-align: center; margin: 15px 0; border-radius: 2px;
+            cursor: pointer; display: block; text-decoration: none; color: #337ab7; font-weight: bold;
+        }
+
+        /* Table Design - Matching erp20.png */
+        .table-wrap { padding: 0 5px; }
+        .manager-table { width: 100%; border-collapse: collapse; background: white; border: 1px solid #ddd; }
+        .manager-table th { 
+            background: #d9edf7; color: #31708f; padding: 10px; 
+            border: 1px solid #bce8f1; text-align: center; 
+            border-top: 2px solid #d9534f; /* Exact Red Top Border */
+            font-size: 13px; text-transform: uppercase;
+        }
+        .manager-table td { border: 1px solid #ddd; padding: 12px 10px; font-size: 14px; color: #333; }
+
+        .no-data { color: #333; font-size: 14px; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav-breadcrumb">
+        <div>
+            <a href="#" class="breadcrumb-link"><i class="fa fa-home"></i> Home</a> 
+            <span class="text-muted" style="font-size: 12px;"> <i class="fa fa-angle-right mx-1"></i> Category</span>
+        </div>
+        <a href="#" class="cog-btn"><i class="fa fa-cog"></i></a>
+    </div>
+
+    <div class="container-fluid mt-3">
+        <h2 class="page-title-header">Category Manager <span>» List</span></h2>
+        
+        <div class="action-btns-row">
+            <a href="#" class="a-btn-custom btn-blue"><i class="fa fa-list"></i> All Category</a>
+            <a href="cmsaddcmscategory.html" class="a-btn-custom btn-dark-blue"><i class="fa fa-plus"></i> Add Category</a>
+        </div>
+
+        <a href="javascript:void(0);" class="filter-section shadow-sm" onclick="alert('Filter Category menu triggered!')">
+            <i class="fa fa-angle-double-right"></i> Filter Category <i class="fa fa-filter"></i>
+        </a>
+
+        <div class="action-btns-row">
+            <a href="#" class="a-btn-custom btn-blue"><i class="fa fa-check"></i> Active</a>
+            <a href="#" class="a-btn-custom btn-orange"><i class="fa fa-times"></i> In-Active</a>
+            <a href="#" class="a-btn-custom btn-red"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+
+        <div class="table-wrap">
+            <table class="manager-table shadow-sm">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;"><input type="checkbox" id="checkAll"></th>
+                        <th style="width: 60%;">DETAIL</th>
+                        <th>STATUS</th>
+                        <th style="width: 50px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="4" class="no-data">No data fount.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Checkbox "Select All" functionality
+        document.getElementById('checkAll').onclick = function() {
+            let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = this.checked);
+        }
+    </script>
+
+</body>
+</html>
