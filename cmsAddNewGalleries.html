@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Manager - Add Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        /* Top Navigation */
+        .top-nav { background: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
+        .home-link { text-decoration: none; color: #337ab7; font-size: 13px; font-weight: 500; }
+        .cog-btn { background: #f0ad4e; color: white; border: none; padding: 6px 10px; border-radius: 4px; text-decoration: none; }
+
+        /* Page Title */
+        .page-header { text-align: center; color: #337ab7; font-weight: bold; padding: 15px; font-size: 16px; margin-bottom: 0; }
+        .page-header span { color: #999; font-weight: normal; font-size: 14px; }
+
+        /* Action Buttons */
+        .all-gallery-btn { text-decoration: none !important; background-color: #337ab7; color: white !important; padding: 7px 15px; border-radius: 3px; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; }
+
+        /* ERP Form Style */
+        .form-main-box { background: #fff; border: 1px solid #ddd; border-radius: 2px; margin-bottom: 30px; }
+        .row-erp { display: flex; border-bottom: 1px solid #eee; min-height: 42px; }
+        .label-erp { 
+            background: #f1f3f4; width: 220px; padding: 10px 15px; 
+            font-weight: bold; font-size: 11px; color: #555; 
+            text-align: right; border-right: 1px solid #ddd; 
+            display: flex; align-items: center; justify-content: flex-end;
+            text-transform: uppercase;
+        }
+        .input-erp { flex: 1; padding: 8px 15px; display: flex; align-items: center; flex-wrap: wrap; }
+        
+        .form-control { border-radius: 0; border: 1px solid #ccc; font-size: 13px; padding: 5px 10px; height: 32px; }
+        .req-line { border-left: 2px solid red !important; }
+
+        /* Blue Toolbar Editor */
+        .editor-wrap { width: 100%; border: 1px solid #ccc; }
+        .toolbar-blue { background: #337ab7; padding: 4px; display: flex; gap: 3px; flex-wrap: wrap; }
+        .t-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 2px 7px; font-size: 11px; cursor: pointer; }
+
+        /* Special Bottom Table for Multiple Images */
+        .image-list-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        .image-list-table th { 
+            background: #d9edf7; color: #31708f; padding: 8px; 
+            border: 1px solid #bce8f1; border-top: 2px solid #d9534f;
+            font-size: 11px; text-transform: uppercase; text-align: center;
+        }
+        .add-img-btn { background: #286090; color: white !important; text-decoration: none; padding: 3px 10px; font-size: 12px; border-radius: 3px; display: flex; align-items: center; gap: 5px; }
+
+        /* Footer */
+        .footer-btns { background: #f1f3f4; padding: 15px; text-align: center; border-top: 1px solid #ddd; display: flex; justify-content: center; gap: 6px; }
+        .a-btn-footer { text-decoration: none; padding: 7px 20px; font-size: 13px; color: white !important; border-radius: 3px; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-reset { background: #999; }
+        .btn-submit { background: #286090; }
+
+        @media (max-width: 768px) { .row-erp { flex-direction: column; } .label-erp { width: 100%; text-align: left; justify-content: flex-start; } }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        <div>
+            <a href="#" class="home-link"><i class="fa fa-home"></i> Home</a> 
+            <span class="text-muted"> <i class="fa fa-angle-right mx-1"></i> Gallery</span>
+        </div>
+        <a href="#" class="cog-btn"><i class="fa fa-cog"></i></a>
+    </div>
+
+    <div class="container-fluid mt-2">
+        <h2 class="page-header">Gallery Manager <span>» Add form</span></h2>
+        
+        <div class="text-center mb-3 mt-1">
+            <a href="gallery-list.html" class="all-gallery-btn"><i class="fa fa-list"></i> All Gallery</a>
+        </div>
+
+        <div class="form-main-box shadow-sm">
+            
+            <div class="row-erp">
+                <div class="label-erp">Gallery Title</div>
+                <div class="input-erp">
+                    <input type="text" class="form-control w-100 req-line" placeholder="Enter Gallery Title">
+                </div>
+            </div>
+
+            <div class="row-erp">
+                <div class="label-erp">Description</div>
+                <div class="input-erp p-0">
+                    <div class="editor-wrap">
+                        <div class="toolbar-blue">
+                            <button type="button" class="t-btn"><i class="fa fa-magic"></i></button>
+                            <button type="button" class="t-btn"><i class="fa fa-bold"></i></button>
+                            <button type="button" class="t-btn"><i class="fa fa-italic"></i></button>
+                            <button type="button" class="t-btn">Open Sans <i class="fa fa-caret-down"></i></button>
+                            <button type="button" class="t-btn"><i class="fa fa-align-left"></i></button>
+                            <button type="button" class="t-btn"><i class="fa fa-table"></i></button>
+                            <button type="button" class="t-btn"><i class="fa fa-link"></i></button>
+                            <button type="button" class="t-btn"><i class="fa fa-image"></i></button>
+                            <button type="button" class="t-btn"><i class="fa fa-video"></i></button>
+                            <button type="button" class="t-btn"><i class="fa fa-code"></i></button>
+                            <button type="button" class="t-btn"><i class="fa fa-question-circle"></i></button>
+                        </div>
+                        <textarea class="form-control border-0 w-100" rows="10"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-erp">
+                <div class="label-erp">Image</div>
+                <div class="input-erp">
+                    <input type="file" class="form-control w-auto me-2">
+                    <small class="text-primary"><i class="fa fa-question-circle"></i> Recomended Image Size 410px X 376px(72dpi)</small>
+                </div>
+            </div>
+
+            <div class="row-erp">
+                <div class="label-erp">Gallery Rank</div>
+                <div class="input-erp">
+                    <input type="number" class="form-control" style="width: 250px;" value="10">
+                </div>
+            </div>
+
+            <div class="row-erp">
+                <div class="label-erp">Status</div>
+                <div class="input-erp">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="st" id="active" checked>
+                        <label class="form-check-label" for="active" style="font-size: 13px;">Active</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="st" id="inactive">
+                        <label class="form-check-label" for="inactive" style="font-size: 13px;">Inactive</label>
+                    </div>
+                </div>
+            </div>
+
+            <table class="image-list-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">IMAGE</th>
+                        <th style="width: 40%;">ALT TEXT/CAPTION</th>
+                        <th style="width: 20%;">STATUS</th>
+                        <th>
+                            <a href="javascript:void(0)" class="add-img-btn float-end" onclick="alert('Row added!')">
+                                <i class="fa fa-plus"></i> Add Image
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+
+            <div class="footer-btns">
+                <a href="#" class="a-btn-footer btn-reset"><i class="fa fa-undo"></i> Reset</a>
+                <a href="javascript:void(0)" class="a-btn-footer btn-submit" onclick="alert('Gallery data saved!')"><i class="fa fa-save"></i> Submit</a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
