@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Setting Manager - Add Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, sans-serif; font-size: 13px; }
+        
+        /* Breadcrumb Header */
+        .erp-header-nav {
+            background: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .erp-header-nav a { text-decoration: none; color: #337ab7; font-size: 12px; }
+        .gear-btn { background: #f0ad4e; color: white !important; padding: 5px 10px; border-radius: 4px; }
+
+        /* Page Heading */
+        .page-title-erp { text-align: center; color: #337ab7; font-weight: bold; padding: 15px; font-size: 15px; margin-bottom: 0; }
+        .page-title-erp span { color: #999; font-weight: normal; font-size: 13px; }
+
+        /* Form Structure */
+        .form-container-erp { background: #fff; border: 1px solid #ddd; margin: 10px; border-radius: 2px; }
+        .form-row-custom { display: flex; border-bottom: 1px solid #eee; min-height: 40px; }
+        
+        .label-cell { 
+            background: #f1f3f4; width: 220px; padding: 10px 15px; 
+            font-weight: bold; font-size: 10px; color: #555; 
+            text-align: right; border-right: 1px solid #ddd; 
+            display: flex; align-items: center; justify-content: flex-end;
+            text-transform: uppercase;
+        }
+        .input-cell { flex: 1; padding: 5px 15px; display: flex; align-items: center; }
+
+        .form-control-erp { 
+            width: 100%; border-radius: 0; border: 1px solid #ccc; 
+            font-size: 12px; padding: 4px 8px; height: 30px;
+        }
+        
+        /* Editor Placeholder Style */
+        .editor-box { border: 1px solid #ccc; width: 100%; margin-top: 5px; }
+        .editor-toolbar { background: #eef1f5; border-bottom: 1px solid #ccc; padding: 5px; display: flex; gap: 5px; flex-wrap: wrap; }
+        .editor-btn { background: #337ab7; color: white; border: none; padding: 2px 6px; font-size: 11px; border-radius: 2px; }
+
+        /* Footer Buttons */
+        .form-footer { background: #f1f3f4; padding: 15px; text-align: center; border-top: 1px solid #ddd; display: flex; justify-content: center; gap: 10px; }
+        .erp-footer-btn { text-decoration: none; padding: 6px 20px; font-size: 13px; color: white !important; border-radius: 3px; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-gray-reset { background: #999; }
+        .btn-navy-submit { background: #286090; }
+
+        /* Scrollable layout for many rows */
+        .form-body { max-height: 75vh; overflow-y: auto; overflow-x: hidden; }
+    </style>
+</head>
+<body>
+
+    <div class="erp-header-nav">
+        <div>
+            <a href="#"><i class="fa fa-home"></i> Home</a> 
+            <span class="text-muted"> <i class="fa fa-angle-right mx-1"></i> Registration Setting</span>
+        </div>
+        <a href="#" class="gear-btn"><i class="fa fa-cog"></i></a>
+    </div>
+
+    <div class="container-fluid">
+        <h2 class="page-title-erp">Registration Setting Manager <span>» Add form</span></h2>
+        
+        <div class="form-container-erp shadow-sm">
+            <div class="form-body">
+                
+                <div class="form-row-custom">
+                    <div class="label-cell">Registration Status</div>
+                    <div class="input-cell">
+                        <select class="form-control-erp"><option>Show</option><option>Hide</option></select>
+                    </div>
+                </div>
+
+                <div class="form-row-custom">
+                    <div class="label-cell">Open & Close Date</div>
+                    <div class="input-cell">
+                        <input type="date" class="form-control-erp" style="width: 45%;">
+                        <span class="mx-2">=</span>
+                        <input type="date" class="form-control-erp" style="width: 45%;">
+                    </div>
+                </div>
+
+                <div class="form-row-custom">
+                    <div class="label-cell">Title</div>
+                    <div class="input-cell"><input type="text" class="form-control-erp"></div>
+                </div>
+                <div class="form-row-custom">
+                    <div class="label-cell">Subtitle</div>
+                    <div class="input-cell"><input type="text" class="form-control-erp"></div>
+                </div>
+
+                <div class="form-row-custom">
+                    <div class="label-cell">Logo</div>
+                    <div class="input-cell"><input type="file" class="form-control-erp" style="border:none; padding: 0;"></div>
+                </div>
+
+                <script>
+                    const fields = ["Medical Info", "Guardian Detail", "Permanent Address", "Mailing Address", "Photo Status", "Applicant Photo", "Applicant Signature", "Guardian Photo", "Qualification", "Experience", "Rules Status"];
+                    fields.forEach(f => {
+                        document.write(`
+                            <div class="form-row-custom">
+                                <div class="label-cell">${f}</div>
+                                <div class="input-cell">
+                                    <select class="form-control-erp"><option>Show</option><option>Hide</option></select>
+                                </div>
+                            </div>
+                        `);
+                    });
+                </script>
+
+                <div class="form-row-custom" style="height: auto;">
+                    <div class="label-cell">Rules Info</div>
+                    <div class="input-cell d-block">
+                        <div class="editor-box">
+                            <div class="editor-toolbar">
+                                <button class="editor-btn">B</button><button class="editor-btn">I</button><button class="editor-btn">U</button>
+                                <button class="editor-btn"><i class="fa fa-list"></i></button><button class="editor-btn"><i class="fa fa-link"></i></button>
+                            </div>
+                            <textarea class="form-control-erp" style="height: 150px; border:none;"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row-custom">
+                    <div class="label-cell">Agreement Status</div>
+                    <div class="input-cell">
+                        <select class="form-control-erp"><option>Show</option><option>Hide</option></select>
+                    </div>
+                </div>
+
+                <div class="form-row-custom" style="height: auto; border-bottom: none;">
+                    <div class="label-cell">Agreement Info</div>
+                    <div class="input-cell d-block">
+                        <div class="editor-box">
+                            <div class="editor-toolbar">
+                                <button class="editor-btn">B</button><button class="editor-btn">I</button><button class="editor-btn"><i class="fa fa-code"></i></button>
+                            </div>
+                            <textarea class="form-control-erp" style="height: 150px; border:none;"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-footer">
+                <a href="javascript:void(0)" class="erp-footer-btn btn-gray-reset" onclick="window.location.reload();">
+                    <i class="fa fa-undo"></i> Reset
+                </a>
+                <a href="javascript:void(0)" class="erp-footer-btn btn-navy-submit" onclick="alert('Settings Saved Successfully!')">
+                    <i class="fa fa-save"></i> Submit
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
