@@ -1,3 +1,5 @@
+/* Navbar or toolbar or footer wali css  */
+
 body {
     background-color: #f4f7f6;
     font-family: Arial, sans-serif;
@@ -97,20 +99,25 @@ body {
 /* -- admin control ke liye css ynha se poori ho rhi hai */
 
 /* --- UPDATED TOOLBAR FOR WRAPPING & 15 ITEMS ROW --- */
+/* --- FINAL REFINED TOOLBAR (WRAP + DROPDOWN OVER IFRAME) --- */
+
 .toolbar-container { 
     width: 100%;
     display: flex;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;           /* Zoom karne par items niche line mein aayenge */
     justify-content: flex-start; 
     background: white;
+    position: relative;
+    z-index: 1000;             /* Iframe ke upar dikhne ke liye */
+    overflow: visible !important; /* Ye sabse important hai dropdown ke liye */
 }
 
 .toolbar-item { 
-    flex: 0 0 auto; 
-    padding: 10px 2px; 
+    flex: 1 1 0;            /* Items ko barabar space mein stretch karega */
+    width: calc(100% / 15.2); /* 15 ki jagah 15.2 kiya taaki zoom ke waqt thoda 'buffer' space rahe */
+    min-width: 65px;        /* 125% zoom par 15 items fit karne ke liye min-width kam karni hogi */
+    padding: 10px 1px;      /* Padding thodi kam ki taaki items sikud sakein */
     color: #555; 
-    width: calc(100% / 15); 
-    min-width: 85px; 
     border-right: 1px solid #eee; 
     border-bottom: 1px solid #eee; 
     position: relative; 
@@ -118,99 +125,68 @@ body {
     text-align: center;
 }
 
-/* Mobile aur Tablet ke liye settings */
-@media (max-width: 1300px) {
-    .toolbar-item { width: 12.5%; }
+/* 100% zoom par fix 15 items aayein uske liye screen width check */
+@media (min-width: 1350px) {
+    .toolbar-item { width: calc(100% / 15); }
 }
 
-@media (max-width: 992px) {
-    .toolbar-item { width: 20%; }
+/* HOVER & DROPDOWN FIX */
+.toolbar-item:hover {
+    background-color: #f0f7ff;
+    z-index: 1001;             /* Hover wala item sabse upar rahega */
 }
 
-@media (max-width: 768px) {
-    .toolbar-item { width: 25%; }
+.hover-dropdown-list {
+    display: none; 
+    position: absolute;
+    top: 100%;                 /* Toolbar ke theek niche */
+    left: 0;
+    background: white;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    padding: 10px 0;
+    margin: 0;
+    list-style: none;
+    border-radius: 0 0 5px 5px;
+    z-index: 999999 !important; /* Ye iframe ke content ke upar dikhega */
+    border: 1px solid #ddd;
 }
 
-.toolbar-item i { display: block; font-size: 1.1rem; margin-bottom: 3px; color: #2c68a4; }
-.toolbar-item p { font-size: 10px; margin: 0; font-weight: bold; }
-.toolbar-item.active { border-bottom: 3px solid #2c68a4; color: #2c68a4; background: #f9f9f9; }
+.toolbar-item:hover .hover-dropdown-list {
+    display: block !important; /* Hover par dropdown pakka khulega */
+}
 
-/* ynha se mobile hide karna hai toolbar*/
-/* Mobile aur Tablet par poore section ko hide karne ke liye */
-@media (max-width: 991px) {
-    section:has(.toolbar-container) {
+/* Iframe adjustment taaki dropdown chhup na jaye */
+#erp_frame {
+    z-index: 1;               /* Iframe niche rahega */
+    position: absolute;
+}
+/*--mobile par toolbar ko hide karne ke liye --*/
+/* --- MOBILE FINAL FIX --- */
+
+/* Sirf Mobile/Touch devices ke liye */
+@media (max-width: 991px) and (pointer: coarse) {
+    .toolbar-container {
         display: none !important;
     }
-}
-/* --- Dashboard Stat Cards Section Start --- */
-.stat-card { 
-    border-radius: 12px; /* Pehle 4px tha, ab rounded look hai */
-    padding: 15px 10px; 
-    text-align: center; 
-    color: white; 
-    margin-bottom: 10px; 
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth 3D transition */
-    position: relative;
-    overflow: hidden;
-    border: none;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Subtle 3D base shadow */
-    cursor: pointer;
+
+    #erp_frame {
+        /* 85px se navbar bilkul nahi katega, thodi extra jagah mil jayegi */
+        top: 85px !important; 
+        height: calc(100vh - 85px) !important;
+        position: absolute;
+        left: 0;
+        width: 100%;
+        border-top: none;
+    }
 }
 
-/* 3D Hover Effect */
-.stat-card:hover {
-    transform: translateY(-7px) scale(1.02); /* Card upar uthega */
-    box-shadow: 0 12px 20px rgba(0,0,0,0.2); /* Deep shadow on hover */
+/* Desktop zoom fix (Pehele ki tarah) */
+@media (max-width: 991px) and (pointer: fine) {
+    .toolbar-container {
+        display: flex !important;
+    }
 }
-
-/* Background Shine Effect on Hover */
-.stat-card::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: rgba(255, 255, 255, 0.1);
-    transform: rotate(45deg);
-    transition: 0.5s;
-    pointer-events: none;
-}
-.stat-card:hover::after {
-    left: 120%;
-}
-
-.stat-card h2 { 
-    font-size: 1.8rem; /* Size chota kiya professional look ke liye */
-    margin: 0; 
-    font-weight: 800; 
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.2); 
-}
-
-.stat-card p { 
-    font-size: 0.85rem; /* Text size adjust kiya */
-    margin: 0; 
-    font-weight: 500;
-    opacity: 0.9;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* Modern Colors with Gradients for 3D Feel */
-.pink-card { background: linear-gradient(135deg, #ff4b6b, #ff708b); }
-.teal-card { background: linear-gradient(135deg, #008080, #00a0a0); }
-.green-card { background: linear-gradient(135deg, #43a047, #66bb6a); }
-.orange-card { background: linear-gradient(135deg, #c07d00, #e69b00); }
-.red-card { background: linear-gradient(135deg, #f44336, #ff6659); }
-.blue-card { background: linear-gradient(135deg, #3f51b5, #5c6bc0); }
-
-/* Mobile Responsiveness Fine-tuning */
-@media (max-width: 576px) {
-    .stat-card { padding: 12px 5px; }
-    .stat-card h2 { font-size: 1.5rem; }
-    .stat-card p { font-size: 0.75rem; }
-}
-/* --- Dashboard Stat Cards Section End --- */
 /* Sidebar Menu */
 .menu-title {
     color: #2c68a4;
@@ -288,327 +264,99 @@ body {
 .hover-dropdown-list li:hover a { color: #2c68a4; }
 .overflow-visible { overflow: visible !important; }
 
-/* --- ynha se vo wali css sure ho rhi hai jnha par enquiri student or confrem admission status card mai aa rha hai --- */
-.uni-analytics-card {
-    background: #fff;
-    border-radius: 15px;
-    border: none;
-    transition: transform 0.3s ease;
-}
+/* --- yanha par navbar or toolbar wali css poori ho rhi hai  ---- */
 
-.uni-card-header {
-    padding: 1.25rem;
-    background: transparent;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.uni-card-header h5 {
-    color: #2c3e50;
-    font-size: 1.1rem;
-    font-weight: 700;
-}
-
-.uni-card-body {
-    padding: 1.5rem;
-}
-
-/* Responsive progress bar color for conversion */
-.progress-bar {
-    border-radius: 10px;
-}
-
-.list-group-item {
-    border-left: none;
-    border-right: none;
-    padding: 1rem 1.25rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.list-group-item:first-child { border-top: none; }
-
-/* PHP Integration Friendly Hover */
-.uni-analytics-card:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
-}
-
-@media (max-width: 768px) {
-    .uni-card-body h3 { font-size: 1.4rem; }
-    .uni-card-body p { font-size: 0.75rem; }
-}
-/* --- ynha se vo wali css sure ho rhi hai jnha admision enqury wali confrem admission wala porsen poora ho rha hai  --- */
-
-/* ynha se start hai vo wali css cart wali attendance wali   */
-/* --- Final ERP Dashboard Styling --- */
-:root {
-    --erp-primary: #4e73df;
-    --erp-success: #1cc88a;
-    --erp-info: #36b9cc;
-    --bg-soft: #f8f9fc;
-}
-
-.erp-final-card {
-    background: #ffffff;
-    border-radius: 1.25rem;
-    border: none;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.erp-final-card:hover {
-    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Icon Styles */
-.icon-box {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
-}
-
-.bg-soft-primary { background: #eef2ff; }
-.bg-soft-danger { background: #fff5f5; }
-
-.attendance-stat-card {
-    background: #f8f9fa;
-    border: 1px solid rgba(0,0,0,0.03);
-}
-
-.bg-success-light {
-    background-color: rgba(28, 200, 138, 0.15);
-}
-
-/* Chart Wrapper Padding for Mobile */
-@media (max-width: 768px) {
-    .erp-card-body { padding: 1rem !important; }
-    .chart-wrapper { height: 250px !important; }
-}
-
-
-/* ynha par cart  attendance wali css poori ho rhi hai   */
-
-
-/* ynha par cart fee reminder cart wali css sure ho rhi hai   */
-/* Fee Stat Cards */
-.fee-stat-card {
-    border-radius: 20px;
-    border: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    min-height: 140px;
-}
-
-.fee-stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
-}
-
-.card-bg-icon {
+/*---yanha se iframe jab kaam nhi kar rha tha link 
+page poora nhi khul rha tha to use solve karne ke liye lgai hai--*/
+#erp_frame {
     position: absolute;
-    right: -10px;
-    bottom: -10px;
-    font-size: 5rem;
-    opacity: 0.15;
-    transform: rotate(-15deg);
-}
-
-.z-index-1 { z-index: 1; }
-
-.btn-white {
-    background: #fff;
-    border: 1px solid #eee;
-    font-weight: 600;
-}
-
-/* Department Progress Bars (Custom) */
-.erp-final-card {
-    background: #ffffff;
-    border-radius: 20px;
-}
-
-.form-check-input:checked {
-    background-color: #1cc88a;
-    border-color: #1cc88a;
-}
-/* ynha par cart  fee reminder wali css poori ho rhi hai*/
-
-/* ynha par placement chart wali css sure ho rhi hai */
-.bg-soft-success { background-color: #e6fcf5 !important; }
-.bg-soft-primary { background-color: #e7f0ff !important; }
-.bg-soft-warning { background-color: #fff9db !important; }
-
-.icon-circle {
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    font-size: 1.2rem;
-}
-
-.placement-card {
-    transition: transform 0.3s ease;
-    border: 1px solid rgba(0,0,0,0.05) !important;
-}
-
-.placement-card:hover {
-    transform: translateY(-5px);
-}
-/* ynha par placement chart wali css poori ho rhi hai */
-
-/* ynha par complent ticket wali css sure ho rhi hai  */ 
-.pulse-animation {
-    animation: pulse-red 2s infinite;
-}
-
-@keyframes pulse-red {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
-}
-
-.grievance-card {
-    transition: all 0.3s;
-}
-.grievance-card:hover {
-    transform: translateY(-3px);
-}
-
-.bg-soft-info { background-color: #e3fafc; color: #1098ad; }
-.bg-soft-warning { background-color: #fff9db; color: #f59f00; }
-/* ynha par complent ticket wali css poori ho rhi hai */ 
-
-
-/* --- Premium Footer CSS by SoftSolution --- */
-.premium-erp-footer {
-    background: #f8f9fc;
-    border-top: 1px solid rgba(0,0,0,0.05);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 130px; /* Is value ko adjust karein (Navbar + Toolbar ki total height) */
     width: 100%;
+    height: calc(100vh - 130px); /* 100% height minus upar ka header */
 }
 
-.footer-glass-wrap {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-radius: 24px 24px 0 0;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.04);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+/*--- yanha se admin control chup rha tha jab use click karte the to maine yanha par kaam kiya hai --*/
+
+/* --- FINAL DROPDOWN OVERLAP FIX (ADD AT THE END) --- */
+
+/* 1. Navbar ko Toolbar (1000) se upar priority dena */
+.custom-blue-nav {
+    position: relative !important;
+    z-index: 2000 !important; /* Toolbar ke 1000 se double, taaki dropdowns upar rahein */
 }
 
-/* Branding Logo Icon */
-.footer-logo-circle {
-    width: 38px;
-    height: 38px;
-    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    font-weight: 800;
-    font-size: 1.2rem;
-    box-shadow: 0 4px 10px rgba(78, 115, 223, 0.3);
+/* 2. Admin Control Dropdown ko sabse upar laana */
+.custom-admin-dropdown {
+    z-index: 9999 !important; /* Sabse high priority */
+    margin-top: 2px !important; /* Navbar ke paas rakha taaki hover break na ho */
 }
 
-.brand-name {
-    letter-spacing: 0.5px;
-    font-size: 1.05rem;
+/* 3. Profile/Logout Dropdown ko bhi upar laana */
+.dropdown-menu-end {
+    z-index: 9999 !important;
 }
 
-/* Live Status Pill with Blinking Effect */
-.status-pill {
-    background: #f0fff4;
-    color: #2f855a;
-    padding: 6px 16px;
-    border-radius: 50px;
-    font-size: 11px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    border: 1px solid #c6f6d5;
+/* 4. Toolbar ki boundary ko dropdown rokne se rokna */
+section {
+    overflow: visible !important;
 }
 
-.live-dot {
-    height: 8px;
-    width: 8px;
-    background-color: #38a169;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 8px;
-    position: relative;
+.toolbar-container {
+    overflow: visible !important;
 }
 
-.live-dot::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: inherit;
-    border-radius: inherit;
-    animation: status-ripple 1.5s ease-out infinite;
+/* 5. Iframe ko sabse peeche lock karna (Bina height/top badle) */
+#erp_frame {
+    z-index: 1 !important; /* Ye hamesha menu ke peeche hi rahega */
 }
 
-@keyframes status-ripple {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(2.5); opacity: 0; }
-}
-
-/* Clock & Version Styling */
-.clock-display {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-weight: 700;
-    color: #2d3748;
-    font-size: 0.95rem;
-    background: #f7fafc;
-    padding: 5px 12px;
-    border-radius: 8px;
-    border: 1px solid #edf2f7;
-}
-
-.version-badge {
-    background: #2d3748;
-    color: #ffffff;
-    padding: 4px 12px;
-    border-radius: 7px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
-.v-line {
-    width: 1.5px;
-    height: 24px;
-    background: #e2e8f0;
-}
-
-/* Support Box Styling */
-.support-item {
-    font-size: 12.5px;
-    color: #4a5568;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.2s ease;
-}
-
-.support-item:hover {
-    color: #4e73df;
-    transform: translateY(-1px);
-}
-
-.support-item i {
-    font-size: 14px;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-}
-
-/* Responsiveness */
-@media (max-width: 991px) {
-    .footer-glass-wrap {
-        border-radius: 0;
-        padding-bottom: 20px;
+/* Mobile par Admin menu ka overlap fix */
+@media (max-width: 768px) {
+    .custom-admin-dropdown {
+        z-index: 10000 !important;
+        position: fixed !important;
     }
+}
+
+/*--yanha se three dot wali css sure ho rhi hai --*/
+/* --- OFFCANVAS SIDEBAR MOBILE OPTIMIZATION --- */
+
+.offcanvas {
+    /* Desktop par width itni hi rahegi */
+    width: 320px !important; 
+    z-index: 10001 !important; /* Taaki ye dropdowns aur toolbar sabke upar khule */
+}
+
+@media (max-width: 576px) {
+    .offcanvas {
+        /* Mobile par width thodi kam taaki screen ke bahar na jaye */
+        width: 85% !important; 
+    }
+    
+    .offcanvas-header {
+        padding: 15px !important;
+        height: 60px; /* Ek fixed height taaki title na kate */
+    }
+
+    .offcanvas-title {
+        font-size: 1.1rem !important;
+    }
+}
+
+/* Scrollbar ko sundar banane ke liye taaki menu lamba ho to dikkat na ho */
+.offcanvas-body {
+    overflow-y: auto;
+    padding-top: 10px;
+}
+
+.offcanvas-body::-webkit-scrollbar {
+    width: 5px;
+}
+
+.offcanvas-body::-webkit-scrollbar-thumb {
+    background: #2c68a4;
+    border-radius: 10px;
 }
