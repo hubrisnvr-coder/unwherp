@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Certificate Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- Page Layout (Footer Bottom Control) --- */
+        html, body { height: 100%; margin: 0; }
+        body { background-color: #f9f9f9; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; }
+        
+        .content-wrapper { flex: 1 0 auto; } /* Main content pushes footer down */
+
+        .page-header-title { text-align: center; font-size: 14px; color: #337ab7; padding: 12px 0; background: #fff; font-weight: 600; border-bottom: 1px solid #eee; }
+        .page-header-title span { color: #777; font-weight: normal; }
+
+        /* Toolbar Navigation */
+        .certificate-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; padding: 15px; background: #fff; border-bottom: 1px solid #eee; }
+        
+        /* Anchor Tag Buttons */
+        .nav-link-btn { 
+            text-decoration: none !important; 
+            color: white !important; 
+            padding: 6px 12px; 
+            font-size: 12px; 
+            border-radius: 4px; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            background-color: #31708f; 
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        
+        /* Active Style (Green) */
+        .nav-link-btn.active { background-color: #4cae4c !important; }
+
+        /* Filter Section */
+        .filter-container { width: 96%; margin: 20px auto; background: white; border: 1px solid #ddd; border-radius: 4px; padding: 12px; text-align: center; }
+        .filter-link { text-decoration: none; color: #337ab7; font-weight: 600; font-size: 16px; display: block; }
+
+        /* Action Buttons Row */
+        .action-row { width: 96%; margin: 0 auto 10px auto; display: flex; gap: 5px; flex-wrap: wrap; }
+        .btn-action { text-decoration: none !important; color: white !important; padding: 5px 12px; border-radius: 3px; font-size: 13px; display: flex; align-items: center; gap: 5px; }
+        .bg-print { background: #337ab7; }
+        .bg-active { background: #31708f; }
+        .bg-inactive { background: #f0ad4e; }
+        .bg-delete { background: #d9534f; }
+
+        /* Table Design erp56 style */
+        .table-box { width: 96%; margin: 0 auto 30px auto; background: white; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; }
+        .erp-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .erp-table th { background: #eef7fd; color: #31708f; padding: 12px 5px; border: 1px solid #ddd; text-align: center; text-transform: uppercase; }
+        .erp-table td { padding: 10px 5px; border: 1px solid #ddd; text-align: center; color: #555; }
+        
+        /* Red alert line for 'No Data' */
+        .no-data-row { border-top: 2px solid red !important; text-align: left !important; padding-left: 15px !important; color: #666; font-size: 13px; }
+
+        /* --- SoftSolution Footer CSS --- */
+        .premium-erp-footer { flex-shrink: 0; background: #f8f9fc; border-top: 1px solid rgba(0,0,0,0.05); width: 100%; }
+        .footer-glass-wrap { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 24px 24px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.04); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .footer-logo-circle { width: 38px; height: 38px; background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); color: white; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-weight: 800; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(78, 115, 223, 0.3); }
+        .brand-name { letter-spacing: 0.5px; font-size: 1.05rem; }
+        .status-pill { background: #f0fff4; color: #2f855a; padding: 6px 16px; border-radius: 50px; font-size: 11px; font-weight: 700; display: flex; align-items: center; border: 1px solid #c6f6d5; }
+        .live-dot { height: 8px; width: 8px; background-color: #38a169; border-radius: 50%; display: inline-block; margin-right: 8px; position: relative; }
+        .live-dot::after { content: ''; position: absolute; width: 100%; height: 100%; background: inherit; border-radius: inherit; animation: status-ripple 1.5s ease-out infinite; }
+        @keyframes status-ripple { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2.5); opacity: 0; } }
+        .clock-display { font-family: 'JetBrains Mono', 'Courier New', monospace; font-weight: 700; color: #2d3748; font-size: 0.95rem; background: #f7fafc; padding: 5px 12px; border-radius: 8px; border: 1px solid #edf2f7; }
+        .version-badge { background: #2d3748; color: #ffffff; padding: 4px 12px; border-radius: 7px; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; }
+        .v-line { width: 1.5px; height: 24px; background: #e2e8f0; }
+        .support-item { font-size: 12.5px; color: #4a5568; font-weight: 600; display: inline-flex; align-items: center; gap: 10px; transition: all 0.2s ease; }
+        .support-item:hover { color: #4e73df; transform: translateY(-1px); }
+    </style>
+</head>
+<body>
+
+    <div class="content-wrapper">
+        <div class="page-header-title">
+            Character Certificate Manager <span>» Detail</span>
+        </div>
+
+        <div class="certificate-tabs">
+            <a href="javascript:void(0)" class="nav-link-btn" onclick="navAction('Issue', this)"><i class="fa fa-circle-up"></i> Issue</a>
+            <a href="javascript:void(0)" class="nav-link-btn" onclick="navAction('Attendance', this)"><i class="fa fa-sun"></i> Attendance</a>
+            <a href="javascript:void(0)" class="nav-link-btn" onclick="navAction('Transfer', this)"><i class="fa fa-sun"></i> Transfer</a>
+            <a href="javascript:void(0)" class="nav-link-btn active" onclick="navAction('Character', this)"><i class="fa fa-sun"></i> Character</a>
+            <a href="javascript:void(0)" class="nav-link-btn" onclick="navAction('Bonafide', this)"><i class="fa fa-sun"></i> Bonafide</a>
+            <a href="javascript:void(0)" class="nav-link-btn" onclick="navAction('Course Completion', this)"><i class="fa fa-sun"></i> Course Completion</a>
+            <a href="javascript:void(0)" class="nav-link-btn" onclick="navAction('Nirgam Utara', this)"><i class="fa fa-sun"></i> Nirgam Utara</a>
+            <a href="javascript:void(0)" class="nav-link-btn" onclick="navAction('Provisional', this)"><i class="fa fa-sun"></i> Provisional</a>
+            <a href="javascript:void(0)" class="nav-link-btn" onclick="navAction('Testimonial', this)"><i class="fa fa-sun"></i> Testimonial</a>
+            <a href="javascript:void(0)" class="nav-link-btn" onclick="navAction('MOI', this)"><i class="fa fa-sun"></i> MOI</a>
+            <a href="javascript:void(0)" class="nav-link-btn" onclick="navAction('Transcript', this)"><i class="fa fa-sun"></i> Transcript</a>
+            <a href="javascript:void(0)" class="nav-link-btn" onclick="navAction('History', this)"><i class="fa fa-sun"></i> History</a>
+            <a href="javascript:void(0)" class="nav-link-btn" onclick="navAction('Custom', this)"><i class="fa fa-sun"></i> Custom</a>
+            <a href="javascript:void(0)" class="nav-link-btn" onclick="navAction('Template', this)"><i class="fa fa-sun"></i> Template</a>
+        </div>
+
+        <div class="filter-container">
+            <a href="javascript:void(0)" class="filter-link" onclick="callFilter()">
+                » Filter Character Certificate <i class="fa fa-filter"></i>
+            </a>
+        </div>
+
+        <div class="action-row">
+            <a href="javascript:void(0)" class="btn-action bg-print" onclick="callPrint()"><i class="fa fa-print"></i> Print</a>
+            <a href="javascript:void(0)" class="btn-action bg-active" onclick="callActive()"><i class="fa fa-check"></i> Active</a>
+            <a href="javascript:void(0)" class="btn-action bg-inactive" onclick="callInActive()"><i class="fa fa-times"></i> In-Active</a>
+            <a href="javascript:void(0)" class="btn-action bg-delete" onclick="callDelete()"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+
+        <div class="table-box">
+            <table class="erp-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>S.N.</th>
+                        <th>PROGRAM/CLASS</th>
+                        <th>SEMESTER/SECTION</th>
+                        <th>REG.NO.</th>
+                        <th>NAME OF STUDENT</th>
+                        <th>CC.NO.</th>
+                        <th>ISSUE DATE</th>
+                        <th>YEAR</th>
+                        <th>CHARACTER</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="11" class="no-data-row">
+                            No Character Certificate data found. Please Filter Character Certificate to show.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="premium-erp-footer">
+        <div class="footer-glass-wrap container-fluid px-4 py-3">
+            <div class="row align-items-center g-3">
+                <div class="col-12 col-lg-3 text-center text-lg-start">
+                    <div class="d-flex align-items-center justify-content-center justify-content-lg-start">
+                        <div class="footer-logo-circle me-2">S</div>
+                        <div>
+                            <p class="mb-0 fw-bold text-dark brand-name">SoftSolution</p>
+                            <small class="text-muted">&copy; 2025-26 All Rights Reserved</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-5">
+                    <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+                        <div class="status-pill">
+                            <span class="live-dot"></span>
+                            <span class="status-text">SYSTEM LIVE</span>
+                        </div>
+                        <div class="v-line d-none d-lg-block"></div>
+                        <div class="clock-display">
+                            <i class="far fa-clock me-2 text-primary"></i>
+                            <span id="erpLiveTime">00:00:00 AM</span>
+                        </div>
+                        <div class="v-line d-none d-lg-block"></div>
+                        <div class="version-badge shadow-sm">v4.0.2-Stable</div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <div class="d-flex justify-content-center justify-content-lg-end align-items-center gap-3">
+                        <div class="support-box">
+                            <a href="tel:+916396004079" class="support-item text-decoration-none">
+                                <i class="fas fa-phone-alt text-success"></i>
+                                <span>+916396004079</span>
+                            </a>
+                            <a href="mailto:Shubham@softsolution.com" class="support-item text-decoration-none border-start ps-3">
+                                <i class="fas fa-envelope text-info"></i>
+                                <span>Shubham@softsolution.com</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function navAction(mode, el) {
+            document.querySelectorAll('.nav-link-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
+        function callFilter() { alert("Filter UI for Character Certificate"); }
+        function callPrint() { alert("Print Logic Initiated"); }
+        function callActive() { alert("Marking records Active"); }
+        function callInActive() { alert("Marking records In-Active"); }
+        function callDelete() { confirm("Delete selected certificates?"); }
+
+        function updateERPTimer() {
+            const timeDisplay = document.getElementById("erpLiveTime");
+            const now = new Date();
+            timeDisplay.textContent = now.toLocaleTimeString([], { 
+                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true 
+            });
+        }
+        setInterval(updateERPTimer, 1000);
+        updateERPTimer();
+    </script>
+</body>
+</html>
