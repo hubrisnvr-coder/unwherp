@@ -61,7 +61,6 @@
         .f-logo { width: 35px; height: 35px; background: linear-gradient(135deg, #4e73df, #224abe); color: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
         .clock-box { font-family: monospace; font-weight: bold; color: #4e73df; background: #eaecf4; padding: 5px 12px; border-radius: 5px; }
         /*---yanha se attendance wali css sure ho rhi hai */
-        <style>
     .template-inner-table { width: 100%; border-collapse: collapse; }
     .template-inner-table td { padding: 6px 10px; border-bottom: 1px solid #eee; font-size: 12px; }
     .field-label { width: 35%; color: #333; font-weight: 500; text-align: left; }
@@ -70,6 +69,310 @@
     .img-placeholder { border: 1px solid #ddd; width: 100px; height: 120px; margin-top: 10px; background: #fafafa; display: flex; align-items: center; justify-content: center; }
     .status-cell { display: flex; gap: 4px; justify-content: center; padding: 10px; }
     .btn-status { font-size: 11px; padding: 2px 6px; border-radius: 3px; color: white !important; text-decoration: none !important; display: flex; align-items: center; gap: 3px; }
+    .bg-active-p { background: #2e6da4; }
+    .bg-edit { background: #5cb85c; }
+    .bg-danger { background: #d9534f; }
+    /*---yanha se transfer-1 wali css sure ho rhi hai ---*/
+    /* --- Common CSS for Template Sections --- */
+
+/* Inner Table Layout */
+.template-inner-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 5px 0;
+}
+
+.template-inner-table td { 
+    padding: 6px 10px; 
+    border: 1px solid #f0f0f0; /* Light border jaisa screenshot mein hai */
+    font-size: 12px; 
+    vertical-align: middle;
+}
+
+/* Label, Separator and Value alignment */
+.field-label { 
+    width: 35%; 
+    color: #444; 
+    font-weight: 500; 
+    text-align: left; 
+}
+
+.field-sep { 
+    width: 3%; 
+    text-align: center; 
+    font-weight: bold; 
+    color: #333;
+}
+
+.field-val { 
+    width: 50%; 
+    color: #000; 
+    font-weight: 600; 
+    text-align: left; 
+}
+
+/* Image Box (Left Side) */
+.img-placeholder { 
+    border: 1px solid #ddd; 
+    width: 85px; 
+    height: 110px; 
+    margin-top: 10px; 
+    background: #f9f9f9; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+/* Action Buttons (Right Side) */
+.status-cell { 
+    display: flex; 
+    flex-direction: row; 
+    gap: 3px; 
+    justify-content: center; 
+    padding: 10px 5px; 
+}
+
+.btn-status { 
+    font-size: 10.5px; 
+    padding: 3px 8px; 
+    border-radius: 3px; 
+    color: white !important; 
+    text-decoration: none !important; 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 4px; 
+    font-weight: 500;
+}
+
+.bg-active-p { background-color: #2e6da4; border: 1px solid #285e8e; }
+.bg-edit { background-color: #5cb85c; border: 1px solid #4cae4c; }
+.bg-danger { background-color: #d9534f; border: 1px solid #d43f3a; }
+
+/* For erp68 Student Image placeholder in template */
+.student-img-box {
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 40px 10px;
+    text-align: center;
+    color: #999;
+    font-style: italic;
+}
+/*---yanha se transfer-2 wali css sure ho rhi hai ---*/
+    .template-inner-table { width: 100%; border-collapse: collapse; }
+    .template-inner-table td { padding: 4px 8px; border: 1px solid #f0f0f0; font-size: 11px; vertical-align: middle; }
+    .field-label { color: #444; font-weight: 500; text-align: left; }
+    .field-sep { width: 15px; text-align: center; font-weight: bold; }
+    .field-val { color: #000; font-weight: 600; }
+    .img-placeholder { border: 1px solid #ddd; width: 85px; height: 110px; margin-top: 10px; background: #f9f9f9; display: flex; align-items: center; justify-content: center; }
+    .status-cell { display: flex; gap: 4px; justify-content: center; }
+    .btn-status { font-size: 10px; padding: 2px 5px; border-radius: 3px; color: white !important; text-decoration: none !important; display: flex; align-items: center; gap: 3px; }
+    .bg-active-p { background: #2e6da4; } .bg-edit { background: #5cb85c; } .bg-danger { background: #d9534f; }
+    .header-row td { background-color: #fcfcfc; font-weight: bold; font-size: 10px; }
+    /*---yanha se transfer-3 wali css sure ho rhi hai ---*/
+    /* Table Main Structure */
+    .template-inner-table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        font-family: sans-serif;
+    }
+
+    /* Table Cells */
+    .template-inner-table td { 
+        padding: 5px 8px; 
+        border: 1px solid #e0e0e0; /* Light grey border as per erp70 */
+        font-size: 11.5px; 
+        line-height: 1.4;
+    }
+
+    /* Label Styling */
+    .field-label { 
+        color: #555; 
+        font-weight: 500; 
+        text-align: left; 
+    }
+
+    /* Separator (:) Styling */
+    .field-sep { 
+        width: 10px; 
+        text-align: center; 
+        font-weight: bold; 
+        border-left: none !important; 
+        border-right: none !important;
+    }
+
+    /* Value Styling */
+    .field-val { 
+        color: #000; 
+        font-weight: 600; 
+        text-align: left; 
+    }
+
+    /* Special Header Row for erp70 (TC No & Reg No) */
+    .header-info-row td {
+        background-color: #fafafa;
+        font-size: 11px;
+    }
+
+    /* Image Placeholder (Left Column) */
+    .img-placeholder { 
+        border: 1px solid #ccc; 
+        width: 90px; 
+        height: 115px; 
+        margin-top: 8px; 
+        background: #fdfdfd; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+    }
+
+    /* Action Buttons (Right Column) */
+    .status-cell { 
+        display: flex; 
+        gap: 5px; 
+        justify-content: center; 
+        align-items: center;
+    }
+
+    .btn-status { 
+        font-size: 10px; 
+        padding: 3px 7px; 
+        border-radius: 2px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 3px; 
+    }
+
+    .bg-active-p { background-color: #2e6da4; }
+    .bg-edit { background-color: #5cb85c; }
+    .bg-danger { background-color: #d9534f; }
+    /*---yanha se NIRGAMUTARA_1 wali css sure ho rhi hai ---*/
+    /* Main Table and Layout */
+    .template-inner-table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .template-inner-table td { 
+        padding: 6px 12px; 
+        border: 1px solid #e0e0e0; 
+        font-size: 12px; 
+        color: #333;
+    }
+
+    /* Labels & Values */
+    .field-label { 
+        font-weight: 500; 
+        color: #555; 
+        width: 30%; /* Balanced width for long labels like 'Reason for leaving school' */
+    }
+
+    .field-sep { 
+        width: 15px; 
+        text-align: center; 
+        font-weight: bold;
+    }
+
+    .field-val { 
+        font-weight: 600; 
+        color: #000;
+    }
+
+    /* Footer Section (Date, Place, Sign) */
+    .footer-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 20px 10px 10px 10px;
+    }
+
+    .signature-box {
+        text-align: center;
+        width: 180px;
+    }
+
+    .signature-line {
+        border-top: 1px solid #444;
+        margin-bottom: 5px;
+        width: 100%;
+    }
+
+    .footer-text {
+        font-size: 11px;
+        font-weight: bold;
+        color: #444;
+    }
+
+    /* Action Buttons */
+    .status-cell { display: flex; gap: 4px; justify-content: center; }
+    .btn-status { 
+        font-size: 10px; 
+        padding: 3px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+    }
+    .bg-active-p { background-color: #2e6da4; }
+    .bg-edit { background-color: #5cb85c; }
+    .bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .img-placeholder { 
+        border: 1px solid #ddd; 
+        width: 85px; 
+        height: 110px; 
+        margin-top: 10px; 
+        background: #f9f9f9; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+    }
+    /*---yanha se NIRGAMUTARA_2 wali css sure ho rhi hai ---*/
+    <style>
+    .template-inner-table { width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; }
+    .template-inner-table td { padding: 6px; border: 1px solid #ddd; font-size: 12px; }
+    
+    .field-label { color: #444; font-weight: 500; width: 40%; }
+    .field-sep { width: 15px; text-align: center; font-weight: bold; border: none !important; }
+    .field-val { font-weight: 600; color: #000; }
+
+    /* Header & Footer Specific */
+    .header-top-box { display: flex; justify-content: space-between; padding: 5px; background: #f9f9f9; font-weight: bold; border-bottom: 2px solid #eee; }
+    .footer-flex { display: flex; justify-content: space-between; padding: 20px 10px; margin-top: 10px; }
+    .sign-box { text-align: center; border-top: 1px solid #000; width: 150px; padding-top: 5px; font-size: 11px; }
+
+    /* Status Buttons */
+    .status-cell { display: flex; gap: 5px; justify-content: center; }
+    .btn-status { font-size: 10px; padding: 3px 8px; border-radius: 2px; color: #fff !important; text-decoration: none; }
+    .bg-active-p { background: #2e6da4; }
+    .bg-edit { background: #5cb85c; }
+    .bg-danger { background: #d9534f; }
+    /*---yanha se CHARACTER, BONAFIDE, COURSE COMPLETION, aur MEDIUM OF INSTRUCTION (MOI) wali css sure ho rhi hai ---*/
+    <style>
+    /* Table & Paragraph Styling */
+    .template-inner-table { width: 100%; border-collapse: collapse; font-family: 'Segoe UI', sans-serif; }
+    .cert-paragraph { 
+        font-size: 13px; 
+        line-height: 1.8; 
+        color: #333; 
+        text-align: justify; 
+        padding: 10px 0;
+    }
+    
+    /* Variables Highlight */
+    .cert-paragraph b { color: #000; font-weight: 700; border-bottom: 1px dotted #999; }
+
+    /* Footer Styling */
+    .cert-footer { margin-top: 15px; font-size: 12px; font-weight: 600; color: #444; }
+
+    /* Action Buttons */
+    .status-cell { display: flex; gap: 4px; justify-content: center; }
+    .btn-status { font-size: 10px; padding: 3px 8px; border-radius: 3px; color: #fff !important; text-decoration: none; display: inline-flex; align-items: center; gap: 3px; }
     .bg-active-p { background: #2e6da4; }
     .bg-edit { background: #5cb85c; }
     .bg-danger { background: #d9534f; }
@@ -191,6 +494,404 @@
         </table>
     </td>
     <td>
+    </tr>
+        <!--yanhse se transfer-1 wala section sure ho rha hai -->
+         <tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">3</td>
+    <td style="padding: 10px;">
+        TRANSFER_1
+        <div class="img-placeholder">
+            <i class="fa fa-image fa-3x" style="color: #ddd;"></i>
+        </div>
+    </td>
+    <td>
+        <table class="template-inner-table">
+            <tr>
+                <td class="field-label">TC No.</td>
+                <td class="field-sep">:</td>
+                <td class="field-val">{{tc_num}}</td>
+                <td rowspan="5" class="student-img-box">{{student_image}}</td>
+            </tr>
+            <tr>
+                <td class="field-label">Faculty/Level</td>
+                <td class="field-sep">:</td>
+                <td class="field-val">{{faculty}}</td>
+            </tr>
+            <tr>
+                <td class="field-label">Admission No./Reg.No.</td>
+                <td class="field-sep">:</td>
+                <td class="field-val">{{reg_no}}</td>
+            </tr>
+            <tr>
+                <td class="field-label">University Reg. No.</td>
+                <td class="field-sep">:</td>
+                <td class="field-val">{{university_reg}}</td>
+            </tr>
+            <tr>
+                <td class="field-label">Batch.</td>
+                <td class="field-sep">:</td>
+                <td class="field-val">{{batch}}</td>
+            </tr>
+            
+            <tr><td class="field-label">01. Name of Student</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{student_name}}</td></tr>
+            <tr><td class="field-label">02. Name of Father.</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{parents_name}}</td></tr>
+            <tr><td class="field-label">03. Date of Birth</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{date_of_birth}}</td></tr>
+            <tr><td class="field-label">04. Gender</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{gender}}</td></tr>
+            <tr><td class="field-label">05. Nationality</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{nationality}}</td></tr>
+            <tr><td class="field-label">06. Religion</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{religion}}</td></tr>
+            <tr><td class="field-label">07. Community & Caste</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{caste}}</td></tr>
+            <tr><td class="field-label">08. Date of Admission</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{reg_date}}</td></tr>
+            <tr><td class="field-label">09. Date of Leaving</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{date_of_leaving}}</td></tr>
+            <tr><td class="field-label">10. Class studied at the time of leaving</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{leaving_time_class}}</td></tr>
+            <tr><td class="field-label">11. Whether qualified for promotion to higher class</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{qualified_to_promote}}</td></tr>
+            <tr><td class="field-label">12. Whether the student has paid all Balance fees to the college</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{paid_fee_status}}</td></tr>
+            <tr><td class="field-label">13. Conduct and Character</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{character}}</td></tr>
+        </table>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+        <!--yanhse se transfer-1 wala section poora ho rha hai -->
+
+        <!--yanhse se transfer-2 wala section sure ho rha hai -->
+          <tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">4</td>
+    <td style="padding: 10px;">
+        TRANSFER_2
+        <div class="img-placeholder">
+            <i class="fa fa-image fa-3x" style="color: #ddd;"></i>
+        </div>
+    </td>
+    <td>
+        <table class="template-inner-table">
+            <tr class="header-row">
+                <td colspan="2">TC No.: {{tc_num}}</td>
+                <td colspan="2">विद्यालय सं. / School No: {{school_no}}</td>
+                <td colspan="2">Affiliation No: {{affiliation_reg}}</td>
+                <td colspan="2">Renewal upto: -</td>
+                <td colspan="2">प्रवेश सं./Admission No.: -</td>
+            </tr>
+
+            <tr><td width="30">01.</td><td class="field-label">विद्यार्थी का नाम / Name of Student :</td><td class="field-val" colspan="8">{{student_name}}</td></tr>
+            <tr><td>02.</td><td class="field-label">माता का नाम / Mother's Name :</td><td class="field-val" colspan="8">{{mother_name}}</td></tr>
+            <tr><td>03.</td><td class="field-label">पिता का नाम / Name of Father's / Guardian's Name :</td><td class="field-val" colspan="8">{{father_name}}</td></tr>
+            <tr><td>04.</td><td class="field-label">Date of birth (in Christian Era) according to Admission & Withdrawal Register :</td><td class="field-val" colspan="8">In figures: {{date_of_birth}} <br> In words: {{date_of_birth_in_word}}</td></tr>
+            <tr><td>05.</td><td class="field-label">Proof for Date of Birth submitted at the time of admission :</td><td class="field-val" colspan="8">{{dob_certificate}}</td></tr>
+            <tr><td>06.</td><td class="field-label">राष्ट्रीयता / Nationality :</td><td class="field-val" colspan="8">{{nationality}}</td></tr>
+            <tr><td>07.</td><td class="field-label">Whether the candidate belongs to Scheduled Caste or Schedule Tribe or OBC :</td><td class="field-val" colspan="8">{{caste}}</td></tr>
+            <tr><td>08.</td><td class="field-label">Date of the first admission in the school with the class :</td><td class="field-val" colspan="8">{{reg_date}} Class Joined: {{join_time_class}}</td></tr>
+            <tr><td>09.</td><td class="field-label">Class in which the pupil last studied (in words) :</td><td class="field-val" colspan="8">{{leaving_time_class}}</td></tr>
+            <tr><td>10.</td><td class="field-label">School/Board Annual Examination last taken with the result :</td><td class="field-val" colspan="8">{{last_taken_exam_with_result}}</td></tr>
+            <tr><td>11.</td><td class="field-label">Whether failed, if so once/twice in the same class :</td><td class="field-val" colspan="8">{{exam_fail_status}}</td></tr>
+            <tr><td>12.</td><td class="field-label">विषय पढ़ाए / Subjects Studied :</td><td class="field-val" colspan="8">{{subject_studied}}</td></tr>
+            <tr><td>13.</td><td class="field-label">Whether qualified for promotion to the next higher class :</td><td class="field-val" colspan="8">{{qualified_to_promote}} ({{promoted_class}})</td></tr>
+            <tr><td>14.</td><td class="field-label">Total No. of working days in the academic session :</td><td class="field-val" colspan="8">{{school_college_open_total}}</td></tr>
+            <tr><td>15.</td><td class="field-label">Total No. of presence in the academic session :</td><td class="field-val" colspan="8">{{total_attendance}}</td></tr>
+            <tr><td>16.</td><td class="field-label">Month up to which the people has paid school dues :</td><td class="field-val" colspan="8">{{paid_fee_status}}</td></tr>
+            <tr><td>17.</td><td class="field-label">Any Fee concession availed of, if so, the nature of such concession :</td><td class="field-val" colspan="8">{{fee_concession_detail}}</td></tr>
+            <tr><td>18.</td><td class="field-label">Whether the pupil is NCC cadet / Boy Scout / Girl Guide (give details) :</td><td class="field-val" colspan="8">{{cadet_detail}}</td></tr>
+            <tr><td>19.</td><td class="field-label">Whether the school is under Govt/Minority/Independent Category :</td><td class="field-val" colspan="8">{{school_category}}</td></tr>
+            <tr><td>20.</td><td class="field-label">Games Played or extra-curricular activities in which the pupil usually took part :</td><td class="field-val" colspan="8">{{extra_activity_detail}}</td></tr>
+            <tr><td>21.</td><td class="field-label">Date of application for certificate :</td><td class="field-val" colspan="8">{{application_date}}</td></tr>
+            <tr><td>22.</td><td class="field-label">Date on which pupils name was struck off the rolls of the Vidyalaya :</td><td class="field-val" colspan="8">{{date_of_leaving}}</td></tr>
+            <tr><td>23.</td><td class="field-label">Date of issue of certificate :</td><td class="field-val" colspan="8">{{date_of_issue}}</td></tr>
+            <tr><td>24.</td><td class="field-label">कोई अन्य टिप्पणी / Any other remarks :</td><td class="field-val" colspan="8">{{any_other_remark}}</td></tr>
+        </table>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT TRANSFER_2')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE TRANSFER_2')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+        <!--yanhse se transfer-2 wala section poora ho rha hai -->
+
+        <!--yanhse se transfer-3 wala section sure ho rha hai -->
+        <tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">5</td>
+    <td style="padding: 10px;">
+        TRANSFER_3
+        <div class="img-placeholder">
+            <i class="fa fa-image fa-3x" style="color: #ddd;"></i>
+        </div>
+    </td>
+    <td>
+        <table class="template-inner-table">
+            <tr class="header-info-row">
+                <td class="field-label" style="width:12%">TC No.</td><td class="field-sep">:</td><td class="field-val">{{tc_num}}</td>
+                <td colspan="3" style="border:none;"></td> <td class="field-label" style="width:18%">Admission No./Reg.No.</td><td class="field-sep">:</td><td class="field-val">{{reg_no}}</td>
+            </tr>
+            <tr class="header-info-row">
+                <td class="field-label">{{national_id_1}}</td><td class="field-sep">:</td><td class="field-val">{{national_id_2}}</td>
+                <td colspan="3" style="border:none;"></td>
+                <td class="field-label">{{national_id_3}}</td><td class="field-sep">:</td><td class="field-val">{{national_id_4}}</td>
+            </tr>
+
+            <tr><td width="30" style="text-align:center">01.</td><td class="field-label" colspan="2">Name of Pupil</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{student_name}}</td></tr>
+            <tr><td style="text-align:center">02.</td><td class="field-label" colspan="2">Father's / Guardian's Name</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{guardian_name}}</td></tr>
+            <tr><td style="text-align:center">03.</td><td class="field-label" colspan="2">Mother's Name</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{father_name}}</td></tr>
+            <tr><td style="text-align:center">04.</td><td class="field-label" colspan="2">Place of Birth</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{birth_place}}</td></tr>
+            <tr><td style="text-align:center">05.</td><td class="field-label" colspan="2">Nationality</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{nationality}}</td></tr>
+            <tr><td style="text-align:center">06.</td><td class="field-label" colspan="2">Caste / Category</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{caste}}</td></tr>
+            <tr><td style="text-align:center">07.</td><td class="field-label" colspan="2">Date of the first admission in the School with the class</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{reg_date}}</td></tr>
+            <tr>
+                <td style="text-align:center">08.</td>
+                <td class="field-label" colspan="2">Date of birth (in Christian Era) according to Admission Register</td>
+                <td class="field-sep">:</td>
+                <td class="field-val" colspan="5">
+                    In figures: {{date_of_birth}}<br>
+                    In words: {{date_of_birth_in_word}}
+                </td>
+            </tr>
+            <tr><td style="text-align:center">09.</td><td class="field-label" colspan="2">Class in which the pupil last studied/studying</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{leaving_time_class}}</td></tr>
+            <tr><td style="text-align:center">10.</td><td class="field-label" colspan="2">School/Board Annual Examination last taken with the result</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{last_taken_exam_with_result}}</td></tr>
+            <tr><td style="text-align:center">11.</td><td class="field-label" colspan="2">Promoted Class</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{promoted_class}}</td></tr>
+            <tr><td style="text-align:center">12.</td><td class="field-label" colspan="2">General Conduct</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{character}}</td></tr>
+            <tr><td style="text-align:center">13.</td><td class="field-label" colspan="2">Date of application for Transfer certificate</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{date_of_issue}}</td></tr>
+            <tr><td style="text-align:center">14.</td><td class="field-label" colspan="2">Date of issue of Transfer certificate</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{date_of_issue}}</td></tr>
+            <tr><td style="text-align:center">15.</td><td class="field-label" colspan="2">Reason for leaving the school</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{qualified_to_promote}}</td></tr>
+            <tr><td style="text-align:center">16.</td><td class="field-label" colspan="2">Any other remarks</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{any_other_remark}}</td></tr>
+        </table>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+        <!--yanhse se transfer-3 wala section poora ho rha hai -->
+
+        <!--yanhse se NIRGAMUTARA_1 wala section sure ho rha hai -->
+          <tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">6</td>
+    <td style="padding: 10px;">
+        NIRGAMUTARA_1
+        <div class="img-placeholder">
+            <i class="fa fa-image fa-3x" style="color: #ddd;"></i>
+        </div>
+    </td>
+    <td>
+        <table class="template-inner-table">
+            <tr><td width="30" style="text-align:center">01.</td><td class="field-label">Admission No</td><td class="field-sep">:</td><td class="field-val">{{reg_no}}</td></tr>
+            <tr><td style="text-align:center">02.</td><td class="field-label">Student Full Name</td><td class="field-sep">:</td><td class="field-val">{{student_name}}</td></tr>
+            <tr><td style="text-align:center">03.</td><td class="field-label">Parent Full Name</td><td class="field-sep">:</td><td class="field-val">{{parents_name}}</td></tr>
+            <tr><td style="text-align:center">04.</td><td class="field-label">Cast</td><td class="field-sep">:</td><td class="field-val">{{caste}}</td></tr>
+            <tr><td style="text-align:center">05.</td><td class="field-label">Parent Business</td><td class="field-sep">:</td><td class="field-val">{{father_occupation}} / {{mother_occupation}}</td></tr>
+            <tr><td style="text-align:center">06.</td><td class="field-label">Mother Tongue</td><td class="field-sep">:</td><td class="field-val">{{mother_tongue}}</td></tr>
+            <tr><td style="text-align:center">07.</td><td class="field-label">Admission Date</td><td class="field-sep">:</td><td class="field-val">{{reg_date}}</td></tr>
+            <tr><td style="text-align:center">08.</td><td class="field-label">Birth Date in number</td><td class="field-sep">:</td><td class="field-val">{{date_of_birth}}</td></tr>
+            <tr><td style="text-align:center">09.</td><td class="field-label">Birth Date in word</td><td class="field-sep">:</td><td class="field-val">{{date_of_birth_in_word}}</td></tr>
+            <tr><td style="text-align:center">10.</td><td class="field-label">Class while admission</td><td class="field-sep">:</td><td class="field-val">{{join_time_class}}</td></tr>
+            <tr><td style="text-align:center">11.</td><td class="field-label">Previous School Name</td><td class="field-sep">:</td><td class="field-val">{{previous_school_name}}</td></tr>
+            <tr><td style="text-align:center">12.</td><td class="field-label">Standard</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td style="text-align:center">13.</td><td class="field-label">Sign of Authority</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td style="text-align:center">14.</td><td class="field-label">The class while leaving school</td><td class="field-sep">:</td><td class="field-val">{{leaving_time_class}}</td></tr>
+            <tr><td style="text-align:center">15.</td><td class="field-label">Leaving Date</td><td class="field-sep">:</td><td class="field-val">{{date_of_leaving}}</td></tr>
+            <tr><td style="text-align:center">16.</td><td class="field-label">Reason for leaving School</td><td class="field-sep">:</td><td class="field-val">{{reason_to_leave}}</td></tr>
+            <tr><td style="text-align:center">17.</td><td class="field-label">Mention 2 Body Mark</td><td class="field-sep">:</td><td class="field-val">{{mention_body_mark}}</td></tr>
+            <tr><td style="text-align:center">18.</td><td class="field-label">Sign of Authority while leaving school</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td style="text-align:center">19.</td><td class="field-label">Head Master's Sign</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td style="text-align:center">20.</td><td class="field-label">Description</td><td class="field-sep">:</td><td class="field-val">{{any_other_remark}}</td></tr>
+
+            <tr>
+                <td colspan="4">
+                    <div class="footer-container">
+                        <div class="footer-text">Date: _________</div>
+                        <div class="footer-text">Place: _________</div>
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <div class="footer-text">Seal</div>
+                        </div>
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <div class="footer-text">Headmaster's Sign</div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT NIRGAMUTARA_1')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE NIRGAMUTARA_1')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+        <!--yanhse se NIRGAMUTARA_1 wala section poora ho rha hai -->
+
+        <!--yanhse se NIRGAMUTARA_2 wala section sure ho rha hai -->
+        <tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">7</td>
+    <td style="padding: 10px;">
+        NIRGAMUTARA_2
+        <div class="img-placeholder" style="border:1px solid #ccc; width:80px; height:100px; margin-top:5px; display:flex; align-items:center; justify-content:center;">
+            <i class="fa fa-image fa-3x" style="color: #ddd;"></i>
+        </div>
+    </td>
+    <td>
+        <div class="header-top-box">
+            <span>शाळेचे नाव: __________________________</span>
+            <span>रजिस्टर नं. ________________</span>
+        </div>
+
+        <table class="template-inner-table">
+            <tr><td width="30">१</td><td class="field-label">प्रवेश अनुक्रमांक</td><td class="field-sep">:</td><td class="field-val">{{reg_no}}</td></tr>
+            <tr><td>२</td><td class="field-label">विद्यार्थ्याचे संपूर्ण नाव आडनावासह</td><td class="field-sep">:</td><td class="field-val">{{student_name}}</td></tr>
+            <tr><td>३</td><td class="field-label">आई / वडिलांचे नाव / वडील हयात नसल्यास पालकांचे नाव</td><td class="field-sep">:</td><td class="field-val">{{parents_name}}</td></tr>
+            <tr><td>४</td><td class="field-label">जात</td><td class="field-sep">:</td><td class="field-val">{{caste}}</td></tr>
+            <tr><td>५</td><td class="field-label">वडील पालकांचा व्यवसाय</td><td class="field-sep">:</td><td class="field-val">{{father_occupation}} / {{mother_occupation}}</td></tr>
+            <tr><td>६</td><td class="field-label">मातृभाषा</td><td class="field-sep">:</td><td class="field-val">{{mother_tongue}}</td></tr>
+            <tr><td>७</td><td class="field-label">प्रवेश दिनांक</td><td class="field-sep">:</td><td class="field-val">{{reg_date}}</td></tr>
+            <tr><td>८</td><td class="field-label">जन्म दिनांक</td><td class="field-sep">:</td><td class="field-val">अंकात: {{date_of_birth}}<br>अक्षरात: {{date_of_birth_in_word}}</td></tr>
+            <tr><td>९</td><td class="field-label">प्रवेश समयीचा वर्ग</td><td class="field-sep">:</td><td class="field-val">{{join_time_class}}</td></tr>
+            <tr><td>१०</td><td class="field-label">पूर्वीच्या शाळेचे नाव</td><td class="field-sep">:</td><td class="field-val">{{previous_school_name}}</td></tr>
+            <tr><td>११</td><td class="field-label">इयत्ता</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td>१२</td><td class="field-label">प्रवेश देणाऱ्या अधिकाऱ्याची सही</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td>१३</td><td class="field-label">निर्गम समयी वर्ग</td><td class="field-sep">:</td><td class="field-val">{{leaving_time_class}}</td></tr>
+            <tr><td>१४</td><td class="field-label">निर्गम दिनांक</td><td class="field-sep">:</td><td class="field-val">{{date_of_leaving}}</td></tr>
+            <tr><td>१५</td><td class="field-label">शाळा सोडण्याचे कारण</td><td class="field-sep">:</td><td class="field-val">{{reason_to_leave}}</td></tr>
+            <tr><td>१६</td><td class="field-label">परिचय चिन्ह विद्यार्थ्याचे थोडक्यात दोन चिन्ह नोंदवावे</td><td class="field-sep">:</td><td class="field-val">{{mention_body_mark}}</td></tr>
+            <tr><td>१७</td><td class="field-label">निर्गम समयी निर्गामाची नोंद घेणाऱ्या अधिकाऱ्याची सही</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td>१८</td><td class="field-label">मुख्याध्यापकाची स्वाक्षरी</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td>१९</td><td class="field-label">विवरण</td><td class="field-sep">:</td><td class="field-val">{{any_other_remark}}</td></tr>
+        </table>
+
+        <div class="footer-flex">
+            <div style="font-size: 11px;">दिनांक: ________<br>स्थळ: ________</div>
+            <div class="sign-box">शाळेचा शिक्का</div>
+            <div class="sign-box">मुख्याध्यापकाची स्वाक्षरी</div>
+        </div>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+        <!--yanhse se NIRGAMUTARA_2 wala section poora ho rha hai -->
+
+        <!--yanhse se CHARACTER, BONAFIDE, COURSE COMPLETION, aur MEDIUM OF INSTRUCTION (MOI) wala section suru ho rha hai -->
+          <tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">8</td>
+    <td style="padding: 10px;">
+        CHARACTER
+        <div class="img-placeholder" style="border:1px solid #ddd; width:80px; height:60px; margin-top:5px; display:flex; align-items:center; justify-content:center;">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+    <td>
+        <div class="cert-paragraph">
+            This is to certify that <b>{{student_name}}</b> Son of <b>{{father_name}}</b> & <b>{{mother_name}}</b>, Permanent Address <b>{{address}}</b>, is known to me for about <b>{{year}}</b> years. He is a citizen of <b>{{country}}</b> by birth.
+            <br><br>
+            To the best of my knowledge, he bears a <b>{{character}}</b> character and is not involved in such activities which are against the state freedom and peace. I wish all success and prosperity in his life.
+        </div>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+
+<tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">9</td>
+    <td style="padding: 10px;">
+        BONAFIDE
+        <div class="img-placeholder" style="border:1px solid #ddd; width:80px; height:60px; margin-top:5px; display:flex; align-items:center; justify-content:center;">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+    <td>
+        <div class="cert-paragraph">
+            This is to certify that <b>{{student_name}}</b> Reg No. <b>{{reg_no}}</b> Son of <b>{{parents_name}}</b> is a bonafide student of this College in the <b>{{course}}</b> course during the period <b>{{period}}</b>. His/Her Date of Birth as per our School/College record is <b>{{date_of_birth}}</b>. His/Her Conduct and Character are <b>{{character}}</b>.
+        </div>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+
+<tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">10</td>
+    <td style="padding: 10px;">
+        COURSE COMPLETION
+        <div class="img-placeholder" style="border:1px solid #ddd; width:80px; height:60px; margin-top:5px; display:flex; align-items:center; justify-content:center;">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+    <td>
+        <div class="cert-paragraph">
+            This is to certify that <b>{{student_name}}</b> Reg No. <b>{{reg_no}}</b> Son of <b>{{parents_name}}</b> has studied <b>{{course}}</b> in our college during the <b>{{period}}</b>. His/Her Date of Birth as per our School/College record is <b>{{date_of_birth}}</b>. His/Her Conduct and Character are <b>{{character}}</b> during the tenure of his studies.
+        </div>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+
+<tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">11</td>
+    <td style="padding: 10px;">
+        MEDIUM OF INSTRUCTION
+        <div class="img-placeholder" style="border:1px solid #ddd; width:80px; height:60px; margin-top:5px; display:flex; align-items:center; justify-content:center;">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+    <td>
+        <div class="cert-paragraph">
+            This is to certify that <b>{{student_name}}</b> is a regular student of <b>{{reg_no}}</b> under the Depart of <b>{{department}}</b> of this University. It is to be mentioned that the medium of instruction and examination at this university is English.
+            <br><br>
+            He / She is an intelligent and hardworking student with a charming personality. To the best of my knowledge, he/she bears a good moral character.
+            <br><br>
+            I wish his / her every success in life.
+        </div>
+        <div class="cert-footer">
+            (.........)<br>
+            Deputy Controller of Examination(Additional Charge)
+        </div>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+        <!--yanhse se  CHARACTER, BONAFIDE, COURSE COMPLETION, aur MEDIUM OF INSTRUCTION (MOI)wala section poora ho rha hai -->
+
         <div class="status-cell">
             <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
             <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT ATTENDANCE')"><i class="fa fa-edit"></i> Edit</a>
