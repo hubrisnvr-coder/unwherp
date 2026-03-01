@@ -54,12 +54,6 @@
         .status-cell { display: flex; gap: 4px; justify-content: center; padding: 10px; }
         .btn-status { font-size: 11px; padding: 2px 6px; border-radius: 3px; color: white; text-decoration: none !important; display: flex; align-items: center; gap: 3px; }
         .bg-edit { background: #5cb85c; } .bg-active-p { background: #2e6da4; }
-
-        /* SoftSolution Footer */
-        .ss-footer { background: #f8f9fc; border-top: 1px solid #dee2e6; padding: 15px; margin-top: auto; }
-        .footer-card { background: white; border-radius: 12px; padding: 15px 25px; border: 1px solid #e3e6f0; box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15); }
-        .f-logo { width: 35px; height: 35px; background: linear-gradient(135deg, #4e73df, #224abe); color: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        .clock-box { font-family: monospace; font-weight: bold; color: #4e73df; background: #eaecf4; padding: 5px 12px; border-radius: 5px; }
         /*---yanha se attendance wali css sure ho rhi hai */
     .template-inner-table { width: 100%; border-collapse: collapse; }
     .template-inner-table td { padding: 6px 10px; border-bottom: 1px solid #eee; font-size: 12px; }
@@ -1425,30 +1419,453 @@
     </td>
 </tr>
 <!--yanha se SEMESTER WISE FINAL RESULT wala porsen poora ho rha hai-->
-            </tbody>
 
+<!--yanha se GENERAL TEMPLATE wala porsen sure ho rha hai-->
+<style>
+    /* Fixed border layout specifically for ERP80 */
+    .e80-main-table-row td {
+        border: 1px solid #dee2e6 !important; /* Fixed outer borders */
+        vertical-align: top;
+        padding: 12px;
+        background-color: #fff;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
 
-    <footer class="ss-footer">
-        <div class="container footer-card">
-            <div class="row align-items-center">
-                <div class="col-md-4 d-flex align-items-center gap-3">
-                    <div class="f-logo">S</div>
-                    <div>
-                        <h6 class="mb-0 fw-bold text-dark">SoftSolution</h6>
-                        <small class="text-muted">© 2025-26 ERP System</small>
-                    </div>
-                </div>
-                <div class="col-md-4 text-center">
-                    <span class="badge bg-success rounded-pill px-3 mb-1">SYSTEM LIVE</span>
-                    <div class="clock-box" id="erpTime">00:00:00 AM</div>
-                </div>
-                <div class="col-md-4 text-end text-muted">
-                    <small><i class="fa fa-envelope text-primary"></i> Shubham@softsolution.com</small>
-                </div>
+    /* Header Reg Info Styling */
+    .e80-header-info {
+        display: flex;
+        justify-content: space-around;
+        font-weight: bold;
+        font-size: 13px;
+        margin-bottom: 25px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    /* Content Body - Centered as per screenshot */
+    .e80-content-box {
+        text-align: center;
+        line-height: 2.2;
+        color: #333;
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    .e80-variable {
+        font-weight: bold;
+        text-decoration: none; /* Screenshot mein underline nahi hai, sirf bold hai */
+    }
+
+    /* Action Buttons (Right Aligned) */
+    .e80-status-cell { 
+        display: flex; 
+        gap: 4px; 
+        justify-content: flex-end; 
+    }
+
+    .e80-btn-status { 
+        font-size: 10px; 
+        padding: 4px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+        font-weight: bold;
+    }
+
+    .e80-bg-active { background-color: #2e6da4; }
+    .e80-bg-edit { background-color: #5cb85c; }
+    .e80-bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .e80-img-placeholder {
+        border: 1px solid #ddd;
+        width: 80px;
+        height: 60px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fcfcfc;
+    }
+</style>
+
+<tr class="e80-main-table-row">
+    <td style="width: 30px; text-align: center;">
+        <input type="checkbox">
+    </td>
+
+    <td style="width: 40px; text-align: center; font-weight: bold;">
+        16
+    </td>
+
+    <td style="width: 160px;">
+        <div style="font-weight: bold; font-size: 12px; text-transform: uppercase;">GENERAL TEMPLATE</div>
+        <div class="e80-img-placeholder">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <div class="e80-header-info">
+            <span>REG.NO.: <span class="e80-variable">{{reg_no}}</span></span>
+            <span>REG.DATE: <span class="e80-variable">{{reg_date}}</span></span>
+        </div>
+
+        <div class="e80-content-box">
+            This is to certify that <span class="e80-variable">{{student_name}}</span> 
+            son/daughter of <span class="e80-variable">{{parents_name}}</span> 
+            Residing at <span class="e80-variable">{{address}}</span> is bonafide Student of our school.
+            <br>
+            He/She is /was very obedient, sincere and hardworking.
+            <br>
+            He/She bears a good moral character. His/Her Date of Birth is 
+            <span class="e80-variable">{{date_of_birth}}</span> and Place of Birth is 
+            <span class="e80-variable">{{address}}</span>.
+        </div>
+    </td>
+
+    <td style="width: 160px;">
+        <div class="e80-status-cell">
+            <a href="#" class="e80-btn-status e80-bg-active">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e80-btn-status e80-bg-edit" onclick="consoleCall('EDIT GENERAL TEMPLATE')">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+            <a href="#" class="e80-btn-status e80-bg-danger" onclick="consoleCall('DELETE GENERAL TEMPLATE')">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </td>
+</tr>
+<!--yanha se GENERAL TEMPLATE wala porsen poora ho rha hai-->
+<!--yanha se IDENTITY CARD wala porsen poora ho rha hai-->
+<style>
+    /* Fixed border layout for ERP81 */
+    .e81-main-table-row td {
+        border: 1px solid #dee2e6 !important; /* Fixed outer borders */
+        vertical-align: top;
+        padding: 12px;
+        background-color: #fff;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* ID Card Content Styling */
+    .e81-content-box {
+        position: relative;
+        line-height: 1.8;
+        color: #333;
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    /* Student Header (Centered) */
+    .e81-student-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .e81-name {
+        font-size: 16px;
+        font-weight: bold;
+        display: block;
+    }
+
+    .e81-faculty {
+        font-weight: bold;
+        color: #555;
+    }
+
+    /* Details Styling (Left Aligned) */
+    .e81-details {
+        text-align: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .e81-variable {
+        color: #000;
+    }
+
+    /* Action Buttons (Right Aligned) */
+    .e81-status-cell { 
+        display: flex; 
+        gap: 4px; 
+        justify-content: flex-end; 
+    }
+
+    .e81-btn-status { 
+        font-size: 10px; 
+        padding: 4px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+        font-weight: bold;
+    }
+
+    .e81-bg-active { background-color: #2e6da4; }
+    .e81-bg-edit { background-color: #5cb85c; }
+    .e81-bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .e81-img-placeholder {
+        border: 1px solid #ddd;
+        width: 80px;
+        height: 60px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fcfcfc;
+    }
+</style>
+
+<tr class="e81-main-table-row">
+    <td style="width: 30px; text-align: center;">
+        <input type="checkbox">
+    </td>
+
+    <td style="width: 40px; text-align: center; font-weight: bold;">
+        17
+    </td>
+
+    <td style="width: 160px;">
+        <div style="font-weight: bold; font-size: 12px; text-transform: uppercase;">IDENTITY CARD</div>
+        <div class="e81-img-placeholder">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <div class="e81-content-box">
+            <div class="e81-student-header">
+                <span class="e81-name">{{student_name}}</span>
+                <span class="e81-faculty">{{faculty}}-{{semester}}</span>
+            </div>
+
+            <div class="e81-details">
+                <div>PARENT : <span class="e81-variable">{{parents_name}}</span></div>
+                <div>ADDRESS : <span class="e81-variable">{{address}}</span></div>
+                <div>CONTACT : <span class="e81-variable">{{guardian_mobile_1}}</span></div>
+                <div style="margin-top: 5px;">VALID DATE : <span class="e81-variable">JAN 2019 - FEB 2020</span></div>
             </div>
         </div>
-    </footer>
+    </td>
 
+    <td style="width: 160px;">
+        <div class="e81-status-cell">
+            <a href="#" class="e81-btn-status e81-bg-active">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e81-btn-status e81-bg-edit" onclick="consoleCall('EDIT IDENTITY CARD')">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+            <a href="#" class="e81-btn-status e81-bg-danger" onclick="consoleCall('DELETE IDENTITY CARD')">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </td>
+</tr>
+<!--yanha se IDENTITY CARD wala porsen sure ho rha hai-->
+
+<!--yanha se FEE VOUCHER wala porsen sure ho rha hai-->
+<style>
+    .e82-main-row td {
+        border: 1px solid #dee2e6 !important;
+        vertical-align: top;
+        padding: 10px;
+        background-color: #fff;
+    }
+
+    .e82-flex-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .e82-voucher {
+        flex: 1;
+        border: 1px solid #000;
+        padding: 5px;
+        font-family: Arial, sans-serif;
+        font-size: 8.5px; /* Slightly smaller to fit all text */
+        color: #000;
+    }
+
+    .e82-header { text-align: center; margin-bottom: 5px; }
+    .e82-header h2 { font-size: 13px; margin: 0; font-weight: bold; }
+    .e82-header div { font-size: 9px; }
+    
+    .e82-info-table { width: 100%; border-collapse: collapse; margin-bottom: 5px; }
+    .e82-info-table td { border: 1px solid #000 !important; padding: 1px 3px; }
+    .e82-label { width: 45%; font-weight: bold; }
+
+    .e82-challan-title { text-align: center; font-weight: bold; background: #fff; border: 1px solid #000; margin: 2px 0; padding: 1px; }
+
+    .e82-fee-table { width: 100%; border-collapse: collapse; }
+    .e82-fee-table td { border: 1px solid #000 !important; padding: 2px; height: 13px; }
+    .e82-fee-table .th { font-weight: bold; text-align: center; }
+
+    .e82-payment-terms { font-size: 7.5px; margin-top: 5px; line-height: 1.1; }
+    
+    .e82-footer-stamps {
+        margin-top: 10px;
+        text-align: center;
+        border-top: 1px solid #000;
+        padding-top: 5px;
+    }
+    .e82-stamp-box { margin-top: 10px; font-weight: bold; display: flex; justify-content: space-between; padding: 0 5px; }
+
+    .e82-btn-group { display: flex; gap: 3px; justify-content: flex-end; }
+    .e82-btn { padding: 3px 6px; color: #fff !important; font-size: 10px; border-radius: 2px; text-decoration: none; font-weight: bold; }
+</style>
+
+<tr class="e82-main-row">
+    <td style="width: 30px; text-align: center;"><input type="checkbox"></td>
+    <td style="width: 40px; text-align: center; font-weight: bold;">18</td>
+    <td style="width: 130px;">
+        <div style="font-weight: bold; font-size: 11px;">FEE VOUCHER</div>
+        <div style="border: 1px solid #ddd; width: 80px; height: 100px; margin-top: 10px; display: flex; align-items: center; justify-content: center; background: #fcfcfc;">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <div class="e82-flex-container">
+            <div class="e82-voucher">
+                <div class="e82-header">
+                    <h2>UnlimitedEduFirm</h2>
+                    <div>School & College IMS</div>
+                    <div>From Nepal</div>
+                    <div style="margin-top:2px;">Rajbiraj, Saptari (Nepal)</div>
+                    <div style="font-weight:bold; border-top:1px solid #000; margin-top:2px;">ACCOUNT # : {{reg_no}}</div>
+                </div>
+                <table class="e82-info-table">
+                    <tr><td class="e82-label">Student Name :</td><td>{{student_name}}</td></tr>
+                    <tr><td class="e82-label">Father Name :</td><td>{{father_name}}</td></tr>
+                    <tr><td class="e82-label">Faculty/Program/Class :</td><td>{{faculty}}</td></tr>
+                    <tr><td class="e82-label">Sec / Group :</td><td>{{semester}}</td></tr>
+                    <tr><td class="e82-label">Roll No:</td><td>{{university_reg}}</td></tr>
+                    <tr><td class="e82-label">Reg No :</td><td>{{reg_no}}</td></tr>
+                    <tr><td class="e82-label">Issue Date :</td><td>{{date_of_issue}}</td></tr>
+                    <tr><td class="e82-label">Due Date :</td><td>{{date_of_due}}</td></tr>
+                    <tr><td class="e82-label">Fee Month :</td><td>{{month}}</td></tr>
+                </table>
+                <div class="e82-challan-title">FEE CHALLAN</div>
+                <table class="e82-fee-table">
+                    <tr class="th"><td>DESCRIPTION</td><td style="width:30%;">AMOUNT</td></tr>
+                    <tr><td>Admission Fee :</td><td>{{fee}}</td></tr>
+                    <tr><td>Security Fee :</td><td></td></tr>
+                    <tr><td>Examination Fee :</td><td></td></tr>
+                    <tr><td>Board Reg. Fee :</td><td></td></tr>
+                    <tr><td>Misc. Funds :</td><td></td></tr>
+                    <tr><td>Tuition Fee :</td><td></td></tr>
+                    <tr><td>Arrear :</td><td></td></tr>
+                    <tr><td>Fine :</td><td></td></tr>
+                    <tr style="font-weight:bold;"><td>Total Payment by date</td><td>{{total}}</td></tr>
+                </table>
+                <div class="e82-payment-terms">
+                    <b>PAYMENT TERMS:</b><br>
+                    1.) Fee must be paid by 15th of the Month. 2.) Late Fee fine will be charged Rs.20/- per day. 3.) Arrear of the last month will be charged with Rs.300/- as fine. 4.) In case fee is not deposited two months, the name of the student will be struck off from the college rolls automatically. The student will have to get re-admission by paying the 50% of admission fee.
+                </div>
+                <div class="e82-footer-stamps">Bank Copy</div>
+                <div class="e82-stamp-box"><span>________________</span><span>BANK STAMP</span></div>
+            </div>
+
+            <div class="e82-voucher">
+                <div class="e82-header">
+                    <h2>UnlimitedEduFirm</h2>
+                    <div>School & College IMS</div>
+                    <div>From Nepal</div>
+                    <div style="margin-top:2px;">Rajbiraj, Saptari (Nepal)</div>
+                    <div style="font-weight:bold; border-top:1px solid #000; margin-top:2px;">ACCOUNT # : {{reg_no}}</div>
+                </div>
+                <table class="e82-info-table">
+                    <tr><td class="e82-label">Student Name :</td><td>{{student_name}}</td></tr>
+                    <tr><td class="e82-label">Father Name :</td><td>{{father_name}}</td></tr>
+                    <tr><td class="e82-label">Faculty/Program/Class :</td><td>{{faculty}}</td></tr>
+                    <tr><td class="e82-label">Sec / Group :</td><td>{{semester}}</td></tr>
+                    <tr><td class="e82-label">Roll No:</td><td></td></tr>
+                    <tr><td class="e82-label">Reg No :</td><td></td></tr>
+                    <tr><td class="e82-label">Issue Date :</td><td></td></tr>
+                    <tr><td class="e82-label">Due Date :</td><td></td></tr>
+                    <tr><td class="e82-label">Fee Month :</td><td></td></tr>
+                </table>
+                <div class="e82-challan-title">FEE CHALLAN</div>
+                <table class="e82-fee-table">
+                    <tr class="th"><td>DESCRIPTION</td><td>AMOUNT</td></tr>
+                    <tr><td>Registration Fee</td><td></td></tr>
+                    <tr><td>Admission Fee</td><td></td></tr>
+                    <tr><td>Tuition Fee</td><td></td></tr>
+                    <tr><td>Board /University /Exam Fee</td><td></td></tr>
+                    <tr><td>Misc. Charges</td><td></td></tr>
+                    <tr><td>Re-Mid Fee</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr style="font-weight:bold;"><td>Total Payment by date</td><td></td></tr>
+                </table>
+                <div class="e82-payment-terms">
+                    <b>PAYMENT TERMS:</b><br>
+                    1.) Fee must be paid by 15th of the Month. 2.) Late Fee fine will be charged Rs.20/- per day. 3.) Arrear of the last month will be charged with Rs.300/- as fine. 4.) In case fee is not deposited two months, the name of the student will be struck off...
+                </div>
+                <div class="e82-footer-stamps">College Copy</div>
+                <div class="e82-stamp-box"><span>________________</span><span>BANK STAMP</span></div>
+            </div>
+
+            <div class="e82-voucher">
+                <div class="e82-header">
+                    <h2>UnlimitedEduFirm</h2>
+                    <div>School & College IMS</div>
+                    <div>From Nepal</div>
+                    <div style="margin-top:2px;">Rajbiraj, Saptari (Nepal)</div>
+                    <div style="font-weight:bold; border-top:1px solid #000; margin-top:2px;">ACCOUNT # : {{reg_no}}</div>
+                </div>
+                <table class="e82-info-table">
+                    <tr><td class="e82-label">Student Name :</td><td>{{student_name}}</td></tr>
+                    <tr><td class="e82-label">Father Name :</td><td>{{father_name}}</td></tr>
+                    <tr><td class="e82-label">Faculty/Program/Class :</td><td>{{faculty}}</td></tr>
+                    <tr><td class="e82-label">Sec / Group :</td><td>{{semester}}</td></tr>
+                    <tr><td class="e82-label">Roll No:</td><td></td></tr>
+                    <tr><td class="e82-label">Reg No :</td><td></td></tr>
+                    <tr><td class="e82-label">Issue Date :</td><td></td></tr>
+                    <tr><td class="e82-label">Due Date :</td><td></td></tr>
+                    <tr><td class="e82-label">Fee Month :</td><td></td></tr>
+                </table>
+                <div class="e82-challan-title">FEE CHALLAN</div>
+                <table class="e82-fee-table">
+                    <tr class="th"><td>DESCRIPTION</td><td>AMOUNT</td></tr>
+                    <tr><td>Registration Fee</td><td></td></tr>
+                    <tr><td>Admission Fee</td><td></td></tr>
+                    <tr><td>Tuition Fee</td><td></td></tr>
+                    <tr><td>Board /University /Exam Fee</td><td></td></tr>
+                    <tr><td>Misc. Charges</td><td></td></tr>
+                    <tr><td>Re-Mid Fee</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr style="font-weight:bold;"><td>Total Payment by date</td><td></td></tr>
+                </table>
+                <div class="e82-payment-terms">
+                    <b>PAYMENT TERMS:</b><br>
+                    1.) Fee must be paid by 15th of the Month. 2.) Late Fee fine will be charged Rs.20/- per day. 3.) Arrear of the last month will be charged with Rs.300/- as fine. 4.) In case fee is not deposited two months, the name of the student...
+                </div>
+                <div class="e82-footer-stamps">Student Copy</div>
+                <div class="e82-stamp-box"><span>________________</span><span>BANK STAMP</span></div>
+            </div>
+        </div>
+    </td>
+
+    <td style="width: 150px;">
+        <div class="e82-btn-group">
+            <a href="#" class="e82-btn" style="background:#2e6da4;">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e82-btn" style="background:#5cb85c;"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="e82-btn" style="background:#d9534f;"><i class="fa fa-trash"></i></a>
+        </div>
+    </td>
+</tr>
+<!--yanha se FEE VOUCHER wala porsen sure ho rha hai-->
+</tbody>
     <script>
         function consoleCall(action) {
             console.log("----------------------------");
