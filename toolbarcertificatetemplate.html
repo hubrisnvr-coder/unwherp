@@ -899,9 +899,534 @@
         </div>
     </td>
 </tr>
-                </tbody>
+<!--yanha se provissional wala areya sure ho rha hai -->
+<style>
+    /* CSS specifically for ERP75 to ensure fixed borders and layout */
+    .e75-main-table-row td {
+        border: 1px solid #dee2e6 !important; /* Fixed outer borders */
+        vertical-align: top;
+        padding: 12px;
+        background-color: #fff;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* Content Styling - Matches the image layout */
+    .e75-content-box {
+        text-align: center; /* Provisional is usually centered */
+        line-height: 1.6;
+        color: #333;
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .e75-variable {
+        font-weight: bold;
+    }
+
+    /* Signature Section */
+    .e75-sig-wrap {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding: 0 30px;
+        font-weight: bold;
+    }
+
+    /* Metadata at the bottom */
+    .e75-meta-info {
+        text-align: left;
+        margin-top: 30px;
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    /* Action Buttons */
+    .e75-status-cell { 
+        display: flex; 
+        gap: 4px; 
+        justify-content: flex-end; 
+    }
+
+    .e75-btn-status { 
+        font-size: 10px; 
+        padding: 4px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+        font-weight: bold;
+    }
+
+    .e75-bg-active { background-color: #2e6da4; }
+    .e75-bg-edit { background-color: #5cb85c; }
+    .e75-bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .e75-img-placeholder {
+        border: 1px solid #ddd;
+        width: 80px;
+        height: 60px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fcfcfc;
+    }
+</style>
+
+<tr class="e75-main-table-row">
+    <td style="width: 30px; text-align: center;">
+        <input type="checkbox">
+    </td>
+
+    <td style="width: 40px; text-align: center; font-weight: bold;">
+        12
+    </td>
+
+    <td style="width: 160px;">
+        <div style="font-weight: bold; font-size: 12px; text-transform: uppercase;">PROVISIONAL</div>
+        <div class="e75-img-placeholder">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <div class="e75-content-box">
+            <div style="font-style: italic;">This is to certify that</div>
+            <div class="e75-variable" style="font-size: 15px; margin: 5px 0;">{{student_name}}</div>
+            
+            <div style="font-style: italic;">Unique Student ID# <span class="e75-variable">{{reg_no}}</span></div>
+            
+            <div style="margin-top: 10px;">
+                has passed the examination for <span class="e75-variable">{{batch}}</span> at this university<br>
+                and obtained a degree of<br>
+                <span class="e75-variable">{{faculty}}</span>
+            </div>
+
+            <div style="margin-top: 10px;">
+                with a cumulative GPA of <span class="e75-variable">{{gpa}}</span> in a scale of <span class="e75-variable">{{scale}}</span><br>
+                from the <span class="e75-variable">{{department}}</span>
+            </div>
+
+            <div style="margin-top: 15px; font-weight: 500;">
+                The medium of instruction of the program was English.
+            </div>
+
+            <div style="font-size: 11px; margin-top: 10px; font-style: italic; color: #666;">
+                In testimony where this provisional certificate is issued until such times when a<br>
+                convocation is held and a degree certificate is issued.
+            </div>
+
+            <div class="e75-sig-wrap">
+                <span>Registrar</span>
+                <span>Deputy Controller of Examination</span>
+            </div>
+
+            <div class="e75-meta-info">
+                Issued On: <strong>{{date_of_issue}}</strong><br>
+                for Online Verification: ...<br>
+                Date of Publication of Results: <strong>{{result_publish_date}}</strong><br>
+                Verification Code: <strong>{{reg_no}}</strong>
+            </div>
+        </div>
+    </td>
+
+    <td style="width: 160px;">
+        <div class="e75-status-cell">
+            <a href="#" class="e75-btn-status e75-bg-active">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e75-btn-status e75-bg-edit" onclick="consoleCall('EDIT PROVISIONAL')">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+            <a href="#" class="e75-btn-status e75-bg-danger" onclick="consoleCall('DELETE PROVISIONAL')">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </td>
+</tr>
+<!--yanha se provissional wala areya poora ho rha hai -->
+
+<!--yanha se terminiol wala areya sure ho rha hai -->
+<style>
+    /* CSS specifically for ERP77 to ensure fixed borders and layout */
+    .e77-main-table-row td {
+        border: 1px solid #dee2e6 !important; /* Fixed outer borders */
+        vertical-align: top;
+        padding: 12px;
+        background-color: #fff;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* Inner Content Styling */
+    .e77-content-box {
+        line-height: 1.8;
+        color: #333;
+        font-size: 13px;
+        text-align: justify;
+    }
+
+    .e77-variable {
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    .e77-footer-sig {
+        margin-top: 30px;
+        font-weight: bold;
+    }
+
+    /* Action Buttons (Aligned to the Right Column) */
+    .e77-status-cell { 
+        display: flex; 
+        gap: 4px; 
+        justify-content: flex-end; 
+    }
+
+    .e77-btn-status { 
+        font-size: 10px; 
+        padding: 4px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+        font-weight: bold;
+    }
+
+    .e77-bg-active { background-color: #2e6da4; }
+    .e77-bg-edit { background-color: #5cb85c; }
+    .e77-bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .e77-img-placeholder {
+        border: 1px solid #ddd;
+        width: 80px;
+        height: 60px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fcfcfc;
+    }
+</style>
+
+<tr class="e77-main-table-row">
+    <td style="width: 30px; text-align: center;">
+        <input type="checkbox">
+    </td>
+
+    <td style="width: 40px; text-align: center; font-weight: bold;">
+        13
+    </td>
+
+    <td style="width: 160px;">
+        <div style="font-weight: bold; font-size: 12px; text-transform: uppercase;">TESTIMONIAL</div>
+        <div class="e77-img-placeholder">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <div class="e77-content-box">
+            This is to certify that <span class="e77-variable">{{student_name}}</span> Son / Daughter of 
+            <span class="e77-variable">{{father_name}}</span> and <span class="e77-variable">{{mother_name}}</span> 
+            was a student in the Department of <span class="e77-variable">{{department}}</span> 
+            Session <span class="e77-variable">{{batch}}</span> bearing Unique Student ID# 
+            <span class="e77-variable">{{reg_no}}</span> under the Faculty of <span class="e77-variable">{{department}}</span> 
+            at CCN University of Science and Technology. He/She has successfully completed 
+            <span class="e77-variable">{{program_duration}}</span> in <span class="e77-variable">{{year}}</span> 
+            and obtained CGPA of <span class="e77-variable">{{gpa}}</span> on a scale of <span class="e77-variable">{{scale}}</span> 
+            with an Average Grade <span class="e77-variable">{{average_grade}}</span>. 
+            The medium of the program was English.
+            <br><br>
+            He/She bears a good moral character and did not participate in any activities subversive to the state or discipline of the university.
+            <br><br>
+            I wish his/her every success in life.
+            
+            <div class="e77-footer-sig">
+                (Professor Dr........ )<br>
+                Registrar
+            </div>
+        </div>
+    </td>
+
+    <td style="width: 160px;">
+        <div class="e77-status-cell">
+            <a href="#" class="e77-btn-status e77-bg-active">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e77-btn-status e77-bg-edit" onclick="consoleCall('EDIT TESTIMONIAL')">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+            <a href="#" class="e77-btn-status e77-bg-danger" onclick="consoleCall('DELETE TESTIMONIAL')">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </td>
+</tr>
+<!--yanha se terminiol wala areya poora  ho rha hai -->
+
+<!--yanha seTRANSCRIPT wala porsen sure ho rha hai  -->
+<style>
+    /* CSS specifically for ERP78 to ensure fixed borders and layout */
+    .e78-main-table-row td {
+        border: 1px solid #dee2e6 !important; /* Fixed outer borders */
+        vertical-align: top;
+        padding: 12px;
+        background-color: #fff;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* Inner Table for Transcript Data */
+    .e78-inner-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .e78-inner-table td {
+        padding: 6px 8px;
+        font-size: 13px;
+        border: none !important; /* Inner fields don't need borders */
+    }
+
+    /* Field Styles */
+    .e78-label {
+        width: 25%;
+        color: #333;
+        font-weight: 400;
+    }
+
+    .e78-sep {
+        width: 20px;
+        text-align: center;
+    }
+
+    .e78-val {
+        font-weight: bold;
+        color: #000;
+    }
+
+    /* Action Buttons */
+    .e78-status-cell { 
+        display: flex; 
+        gap: 4px; 
+        justify-content: flex-end; 
+    }
+
+    .e78-btn-status { 
+        font-size: 10px; 
+        padding: 4px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+        font-weight: bold;
+    }
+
+    .e78-bg-active { background-color: #2e6da4; }
+    .e78-bg-edit { background-color: #5cb85c; }
+    .e78-bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .e78-img-placeholder {
+        border: 1px solid #ddd;
+        width: 80px;
+        height: 60px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fcfcfc;
+    }
+</style>
+
+<tr class="e78-main-table-row">
+    <td style="width: 30px; text-align: center;">
+        <input type="checkbox">
+    </td>
+
+    <td style="width: 40px; text-align: center; font-weight: bold;">
+        14
+    </td>
+
+    <td style="width: 160px;">
+        <div style="font-weight: bold; font-size: 12px; text-transform: uppercase;">TRANSCRIPT</div>
+        <div class="e78-img-placeholder">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <table class="e78-inner-table">
+            <tr>
+                <td class="e78-label">Name of Student</td>
+                <td class="e78-sep">:</td>
+                <td class="e78-val">{{student_name}}</td>
+            </tr>
+            <tr>
+                <td class="e78-label">Unique Student ID#</td>
+                <td class="e78-sep">:</td>
+                <td class="e78-val">{{reg_no}}</td>
+            </tr>
+            <tr>
+                <td class="e78-label">Program</td>
+                <td class="e78-sep">:</td>
+                <td class="e78-val">{{faculty}}</td>
+            </tr>
+            <tr>
+                <td class="e78-label">Credit Required</td>
+                <td class="e78-sep">:</td>
+                <td class="e78-val">{{credit_required}}</td>
+            </tr>
+            <tr>
+                <td class="e78-label">Passing Year</td>
+                <td class="e78-sep">:</td>
+                <td class="e78-val">{{year}}</td>
+            </tr>
+            <tr>
+                <td class="e78-label">Duration</td>
+                <td class="e78-sep">:</td>
+                <td class="e78-val">{{duration}}</td>
+            </tr>
         </table>
-    </div>
+    </td>
+
+    <td style="width: 160px;">
+        <div class="e78-status-cell">
+            <a href="#" class="e78-btn-status e78-bg-active">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e78-btn-status e78-bg-edit" onclick="consoleCall('EDIT TRANSCRIPT')">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+            <a href="#" class="e78-btn-status e78-bg-danger" onclick="consoleCall('DELETE TRANSCRIPT')">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </td>
+</tr>
+<!--yanha se TRANSCRIPT wala porsen poora ho rha hai-->
+
+<!--yanha se SEMESTER WISE FINAL RESULT wala porsen poora ho rha hai-->
+<style>
+    /* CSS for ERP79 to ensure fixed borders and consistent layout */
+    .e79-main-table-row td {
+        border: 1px solid #dee2e6 !important; /* Fixed outer borders */
+        vertical-align: top;
+        padding: 12px;
+        background-color: #fff;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* Content Styling */
+    .e79-content-box {
+        line-height: 1.8;
+        color: #333;
+        font-size: 13px;
+        text-align: justify;
+    }
+
+    .e79-variable {
+        font-weight: bold;
+        color: #000;
+    }
+
+    /* Metadata List Styling */
+    .e79-meta-list {
+        margin-top: 15px;
+        list-style: none;
+        padding: 0;
+    }
+
+    .e79-meta-list li {
+        margin-bottom: 5px;
+    }
+
+    /* Action Buttons Styling */
+    .e79-status-cell { 
+        display: flex; 
+        gap: 4px; 
+        justify-content: flex-end; 
+    }
+
+    .e79-btn-status { 
+        font-size: 10px; 
+        padding: 4px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+        font-weight: bold;
+    }
+
+    .e79-bg-active { background-color: #2e6da4; }
+    .e79-bg-edit { background-color: #5cb85c; }
+    .e79-bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .e79-img-placeholder {
+        border: 1px solid #ddd;
+        width: 80px;
+        height: 60px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fcfcfc;
+    }
+</style>
+
+<tr class="e79-main-table-row">
+    <td style="width: 30px; text-align: center;">
+        <input type="checkbox">
+    </td>
+
+    <td style="width: 40px; text-align: center; font-weight: bold;">
+        15
+    </td>
+
+    <td style="width: 160px;">
+        <div style="font-weight: bold; font-size: 11px; text-transform: uppercase;">SEMESTER WISE FINAL RESULT</div>
+        <div class="e79-img-placeholder">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <div class="e79-content-box">
+            Student Name: <span class="e79-variable">{{student_name}}</span> 
+            Unique Student ID# <span class="e79-variable">{{reg_no}}</span> 
+            Admitted Year <span class="e79-variable">{{batch}}</span> 
+            Passing Year <span class="e79-variable">{{year}}</span> 
+            Under the Faculty of <span class="e79-variable">{{department}}</span> 
+            got a CGPA of <span class="e79-variable">{{gpa}}</span> and passed. 
+            Documents were submitted for permission to issue his or her Testimonial, Mark Sheet, and Provisional Certificate.
+            
+            <ul class="e79-meta-list">
+                <li>Verification Code: <span class="e79-variable">{{verification_code}}</span></li>
+                <li>Serial Number of Mark Sheet: <span class="e79-variable">{{mark_sheet_sn}}</span></li>
+                <li>Serial Number of Provisional Certificate: <span class="e79-variable">{{provisional_certificate_num}}</span></li>
+            </ul>
+        </div>
+    </td>
+
+    <td style="width: 160px;">
+        <div class="e79-status-cell">
+            <a href="#" class="e79-btn-status e79-bg-active">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e79-btn-status e79-bg-edit" onclick="consoleCall('EDIT FINAL RESULT')">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+            <a href="#" class="e79-btn-status e79-bg-danger" onclick="consoleCall('DELETE FINAL RESULT')">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </td>
+</tr>
+<!--yanha se SEMESTER WISE FINAL RESULT wala porsen poora ho rha hai-->
+            </tbody>
+
 
     <footer class="ss-footer">
         <div class="container footer-card">
