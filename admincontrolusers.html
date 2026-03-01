@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Manager - ERP88</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body { 
+            margin: 0; 
+            padding: 20px; 
+            background-color: #f4f7f9; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Header Navigation */
+        .header-nav { text-align: center; margin-bottom: 20px; }
+        .header-nav h4 { color: #2e6da4; margin-bottom: 10px; font-size: 16px; }
+        .nav-links { display: flex; justify-content: center; gap: 5px; margin-bottom: 15px; }
+        
+        .btn-top {
+            color: white !important;
+            padding: 6px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Filter Section */
+        .filter-container {
+            background: #eee;
+            border: 1px solid #ddd;
+            padding: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .filter-group { display: flex; align-items: center; gap: 5px; flex: 1; min-width: 200px; }
+        .filter-group label { font-size: 12px; font-weight: bold; text-transform: uppercase; white-space: nowrap; }
+        .filter-group input, .filter-group select { 
+            width: 100%; 
+            padding: 6px; 
+            border: 1px solid #ccc; 
+            border-radius: 2px;
+        }
+
+        /* Bulk & Search Tools */
+        .tool-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .bulk-btns { display: flex; gap: 5px; }
+        .action-icons { display: flex; gap: 5px; }
+        
+        .btn-sm {
+            padding: 4px 10px;
+            color: white !important;
+            text-decoration: none;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+        .icon-tool {
+            border: 1px solid #ccc;
+            padding: 5px 8px;
+            color: #337ab7;
+            text-decoration: none;
+            background: #fff;
+        }
+
+        /* Table Design */
+        .table-box { background: #fff; border: 1px solid #ddd; border-radius: 2px; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        thead { background: #e4eaec; }
+        th { 
+            border: 1px solid #ddd; 
+            padding: 10px; 
+            color: #2e6da4; 
+            text-align: left;
+            text-transform: uppercase;
+        }
+        td { border: 1px solid #ddd; padding: 10px; vertical-align: middle; }
+        
+        .user-info { color: #333; font-weight: bold; }
+        .user-email { font-size: 11px; color: #666; font-weight: normal; }
+        
+        /* Status Badges */
+        .badge-role { background: #337ab7; color: white; padding: 2px 8px; border-radius: 2px; font-size: 11px; }
+        .status-select { background: #2e6da4; color: white; border: none; padding: 3px; font-size: 11px; }
+
+        /* Action Buttons in Table */
+        .btn-action {
+            padding: 3px 6px;
+            color: white !important;
+            border-radius: 2px;
+            font-size: 12px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-nav">
+    <h4>User Manager » <span>Detail</span></h4>
+    <div class="nav-links">
+        <a href="javascript:void(0);" onclick="userManagerAction('USER')" class="btn-top" style="background-color: #5cb85c;"><i class="fa fa-user"></i> User</a>
+        <a href="javascript:void(0);" onclick="userManagerAction('ROLE')" class="btn-top" style="background-color: #337ab7;"><i class="fa fa-cog"></i> Role Accessibility</a>
+    </div>
+    <div class="nav-links">
+        <a href="javascript:void(0);" onclick="userManagerAction('DETAIL')" class="btn-top" style="background-color: #5cb85c;"><i class="fa fa-list"></i> Detail</a>
+        <a href="javascript:void(0);" onclick="userManagerAction('CREATE')" class="btn-top" style="background-color: #337ab7;"><i class="fa fa-plus"></i> Create User</a>
+    </div>
+</div>
+
+<div class="filter-container">
+    <div class="filter-group">
+        <label>Name or Email</label>
+        <input type="text" id="filter_search" placeholder="Enter Name or Email...">
+    </div>
+    <div class="filter-group">
+        <label>User Role</label>
+        <select id="filter_role">
+            <option>Select Role</option>
+        </select>
+    </div>
+    <div class="filter-group">
+        <label>Status</label>
+        <select id="filter_status">
+            <option>Select Status</option>
+        </select>
+    </div>
+    <a href="javascript:void(0);" onclick="userManagerAction('FILTER')" class="btn-top" style="background-color: #337ab7;"><i class="fa fa-filter"></i> Filter</a>
+</div>
+
+<div class="tool-bar">
+    <div class="bulk-btns">
+        <a href="javascript:void(0);" onclick="bulkAction('ACTIVE')" class="btn-sm" style="background-color: #337ab7;"><i class="fa fa-check"></i> Active</a>
+        <a href="javascript:void(0);" onclick="bulkAction('INACTIVE')" class="btn-sm" style="background-color: #f0ad4e;"><i class="fa fa-times"></i> In-Active</a>
+        <a href="javascript:void(0);" onclick="bulkAction('DELETE')" class="btn-sm" style="background-color: #d9534f;"><i class="fa fa-trash"></i> Delete</a>
+    </div>
+    <div class="action-icons">
+        <a href="javascript:void(0);" class="icon-tool"><i class="fa fa-search"></i></a>
+        <a href="javascript:void(0);" onclick="location.reload();" class="icon-tool"><i class="fa fa-refresh"></i></a>
+        <a href="javascript:void(0);" class="icon-tool"><i class="fa fa-copy"></i></a>
+        <a href="javascript:void(0);" class="icon-tool"><i class="fa fa-database"></i></a>
+        <a href="javascript:void(0);" onclick="window.print();" class="icon-tool"><i class="fa fa-print"></i></a>
+    </div>
+</div>
+
+<div class="table-box">
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 20px;"><input type="checkbox" id="selectAll"></th>
+                <th>S.N. <i class="fa fa-sort"></i></th>
+                <th>User Detail <i class="fa fa-sort"></i></th>
+                <th>Image <i class="fa fa-sort"></i></th>
+                <th>User Type <i class="fa fa-sort"></i></th>
+                <th>Status <i class="fa fa-sort"></i></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="checkbox" class="user-check"></td>
+                <td>1</td>
+                <td>
+                    <div class="user-info">Super Admin</div>
+                    <div class="user-email">kundan@gmail.com</div>
+                </td>
+                <td>No image</td>
+                <td><span class="badge-role">Super Admin</span></td>
+                <td>
+                    <select class="status-select">
+                        <option>Active</option>
+                    </select>
+                </td>
+                <td>
+                    <a href="javascript:void(0);" onclick="rowAction('VIEW', 1)" class="btn-action" style="background-color: #5cb85c;"><i class="fa fa-eye"></i></a>
+                    <a href="javascript:void(0);" onclick="rowAction('EDIT', 1)" class="btn-action" style="background-color: #337ab7;"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:void(0);" onclick="rowAction('DELETE', 1)" class="btn-action" style="background-color: #d9534f;"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="user-check"></td>
+                <td>2</td>
+                <td>
+                    <div class="user-info">Super Admin</div>
+                    <div class="user-email">superadmin@unlimitededufirm.com</div>
+                </td>
+                <td>No image</td>
+                <td><span class="badge-role">Super Admin</span></td>
+                <td>
+                    <select class="status-select">
+                        <option>Active</option>
+                    </select>
+                </td>
+                <td>
+                    <a href="javascript:void(0);" onclick="rowAction('VIEW', 2)" class="btn-action" style="background-color: #5cb85c;"><i class="fa fa-eye"></i></a>
+                    <a href="javascript:void(0);" onclick="rowAction('EDIT', 2)" class="btn-action" style="background-color: #337ab7;"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:void(0);" onclick="rowAction('DELETE', 2)" class="btn-action" style="background-color: #d9534f;"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // General Actions for Header & Filters
+    function userManagerAction(actionType) {
+        console.log("Triggering Action: " + actionType);
+        // PHP Integration Point: window.location.href = "user_process.php?action=" + actionType;
+        alert("Action: " + actionType + " called via JavaScript.");
+    }
+
+    // Bulk Actions (Active, In-Active, Delete)
+    function bulkAction(type) {
+        let selected = document.querySelectorAll('.user-check:checked').length;
+        alert("Bulk " + type + " triggered for " + selected + " users.");
+    }
+
+    // Individual Row Actions
+    function rowAction(type, id) {
+        alert("Row ID: " + id + " | Action: " + type);
+    }
+
+    // Select All Checkbox Logic
+    document.getElementById('selectAll').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.user-check');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
+</script>
+
+</body>
+</html>
