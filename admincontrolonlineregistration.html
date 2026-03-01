@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP91 - Full Functional Editors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body { margin: 0; padding: 10px; background-color: #f4f7f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        /* Navigation */
+        .header-nav { text-align: center; margin-bottom: 10px; }
+        .nav-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 2px; }
+        .btn-top {
+            color: white !important; padding: 4px 8px; text-decoration: none; border-radius: 2px;
+            font-size: 11px; display: flex; align-items: center; gap: 4px; background-color: #337ab7; font-weight: bold;
+        }
+        .btn-top.active { background-color: #5cb85c; }
+
+        /* Form Structure */
+        .main-box { background: #fff; border: 1px solid #ddd; padding: 5px; margin-top: 10px; }
+        .row-item { display: flex; border-bottom: 1px solid #eee; align-items: center; }
+        .label-side { width: 220px; background: #f9f9f9; padding: 10px; font-size: 11px; font-weight: bold; border-right: 1px solid #ddd; text-transform: uppercase; }
+        .input-side { flex: 1; padding: 5px 10px; }
+        .input-side input, .input-side select { width: 100%; padding: 6px; border: 1px solid #ccc; font-size: 13px; }
+
+        /* Full Toolbar Style */
+        .editor-container { border: 1px solid #ccc; margin-bottom: 20px; }
+        .toolbar { background: #4b91bc; padding: 4px; display: flex; gap: 3px; flex-wrap: wrap; align-items: center; }
+        .t-btn { 
+            background: #4b91bc; border: 1px solid #63a4cc; color: white; padding: 5px 7px; 
+            font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .t-btn:hover { background: #357ebd; }
+        .t-select { background: #fff; border: none; font-size: 11px; padding: 2px; height: 24px; border-radius: 2px; }
+        .content-area { min-height: 150px; padding: 15px; background: #fff; overflow-y: auto; outline: none; border-top: 1px solid #ddd; font-size: 14px; }
+
+        /* Table & Footer */
+        .prog-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12px; }
+        .prog-table th { border: 1px solid #ddd; padding: 8px; background: #f9f9f9; color: #337ab7; text-align: left; border-top: 2px solid red; }
+        .prog-table td { border: 1px solid #ddd; padding: 20px; text-align: center; color: #999; }
+        
+        .footer-bar { display: flex; justify-content: flex-end; gap: 8px; padding: 15px; background: #f5f5f5; border-top: 1px solid #ddd; }
+        .btn-footer { padding: 8px 20px; color: white !important; text-decoration: none; border-radius: 3px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; }
+    </style>
+</head>
+<body>
+
+<div class="header-nav">
+    <div class="nav-links">
+        <a href="javascript:void(0);" onclick="jsAction('GENERAL')" class="btn-top"><i class="fa fa-cog"></i> General Setting</a>
+        <a href="javascript:void(0);" onclick="jsAction('ONLINE_REG')" class="btn-top active"><i class="fa fa-id-card-o"></i> Online Registration</a>
+        <a href="javascript:void(0);" onclick="jsAction('SMS')" class="btn-top"><i class="fa fa-mobile"></i> SMS Setting</a>
+        <a href="javascript:void(0);" onclick="jsAction('EMAIL')" class="btn-top"><i class="fa fa-envelope"></i> E-Mail Setting</a>
+        <a href="javascript:void(0);" onclick="jsAction('ALERT')" class="btn-top"><i class="fa fa-bell"></i> Alert Setting</a>
+        <a href="javascript:void(0);" onclick="jsAction('PAYMENT')" class="btn-top"><i class="fa fa-dollar"></i> Payment Gateway</a>
+        <a href="javascript:void(0);" onclick="jsAction('MEETING')" class="btn-top"><i class="fa fa-video-camera"></i> Meeting - Remote Class</a>
+    </div>
+</div>
+
+<div class="main-box">
+    <div style="text-align: right; padding: 5px;">
+        <a href="javascript:void(0);" onclick="jsAction('SHOW_LIST')" class="btn-top" style="display:inline-flex; background:#337ab7;"><i class="fa fa-list"></i> Show Online Registration List</a>
+    </div>
+
+    <div class="row-item"><div class="label-side">Registration Status</div><div class="input-side"><select><option>Open</option><option>Closed</option></select></div></div>
+    
+    <div class="row-item">
+        <div class="label-side">Open & Close Date</div>
+        <div class="input-side" style="display: flex; gap: 8px;">
+            <input type="text" value="2026-01-01">
+            <span style="padding: 6px; background: #eee; border: 1px solid #ccc;"><i class="fa fa-exchange"></i></span>
+            <input type="text" value="2026-08-31">
+        </div>
+    </div>
+
+    <div class="row-item"><div class="label-side">Title</div><div class="input-side"><input type="text" value="Admission form"></div></div>
+    <div class="row-item"><div class="label-side">Existing Logo</div><div class="input-side" style="font-size: 11px; color:#888;">No image</div></div>
+    <div class="row-item"><div class="label-side">Logo</div><div class="input-side"><input type="file"></div></div>
+    <div class="row-item"><div class="label-side">Rules Status</div><div class="input-side"><select><option>Show</option><option>Hide</option></select></div></div>
+
+    <div id="editor-sections">
+        
+        <div class="label-side" style="width: 100%; border-right: none;">Rules Info</div>
+        <div class="editor-container">
+            <div class="toolbar">
+                <button class="t-btn"><i class="fa fa-magic"></i></button>
+                <button class="t-btn"><b>B</b></button>
+                <button class="t-btn"><u>U</u></button>
+                <button class="t-btn"><i class="fa fa-eraser"></i></button>
+                <select class="t-select"><option>Open Sans</option></select>
+                <button class="t-btn" style="color: yellow;"><i class="fa fa-font"></i></button>
+                <button class="t-btn"><i class="fa fa-list-ul"></i></button>
+                <button class="t-btn"><i class="fa fa-list-ol"></i></button>
+                <button class="t-btn"><i class="fa fa-align-left"></i></button>
+                <button class="t-btn"><i class="fa fa-table"></i></button>
+                <button class="t-btn"><i class="fa fa-link"></i></button>
+                <button class="t-btn"><i class="fa fa-picture-o"></i></button>
+                <button class="t-btn"><i class="fa fa-video-camera"></i></button>
+                <button class="t-btn"><i class="fa fa-arrows-alt"></i></button>
+                <button class="t-btn"><i class="fa fa-code"></i></button>
+                <button class="t-btn"><i class="fa fa-question-circle"></i></button>
+            </div>
+            <div class="content-area" contenteditable="true"></div>
+        </div>
+
+        <div class="row-item"><div class="label-side">Agreement Status</div><div class="input-side"><select><option>Show</option></select></div></div>
+
+        <div class="label-side" style="width: 100%; border-right: none;">Agreement Info</div>
+        <div class="editor-container">
+            <div class="toolbar">
+                <button class="t-btn"><i class="fa fa-magic"></i></button>
+                <button class="t-btn"><b>B</b></button>
+                <button class="t-btn"><u>U</u></button>
+                <button class="t-btn"><i class="fa fa-eraser"></i></button>
+                <select class="t-select"><option>Open Sans</option></select>
+                <button class="t-btn" style="color: yellow;"><i class="fa fa-font"></i></button>
+                <button class="t-btn"><i class="fa fa-list-ul"></i></button>
+                <button class="t-btn"><i class="fa fa-list-ol"></i></button>
+                <button class="t-btn"><i class="fa fa-align-left"></i></button>
+                <button class="t-btn"><i class="fa fa-table"></i></button>
+                <button class="t-btn"><i class="fa fa-link"></i></button>
+                <button class="t-btn"><i class="fa fa-picture-o"></i></button>
+                <button class="t-btn"><i class="fa fa-video-camera"></i></button>
+                <button class="t-btn"><i class="fa fa-arrows-alt"></i></button>
+                <button class="t-btn"><i class="fa fa-code"></i></button>
+                <button class="t-btn"><i class="fa fa-question-circle"></i></button>
+            </div>
+            <div class="content-area" contenteditable="true"></div>
+        </div>
+
+        <div class="label-side" style="width: 100%; border-right: none;">Registration Guideline Info</div>
+        <div class="editor-container">
+            <div class="toolbar">
+                <button class="t-btn"><i class="fa fa-magic"></i></button>
+                <button class="t-btn"><b>B</b></button>
+                <button class="t-btn"><u>U</u></button>
+                <button class="t-btn"><i class="fa fa-eraser"></i></button>
+                <select class="t-select"><option>Open Sans</option></select>
+                <button class="t-btn" style="color: yellow;"><i class="fa fa-font"></i></button>
+                <button class="t-btn"><i class="fa fa-list-ul"></i></button>
+                <button class="t-btn"><i class="fa fa-list-ol"></i></button>
+                <button class="t-btn"><i class="fa fa-align-left"></i></button>
+                <button class="t-btn"><i class="fa fa-table"></i></button>
+                <button class="t-btn"><i class="fa fa-link"></i></button>
+                <button class="t-btn"><i class="fa fa-picture-o"></i></button>
+                <button class="t-btn"><i class="fa fa-video-camera"></i></button>
+                <button class="t-btn"><i class="fa fa-arrows-alt"></i></button>
+                <button class="t-btn"><i class="fa fa-code"></i></button>
+                <button class="t-btn"><i class="fa fa-question-circle"></i></button>
+            </div>
+            <div class="content-area" contenteditable="true"></div>
+        </div>
+
+        <div class="label-side" style="width: 100%; border-right: none;">Registration Close Message</div>
+        <div class="editor-container">
+            <div class="toolbar">
+                <button class="t-btn"><i class="fa fa-magic"></i></button>
+                <button class="t-btn"><b>B</b></button>
+                <button class="t-btn"><u>U</u></button>
+                <button class="t-btn"><i class="fa fa-eraser"></i></button>
+                <select class="t-select"><option>Open Sans</option></select>
+                <button class="t-btn" style="color: yellow;"><i class="fa fa-font"></i></button>
+                <button class="t-btn"><i class="fa fa-list-ul"></i></button>
+                <button class="t-btn"><i class="fa fa-list-ol"></i></button>
+                <button class="t-btn"><i class="fa fa-align-left"></i></button>
+                <button class="t-btn"><i class="fa fa-table"></i></button>
+                <button class="t-btn"><i class="fa fa-link"></i></button>
+                <button class="t-btn"><i class="fa fa-picture-o"></i></button>
+                <button class="t-btn"><i class="fa fa-video-camera"></i></button>
+                <button class="t-btn"><i class="fa fa-arrows-alt"></i></button>
+                <button class="t-btn"><i class="fa fa-code"></i></button>
+                <button class="t-btn"><i class="fa fa-question-circle"></i></button>
+            </div>
+            <div class="content-area" contenteditable="true"></div>
+        </div>
+    </div>
+
+    <div class="row-item"><div class="label-side">Registration Enable Base</div><div class="input-side"><select><option>Faculty/Program/Class</option></select></div></div>
+
+    <table class="prog-table">
+        <thead>
+            <tr>
+                <th>Program/Class</th>
+                <th>Semester/Sec</th>
+                <th>Start & End Date</th>
+                <th>Status</th>
+                <th style="width: 120px;">
+                    <a href="javascript:void(0);" onclick="jsAction('ADD_PROG')" class="btn-top" style="background:#337ab7; justify-content:center;"><i class="fa fa-plus"></i> Add Program</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td colspan="5">No Program Data Defined.</td></tr>
+        </tbody>
+    </table>
+
+    <div class="footer-bar">
+        <a href="javascript:void(0);" onclick="jsAction('RESET')" class="btn-footer" style="background:#94a3b8;"><i class="fa fa-undo"></i> Reset</a>
+        <a href="javascript:void(0);" onclick="jsAction('UPDATE')" class="btn-footer" style="background:#2e6da4;"><i class="fa fa-save"></i> Update</a>
+    </div>
+</div>
+
+<script>
+    // General Action Handler
+    function jsAction(task) {
+        console.log("Triggered Task: " + task);
+        alert("JavaScript Call: " + task);
+        
+        // After PHP integration, you can use:
+        // window.location.href = "process_reg.php?task=" + task;
+    }
+
+    // Individual Icon Action placeholder
+    document.querySelectorAll('.t-btn').forEach(button => {
+        button.onclick = function() {
+            let iconClass = this.querySelector('i') ? this.querySelector('i').className : 'Text';
+            console.log("Toolbar click: " + iconClass);
+        };
+    });
+</script>
+
+</body>
+</html>
