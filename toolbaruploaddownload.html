@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Manager - ERP85</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #download-manager-wrapper {
+            padding: 20px;
+        }
+
+        /* Top Navigation Header */
+        .nav-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-header h4 {
+            color: #2e6da4;
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .nav-header span {
+            color: #999;
+            font-weight: normal;
+        }
+
+        .btn-nav {
+            color: white !important;
+            padding: 7px 15px;
+            text-decoration: none !important;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.2s;
+        }
+
+        .bg-detail { background-color: #5cb85c; }
+        .bg-primary { background-color: #337ab7; }
+        .btn-nav:hover { opacity: 0.9; }
+
+        /* Filter Section */
+        .filter-container {
+            background: white;
+            border: 1px solid #c2cfd6;
+            margin-bottom: 25px;
+            border-radius: 3px;
+        }
+
+        .filter-header {
+            text-align: center;
+            padding: 12px;
+            color: #2e6da4;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        #download-filter-body {
+            border-top: 1px solid #c2cfd6;
+            padding: 20px;
+            display: none; /* Initially hidden */
+            background: #fff;
+        }
+
+        /* Data List Section */
+        .list-container {
+            background: white;
+            border: 1px solid #c2cfd6;
+            border-radius: 3px;
+        }
+
+        .list-header-title {
+            padding: 10px;
+            color: #2e6da4;
+            font-weight: bold;
+            text-align: center;
+            font-size: 15px;
+            border-bottom: 1px solid #c2cfd6;
+        }
+
+        .action-bar {
+            padding: 12px;
+            display: flex;
+            justify-content: center; /* Centered buttons as per erp85 screenshot */
+            gap: 5px;
+        }
+
+        .btn-action {
+            color: white !important;
+            padding: 5px 12px;
+            text-decoration: none !important;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .bg-active { background-color: #337ab7; }
+        .bg-inactive { background-color: #f0ad4e; }
+        .bg-danger { background-color: #d9534f; }
+
+        /* Table Styling */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        th {
+            border: 1px solid #c2cfd6;
+            padding: 12px;
+            background-color: #e4eaec;
+            color: #2e6da4;
+            text-transform: uppercase;
+        }
+
+        td {
+            border: 1px solid #c2cfd6;
+            padding: 12px;
+            color: #333;
+        }
+
+        .no-data-row {
+            text-align: left !important;
+            color: #555;
+            border-top: 2px solid #ff0000 !important;
+            padding: 15px !important;
+        }
+    </style>
+</head>
+<body>
+
+<div id="download-manager-wrapper">
+
+    <div class="nav-header">
+        <h4>Download Manager » <span>Detail</span></h4>
+        <div style="display: flex; justify-content: center; gap: 5px;">
+            <a href="javascript:void(0);" onclick="downloadManagerAction('VIEW_DETAIL')" class="btn-nav bg-detail">
+                <i class="fa fa-list"></i> Detail
+            </a>
+            <a href="javascript:void(0);" onclick="downloadManagerAction('ADD_NEW')" class="btn-nav bg-primary">
+                <i class="fa fa-plus"></i> New Download
+            </a>
+        </div>
+    </div>
+
+    <div class="filter-container">
+        <div class="filter-header" onclick="downloadManagerAction('TOGGLE_FILTER')">
+            » Filter Download <i class="fa fa-filter"></i>
+        </div>
+        <div id="download-filter-body">
+            <p style="text-align:center; font-size:12px; color:#999;">Filter options will go here.</p>
+        </div>
+    </div>
+
+    <div class="list-container">
+        <div class="action-bar">
+            <a href="javascript:void(0);" onclick="bulkDownloadAction('ACTIVE')" class="btn-action bg-active">
+                <i class="fa fa-check"></i> Active
+            </a>
+            <a href="javascript:void(0);" onclick="bulkDownloadAction('INACTIVE')" class="btn-action bg-inactive">
+                <i class="fa fa-times"></i> In-Active
+            </a>
+            <a href="javascript:void(0);" onclick="bulkDownloadAction('DELETE')" class="btn-action bg-danger">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 35px;"><input type="checkbox" id="selectAll"></th>
+                        <th>S.N.</th>
+                        <th>SEMESTER/SECTION</th>
+                        <th>SUBJECT</th>
+                        <th>TITLE</th>
+                        <th>UPLOADED BY</th>
+                        <th>DATE&TIME</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="8" class="no-data-row">
+                            No Download data found. Please Filter Download to show.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * JavaScript Functions for Backend Connectivity
+     */
+
+    // Main Navigation Actions
+    function downloadManagerAction(action) {
+        console.log("Action Triggered: " + action);
+        
+        if (action === 'TOGGLE_FILTER') {
+            const filterDiv = document.getElementById('download-filter-body');
+            filterDiv.style.display = (filterDiv.style.display === 'none' || filterDiv.style.display === '') ? 'block' : 'none';
+        } else if (action === 'ADD_NEW') {
+            // Integration Point: window.location.href = 'add_download.php';
+            alert("Opening New Download Form...");
+        } else {
+            alert("Action: " + action + " triggered.");
+        }
+    }
+
+    // Bulk Management Actions
+    function bulkDownloadAction(status) {
+        console.log("Bulk Update: " + status);
+        // Integration Point: AJAX call to PHP to update database
+        alert("Bulk " + status + " action initiated for selected downloads.");
+    }
+
+    // Select All Checkbox Logic
+    document.getElementById('selectAll')?.addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
+</script>
+
+</body>
+</html>
