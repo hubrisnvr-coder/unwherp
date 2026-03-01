@@ -1,0 +1,93 @@
+<div id="assignment-manager-container" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f9; padding: 20px;">
+
+    <div style="text-align: center; margin-bottom: 15px;">
+        <h4 style="color: #2e6da4; margin: 0; font-size: 16px; font-weight: bold;">
+            Assignment Manager » <span style="color: #999; font-weight: normal;">Detail</span>
+        </h4>
+        <div style="margin-top: 10px; display: flex; justify-content: center; gap: 5px;">
+            <a href="javascript:void(0);" onclick="assignmentAction('VIEW_DETAIL')" style="background-color: #5cb85c; color: white; padding: 6px 15px; text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 5px;">
+                <i class="fa fa-list"></i> Assignment Detail
+            </a>
+            <a href="javascript:void(0);" onclick="assignmentAction('ADD_NEW')" style="background-color: #337ab7; color: white; padding: 6px 15px; text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 5px;">
+                <i class="fa fa-plus"></i> New Assignment
+            </a>
+        </div>
+    </div>
+
+    <div style="background: white; border: 1px solid #c2cfd6; margin-bottom: 20px; border-radius: 2px;">
+        <div style="text-align: center; padding: 10px; color: #2e6da4; font-weight: bold; cursor: pointer; font-size: 15px;" onclick="assignmentAction('TOGGLE_FILTER')">
+            » Filter Assignment <i class="fa fa-filter"></i>
+        </div>
+        <div id="filter-body" style="border-top: 1px solid #c2cfd6; padding: 20px; height: 40px; background-color: #fff;">
+            </div>
+    </div>
+
+    <div style="background: white; border: 1px solid #c2cfd6; border-radius: 2px;">
+        <div style="padding: 10px; color: #2e6da4; font-weight: bold; text-align: center; font-size: 15px; border-bottom: 1px solid #c2cfd6;">
+            <i class="fa fa-list-ul"></i> Assignment List
+        </div>
+
+        <div style="padding: 10px; display: flex; gap: 5px;">
+            <a href="javascript:void(0);" onclick="bulkAction('ACTIVE')" style="background-color: #337ab7; color: white; padding: 5px 12px; text-decoration: none; border-radius: 3px; font-size: 12px; font-weight: bold;">
+                <i class="fa fa-check"></i> Active
+            </a>
+            <a href="javascript:void(0);" onclick="bulkAction('INACTIVE')" style="background-color: #f0ad4e; color: white; padding: 5px 12px; text-decoration: none; border-radius: 3px; font-size: 12px; font-weight: bold;">
+                <i class="fa fa-times"></i> In-Active
+            </a>
+            <a href="javascript:void(0);" onclick="bulkAction('DELETE')" style="background-color: #d9534f; color: white; padding: 5px 12px; text-decoration: none; border-radius: 3px; font-size: 12px; font-weight: bold;">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+
+        <div style="background-color: #337ab7; color: white; padding: 8px 15px; font-size: 13px;">
+            Assignment Record list on table. Filter Assignment using the filter.
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead>
+                    <tr style="background-color: #e4eaec; color: #333;">
+                        <th style="border: 1px solid #c2cfd6; padding: 10px; width: 30px;"><input type="checkbox"></th>
+                        <th style="border: 1px solid #c2cfd6; padding: 10px; color: #2e6da4;">S.N.</th>
+                        <th style="border: 1px solid #c2cfd6; padding: 10px; color: #2e6da4;">SEMESTER/SECTION</th>
+                        <th style="border: 1px solid #c2cfd6; padding: 10px; color: #2e6da4;">SUBJECT</th>
+                        <th style="border: 1px solid #c2cfd6; padding: 10px; color: #2e6da4;">QUESTION</th>
+                        <th style="border: 1px solid #c2cfd6; padding: 10px; color: #2e6da4;">AVAILABLEON</th>
+                        <th style="border: 1px solid #c2cfd6; padding: 10px; color: #2e6da4;">SUBMIT</th>
+                        <th style="border: 1px solid #c2cfd6; padding: 10px; color: #2e6da4;">CREATED BY</th>
+                        <th style="border: 1px solid #c2cfd6; padding: 10px; color: #2e6da4;">STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="9" style="border: 1px solid #c2cfd6; padding: 15px; text-align: left; color: #666; border-top: 2px solid red;">
+                            No Assignment data found. Please Filter Assignment to show.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function assignmentAction(type) {
+        console.log("Global Action Triggered: " + type);
+        if(type === 'ADD_NEW') {
+            // Aap yahan PHP file ka path dal sakte hain baad mein
+            // window.location.href = 'add_assignment.php';
+            alert('Opening Add New Assignment Form...');
+        } else if(type === 'TOGGLE_FILTER') {
+            var f = document.getElementById('filter-body');
+            f.style.display = (f.style.display === 'none') ? 'block' : 'none';
+        }
+    }
+
+    function bulkAction(statusType) {
+        console.log("Bulk Action Triggered: " + statusType);
+        var selected = [];
+        // Logic to collect checkboxes can be added here
+        alert('Performing ' + statusType + ' on selected assignments.');
+    }
+</script>
