@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Setting Manager - ERP90</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body { margin: 0; padding: 20px; background-color: #f4f7f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .header-nav { text-align: center; margin-bottom: 20px; }
+        .header-nav h4 { color: #2e6da4; margin-bottom: 10px; font-size: 16px; font-weight: bold; text-transform: capitalize; }
+        
+        /* Top Navigation Buttons */
+        .nav-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; margin-bottom: 20px; }
+        .btn-top {
+            color: white !important;
+            padding: 6px 10px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: bold;
+            background-color: #337ab7;
+        }
+
+        /* Tab System */
+        .tab-container { background: #fff; border: 1px solid #ddd; border-radius: 2px; }
+        .tabs { display: flex; background: #f9f9f9; border-bottom: 1px solid #ddd; flex-wrap: wrap; }
+        .tab-link {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #2e6da4;
+            border-right: 1px solid #fff;
+        }
+        .tab-link.active { background-color: #fff; color: #f0ad4e; border-top: 2px solid #f0ad4e; }
+
+        /* Form Layout */
+        .form-body { padding: 20px; }
+        .form-row { display: flex; flex-wrap: wrap; margin-bottom: 10px; align-items: stretch; }
+        .label-box { 
+            background: #eee; 
+            border: 1px solid #ccc; 
+            width: 120px; 
+            padding: 8px; 
+            font-size: 12px; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            text-transform: uppercase;
+        }
+        .input-box { flex: 1; border: 1px solid #ccc; border-left: none; }
+        .input-box input, .input-box select { 
+            width: 100%; 
+            padding: 9px; 
+            border: none; 
+            outline: none; 
+            font-size: 14px; 
+            box-sizing: border-box;
+        }
+        .input-box input:focus { background-color: #fffdf0; }
+        .red-line { border-left: 2px solid red !important; }
+
+        /* Bottom Action Buttons */
+        .footer-actions { 
+            margin-top: 20px; 
+            padding: 15px; 
+            background: #f1f4f6; 
+            display: flex; 
+            justify-content: flex-end; 
+            gap: 10px; 
+            border-top: 1px solid #ddd;
+        }
+        .btn-footer {
+            padding: 8px 20px;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-nav">
+    <h4>General Setting Manager » <span>Edit</span></h4>
+    
+    <div class="nav-links">
+        <a href="javascript:void(0);" onclick="settingAction('GENERAL_SETTING')" class="btn-top" style="background-color: #5cb85c;"><i class="fa fa-cog"></i> General Setting</a>
+        <a href="javascript:void(0);" onclick="settingAction('ONLINE_REG')" class="btn-top"><i class="fa fa-id-card-o"></i> Online Registration</a>
+        <a href="javascript:void(0);" onclick="settingAction('SMS_SETTING')" class="btn-top"><i class="fa fa-mobile"></i> SMS Setting</a>
+        <a href="javascript:void(0);" onclick="settingAction('EMAIL_SETTING')" class="btn-top"><i class="fa fa-envelope"></i> E-Mail Setting</a>
+        <a href="javascript:void(0);" onclick="settingAction('ALERT_SETTING')" class="btn-top"><i class="fa fa-bell"></i> Alert Setting</a>
+        <a href="javascript:void(0);" onclick="settingAction('PAYMENT_GATEWAY')" class="btn-top"><i class="fa fa-dollar"></i> Payment Gateway</a>
+        <a href="javascript:void(0);" onclick="settingAction('REMOTE_CLASS')" class="btn-top"><i class="fa fa-video-camera"></i> Meeting - Remote Class</a>
+    </div>
+</div>
+
+<div class="tab-container">
+    <div class="tabs">
+        <a href="javascript:void(0);" onclick="settingAction('TAB_BRANDING')" class="tab-link active"><i class="fa fa-list-alt"></i> General Information & Branding</a>
+        <a href="javascript:void(0);" onclick="settingAction('TAB_MODULES')" class="tab-link"><i class="fa fa-th-list"></i> Modules & Layout</a>
+        <a href="javascript:void(0);" onclick="settingAction('TAB_ANALYTICS')" class="tab-link"><i class="fa fa-line-chart"></i> Analytics & Tracking</a>
+        <a href="javascript:void(0);" onclick="settingAction('TAB_PRINT')" class="tab-link"><i class="fa fa-print"></i> Print</a>
+        <a href="javascript:void(0);" onclick="settingAction('TAB_SOCIAL')" class="tab-link"><i class="fa fa-facebook-official"></i> Social Media</a>
+    </div>
+
+    <div class="form-body">
+        <div style="display: flex; gap: 20px; margin-bottom: 10px;">
+            <div class="form-row" style="flex: 1;">
+                <div class="label-box">Institute</div>
+                <div class="input-box"><input type="text" value="University ERP" style="border: 1px solid orange;"></div>
+            </div>
+            <div class="form-row" style="flex: 1;">
+                <div class="label-box">Salogan</div>
+                <div class="input-box"><input type="text" placeholder=""></div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="label-box">Copyright©</div>
+            <div class="input-box"><input type="text" placeholder=""></div>
+        </div>
+
+        <div style="display: flex; gap: 20px; margin-bottom: 10px;">
+            <div class="form-row" style="flex: 1;">
+                <div class="label-box">Address</div>
+                <div class="input-box red-line"><input type="text" value="Roorkee" style="color: #999;"></div>
+            </div>
+            <div class="form-row" style="flex: 1;">
+                <div class="label-box"><i class="fa fa-phone"></i> Contact</div>
+                <div class="input-box red-line"><input type="text" value="8888888888" style="color: #999;"></div>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 20px; margin-bottom: 10px;">
+            <div class="form-row" style="flex: 1;">
+                <div class="label-box"><i class="fa fa-envelope"></i> Email</div>
+                <div class="input-box red-line"><input type="text" value="roorkee@gmail.com" style="color: #999;"></div>
+            </div>
+            <div class="form-row" style="flex: 1;">
+                <div class="label-box"><i class="fa fa-globe"></i> Website</div>
+                <div class="input-box"><input type="text" placeholder=""></div>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 20px; margin-bottom: 10px;">
+            <div class="form-row" style="flex: 1;">
+                <div class="label-box">Logo</div>
+                <div class="input-box" style="display: flex; align-items: center; padding-left: 10px; background: #fff;">
+                    <input type="file" style="padding: 5px;">
+                </div>
+            </div>
+            <div class="form-row" style="flex: 1;">
+                <div class="label-box">Favicon</div>
+                <div class="input-box" style="display: flex; align-items: center; padding-left: 10px; background: #fff;">
+                    <input type="file" style="padding: 5px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="label-box">Timezone</div>
+            <div class="input-box">
+                <select>
+                    <option>Asia/Kolkata</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-actions">
+        <a href="javascript:void(0);" onclick="settingAction('RESET_FORM')" class="btn-footer" style="background-color: #94a3b8;"><i class="fa fa-undo"></i> Reset</a>
+        <a href="javascript:void(0);" onclick="settingAction('SAVE_FORM')" class="btn-footer" style="background-color: #2e6da4;"><i class="fa fa-save"></i> Save</a>
+    </div>
+</div>
+
+<script>
+    // Master Function for all actions
+    function settingAction(task) {
+        console.log("Triggered Task: " + task);
+        
+        if(task === 'SAVE_FORM') {
+            alert("Data saving process initiated. You can connect your PHP script here.");
+        } else if(task === 'RESET_FORM') {
+            if(confirm("Are you sure you want to reset all fields?")) {
+                location.reload();
+            }
+        } else {
+            alert("Switching to: " + task);
+        }
+    }
+</script>
+
+</body>
+</html>
