@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Click Clean Manager - ERP97</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body { margin: 0; padding: 10px; background-color: #f4f7f9; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; }
+        
+        /* Header & Nav */
+        .page-title { text-align: center; color: #337ab7; font-size: 14px; margin-bottom: 10px; font-weight: bold; text-transform: capitalize; }
+        .page-title span { color: #999; font-weight: normal; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 5px; margin-bottom: 15px; }
+        .btn-nav { color: white !important; text-decoration: none; padding: 4px 12px; border-radius: 4px; font-weight: bold; display: flex; align-items: center; gap: 5px; font-size: 11px; }
+        .blue-btn { background: #337ab7; }
+        .red-btn { background: #d9534f; }
+
+        /* Warning Alert */
+        .alert-warning { background-color: #fcf8e3; border: 1px solid #faebcc; color: #8a6d3b; padding: 10px; border-radius: 4px; margin-bottom: 20px; font-size: 12px; position: relative; }
+        .alert-warning .close { position: absolute; right: 10px; top: 8px; cursor: pointer; font-size: 16px; opacity: 0.5; }
+
+        /* Table */
+        .table-container { background: #fff; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; }
+        .table-header { padding: 10px; text-align: center; color: #337ab7; font-weight: bold; border-bottom: 1px solid #ddd; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; }
+        
+        .clean-info-bar { background: #337ab7; color: white; padding: 8px 12px; font-size: 11px; font-weight: 500; }
+
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { background: #f9f9f9; border: 1px solid #ddd; padding: 8px; text-align: left; color: #337ab7; border-top: 2px solid #337ab7; font-size: 11px; text-transform: uppercase; }
+        .data-table td { border: 1px solid #ddd; padding: 12px; vertical-align: middle; }
+        
+        /* Action Button Styles */
+        .type-text { font-size: 18px; color: #555; text-align: right; padding-right: 40px; }
+        .btn-clean { background: #d9534f; color: white !important; text-decoration: none; padding: 6px 15px; border-radius: 3px; font-size: 11px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .btn-clean:hover { background: #c9302c; }
+    </style>
+</head>
+<body>
+
+<div class="page-title">One Click Clean Manager » <span>Detail</span></div>
+
+<div class="top-nav">
+    <a href="javascript:void(0);" onclick="jsNavigate('Users Activity')" class="btn-nav blue-btn"><i class="fa fa-history"></i> Users Activity</a>
+    <a href="javascript:void(0);" onclick="jsNavigate('Cleaner')" class="btn-nav red-btn"><i class="fa fa-eraser"></i> Cleaner</a>
+    <a href="javascript:void(0);" onclick="jsNavigate('Developer Info')" class="btn-nav blue-btn"><i class="fa fa-info-circle"></i> Developer Info</a>
+</div>
+
+<div class="alert-warning">
+    <i class="fa fa-thumbs-o-up"></i> Be Careful, While Cleaning. It May Delete Your Valuable Records. Backup Your Data Base First.
+    <span class="close" onclick="this.parentElement.style.display='none'">&times;</span>
+</div>
+
+<div class="table-container">
+    <div class="table-header"><i class="fa fa-list"></i> One Click Clean List</div>
+    <div class="clean-info-bar">One Click Clean Record list on table. Filter One Click Clean using the filter.</div>
+    
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 50%;">CLEANER TYPE</th>
+                <th style="width: 50%;">CLEAN ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="type-text">Clean Chache / Config / Route / View</td>
+                <td>
+                    <a href="javascript:void(0);" onclick="jsClean('All Chache')" class="btn-clean"><i class="fa fa-eraser"></i> Clean All Chache</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="type-text">Clear Cache</td>
+                <td>
+                    <a href="javascript:void(0);" onclick="jsClean('All Cache')" class="btn-clean"><i class="fa fa-eraser"></i> Clean All Cache</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="type-text">Clear Route</td>
+                <td>
+                    <a href="javascript:void(0);" onclick="jsClean('Route Cache')" class="btn-clean"><i class="fa fa-eraser"></i> Clear Route Cache</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="type-text">Clear Config</td>
+                <td>
+                    <a href="javascript:void(0);" onclick="jsClean('Config Cache')" class="btn-clean"><i class="fa fa-eraser"></i> Clear Config Cache</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="type-text">Clear View</td>
+                <td>
+                    <a href="javascript:void(0);" onclick="jsClean('View Cache')" class="btn-clean"><i class="fa fa-eraser"></i> Clear View Cache</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="type-text">Clear User Activity</td>
+                <td>
+                    <a href="javascript:void(0);" onclick="jsClean('User Activity')" class="btn-clean"><i class="fa fa-eraser"></i> Clear User Activity</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    /**
+     * Navigation Logic
+     * Aap yahan window.location use kar sakte hain PHP pages ke liye.
+     */
+    function jsNavigate(module) {
+        console.log("Navigating to: " + module);
+        alert("Redirecting to " + module + " module...");
+    }
+
+    /**
+     * Cleaning Action Logic
+     * Baad mein yahan AJAX call lagakar PHP script run kar sakte hain.
+     */
+    function jsClean(type) {
+        let confirmation = confirm("Are you sure you want to " + type + "? This action cannot be undone.");
+        if (confirmation) {
+            console.log("Executing PHP clean command for: " + type);
+            alert(type + " cleaned successfully! (JS call linked)");
+        }
+    }
+</script>
+
+</body>
+</html>
