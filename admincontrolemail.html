@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftSolution | Developer Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Hidden Scrollbar but functional */
+        ::-webkit-scrollbar { display: none; }
+        
+        :root {
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent: #38bdf8;
+            --text-main: #f1f5f9;
+            --text-dim: #94a3b8;
+        }
+
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background: var(--bg); 
+            color: var(--text-main);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            height: 100vh;
+            overflow: hidden; /* Scrollbar Hatane ke liye */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Dynamic Topbar */
+        .header {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 12px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .logo-text span { color: var(--accent); }
+
+        .nav-menu { display: flex; gap: 20px; }
+        .nav-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 12px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+        .nav-link:hover { border-color: var(--accent); color: white; }
+
+        /* Main Viewport */
+        .viewport {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .glass-panel {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Profile Section */
+        .profile-box {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 20px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        h2 { margin: 15px 0 5px 0; font-size: 20px; }
+        p { color: var(--text-dim); font-size: 13px; line-height: 1.5; }
+
+        /* Table Styling */
+        .email-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .email-table td { padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .label { color: var(--text-dim); font-size: 11px; width: 80px; }
+        .email-val { color: var(--accent); text-decoration: none; font-size: 13px; cursor: pointer; transition: 0.2s; }
+        .email-val:hover { color: white; text-shadow: 0 0 8px var(--accent); }
+
+        /* Button */
+        .btn-connect {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--accent);
+            color: #000 !important;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .btn-connect:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3); }
+
+        /* Footer */
+        .footer {
+            background: rgba(15, 23, 42, 0.9);
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-dim);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="logo-text" onclick="jsCall('Logo')">Soft<span>Solution</span></div>
+    <div class="nav-menu">
+        <a class="nav-link" onclick="jsCall('Overview')">Overview</a>
+        <a class="nav-link" onclick="jsCall('API')">API Docs</a>
+        <a class="nav-link" onclick="jsCall('Support')">Direct Support</a>
+    </div>
+</header>
+
+<div class="viewport">
+    <div class="glass-panel">
+        
+        <div class="profile-box">
+            <span class="badge">Lead Software Engineer</span>
+            <h2>Shubham Kumar</h2>
+            <p>Full-stack architectural lead for high-performance ERP systems.</p>
+            
+            <table class="email-table">
+                <tr><td class="label">GMAIL</td><td><a class="email-val" onclick="jsEmail('hubrisnvr@gmail.com')">hubrisnvr@gmail.com</a></td></tr>
+                <tr><td class="label">OUTLOOK</td><td><a class="email-val" onclick="jsEmail('hubrisnvr@outlook.com')">hubrisnvr@outlook.com</a></td></tr>
+                <tr><td class="label">YAHOO</td><td><a class="email-val" onclick="jsEmail('hubrisnvr@yahoo.com')">hubrisnvr@yahoo.com</a></td></tr>
+            </table>
+            
+            <a class="btn-connect" onclick="jsCall('Message Shubham')">
+                <i class="fa fa-telegram"></i> Direct Ping
+            </a>
+        </div>
+
+        <div class="profile-box" style="border-left-color: #f59e0b;">
+            <span class="badge" style="color:#f59e0b; background:rgba(245,158,11,0.1);">Official Corporation</span>
+            <h2>SoftSolution</h2>
+            <p>Scalable enterprise software development & digital transformation.</p>
+            
+            <table class="email-table">
+                <tr><td class="label">OFFICIAL</td><td><a class="email-val" onclick="jsEmail('softsolution@gmai.com')">softsolution@gmai.com</a></td></tr>
+                <tr><td class="label">SUPPORT</td><td><a class="email-val" onclick="jsEmail('softsolution@outlook.com')">softsolution@outlook.com</a></td></tr>
+                <tr><td class="label">BUSINESS</td><td><a class="email-val" onclick="jsEmail('solftsolution@yahoo.com')">solftsolution@yahoo.com</a></td></tr>
+            </table>
+            
+            <a class="btn-connect" style="background:#f59e0b" onclick="jsCall('Business Hire')">
+                <i class="fa fa-briefcase"></i> Corporate Inquiry
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<footer class="footer">
+    &copy; 2026 <b>SoftSolution</b> | Design & Engineering by <b>Shubham Kumar</b>
+</footer>
+
+<script>
+    // Pure JavaScript with Console Log for PHP
+    function jsCall(action) {
+        console.log("PHP-TRIGGER: " + action);
+        alert("Success: " + action + " call initialized.");
+    }
+
+    function jsEmail(email) {
+        console.log("Opening Mailer for: " + email);
+        window.location.href = "mailto:" + email + "?subject=SoftSolution Inquiry";
+    }
+</script>
+
+</body>
+</html>
