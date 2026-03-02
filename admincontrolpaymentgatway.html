@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Setting Manager - ERP96</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body { margin: 0; padding: 10px; background-color: #f4f7f9; font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; }
+        
+        /* Header & Nav */
+        .page-title { text-align: center; color: #337ab7; font-size: 14px; margin-bottom: 10px; font-weight: bold; }
+        .page-title span { color: #999; font-weight: normal; }
+        .top-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; margin-bottom: 15px; }
+        
+        .btn-blue { background: #337ab7; color: white !important; text-decoration: none; padding: 4px 10px; border-radius: 3px; display: flex; align-items: center; gap: 5px; font-weight: bold; }
+        .btn-green { background: #5cb85c; color: white !important; text-decoration: none; padding: 4px 10px; border-radius: 3px; display: flex; align-items: center; gap: 5px; font-weight: bold; }
+
+        /* Success Alert */
+        .alert-success { background-color: #dff0d8; border: 1px solid #d6e9c6; color: #3c763d; padding: 10px; border-radius: 4px; margin-bottom: 15px; position: relative; }
+        .alert-success .close { position: absolute; right: 10px; top: 8px; cursor: pointer; opacity: 0.5; }
+
+        /* Table Structure */
+        .table-container { background: #fff; border: 1px solid #ddd; }
+        .table-header { padding: 8px; text-align: center; color: #337ab7; font-weight: bold; border-bottom: 1px solid #ddd; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { background: #f9f9f9; border: 1px solid #ddd; padding: 6px; text-align: left; color: #337ab7; border-top: 2px solid red; font-size: 10px; text-transform: uppercase; }
+        .data-table td { border: 1px solid #ddd; padding: 8px; vertical-align: middle; }
+        
+        /* Gateway Styles */
+        .gateway-logo { width: 120px; height: auto; display: block; margin: 0 auto; }
+        .config-row { display: flex; border-bottom: 1px solid #eee; }
+        .config-row:last-child { border-bottom: none; }
+        .label-cell { width: 150px; background: #f5f5f5; padding: 6px; font-weight: bold; border-right: 1px solid #ddd; display: flex; align-items: center; }
+        .input-cell { flex: 1; padding: 4px; }
+        .input-cell input { width: 95%; border: 1px solid #ddd; padding: 4px; background: #fff; font-size: 11px; outline: none; }
+
+        /* Status & Update Buttons */
+        .status-select { background: #f0ad4e; color: white; border: none; padding: 4px 8px; border-radius: 3px; font-size: 10px; font-weight: bold; cursor: pointer; }
+        .btn-update { background: #337ab7; color: white !important; text-decoration: none; padding: 6px 12px; border-radius: 3px; font-size: 11px; font-weight: bold; display: inline-flex; align-items: center; gap: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="page-title">Payment Setting Manager » <span>Detail</span></div>
+
+<div class="top-nav">
+    <a href="javascript:void(0);" onclick="jsNav('GENERAL')" class="btn-blue"><i class="fa fa-cog"></i> General Setting</a>
+    <a href="javascript:void(0);" onclick="jsNav('ONLINE')" class="btn-blue"><i class="fa fa-id-card"></i> Online Registration</a>
+    <a href="javascript:void(0);" onclick="jsNav('SMS')" class="btn-blue"><i class="fa fa-mobile"></i> SMS Setting</a>
+    <a href="javascript:void(0);" onclick="jsNav('EMAIL')" class="btn-blue"><i class="fa fa-envelope"></i> E-Mail Setting</a>
+    <a href="javascript:void(0);" onclick="jsNav('ALERT')" class="btn-blue"><i class="fa fa-bell"></i> Alert Setting</a>
+    <a href="javascript:void(0);" onclick="jsNav('PAYMENT')" class="btn-green"><i class="fa fa-dollar"></i> Payment Gateway</a>
+    <a href="javascript:void(0);" onclick="jsNav('MEETING')" class="btn-blue"><i class="fa fa-video-camera"></i> Meeting - Remote Class</a>
+</div>
+
+<div class="alert-success" id="successAlert">
+    <i class="fa fa-thumbs-o-up"></i> Payment Setting In-Active Successfully.
+    <span class="close" onclick="this.parentElement.style.display='none'">&times;</span>
+</div>
+
+<div class="table-container">
+    <div class="table-header"><i class="fa fa-list"></i> Payment Setting List</div>
+    
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 30px;">S.N.</th>
+                <th style="width: 150px; text-align: center;">GATEWAY</th>
+                <th>CONFIG</th>
+                <th style="width: 100px; text-align: center;">STATUS</th>
+                <th style="width: 100px; text-align: center;">ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td><img src="https://via.placeholder.com/120x40?text=Instamojo" alt="Instamojo" class="gateway-logo"></td>
+                <td>
+                    <div class="config-row"><div class="label-cell">API_KEY</div><div class="input-cell"><input type="text" id="insta_key"></div></div>
+                    <div class="config-row"><div class="label-cell">AUTH_TOKEN</div><div class="input-cell"><input type="text" id="insta_token"></div></div>
+                </td>
+                <td align="center">
+                    <select class="status-select" onchange="jsStatus('Instamojo', this.value)">
+                        <option value="Inactive" selected>In Active</option>
+                        <option value="Active">Active</option>
+                    </select>
+                </td>
+                <td align="center"><a href="javascript:void(0);" onclick="jsUpdate('Instamojo')" class="btn-update"><i class="fa fa-save"></i> Update</a></td>
+            </tr>
+
+            <tr>
+                <td>2</td>
+                <td><img src="https://via.placeholder.com/120x40?text=Khalti" alt="Khalti" class="gateway-logo"></td>
+                <td>
+                    <div class="config-row"><div class="label-cell">MODE</div><div class="input-cell"><input type="text" id="khalti_mode" placeholder="Test or Live"></div></div>
+                    <div class="config-row"><div class="label-cell">PUBLIC_KEY</div><div class="input-cell"><input type="text" id="khalti_pub"></div></div>
+                    <div class="config-row"><div class="label-cell">SECRET_KEY</div><div class="input-cell"><input type="text" id="khalti_sec"></div></div>
+                </td>
+                <td align="center">
+                    <select class="status-select" onchange="jsStatus('Khalti', this.value)">
+                        <option value="Inactive" selected>In Active</option>
+                        <option value="Active">Active</option>
+                    </select>
+                </td>
+                <td align="center"><a href="javascript:void(0);" onclick="jsUpdate('Khalti')" class="btn-update"><i class="fa fa-save"></i> Update</a></td>
+            </tr>
+
+            <tr>
+                <td>3</td>
+                <td><img src="https://via.placeholder.com/120x40?text=Paystack" alt="Paystack" class="gateway-logo"></td>
+                <td>
+                    <div class="config-row"><div class="label-cell">PUBLIC KEY</div><div class="input-cell"><input type="text" id="ps_pub"></div></div>
+                    <div class="config-row"><div class="label-cell">SECRET KEY</div><div class="input-cell"><input type="text" id="ps_sec"></div></div>
+                    <div class="config-row"><div class="label-cell">MERCHANT EMAIL</div><div class="input-cell"><input type="text" id="ps_email"></div></div>
+                </td>
+                <td align="center">
+                    <select class="status-select" onchange="jsStatus('Paystack', this.value)">
+                        <option value="Inactive" selected>In Active</option>
+                        <option value="Active">Active</option>
+                    </select>
+                </td>
+                <td align="center"><a href="javascript:void(0);" onclick="jsUpdate('Paystack')" class="btn-update"><i class="fa fa-save"></i> Update</a></td>
+            </tr>
+
+            <tr>
+                <td>4</td>
+                <td><img src="https://via.placeholder.com/120x40?text=PayUMoney" alt="PayU Money" class="gateway-logo"></td>
+                <td>
+                    <div class="config-row"><div class="label-cell">MERCHANT_KEY</div><div class="input-cell"><input type="text" id="payu_key"></div></div>
+                    <div class="config-row"><div class="label-cell">MERCHANT_SALT</div><div class="input-cell"><input type="text" id="payu_salt"></div></div>
+                    <div class="config-row"><div class="label-cell">AUTH_HEADER</div><div class="input-cell"><input type="text" id="payu_auth"></div></div>
+                </td>
+                <td align="center">
+                    <select class="status-select" onchange="jsStatus('PayU', this.value)">
+                        <option value="Inactive" selected>In Active</option>
+                        <option value="Active">Active</option>
+                    </select>
+                </td>
+                <td align="center"><a href="javascript:void(0);" onclick="jsUpdate('PayU')" class="btn-update"><i class="fa fa-save"></i> Update</a></td>
+            </tr>
+
+            <tr>
+                <td>5</td>
+                <td><img src="https://via.placeholder.com/120x40?text=Razorpay" alt="Razorpay" class="gateway-logo"></td>
+                <td>
+                    <div class="config-row"><div class="label-cell">KEY</div><div class="input-cell"><input type="text" id="razor_key"></div></div>
+                    <div class="config-row"><div class="label-cell">SECRET</div><div class="input-cell"><input type="text" id="razor_sec"></div></div>
+                </td>
+                <td align="center">
+                    <select class="status-select" onchange="jsStatus('Razorpay', this.value)">
+                        <option value="Inactive" selected>In Active</option>
+                        <option value="Active">Active</option>
+                    </select>
+                </td>
+                <td align="center"><a href="javascript:void(0);" onclick="jsUpdate('Razorpay')" class="btn-update"><i class="fa fa-save"></i> Update</a></td>
+            </tr>
+
+            <tr>
+                <td>6</td>
+                <td><img src="https://via.placeholder.com/120x40?text=Stripe" alt="Stripe" class="gateway-logo"></td>
+                <td>
+                    <div class="config-row"><div class="label-cell">PUBLISHABLE_KEY</div><div class="input-cell"><input type="text" id="stripe_pub"></div></div>
+                    <div class="config-row"><div class="label-cell">SECRET_KEY</div><div class="input-cell"><input type="text" id="stripe_sec"></div></div>
+                </td>
+                <td align="center">
+                    <select class="status-select" onchange="jsStatus('Stripe', this.value)">
+                        <option value="Inactive" selected>In Active</option>
+                        <option value="Active">Active</option>
+                    </select>
+                </td>
+                <td align="center"><a href="javascript:void(0);" onclick="jsUpdate('Stripe')" class="btn-update"><i class="fa fa-save"></i> Update</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Navigation
+    function jsNav(target) {
+        console.log("Navigating to: " + target);
+        alert("Loading " + target + " settings module...");
+    }
+
+    // Status Change
+    function jsStatus(gateway, value) {
+        console.log("Status changed for " + gateway + " to " + value);
+        const alertBox = document.getElementById('successAlert');
+        alertBox.innerHTML = `<i class="fa fa-info-circle"></i> ${gateway} status set to ${value} successfully. <span class="close" onclick="this.parentElement.style.display='none'">&times;</span>`;
+        alertBox.style.display = 'block';
+    }
+
+    // Update Action
+    function jsUpdate(gateway) {
+        alert("Updating " + gateway + " configuration in database. (JS Call Successful)");
+        console.log("Executing PHP update simulation for " + gateway);
+    }
+</script>
+
+</body>
+</html>
