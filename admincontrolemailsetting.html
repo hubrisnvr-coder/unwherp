@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Setting Manager - ERP94</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body { margin: 0; padding: 0; background-color: #f4f7f9; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        
+        /* Main Header Text */
+        .page-title-bar { text-align: center; padding: 10px 0; background: #fff; border-bottom: 1px solid #e7e7e7; }
+        .page-title-bar h2 { margin: 0; font-size: 15px; color: #337ab7; font-weight: 500; }
+        .page-title-bar span { color: #999; font-weight: 300; }
+
+        /* Top Navigation Buttons */
+        .nav-container { display: flex; justify-content: center; gap: 3px; padding: 10px 0; background: #fff; flex-wrap: wrap; }
+        .btn-nav {
+            color: white !important; padding: 5px 10px; text-decoration: none; border-radius: 3px;
+            font-size: 12px; display: flex; align-items: center; gap: 5px; background-color: #337ab7;
+        }
+        .btn-nav.active { background-color: #5cb85c; }
+
+        /* Configuration Container */
+        .content-wrapper { padding: 15px; }
+        .config-box { background: #fff; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; }
+        .config-header { 
+            color: #337ab7; text-align: center; font-size: 15px; padding: 12px; 
+            border-bottom: 1px solid #ddd; font-weight: bold; 
+        }
+
+        /* Form Layout */
+        .form-body { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; }
+        .input-group { display: flex; align-items: stretch; height: 34px; }
+        .field-label { 
+            width: 140px; background: #eee; border: 1px solid #ccc; 
+            padding: 0 10px; font-size: 11px; font-weight: bold; 
+            display: flex; align-items: center; justify-content: flex-end; text-transform: uppercase; 
+        }
+        .field-input { flex: 1; border: 1px solid #ccc; border-left: none; display: flex; }
+        .field-input input { 
+            width: 100%; border: none; padding: 0 10px; outline: none; font-size: 13px; color: #555;
+        }
+
+        /* Special Borders */
+        .border-red { border-left: 2px solid red !important; }
+        .border-orange { border: 1px solid orange !important; }
+
+        /* Footer */
+        .form-footer { 
+            padding: 15px; background: #f5f5f5; border-top: 1px solid #ddd; 
+            display: flex; justify-content: center; gap: 10px; 
+        }
+        .btn-action {
+            padding: 6px 15px; color: white !important; text-decoration: none; 
+            border-radius: 3px; font-size: 13px; font-weight: bold; 
+            display: flex; align-items: center; gap: 5px; min-width: 80px; justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-title-bar">
+    <h2>Email Setting Manager » <span>Books Add</span></h2>
+</div>
+
+<div class="nav-container">
+    <a href="javascript:void(0);" onclick="nav('GENERAL')" class="btn-nav"><i class="fa fa-cog"></i> General Setting</a>
+    <a href="javascript:void(0);" onclick="nav('REG')" class="btn-nav"><i class="fa fa-pencil-square-o"></i> Online Registration</a>
+    <a href="javascript:void(0);" onclick="nav('SMS')" class="btn-nav"><i class="fa fa-mobile"></i> SMS Setting</a>
+    <a href="javascript:void(0);" onclick="nav('EMAIL')" class="btn-nav active"><i class="fa fa-envelope"></i> E-Mail Setting</a>
+    <a href="javascript:void(0);" onclick="nav('ALERT')" class="btn-nav"><i class="fa fa-bell"></i> Alert Setting</a>
+    <a href="javascript:void(0);" onclick="nav('PAY')" class="btn-nav"><i class="fa fa-dollar"></i> Payment Gateway</a>
+    <a href="javascript:void(0);" onclick="nav('MEET')" class="btn-nav"><i class="fa fa-video-camera"></i> Meeting - Remote Class</a>
+</div>
+
+<div class="content-wrapper">
+    <div class="config-box">
+        <div class="config-header"><i class="fa fa-plus"></i> Email Configuration</div>
+        
+        <div class="form-body">
+            <div class="input-group">
+                <div class="field-label">Driver</div>
+                <div class="field-input border-orange"><input type="text" id="driver" placeholder="e.g.SMTP"></div>
+            </div>
+            <div class="input-group">
+                <div class="field-label">Host</div>
+                <div class="field-input border-red"><input type="text" id="host" placeholder="e.g.mail.google.com"></div>
+            </div>
+
+            <div class="input-group">
+                <div class="field-label">Port</div>
+                <div class="field-input border-red"><input type="text" id="port" placeholder="e.g.465"></div>
+            </div>
+            <div class="input-group">
+                <div class="field-label">Encryption</div>
+                <div class="field-input border-red"><input type="text" id="encryption" placeholder="e.g.TLS"></div>
+            </div>
+
+            <div class="input-group">
+                <div class="field-label">User Name</div>
+                <div class="field-input border-red"><input type="text" id="username" placeholder=""></div>
+            </div>
+            <div class="input-group">
+                <div class="field-label">Password</div>
+                <div class="field-input border-red"><input type="password" id="password" placeholder=""></div>
+            </div>
+        </div>
+
+        <div class="form-footer">
+            <a href="javascript:void(0);" onclick="handleAction('RESET')" class="btn-action" style="background-color: #abbac3;"><i class="fa fa-undo"></i> Reset</a>
+            <a href="javascript:void(0);" onclick="handleAction('SAVE')" class="btn-action" style="background-color: #2e6da4;"><i class="fa fa-save"></i> Save</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function nav(page) {
+        console.log("Navigating to " + page);
+        alert("Navigating to: " + page);
+    }
+
+    function handleAction(type) {
+        if(type === 'SAVE') {
+            alert("Email Configuration Saved (JS Call)");
+        } else if(type === 'RESET') {
+            if(confirm("Reset all fields?")) {
+                document.querySelectorAll('input').forEach(i => i.value = '');
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
