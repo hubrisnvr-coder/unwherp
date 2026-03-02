@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP98 - Button Fixed Version</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body { margin: 0; padding: 5px; background-color: #f4f7f9; font-family: 'Segoe UI', Tahoma, sans-serif; font-size: 11px; }
+        .page-title { text-align: center; color: #337ab7; font-size: 14px; margin-bottom: 8px; font-weight: bold; }
+        
+        /* Nav */
+        .top-nav { display: flex; justify-content: center; gap: 4px; margin-bottom: 10px; }
+        .btn-nav { color: white !important; text-decoration: none; padding: 4px 10px; border-radius: 3px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+        .blue-btn { background: #337ab7; }
+        .green-btn { background: #5cb85c; }
+        .red-btn { background: #d9534f; }
+
+        /* Table */
+        .table-container { background: #fff; border: 1px solid #ddd; overflow-x: auto; }
+        .blue-info-bar { background: #337ab7; color: white; padding: 6px 12px; font-size: 11px; }
+        
+        .data-table { width: 100%; border-collapse: collapse; min-width: 1400px; }
+        .data-table th { background: #f9f9f9; border: 1px solid #ddd; padding: 6px; text-align: left; color: #337ab7; border-top: 2px solid #337ab7; }
+        .data-table td { border: 1px solid #ddd; padding: 6px; vertical-align: top; }
+
+        .val-link { color: #337ab7; text-decoration: underline; font-weight: bold; cursor: pointer; display: block; }
+        .val-box { background: #f9f9f9; border: 1px solid #eee; padding: 3px; font-family: monospace; font-size: 9px; color: #666; }
+        
+        .btn-delete { background: #d9534f; color: white !important; padding: 3px 6px; border-radius: 2px; text-decoration: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="page-title">User Activity Manager » <span>Detail</span></div>
+
+<div class="top-nav">
+    <a class="btn-nav green-btn" onclick="runPHP('User Activity')"><i class="fa fa-history"></i> User Activity</a>
+    <a class="btn-nav red-btn" onclick="runPHP('Cleaner')"><i class="fa fa-eraser"></i> Cleaner</a>
+    <a class="btn-nav blue-btn" onclick="runPHP('Dev Info')"><i class="fa fa-info-circle"></i> Developer Info</a>
+</div>
+
+<div class="table-container">
+    <div class="blue-info-bar">User Activity Record list on table.</div>
+    
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th><input type="checkbox"></th>
+                <th>S.N.</th>
+                <th>USER</th>
+                <th>USER TYPE</th>
+                <th>EVENT</th>
+                <th>OLD VALUES</th>
+                <th>NEW VALUES</th>
+                <th>URL</th>
+                <th>IP ADDRESS</th>
+                <th>TAG</th>
+                <th>CREATED AT</th>
+                <th>UPDATED AT</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody id="mainBody">
+            </tbody>
+    </table>
+</div>
+
+<script>
+    // Universal function for ALL buttons
+    function runPHP(actionName) {
+        // Yeh console mein 100% dikhega
+        console.log("SUCCESS: Button Clicked -> " + actionName);
+        alert("Action Triggered: " + actionName + "\nCheck Console (F12) to see logic.");
+    }
+
+    function initPage() {
+        const body = document.getElementById('mainBody');
+        for (let i = 1; i <= 30; i++) {
+            let row = `
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>${i}</td>
+                    <td><b>Super Admin</b></td>
+                    <td>Super Admin</td>
+                    <td><b>UPDATE</b></td>
+                    <td>
+                        <a class="val-link" onclick="runPHP('View Old Values Row ${i}')">» Old Values</a>
+                        <div class="val-box">{"status":"active"}</div>
+                    </td>
+                    <td>
+                        <a class="val-link" onclick="runPHP('View New Values Row ${i}')">» New Values</a>
+                        <div class="val-box">{"status":"inactive"}</div>
+                    </td>
+                    <td style="color:#337ab7;">https://university-erp.com/admin/settings/update</td>
+                    <td>122.161.54.194</td>
+                    <td>web</td>
+                    <td>2026-03-03 12:12:01</td>
+                    <td>2026-03-03 12:12:01</td>
+                    <td align="center">
+                        <a class="btn-delete" onclick="runPHP('Delete ID ${i}')"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>`;
+            body.innerHTML += row;
+        }
+    }
+
+    // Initialize content
+    window.onload = initPage;
+</script>
+
+</body>
+</html>
