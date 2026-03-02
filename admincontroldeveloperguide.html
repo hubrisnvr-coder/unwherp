@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Guide Manager - ERP99</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body { margin: 0; padding: 10px; background-color: #f4f7f9; font-family: 'Segoe UI', Tahoma, sans-serif; font-size: 12px; color: #333; }
+        
+        /* Header */
+        .page-title { text-align: center; color: #337ab7; font-size: 14px; margin-bottom: 12px; font-weight: bold; }
+        .page-title span { color: #999; font-weight: normal; }
+        
+        /* Top Navigation */
+        .top-nav { display: flex; justify-content: center; gap: 5px; margin-bottom: 20px; }
+        .btn-nav { color: white !important; text-decoration: none; padding: 5px 12px; border-radius: 4px; font-weight: bold; display: flex; align-items: center; gap: 6px; font-size: 11px; transition: 0.2s; }
+        .blue-btn { background: #337ab7; }
+        .green-btn { background: #5cb85c; }
+        
+        /* Table Structure */
+        .table-container { background: #fff; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; }
+        .table-header { padding: 10px; text-align: center; color: #337ab7; font-weight: bold; border-bottom: 1px solid #ddd; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; }
+        
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { background: #f9f9f9; border: 1px solid #ddd; padding: 10px; text-align: center; color: #337ab7; border-top: 2px solid red; font-size: 11px; text-transform: uppercase; }
+        .data-table td { border: 1px solid #ddd; padding: 12px 10px; vertical-align: middle; color: #555; }
+        
+        /* Specific Button Style */
+        .btn-info { background: #337ab7; color: white !important; text-decoration: none; padding: 5px 10px; border-radius: 3px; font-size: 11px; display: inline-flex; align-items: center; gap: 6px; transition: 0.3s; }
+        .btn-info:hover { background: #286090; }
+        
+        /* Alignments */
+        .text-left { text-align: left; }
+        .text-center { text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="page-title">Developer Guide Manager » <span>Detail</span></div>
+
+<div class="top-nav">
+    <a href="javascript:void(0);" onclick="handleAction('Users Activity')" class="btn-nav blue-btn"><i class="fa fa-history"></i> Users Activity</a>
+    <a href="javascript:void(0);" onclick="handleAction('Cleaner')" class="btn-nav blue-btn"><i class="fa fa-eraser"></i> Cleaner</a>
+    <a href="javascript:void(0);" onclick="handleAction('Developer Info')" class="btn-nav green-btn"><i class="fa fa-users"></i> Developer Info</a>
+</div>
+
+<div class="table-container">
+    <div class="table-header"><i class="fa fa-list"></i> Developer Guide List</div>
+    
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 30%;">INFO TITLE</th>
+                <th style="width: 10%;">TOTAL</th>
+                <th style="width: 30%;">FILE LOCATION</th>
+                <th style="width: 30%;">LINK</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-left">Total Number Of Route</td>
+                <td class="text-left">1556</td>
+                <td class="text-left">routes/web.php</td>
+                <td class="text-left">
+                    <a href="javascript:void(0);" onclick="handleAction('Routes Detail Info')" class="btn-info">
+                        <i class="fa fa-list-ul"></i> Routes Detail Info
+                    </a>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="text-left">Total Number Of Tables</td>
+                <td class="text-left">193</td>
+                <td class="text-left">database/migrations*</td>
+                <td class="text-left">
+                    <a href="javascript:void(0);" onclick="handleAction('Tables Detail Info')" class="btn-info">
+                        <i class="fa fa-list-ul"></i> Tables Detail Info
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    /**
+     * Central Action Handler
+     * Is function ko aap baad mein AJAX ya window.location ke liye PHP se connect kar sakte hain.
+     */
+    function handleAction(actionType) {
+        // Console log for debugging
+        console.log("Button Clicked: " + actionType);
+        
+        // Visual feedback
+        alert("JS Call: Executing action for " + actionType);
+        
+        // Example for PHP connection:
+        // if(actionType === 'Cleaner') { window.location.href = 'cleaner.php'; }
+    }
+</script>
+
+</body>
+</html>
