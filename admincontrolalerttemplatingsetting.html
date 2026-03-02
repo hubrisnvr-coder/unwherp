@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert Template Manager - ERP95 Final</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body { margin: 0; padding: 8px; background-color: #f4f7f9; font-family: 'Segoe UI', Tahoma, sans-serif; font-size: 12px; }
+        
+        /* Header Title */
+        .page-title { text-align: center; color: #337ab7; font-size: 15px; margin-bottom: 8px; font-weight: bold; }
+        .page-title span { color: #888; font-weight: normal; }
+
+        /* Navigation */
+        .top-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 3px; margin-bottom: 8px; }
+        .btn-blue { background: #337ab7; color: white !important; text-decoration: none; padding: 4px 8px; border-radius: 3px; display: flex; align-items: center; gap: 4px; font-weight: bold; font-size: 11px; }
+        .btn-green { background: #5cb85c; color: white !important; text-decoration: none; padding: 4px 8px; border-radius: 3px; display: flex; align-items: center; gap: 4px; font-weight: bold; font-size: 11px; }
+
+        .sub-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 3px; margin-bottom: 12px; padding: 8px; background: #fff; border: 1px solid #ddd; }
+        .btn-sub { background: #337ab7; color: white !important; text-decoration: none; padding: 2px 6px; border-radius: 2px; font-size: 10px; }
+
+        /* Table */
+        .table-container { background: #fff; border: 1px solid #ddd; border-radius: 3px; }
+        .table-header { background: #fff; color: #337ab7; padding: 10px; font-weight: bold; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 6px; font-size: 13px; }
+        
+        .search-row { display: flex; justify-content: space-between; padding: 8px 12px; background: #fcfcfc; border-bottom: 1px solid #eee; }
+        .search-row input { border: 1px solid #ccc; padding: 4px; border-radius: 3px; font-size: 12px; }
+
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { background: #f9f9f9; border: 1px solid #ddd; padding: 8px; text-align: left; color: #337ab7; border-top: 2px solid #d9534f; font-size: 11px; }
+        .data-table td { border: 1px solid #ddd; padding: 8px; vertical-align: top; font-size: 12px; line-height: 1.4; }
+        
+        /* Template Content */
+        .tpl-badge { background: #337ab7; color: white; padding: 1px 6px; border-radius: 2px; font-size: 10px; font-weight: bold; margin-bottom: 4px; display: inline-block; }
+        .tpl-text { color: #555; display: block; font-style: italic; font-size: 11px; }
+        
+        /* Status & Action Buttons */
+        .status-btn { color: white !important; padding: 3px 10px; border-radius: 2px; text-decoration: none; font-size: 10px; font-weight: bold; display: inline-block; transition: 0.3s; }
+        .active-state { background: #337ab7; }
+        .inactive-state { background: #d9534f; }
+        
+        .edit-btn { background: #5cb85c; color: white !important; padding: 3px 8px; border-radius: 2px; text-decoration: none; font-size: 10px; font-weight: bold; display: inline-flex; align-items: center; gap: 3px; }
+    </style>
+</head>
+<body>
+
+<div class="page-title">Alert Template Manager » <span>List</span></div>
+
+<div class="top-nav">
+    <a href="javascript:void(0);" onclick="navAction('General Setting')" class="btn-blue"><i class="fa fa-cog"></i> General Setting</a>
+    <a href="javascript:void(0);" onclick="navAction('Online Registration')" class="btn-blue"><i class="fa fa-id-card"></i> Online Registration</a>
+    <a href="javascript:void(0);" onclick="navAction('SMS Setting')" class="btn-blue"><i class="fa fa-mobile"></i> SMS Setting</a>
+    <a href="javascript:void(0);" onclick="navAction('Email Setting')" class="btn-blue"><i class="fa fa-envelope"></i> E-Mail Setting</a>
+    <a href="javascript:void(0);" onclick="navAction('Alert Setting')" class="btn-green"><i class="fa fa-bell"></i> Alert Setting</a>
+    <a href="javascript:void(0);" onclick="navAction('Payment Gateway')" class="btn-blue"><i class="fa fa-dollar"></i> Payment Gateway</a>
+    <a href="javascript:void(0);" onclick="navAction('Meeting')" class="btn-blue"><i class="fa fa-video-camera"></i> Meeting-Remote Class</a>
+</div>
+
+<div class="sub-nav">
+    <script>
+        const subItems = ["BirthdayAlert", "StudentRegistration", "StudentUpdate", "FeePayment", "StudentFees", "AssignAdmissionNo", "StudentAttendance", "StaffAttendance", "StaffAttendanceHalfday", "ExamScoreInformation", "LibraryRegistration", "LibraryBookIssue", "VisitorRegistration", "BalanceAlert", "TransportRegistration"];
+        subItems.forEach(item => {
+            document.write(`<a href="javascript:void(0);" onclick="navAction('${item}')" class="btn-sub"># ${item}</a>`);
+        });
+    </script>
+</div>
+
+<div class="table-container">
+    <div class="table-header"><i class="fa fa-list"></i> Alert Template List</div>
+    
+    <div class="search-row">
+        <div>Display <select><option>28</option></select> records</div>
+        <div>Search: <input type="text" onkeyup="filterTable(this)" placeholder="Search template..."></div>
+    </div>
+
+    <table class="data-table" id="templateTable">
+        <thead>
+            <tr>
+                <th style="width: 35px;">S.N.</th>
+                <th style="width: 160px;">EVENT</th>
+                <th style="width: 120px;">ACTIVE METHOD</th>
+                <th>TEMPLATE</th>
+                <th style="width: 90px;">STATUS</th>
+                <th style="width: 70px;">ACTION</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            </tbody>
+    </table>
+</div>
+
+<script>
+    // Full Data Object for all 28 entries
+    const templateData = [
+        { event: "Birthday Alert", badge: "Happy Birth Wishing Mail...", text: "Dear {full_name}, wishing you smiles for every moment of your special day..." },
+        { event: "Student Registration", badge: "Registration Notification |", text: "Dear {full_name}, you are successfully registration in our institution with {reg_no}..." },
+        { event: "Student Update", badge: "Update Information |", text: "Dear {full_name}, we would inform you that we successfully updated your profile..." },
+        { event: "Fee Payment", badge: "Fee Payment Information |", text: "Dear {full_name}, we would inform you that we successfully received your payment..." },
+        { event: "Student Fees", badge: "Balance Alert Information |", text: "Dear {full_name}, you have {due_amount} balance fees, please deposit on time..." },
+        { event: "Assign Admission No", badge: "Admission No Assigned |", text: "Dear {full_name}, your admission number has been assigned as {adm_no}..." },
+        { event: "Student Attendance", badge: "Attendance Alert |", text: "Dear Parent, your ward {full_name} is Absent today..." },
+        { event: "Staff Attendance", badge: "Staff Attendance |", text: "Dear {full_name}, your attendance for today has been marked..." }
+        // ... more data can be added to this array
+    ];
+
+    // Function to render table
+    function renderTable() {
+        const body = document.getElementById('tableBody');
+        for (let i = 0; i < 28; i++) {
+            const data = templateData[i % templateData.length];
+            const row = `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td><b>${data.event}</b></td>
+                    <td>Email/SMS</td>
+                    <td>
+                        <span class="tpl-badge">${data.badge}</span>
+                        <span class="tpl-text">${data.text}</span>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="toggleStatus(this)" class="status-btn active-state">Active</a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="editAction(${i+1})" class="edit-btn"><i class="fa fa-pencil"></i> Edit</a>
+                    </td>
+                </tr>`;
+            body.innerHTML += row;
+        }
+    }
+
+    // Working JavaScript Calls
+    function navAction(page) {
+        console.log("Navigating to: " + page);
+        alert("Redirecting to: " + page + "\n(PHP call ready)");
+    }
+
+    function toggleStatus(btn) {
+        if (btn.classList.contains('active-state')) {
+            btn.classList.remove('active-state');
+            btn.classList.add('inactive-state');
+            btn.innerText = "Inactive";
+        } else {
+            btn.classList.remove('inactive-state');
+            btn.classList.add('active-state');
+            btn.innerText = "Active";
+        }
+        console.log("Status changed to: " + btn.innerText);
+    }
+
+    function editAction(id) {
+        alert("Opening Template Editor for ID: " + id);
+    }
+
+    function filterTable(input) {
+        let filter = input.value.toUpperCase();
+        let rows = document.getElementById("templateTable").getElementsByTagName("tr");
+        for (let i = 1; i < rows.length; i++) {
+            let td = rows[i].getElementsByTagName("td")[1];
+            if (td) {
+                let textValue = td.textContent || td.innerText;
+                rows[i].style.display = textValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+            }
+        }
+    }
+
+    window.onload = renderTable;
+</script>
+
+</body>
+</html>
