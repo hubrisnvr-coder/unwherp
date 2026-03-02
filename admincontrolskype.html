@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skype Contact | SoftSolution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Hidden Scrollbar par scrolling functional rahegi */
+        ::-webkit-scrollbar { display: none; }
+        
+        :root {
+            --topbar-bg: #2c3e50; 
+            --footer-bg: #2c3e50;
+            --portal-bg: #fff; 
+            --accent-blue: #337ab7; 
+            --skype-blue: #00aff0;
+            --whatsapp-green: #25d366;
+            --card-glass: rgba(255, 255, 255, 0.95);
+            --text-main: #333;
+            --text-dim: #777;
+        }
+
+        body { 
+            margin: 0; padding: 0; 
+            background: var(--portal-bg); 
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            height: 100vh;
+            overflow: hidden; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Topbar Style */
+        .topbar { 
+            background: var(--topbar-bg); 
+            color: white; 
+            padding: 12px 30px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 3px solid var(--accent-blue);
+        }
+        .logo-section { font-size: 20px; font-weight: bold; letter-spacing: 1px; }
+        .logo-section span { color: var(--accent-blue); }
+        .nav-links a { color: #ccc; text-decoration: none; margin-left: 20px; font-size: 12px; font-weight: bold; }
+
+        /* Middle Section */
+        .viewport {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        }
+
+        .main-panel {
+            width: 100%;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 15px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .glass-card:hover { 
+            transform: translateY(-8px); 
+            border-color: var(--skype-blue);
+        }
+
+        /* Profile Image Styling */
+        .profile-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid var(--accent-blue);
+            padding: 3px;
+            background: #fff;
+        }
+
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 175, 240, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            color: var(--skype-blue);
+        }
+
+        h2 { margin: 0; font-size: 22px; color: #1a1c23; }
+        small { color: var(--text-dim); text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
+
+        .info-box {
+            margin: 20px 0;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px dashed rgba(0, 175, 240, 0.2);
+        }
+        .skype-id {
+            color: var(--skype-blue);
+            font-size: 15px;
+            font-weight: bold;
+            display: block;
+            word-break: break-all;
+        }
+
+        /* Action Buttons */
+        .btn-skype {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--skype-blue);
+            color: white !important;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 10px;
+        }
+        .btn-skype:hover { background: #008cc0; box-shadow: 0 8px 20px rgba(0, 175, 240, 0.2); }
+
+        /* Footer */
+        .footer {
+            background: var(--footer-bg);
+            color: #bdc3c7;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="logo-section"><i class="fa fa-skype"></i> SoftSolution</div>
+    <div class="nav-links">
+        <a href="javascript:void(0);" onclick="jsLog('Support')">Support</a>
+        <a href="javascript:void(0);" onclick="jsLog('Dashboard')">Dashboard</a>
+    </div>
+</div>
+
+<div class="viewport">
+    <div class="main-panel">
+        
+        <div class="glass-card">
+            <img src="shubham.png" alt="Shubham Kumar" class="profile-img">
+            <br>
+            <small>Lead Software Engineer</small>
+            <h2>Shubham Kumar</h2>
+            
+            <div class="info-box">
+                <span style="font-size: 11px; color:#999; display:block; margin-bottom:5px;">OFFICIAL SKYPE ID</span>
+                <a class="skype-id">hubrisnvr@outlook.com</a>
+            </div>
+            
+            <a class="btn-skype" onclick="openSkype('hubrisnvr@outlook.com')">
+                <i class="fa fa-skype"></i> Connect on Skype
+            </a>
+        </div>
+
+        <div class="glass-card">
+            <div class="icon-circle"><i class="fa fa-building-o"></i></div>
+            <small>Official Organization</small>
+            <h2>SoftSolution</h2>
+            
+            <div class="info-box">
+                <span style="font-size: 11px; color:#999; display:block; margin-bottom:5px;">WHATSAPP SUPPORT</span>
+                <a class="skype-id" style="color:var(--whatsapp-green);">+91 6396004079</a>
+            </div>
+            
+            <a class="btn-skype" style="background: var(--whatsapp-green);" onclick="openWA()">
+                <i class="fa fa-whatsapp"></i> Business WhatsApp
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<footer class="footer">
+    &copy; 2026 <b>SoftSolution</b> | Design & Engineering by <b>Shubham Kumar</b>
+</footer>
+
+<script>
+    function jsLog(msg) {
+        console.log("PHP-Log: " + msg);
+        alert("Action: " + msg);
+    }
+
+    function openSkype(id) {
+        console.log("SUCCESS: Initializing Skype Call/Chat to: " + id);
+        window.location.href = `skype:${id}?chat`;
+    }
+
+    function openWA() {
+        const phone = "916396004079";
+        console.log("SUCCESS: Opening WhatsApp Support");
+        window.open(`https://wa.me/${phone}`, '_blank');
+    }
+</script>
+
+</body>
+</html>
