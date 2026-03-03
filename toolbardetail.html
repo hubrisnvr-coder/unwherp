@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Manager | SoftSolution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        :root {
+            --primary-blue: #337ab7;
+            --success-green: #5cb85c;
+            --info-cyan: #5bc0de;
+            --warning-orange: #f0ad4e;
+            --danger-red: #d9534f;
+            --dark-blue: #2c3e50;
+            --light-bg: #f9f9f9;
+            --border-color: #ddd;
+            /* ERP 101 Specific */
+            --label-bg: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        .manager-container {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+
+        .page-title {
+            text-align: center;
+            color: var(--primary-blue);
+            font-size: 16px;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            margin: 0;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 15px;
+            background: #fff;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-detail { background-color: var(--success-green); }
+        .btn-reg, .btn-bulk, .btn-transfer, .btn-docs, .btn-notes, .btn-fees, .btn-library, .btn-attendance { 
+            background-color: var(--primary-blue); 
+        }
+
+        /* ERP 101 Filter Styling */
+        .filter-section {
+            border: 1px solid #bce8f1;
+            margin: 0 15px 15px 15px;
+            border-radius: 4px;
+        }
+
+        .filter-header {
+            background-color: #d9edf7;
+            color: var(--primary-blue);
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 1px solid #bce8f1;
+            cursor: pointer;
+        }
+
+        .filter-form-body {
+            padding: 10px;
+            display: block;
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex: 1 1 30%;
+            border: 1px solid #ccc;
+            height: 32px;
+            align-items: center;
+            border-radius: 2px;
+        }
+
+        .filter-label {
+            background: var(--label-bg);
+            min-width: 140px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            font-weight: bold;
+            font-size: 11px;
+            border-right: 1px solid #ccc;
+        }
+
+        .filter-input {
+            flex: 1;
+            border: none;
+            padding: 0 10px;
+            height: 100%;
+            outline: none;
+        }
+
+        .date-range { display: flex; align-items: center; flex: 1; height: 100%; }
+        .date-range input { width: 45%; border: none; outline: none; padding: 0 5px; }
+
+        .filter-footer {
+            background: #f5f5f5;
+            padding: 10px;
+            text-align: right;
+            border-top: 1px solid #ddd;
+        }
+
+        .btn-submit-filter {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 6px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Action Toolbar */
+        .action-toolbar {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .select-template {
+            padding: 6px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .btn-print, .btn-export { background-color: var(--success-green); }
+        .btn-active { background-color: var(--primary-blue); }
+        .btn-inactive { background-color: var(--warning-orange); }
+        .btn-delete { background-color: var(--danger-red); }
+        .btn-login, .btn-lib-member { background-color: var(--primary-blue); }
+
+        .table-responsive { width: 100%; overflow-x: auto; }
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .data-table th {
+            background-color: #eef1f5; color: var(--primary-blue); padding: 12px 8px;
+            text-align: left; border-top: 2px solid var(--danger-red); border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase; font-size: 12px;
+        }
+        .data-table td { padding: 15px 8px; border-bottom: 1px solid #eee; color: #666; }
+        .no-data { text-align: center; padding: 20px; color: #888; font-style: italic; }
+    </style>
+</head>
+<body>
+
+<div class="manager-container">
+    <h3 class="page-title">Student Manager » Detail</h3>
+
+    <div class="top-nav">
+        <a class="btn btn-detail" onclick="jsAction('Detail View')"><i class="fa fa-list"></i> Detail</a>
+        <a class="btn btn-reg" onclick="jsAction('Registration')"><i class="fa fa-plus"></i> Registration</a>
+        <a class="btn btn-bulk" onclick="jsAction('Bulk Registration')"><i class="fa fa-users"></i> Bulk Registration</a>
+        <a class="btn btn-transfer" onclick="jsAction('Transfer')"><i class="fa fa-exchange"></i> Transfer</a>
+        <a class="btn btn-docs" onclick="jsAction('Documents')"><i class="fa fa-file-text-o"></i> Documents</a>
+        <a class="btn btn-notes" onclick="jsAction('Notes')"><i class="fa fa-sticky-note-o"></i> Notes</a>
+        <a class="btn btn-fees" onclick="jsAction('Balance Fees')"><i class="fa fa-calculator"></i> Balance Fees</a>
+        <a class="btn btn-library" onclick="jsAction('Library')"><i class="fa fa-book"></i> Library</a>
+        <a class="btn btn-attendance" onclick="jsAction('Attendance')"><i class="fa fa-calendar-check-o"></i> Attendance</a>
+    </div>
+
+    <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter()">
+            <i class="fa fa-angle-double-down"></i> Filter Student <i class="fa fa-filter"></i>
+        </div>
+        <form id="filterForm" method="POST" action="process_filter.php">
+            <div class="filter-form-body" id="filterBody">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <div class="filter-label">REG.NO.</div>
+                        <input type="text" name="reg_no" class="filter-input">
+                    </div>
+                    <div class="filter-group">
+                        <div class="filter-label">REG. DATE</div>
+                        <div class="date-range">
+                            <input type="text" name="reg_start" placeholder="YYYY-MM-DD">
+                            <i class="fa fa-exchange"></i>
+                            <input type="text" name="reg_end" placeholder="YYYY-MM-DD">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <div class="filter-label">STATUS</div>
+                        <select name="academic_status" class="filter-input"><option>Select Academic Status</option></select>
+                        <select name="active_status" class="filter-input" style="border-left:1px solid #ccc"><option>Status</option></select>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-group"><div class="filter-label">PROGRAM/CLASS</div><select name="prog" class="filter-input"><option>Select Program/Class</option></select></div>
+                    <div class="filter-group"><div class="filter-label">SEMESTER/SECTION</div><select name="sem" class="filter-input"><option>Select Semester/Section</option></select></div>
+                    <div class="filter-group"><div class="filter-label">BATCH</div><select name="batch" class="filter-input"><option>Select Batch</option></select></div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-group" style="flex: 2;"><div class="filter-label">NAME OF STUDENT</div><input type="text" name="name" class="filter-input"></div>
+                    <div class="filter-group"><div class="filter-label">GENDER</div><select name="gender" class="filter-input"><option>Select Gender</option></select></div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-group"><div class="filter-label">BLOOD GROUP</div><select name="blood" class="filter-input"><option></option></select></div>
+                    <div class="filter-group"><div class="filter-label">DATE OF BIRTH</div><div class="date-range"><input type="text" placeholder="YYYY-MM-DD"> <i class="fa fa-exchange"></i> <input type="text" placeholder="YYYY-MM-DD"></div></div>
+                    <div class="filter-group"><div class="filter-label">UNIQUE STUDENT ID</div><input type="text" name="uid" class="filter-input"></div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-group"><div class="filter-label">NATIONALITY</div><input type="text" name="nat" class="filter-input"></div>
+                    <div class="filter-group"><div class="filter-label">ID. 1</div><input type="text" name="id1" class="filter-input"></div>
+                    <div class="filter-group"><div class="filter-label">ID. 2</div><input type="text" name="id2" class="filter-input"></div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-group"><div class="filter-label">ID. 3</div><input type="text" name="id3" class="filter-input"></div>
+                    <div class="filter-group"><div class="filter-label">ID. 4</div><input type="text" name="id4" class="filter-input"></div>
+                    <div class="filter-group"><div class="filter-label">MOTHER TONGUE</div><input type="text" name="tongue" class="filter-input"></div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-group"><div class="filter-label">RELIGION</div><input type="text" name="rel" class="filter-input"></div>
+                    <div class="filter-group"><div class="filter-label">CASTE</div><input type="text" name="caste" class="filter-input"></div>
+                    <div class="filter-group"><div class="filter-label">E-MAIL</div><input type="text" name="email" class="filter-input"></div>
+                </div>
+            </div>
+            <div class="filter-footer">
+                <button type="submit" class="btn-submit-filter"><i class="fa fa-filter"></i> Filter</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="action-toolbar">
+        <select class="select-template"><option>Select Certificate Templa</option></select>
+        <a class="btn btn-print" onclick="jsAction('Print Certificate')"><i class="fa fa-print"></i> Print Certificate</a>
+        <a class="btn btn-export" onclick="jsAction('Export Data')"><i class="fa fa-file-excel-o"></i> Export</a>
+        <a class="btn btn-active" onclick="jsAction('Mark Active')"><i class="fa fa-check"></i> Active</a>
+        <a class="btn btn-inactive" onclick="jsAction('Mark In-Active')"><i class="fa fa-close"></i> In-Active</a>
+        <a class="btn btn-delete" onclick="jsAction('Delete Selected')"><i class="fa fa-trash"></i> Delete</a>
+        <a class="btn btn-login" onclick="jsAction('Create/Reset Login')"><i class="fa fa-user"></i> Create/Reset Login</a>
+        <a class="btn btn-lib-member" onclick="jsAction('Create Library Member')"><i class="fa fa-id-card-o"></i> Create Library Member</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" onclick="jsAction('Select All')"></th>
+                    <th>S.N.</th><th>PROGRAM/CLASS</th><th>SEMESTER/SECTION</th><th>REG.NO.</th><th>NAME OF STUDENT</th><th>ACADEMIC STATUS</th><th>STATUS</th><th>ACTION</th><th>SERVICE ACTIVATION</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="10" class="no-data">No Student data found. Please Filter Student to show.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function toggleFilter() {
+        const body = document.getElementById('filterBody');
+        body.style.display = (body.style.display === 'none') ? 'block' : 'none';
+    }
+    function jsAction(actionName) {
+        console.log("PHP-Action: " + actionName);
+        alert("Action: " + actionName);
+    }
+</script>
+
+</body>
+</html>
