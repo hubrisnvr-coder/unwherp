@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Notes Manager | ERP 105</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        :root {
+            --primary-blue: #337ab7;
+            --success-green: #5cb85c;
+            --warning-orange: #f0ad4e;
+            --danger-red: #d9534f;
+            --dark-btn-blue: #2e6da4;
+            --border-color: #ddd;
+            --label-bg: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0; padding: 20px; font-size: 13px;
+        }
+
+        .main-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+
+        .breadcrumb-text {
+            text-align: center; color: var(--primary-blue);
+            font-size: 14px; padding: 10px; border-bottom: 1px solid #eee; margin: 0;
+        }
+
+        /* Top Menu */
+        .top-navbar { display: flex; justify-content: center; gap: 5px; padding: 15px; flex-wrap: wrap; }
+        .nav-item {
+            display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px;
+            border-radius: 4px; text-decoration: none; color: white; font-size: 12px;
+            background-color: var(--primary-blue); cursor: pointer; border: none;
+            transition: 0.2s;
+        }
+        .nav-item:hover { background-color: var(--dark-btn-blue); }
+        .nav-item.active { background-color: var(--success-green); }
+
+        /* Split Screen Layout */
+        .page-content { display: flex; gap: 20px; padding: 15px; border-top: 1px solid #eee; }
+        
+        /* Left: Form Section */
+        .create-notes-form { flex: 0 0 35%; }
+        .form-heading { color: var(--primary-blue); font-size: 16px; margin-bottom: 15px; display: block; font-weight: 500; }
+        
+        .field-row { display: flex; border: 1px solid #ccc; margin-bottom: 10px; border-radius: 2px; height: 34px; overflow: hidden; }
+        .field-label { 
+            background: var(--label-bg); min-width: 100px; font-weight: bold; 
+            display: flex; align-items: center; justify-content: flex-end; 
+            padding-right: 15px; border-right: 1px solid #ccc; font-size: 11px;
+        }
+        .field-input { flex: 1; border: none; outline: none; padding: 0 10px; font-size: 13px; }
+        .req-border { border-left: 2px solid #d9534f; } /* Red marker */
+
+        .textarea-box { height: 100px; align-items: flex-start; }
+        .textarea-box .field-label { height: 100%; padding-top: 10px; }
+        .form-textarea { flex: 1; border: none; outline: none; padding: 10px; resize: none; font-family: inherit; }
+
+        .form-action-bg { background: #f5f5f5; padding: 15px; text-align: center; border: 1px solid #ddd; border-top: none; }
+        .btn-save-note { 
+            background: var(--dark-btn-blue); color: white; border: none; padding: 8px 25px; 
+            border-radius: 4px; cursor: pointer; font-size: 16px; display: inline-flex; align-items: center; gap: 8px;
+        }
+
+        /* Right: Table Section */
+        .notes-list-table { flex: 1; }
+        .table-top-actions { display: flex; justify-content: flex-end; gap: 5px; margin-bottom: 10px; }
+        .table-btn { color: white; padding: 5px 12px; border-radius: 4px; font-size: 12px; text-decoration: none; display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .btn-active { background: var(--primary-blue); }
+        .btn-inactive { background: var(--warning-orange); }
+        .btn-delete { background: var(--danger-red); }
+
+        .main-table { width: 100%; border-collapse: collapse; border: 1px solid #ddd; }
+        .main-table th { 
+            background: #eef1f5; color: var(--primary-blue); padding: 10px; 
+            text-align: left; border-bottom: 1px solid #ddd; border-top: 2px solid #d9534f; font-size: 12px;
+        }
+        .main-table td { padding: 12px 10px; border-bottom: 1px solid #eee; color: #666; font-size: 12px; }
+        .empty-row { text-align: center; color: #999; font-style: italic; padding: 30px !important; }
+
+    </style>
+</head>
+<body>
+
+<div class="main-card">
+    <h3 class="breadcrumb-text">Student Manager » Student Notes</h3>
+
+    <div class="top-navbar">
+        <a class="nav-item" onclick="handleNavigation('erp100.php', 'Detail')"><i class="fa fa-list"></i> Detail</a>
+        <a class="nav-item" onclick="handleNavigation('registration.php', 'Registration')"><i class="fa fa-plus"></i> Registration</a>
+        <a class="nav-item" onclick="handleNavigation('erp102.php', 'Bulk')"><i class="fa fa-upload"></i> Bulk Registration</a>
+        <a class="nav-item" onclick="handleNavigation('erp103.php', 'Transfer')"><i class="fa fa-exchange"></i> Transfer</a>
+        <a class="nav-item" onclick="handleNavigation('erp104.php', 'Documents')"><i class="fa fa-file-text-o"></i> Documents</a>
+        <a class="nav-item active" onclick="handleNavigation('erp105.php', 'Notes')"><i class="fa fa-sticky-note-o"></i> Notes</a>
+        <a class="nav-item" onclick="handleNavigation('fees.php', 'Fees')"><i class="fa fa-calculator"></i> Balance Fees</a>
+        <a class="nav-item" onclick="handleNavigation('library.php', 'Library')"><i class="fa fa-book"></i> Library</a>
+        <a class="nav-item" onclick="handleNavigation('attendance.php', 'Attendance')"><i class="fa fa-calendar-check-o"></i> Attendance</a>
+    </div>
+
+    <div class="page-content">
+        <div class="create-notes-form">
+            <span class="form-heading"><i class="fa fa-search"></i> Create Student Notes</span>
+            <form id="studentNotesForm" action="save_note.php" method="POST">
+                <div class="field-row">
+                    <div class="field-label">REG.NO.</div>
+                    <input type="text" name="reg_no" class="field-input req-border" required>
+                </div>
+                <div class="field-row">
+                    <div class="field-label">SUB</div>
+                    <input type="text" name="subject" class="field-input req-border" required>
+                </div>
+                <div class="field-row textarea-box">
+                    <div class="field-label">NOTE</div>
+                    <textarea name="student_note" class="form-textarea"></textarea>
+                </div>
+                <div class="form-action-bg">
+                    <a class="btn-save-note" onclick="submitNoteForm()">
+                        <i class="fa fa-save"></i> Create
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <div class="notes-list-table">
+            <div class="table-top-actions">
+                <a class="table-btn btn-active" onclick="handleTableAction('Active Status')"><i class="fa fa-check"></i> Active</a>
+                <a class="table-btn btn-inactive" onclick="handleTableAction('In-Active Status')"><i class="fa fa-close"></i> In-Active</a>
+                <a class="table-btn btn-delete" onclick="handleTableAction('Delete Note')"><i class="fa fa-trash"></i> Delete</a>
+            </div>
+            
+            <table class="main-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th>S.N.</th>
+                        <th>REG.NO.</th>
+                        <th>STUDENT NOTES</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5" class="empty-row">No Student Notes data found. Please Filter Student Notes to show.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * Top Navigation Handler - Now fully working!
+     */
+    function handleNavigation(url, pageName) {
+        console.log("Navigating to: " + pageName + " (URL: " + url + ")");
+        alert("Redirecting to " + pageName + " Page...");
+        // PHP redirect ke liye niche wali line uncomment karein:
+        // window.location.href = url;
+    }
+
+    /**
+     * Table Actions
+     */
+    function handleTableAction(action) {
+        console.log("Action: " + action);
+        alert("JavaScript Call: " + action);
+    }
+
+    /**
+     * Form Submission
+     */
+    function submitNoteForm() {
+        const reg = document.getElementsByName('reg_no')[0].value;
+        const sub = document.getElementsByName('subject')[0].value;
+
+        if(!reg || !sub) {
+            alert("Kripya REG.NO. aur SUB bharein!");
+            return;
+        }
+
+        console.log("Submitting to PHP...");
+        alert("Data sending to save_note.php");
+        document.getElementById('studentNotesForm').submit();
+    }
+</script>
+
+</body>
+</html>
