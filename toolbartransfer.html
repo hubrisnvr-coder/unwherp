@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Manager | Student Transfer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        :root {
+            --primary-blue: #337ab7;
+            --success-green: #5cb85c;
+            --warning-orange: #f0ad4e;
+            --dark-blue: #2e6da4;
+            --light-bg: #f9f9f9;
+            --border-color: #ddd;
+            --label-bg: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--light-bg);
+            margin: 0; padding: 15px; font-size: 13px;
+        }
+
+        .main-container {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        .breadcrumb-header {
+            text-align: center; color: var(--primary-blue);
+            font-size: 14px; padding: 10px; border-bottom: 1px solid #eee; margin: 0;
+        }
+
+        /* Top Nav */
+        .top-nav { display: flex; justify-content: center; gap: 5px; padding: 15px; flex-wrap: wrap; }
+        .nav-btn {
+            display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px;
+            border-radius: 4px; text-decoration: none; color: white; font-size: 12px;
+            background-color: var(--primary-blue); cursor: pointer; border: none;
+        }
+        .nav-btn.active { background-color: var(--success-green); }
+
+        /* Filter Section */
+        .filter-wrapper { border: 1px solid #bce8f1; margin: 0 15px 15px; border-radius: 4px; overflow: hidden; }
+        .filter-header {
+            background-color: #d9edf7; color: var(--primary-blue); padding: 8px;
+            text-align: center; font-weight: bold; cursor: pointer; border-bottom: 1px solid #bce8f1;
+        }
+        
+        /* Show/Hide Target */
+        #filterContent { display: none; } 
+
+        .filter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
+        .input-group { display: flex; border: 1px solid #ccc; height: 30px; border-radius: 2px; }
+        .label-box {
+            background: var(--label-bg); min-width: 130px; font-size: 11px;
+            font-weight: bold; display: flex; align-items: center; justify-content: flex-end;
+            padding-right: 10px; border-right: 1px solid #ccc; text-transform: uppercase;
+        }
+        .field-input { flex: 1; border: none; outline: none; padding: 0 8px; font-size: 12px; background: transparent; }
+        
+        .date-box { display: flex; align-items: center; flex: 1; }
+        .date-box input { width: 45%; border: none; outline: none; text-align: center; background: transparent; }
+
+        .filter-footer { background: #f5f5f5; padding: 10px 15px; text-align: right; border-top: 1px solid #ddd; }
+        .btn-filter { background: var(--dark-blue); color: white; border: none; padding: 6px 20px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+
+        /* Student List Section */
+        .list-section-header { text-align: center; color: var(--primary-blue); margin: 20px 0 10px; font-weight: bold; font-size: 16px; }
+        .list-controls { 
+            display: flex; flex-wrap: wrap; gap: 10px; padding: 10px 15px; 
+            border-top: 1px solid #eee; border-bottom: 1px solid #eee; background: #fafafa;
+            align-items: center;
+        }
+        .control-group { display: flex; border: 1px solid #ccc; height: 30px; border-radius: 2px; flex: 1; min-width: 200px; }
+        .btn-transfer { background: var(--success-green); color: white; padding: 6px 15px; border-radius: 4px; text-decoration: none; cursor: pointer; font-weight: bold; }
+        .btn-reset { background: var(--warning-orange); color: white; padding: 6px 15px; border-radius: 4px; text-decoration: none; cursor: pointer; font-weight: bold; }
+
+        /* Table */
+        .info-bar { background: #337ab7; color: white; padding: 8px 15px; font-size: 12px; }
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { 
+            background: #eef1f5; color: var(--primary-blue); padding: 10px; text-align: left;
+            border-bottom: 1px solid #ddd; border-top: 1px solid #ddd; font-size: 11px;
+        }
+        .data-table td { padding: 10px; border-bottom: 1px solid #eee; color: #666; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <h3 class="breadcrumb-header">Student Manager » Student Transfer</h3>
+
+    <div class="top-nav">
+        <a class="nav-btn" onclick="jsButton('Detail View')"><i class="fa fa-list"></i> Detail</a>
+        <a class="nav-btn" onclick="jsButton('Registration')"><i class="fa fa-plus"></i> Registration</a>
+        <a class="nav-btn" onclick="jsButton('Bulk Import')"><i class="fa fa-upload"></i> Bulk Registration</a>
+        <a class="nav-btn active" onclick="jsButton('Transfer Page')"><i class="fa fa-exchange"></i> Transfer</a>
+        <a class="nav-btn" onclick="jsButton('Documents')"><i class="fa fa-file-text-o"></i> Documents</a>
+        <a class="nav-btn" onclick="jsButton('Notes')"><i class="fa fa-sticky-note-o"></i> Notes</a>
+        <a class="nav-btn" onclick="jsButton('Fees')"><i class="fa fa-calculator"></i> Balance Fees</a>
+        <a class="nav-btn" onclick="jsButton('Library')"><i class="fa fa-book"></i> Library</a>
+        <a class="nav-btn" onclick="jsButton('Attendance')"><i class="fa fa-calendar-check-o"></i> Attendance</a>
+    </div>
+
+    <div class="filter-wrapper">
+        <div class="filter-header" onclick="toggleFilter()">
+            <i class="fa fa-angle-double-down"></i> Filter Student <i class="fa fa-filter"></i>
+        </div>
+        
+        <form id="filterContent" action="process_filter.php" method="POST">
+            <div class="filter-grid">
+                <div class="input-group"><div class="label-box">REG.NO.</div><input type="text" name="reg_no" class="field-input"></div>
+                <div class="input-group"><div class="label-box">REG. DATE</div><div class="date-box"><input type="text" name="reg_from" placeholder="YYYY-MM-DD"> <i class="fa fa-exchange"></i> <input type="text" name="reg_to" placeholder="YYYY-MM-DD"></div></div>
+                <div class="input-group"><div class="label-box">STATUS</div><select name="acad_status" class="field-input"><option value="">Select Academic Status</option></select><select name="status" class="field-input" style="border-left:1px solid #ccc"><option value="">Status</option></select></div>
+                
+                <div class="input-group"><div class="label-box">PROGRAM/CLASS</div><select name="prog" class="field-input"><option>Select Program/Class</option></select></div>
+                <div class="input-group"><div class="label-box">SEMESTER/SECTION</div><select name="sem" class="field-input"><option>Select Semester/Section</option></select></div>
+                <div class="input-group"><div class="label-box">BATCH</div><select name="batch" class="field-input"><option>Select Batch</option></select></div>
+                
+                <div class="input-group" style="grid-column: span 2;"><div class="label-box">NAME OF STUDENT</div><input type="text" name="student_name" class="field-input"></div>
+                <div class="input-group"><div class="label-box">GENDER</div><select name="gender" class="field-input"><option value=""></option></select></div>
+                
+                <div class="input-group"><div class="label-box">BLOOD GROUP</div><select name="blood" class="field-input"><option value=""></option></select></div>
+                <div class="input-group"><div class="label-box">DATE OF BIRTH</div><div class="date-box"><input type="text" name="dob_from" placeholder="YYYY-MM-DD"> <i class="fa fa-exchange"></i> <input type="text" name="dob_to" placeholder="YYYY-MM-DD"></div></div>
+                <div class="input-group"><div class="label-box">UNIQUE STUDENT ID</div><input type="text" name="uid" class="field-input"></div>
+
+                <div class="input-group"><div class="label-box">NATIONALITY</div><input type="text" name="nat" class="field-input"></div>
+                <div class="input-group"><div class="label-box">ID. 1</div><input type="text" name="id1" class="field-input"></div>
+                <div class="input-group"><div class="label-box">ID. 2</div><input type="text" name="id2" class="field-input"></div>
+                
+                <div class="input-group"><div class="label-box">ID. 3</div><input type="text" name="id3" class="field-input"></div>
+                <div class="input-group"><div class="label-box">ID. 4</div><input type="text" name="id4" class="field-input"></div>
+                <div class="input-group"><div class="label-box">MOTHER TONGUE</div><input type="text" name="tongue" class="field-input"></div>
+                
+                <div class="input-group"><div class="label-box">RELIGION</div><input type="text" name="religion" class="field-input"></div>
+                <div class="input-group"><div class="label-box">CASTE</div><input type="text" name="caste" class="field-input"></div>
+                <div class="input-group"><div class="label-box">E-MAIL</div><input type="email" name="email" class="field-input"></div>
+            </div>
+            <div class="filter-footer">
+                <a class="btn-filter" onclick="jsButton('Filter Applied')"><i class="fa fa-filter"></i> Filter</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="list-section-header"><i class="fa fa-list"></i> Student List</div>
+    <div class="list-controls">
+        <div class="control-group"><div class="label-box">PROGRAM/CLASS</div><select name="t_prog" class="field-input"><option>Select Program/Class</option></select></div>
+        <div class="control-group"><div class="label-box">SEMESTER/SECTION</div><select name="t_sem" class="field-input"><option>Select Semester/Section</option></select></div>
+        <div class="control-group"><div class="label-box">BATCH/STATUS</div>
+            <select name="t_batch" class="field-input"><option>Select Batch</option></select>
+            <select name="t_status" class="field-input"><option>Select Academic Status</option></select>
+        </div>
+        <a class="btn-transfer" onclick="jsButton('Transfer Process Started')"><i class="fa fa-check"></i> Transfer</a>
+        <a class="btn-reset" onclick="jsButton('Reset Triggered')"><i class="fa fa-check"></i> Reset</a>
+    </div>
+
+    <div class="info-bar">Student Record list on table. Filter Student using the filter.</div>
+    <div style="overflow-x:auto;">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox"></th>
+                    <th>S.N.</th><th>PROGRAM/CLASS</th><th>SEMESTER/SECTION</th><th>REG. DATE</th><th>REG. NUM.</th><th>NAME OF STUDENT</th><th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="8" style="text-align:center; padding:20px; color:#999;">No Student data found. Please Filter Student to show.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Toggle Filter Area
+    function toggleFilter() {
+        const content = document.getElementById('filterContent');
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+        console.log("Filter Toggle: " + (content.style.display === "block" ? "Opened" : "Closed"));
+    }
+
+    // Console Logging for Buttons
+    function jsButton(actionName) {
+        console.log("Button Clicked: " + actionName);
+        alert("Action: " + actionName);
+        
+        // For Filter Button specifically, we can also submit the form
+        if(actionName === 'Filter Applied') {
+            // document.getElementById('filterContent').submit();
+        }
+    }
+</script>
+
+</body>
+</html>
