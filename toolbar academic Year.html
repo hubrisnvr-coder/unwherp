@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>Year Manager - Detail</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        /* Base Styling */
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .erp-container { background: #fff; border: 1px solid #ddd; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+        /* Page Title */
+        .page-header { text-align: center; color: #337ab7; font-size: 18px; margin-bottom: 25px; font-weight: bold; }
+        .page-header span { color: #999; font-weight: normal; }
+
+        /* Main Flex Layout */
+        .main-flex { display: flex; gap: 20px; align-items: flex-start; }
+        .left-create-panel { flex: 0 0 320px; }
+        .right-data-panel { flex: 1; }
+
+        /* Left Form Panels */
+        .panel-title { color: #337ab7; font-weight: bold; margin-bottom: 15px; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .input-group { display: flex; align-items: stretch; margin-bottom: 15px; border: 1px solid #ddd; }
+        .input-label { background: #eee; min-width: 80px; padding: 8px; font-size: 11px; font-weight: bold; text-align: right; border-right: 1px solid #ddd; display: flex; align-items: center; justify-content: flex-end; color: #333; }
+        .input-field { flex: 1; border: none; padding: 8px; outline: none; font-size: 14px; border-left: 3px solid red; }
+
+        /* Create Button Container */
+        .create-footer { text-align: right; background: #f5f5f5; padding: 20px; border: 1px solid #ddd; border-top: none; }
+        .btn-create { background: #337ab7; color: white !important; padding: 10px 22px; text-decoration: none !important; display: inline-flex; align-items: center; gap: 8px; border-radius: 2px; font-size: 14px; cursor: pointer; }
+
+        /* Right Panel Tools */
+        .top-action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .status-buttons { display: flex; gap: 5px; }
+        .utility-icons { display: flex; gap: 2px; }
+
+        .btn-status { padding: 4px 12px; font-size: 12px; color: white !important; text-decoration: none !important; border-radius: 3px; display: flex; align-items: center; gap: 5px; }
+        .bg-active { background: #337ab7; }
+        .bg-orange { background: #f0ad4e; }
+        .bg-red { background: #d9534f; }
+        
+        .btn-tool { border: 1px solid #ccc; background: #fff; padding: 5px 10px; color: #337ab7; text-decoration: none !important; font-size: 13px; }
+
+        /* Table Filter Bar */
+        .filter-bar { display: flex; justify-content: space-between; background: #f9f9f9; padding: 8px; border: 1px solid #ddd; border-bottom: none; font-size: 13px; }
+        .search-box { border: 1px solid #ddd; padding: 3px 8px; outline: none; }
+
+        /* Data Table */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid #ddd; }
+        .data-table th { background: #f5fafd; color: #337ab7; padding: 10px; text-align: left; border: 1px solid #ddd; text-transform: uppercase; }
+        .data-table td { padding: 10px; border: 1px solid #ddd; vertical-align: middle; }
+        .red-table-top { border-top: 2px solid #d9534f; }
+
+        /* Table Elements */
+        .btn-click-active { color: #337ab7; text-decoration: none !important; font-size: 12px; display: flex; align-items: center; gap: 5px; }
+        .active-year-badge { background: #337ab7; color: white; padding: 3px 10px; border-radius: 3px; font-size: 12px; }
+        .status-dropdown { background: #337ab7; color: white; padding: 4px 8px; border-radius: 3px; font-size: 11px; display: inline-flex; align-items: center; gap: 5px; }
+        
+        .icon-edit { color: #5cb85c; cursor: pointer; font-size: 16px; margin-right: 8px; }
+        .icon-trash { color: #d9534f; cursor: pointer; font-size: 16px; }
+
+        /* Pagination */
+        .table-footer { display: flex; justify-content: space-between; padding: 15px 0; font-size: 13px; color: #666; }
+        .page-btns { display: flex; gap: 2px; }
+        .page-num { padding: 5px 12px; border: 1px solid #ddd; text-decoration: none; color: #337ab7; }
+        .page-num.active { background: #337ab7; color: white; border-color: #337ab7; }
+    </style>
+</head>
+<body class="notranslate">
+
+<div class="erp-container">
+    <div class="page-header">Year Manager <span>» Detail</span></div>
+
+    <div class="main-flex">
+        <div class="left-create-panel">
+            <div class="panel-title"><i class="fa fa-search"></i> Create Year</div>
+            
+            <div class="input-group">
+                <div class="input-label">YEAR</div>
+                <input type="text" class="input-field" id="year_input" placeholder="">
+            </div>
+
+            <div class="create-footer">
+                <a href="#" class="btn-create" onclick="erpCall('Create Year Submit')">
+                    <i class="fa fa-save"></i> Create
+                </a>
+            </div>
+        </div>
+
+        <div class="right-data-panel">
+            <div class="top-action-bar">
+                <div class="status-buttons">
+                    <a href="#" class="btn-status bg-active" onclick="erpCall('Bulk Active')"><i class="fa fa-check"></i> Active</a>
+                    <a href="#" class="btn-status bg-orange" onclick="erpCall('Bulk In-Active')"><i class="fa fa-times"></i> In-Active</a>
+                    <a href="#" class="btn-status bg-red" onclick="erpCall('Bulk Delete')"><i class="fa fa-trash"></i> Delete</a>
+                </div>
+                <div class="utility-icons">
+                    <a href="#" class="btn-tool" onclick="erpCall('Tool Search')"><i class="fa fa-search"></i></a>
+                    <a href="#" class="btn-tool" onclick="erpCall('Tool Refresh')"><i class="fa fa-refresh"></i> Refresh</a>
+                    <a href="#" class="btn-tool" onclick="erpCall('Tool Copy')"><i class="fa fa-copy"></i></a>
+                    <a href="#" class="btn-tool" onclick="erpCall('Tool Database')"><i class="fa fa-database"></i></a>
+                    <a href="#" class="btn-tool" onclick="erpCall('Tool Print')"><i class="fa fa-print"></i></a>
+                </div>
+            </div>
+
+            <div class="filter-bar">
+                <div>Display 
+                    <select><option>All</option></select> records
+                </div>
+                <div>Search: <input type="text" class="search-box"></div>
+            </div>
+
+            <table class="data-table">
+                <thead class="red-table-top">
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th style="width: 50px;">S.N.</th>
+                        <th>YEAR</th>
+                        <th>ACTIVEYEAR</th>
+                        <th>STATUS</th>
+                        <th style="width: 80px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>1</td>
+                        <td>2026</td>
+                        <td>
+                            <a href="#" class="btn-click-active" onclick="erpCall('Activate Year 2026')">
+                                <i class="fa fa-check"></i> Click To Active
+                            </a>
+                        </td>
+                        <td>
+                            <div class="status-dropdown">Active <i class="fa fa-caret-down"></i></div>
+                        </td>
+                        <td style="text-align: right;">
+                            <i class="fa fa-pencil-square-o icon-edit" onclick="erpCall('Edit 2026')"></i>
+                            <i class="fa fa-trash icon-trash" onclick="erpCall('Delete 2026')"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>2</td>
+                        <td>2025</td>
+                        <td>
+                            <span class="active-year-badge">Active Year</span>
+                        </td>
+                        <td>
+                            <div class="status-dropdown">Active <i class="fa fa-caret-down"></i></div>
+                        </td>
+                        <td style="text-align: right;">
+                            <i class="fa fa-pencil-square-o icon-edit" onclick="erpCall('Edit 2025')"></i>
+                            <i class="fa fa-trash icon-trash" onclick="erpCall('Delete 2025')"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="table-footer">
+                <div>Showing 1 to 2 of 2 entries</div>
+                <div class="page-btns">
+                    <a href="#" class="page-num" onclick="erpCall('Prev Page')">Previous</a>
+                    <a href="#" class="page-num active">1</a>
+                    <a href="#" class="page-num" onclick="erpCall('Next Page')">Next</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * Central JavaScript Function
+     * PHP integration ke liye isi function se AJAX call hogi.
+     */
+    function erpCall(actionName) {
+        console.log("Action Triggered: " + actionName);
+        alert("Working on: " + actionName);
+    }
+
+    // Default anchor behavior preventer
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if(this.getAttribute('onclick')) e.preventDefault();
+        });
+    });
+</script>
+
+</body>
+</html>
