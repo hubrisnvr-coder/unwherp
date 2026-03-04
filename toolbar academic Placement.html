@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Manager - Detail</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 15px; }
+        .erp-card { background: #fff; border: 1px solid #ddd; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+        /* Top Tabs Navigation */
+        .nav-tabs-container { display: flex; justify-content: center; gap: 4px; margin-bottom: 25px; flex-wrap: wrap; }
+        .tab-link { padding: 6px 12px; font-size: 13px; color: white !important; text-decoration: none !important; border-radius: 3px; display: flex; align-items: center; gap: 6px; background: #337ab7; }
+        .tab-link.active { background: #5cb85c; }
+
+        .page-breadcrumb { text-align: center; color: #337ab7; font-size: 16px; margin-bottom: 20px; font-weight: bold; }
+        .page-breadcrumb span { color: #999; font-weight: normal; }
+
+        /* Main Layout */
+        .flex-row { display: flex; gap: 20px; align-items: flex-start; }
+        .col-left { flex: 0 0 350px; }
+        .col-right { flex: 1; }
+
+        /* Create Form Section */
+        .form-section { border: 1px solid #ddd; }
+        .form-header { color: #337ab7; font-weight: bold; padding: 10px; font-size: 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #eee; }
+        .form-field { display: flex; align-items: stretch; border-bottom: 1px solid #eee; }
+        .field-label { background: #f9f9f9; min-width: 110px; padding: 10px; font-size: 11px; font-weight: bold; text-align: right; border-right: 1px solid #ddd; display: flex; align-items: center; justify-content: flex-end; color: #333; }
+        .field-input { flex: 1; border: none; padding: 10px; outline: none; font-size: 13px; border-left: 3px solid red; }
+        .field-textarea { flex: 1; border: none; padding: 10px; outline: none; font-size: 13px; min-height: 60px; resize: vertical; }
+        
+        .form-submit-area { text-align: right; background: #f5f5f5; padding: 15px; }
+        .btn-submit { background: #337ab7; color: white !important; padding: 10px 25px; text-decoration: none !important; border-radius: 2px; font-size: 14px; cursor: pointer; display: inline-block; }
+
+        /* Right Side: Toolbar */
+        .table-toolbar { display: flex; justify-content: flex-end; gap: 5px; margin-bottom: 15px; }
+        .btn-status-action { padding: 5px 12px; font-size: 12px; color: white !important; text-decoration: none !important; border-radius: 3px; display: flex; align-items: center; gap: 5px; }
+        .bg-blue { background: #337ab7; }
+        .bg-orange { background: #f0ad4e; }
+        .bg-red { background: #d9534f; }
+
+        /* Table Design */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid #ddd; }
+        .data-table th { background: #f5fafd; color: #337ab7; padding: 12px 10px; text-align: left; border: 1px solid #ddd; text-transform: uppercase; }
+        .data-table td { padding: 15px 10px; border: 1px solid #ddd; color: #666; }
+        .table-header-line { border-top: 2px solid #d9534f; }
+        .empty-row { text-align: center; padding: 20px !important; font-style: italic; color: #999; }
+
+    </style>
+</head>
+<body class="notranslate">
+
+<div class="erp-card">
+    <div class="nav-tabs-container">
+        <a href="javascript:void(0)" class="tab-link active" onclick="callJS('TAB_PLACEMENT')"><i class="fa fa-list"></i> Placement</a>
+        <a href="javascript:void(0)" class="tab-link" onclick="callJS('TAB_SCHOLARSHIP')"><i class="fa fa-list"></i> Scholarship</a>
+        <a href="javascript:void(0)" class="tab-link" onclick="callJS('TAB_ATTACH_DOC')"><i class="fa fa-list"></i> Attach Document</a>
+        <a href="javascript:void(0)" class="tab-link" onclick="callJS('TAB_ACADEMIC')"><i class="fa fa-list"></i> Academic Info</a>
+        <a href="javascript:void(0)" class="tab-link" onclick="callJS('TAB_DEGREE')"><i class="fa fa-list"></i> Degree</a>
+        <a href="javascript:void(0)" class="tab-link" onclick="callJS('TAB_STATE')"><i class="fa fa-list"></i> State</a>
+        <a href="javascript:void(0)" class="tab-link" onclick="callJS('TAB_APP_TYPE')"><i class="fa fa-list"></i> Application Type</a>
+    </div>
+
+    <div class="page-breadcrumb">Placement Manager <span>» Detail</span></div>
+
+    <div class="flex-row">
+        <div class="col-left">
+            <div class="form-section">
+                <div class="form-header"><i class="fa fa-search"></i> Create Placement</div>
+                
+                <div class="form-field">
+                    <div class="field-label">COMPANY</div>
+                    <input type="text" class="field-input" id="comp_name">
+                </div>
+                <div class="form-field">
+                    <div class="field-label">ADDRESS</div>
+                    <input type="text" class="field-input" style="border-left:none;" id="comp_addr">
+                </div>
+                <div class="form-field">
+                    <div class="field-label">CONTACT NO.</div>
+                    <input type="text" class="field-input" style="border-left:none;" id="comp_phone">
+                </div>
+                <div class="form-field">
+                    <div class="field-label">EMAIL</div>
+                    <input type="text" class="field-input" style="border-left:none;" id="comp_email">
+                </div>
+                <div class="form-field">
+                    <div class="field-label">DESCRIPTION</div>
+                    <textarea class="field-textarea" id="comp_desc"></textarea>
+                </div>
+
+                <div class="form-submit-area">
+                    <a href="javascript:void(0)" class="btn-submit" onclick="submitPlacement()">
+                        Create
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-right">
+            <div class="table-toolbar">
+                <a href="javascript:void(0)" class="btn-status-action bg-blue" onclick="callJS('BULK_ACTIVE')"><i class="fa fa-check"></i> Active</a>
+                <a href="javascript:void(0)" class="btn-status-action bg-orange" onclick="callJS('BULK_INACTIVE')"><i class="fa fa-times"></i> In-Active</a>
+                <a href="javascript:void(0)" class="btn-status-action bg-red" onclick="callJS('BULK_DELETE')"><i class="fa fa-trash"></i> Delete</a>
+            </div>
+
+            <table class="data-table">
+                <thead class="table-header-line">
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th style="width: 60px;">S.N.</th>
+                        <th>PLACEMENT</th>
+                        <th>PHONE</th>
+                        <th>EMAIL</th>
+                        <th style="width: 100px;">STATUS</th>
+                    </tr>
+                </thead>
+                <tbody id="placementTableBody">
+                    <tr>
+                        <td colspan="6" class="empty-row">No Placement data found.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * Placement Form Submission Logic
+     */
+    function submitPlacement() {
+        const data = {
+            company: document.getElementById('comp_name').value,
+            address: document.getElementById('comp_addr').value,
+            phone: document.getElementById('comp_phone').value,
+            email: document.getElementById('comp_email').value,
+            desc: document.getElementById('comp_desc').value
+        };
+
+        if(!data.company) {
+            alert("Please enter Company name");
+            return;
+        }
+
+        callJS('CREATE_PLACEMENT', JSON.stringify(data));
+    }
+
+    /**
+     * Central JavaScript Function for PHP/AJAX Hooks
+     */
+    function callJS(action, payload = "") {
+        console.log("Action Triggered: " + action);
+        if(payload) console.log("Payload: " + payload);
+        
+        // Visual feedback for the user
+        alert("Action: " + action + "\nReady for PHP connection.");
+    }
+</script>
+
+</body>
+</html>
