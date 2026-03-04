@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>Grading System Manager - Detail</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        /* Base Styling */
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .erp-container { background: #fff; border: 1px solid #ddd; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+        /* Page Title */
+        .page-header { text-align: center; color: #337ab7; font-size: 18px; margin-bottom: 20px; font-weight: bold; }
+        .page-header span { color: #999; font-weight: normal; }
+
+        /* Navigation Buttons */
+        .nav-tabs { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; margin-bottom: 25px; }
+        .tab-btn { text-decoration: none !important; color: #fff !important; padding: 7px 12px; font-size: 12px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
+        .btn-blue { background: #337ab7; }
+        .btn-green { background: #5cb85c; } /* Active tab color */
+
+        /* Main Content Layout */
+        .flex-layout { display: flex; gap: 20px; align-items: flex-start; }
+        .left-form { flex: 0 0 450px; }
+        .right-list { flex: 1; }
+
+        /* Form Styling */
+        .section-heading { color: #337ab7; font-weight: bold; margin-bottom: 15px; font-size: 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        
+        /* Title Row */
+        .input-row { display: flex; align-items: stretch; margin-bottom: 15px; border: 1px solid #ddd; }
+        .label-cell { background: #eee; min-width: 80px; padding: 8px; font-size: 11px; font-weight: bold; text-align: right; border-right: 1px solid #ddd; display: flex; align-items: center; justify-content: flex-end; color: #333; }
+        .input-cell { flex: 1; border: none; padding: 8px; outline: none; font-size: 13px; border-left: 3px solid red; } /* Required Mark */
+
+        /* Multi-input Table Row */
+        .dynamic-row { display: flex; border: 1px solid #ddd; border-bottom: 2px solid red; margin-bottom: 20px; }
+        .row-item { flex: 1; border-right: 1px solid #ddd; text-align: center; }
+        .row-item:last-child { border-right: none; }
+        .row-header { background: #eef6fa; color: #333; font-size: 11px; font-weight: bold; padding: 8px; border-bottom: 1px solid #ddd; }
+        .row-input { padding: 5px; }
+        .row-input input { width: 90%; border: 1px solid #ccc; padding: 3px; font-size: 12px; }
+
+        /* Add Button */
+        .btn-add { background: #337ab7; color: white !important; padding: 5px 10px; text-decoration: none !important; font-size: 12px; border-radius: 3px; display: inline-flex; align-items: center; gap: 5px; margin: 5px; }
+
+        /* Hint Ribbon */
+        .hint-ribbon { background: #337ab7; color: white; padding: 5px 15px; font-size: 12px; display: inline-block; position: relative; margin: 20px 0; border-radius: 0 3px 3px 0; }
+        .hint-ribbon::before { content: ''; position: absolute; left: -10px; top: 0; border-width: 13px 5px; border-style: solid; border-color: #337ab7 #337ab7 #337ab7 transparent; }
+
+        /* Form Footer */
+        .form-footer { text-align: right; background: #f5f5f5; padding: 15px; border: 1px solid #ddd; border-top: none; margin-top: 20px; }
+        .btn-save { background: #337ab7; color: white !important; padding: 10px 25px; text-decoration: none !important; display: inline-flex; align-items: center; gap: 8px; border-radius: 2px; cursor: pointer; font-size: 14px; }
+
+        /* Right Panel Actions */
+        .top-actions { display: flex; justify-content: flex-end; gap: 5px; margin-bottom: 10px; }
+        .btn-action { padding: 4px 12px; font-size: 12px; color: white !important; border-radius: 3px; text-decoration: none !important; display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .bg-blue { background: #337ab7; }
+        .bg-orange { background: #f0ad4e; }
+        .bg-red { background: #d9534f; }
+
+        /* Data Table Styling */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 12px; border: 1px solid #ddd; }
+        .data-table th { background: #f5fafd; color: #337ab7; padding: 10px; text-align: left; border: 1px solid #ddd; font-weight: bold; text-transform: uppercase; }
+        .data-table td { padding: 10px; border: 1px solid #ddd; vertical-align: middle; }
+        .empty-msg { text-align: center; color: #666; padding: 30px !important; border-top: 2px solid red !important; }
+    </style>
+</head>
+<body class="notranslate">
+
+<div class="erp-container">
+    <div class="page-header">Grading System Manager <span>» Detail</span></div>
+
+    <div class="nav-tabs">
+        <a href="#" class="tab-btn btn-blue" onclick="erpAction('Dept Head')"><i class="fa fa-list"></i> Department Head</a>
+        <a href="#" class="tab-btn btn-blue" onclick="erpAction('Dept')"><i class="fa fa-list"></i> Department</a>
+        <a href="#" class="tab-btn btn-blue" onclick="erpAction('Prog')"><i class="fa fa-list"></i> Program/Class</a>
+        <a href="#" class="tab-btn btn-blue" onclick="erpAction('Sem')"><i class="fa fa-list"></i> Semester/Section</a>
+        <a href="#" class="tab-btn btn-blue" onclick="erpAction('Batch')"><i class="fa fa-list"></i> Batch</a>
+        <a href="#" class="tab-btn btn-blue" onclick="erpAction('Course')"><i class="fa fa-list"></i> Course/Subject</a>
+        <a href="#" class="tab-btn btn-green" onclick="erpAction('Grading')"><i class="fa fa-list"></i> Grading System</a>
+    </div>
+
+    <div class="flex-layout">
+        <div class="left-form">
+            <div class="section-heading"><i class="fa fa-search"></i> Create Grading System</div>
+            
+            <div class="input-row">
+                <div class="label-cell">TITLE</div>
+                <input type="text" class="input-cell" id="grading_title" placeholder="e.g. University Level">
+            </div>
+
+            <div class="dynamic-row">
+                <div class="row-item">
+                    <div class="row-header">NAME</div>
+                    <div class="row-input"><input type="text"></div>
+                </div>
+                <div class="row-item">
+                    <div class="row-header">FROM(%)</div>
+                    <div class="row-input"><input type="text"></div>
+                </div>
+                <div class="row-item">
+                    <div class="row-header">TO(%)</div>
+                    <div class="row-input"><input type="text"></div>
+                </div>
+                <div class="row-item">
+                    <div class="row-header">POINT</div>
+                    <div class="row-input"><input type="text"></div>
+                </div>
+                <div class="row-item">
+                    <div class="row-header">REMARK</div>
+                    <div class="row-input"><input type="text"></div>
+                </div>
+                <div class="row-item" style="display: flex; align-items: flex-end;">
+                    <a href="#" class="btn-add" onclick="erpAction('Add Row Field')"><i class="fa fa-plus"></i> Add</a>
+                </div>
+            </div>
+
+            <div class="hint-ribbon">
+                Hint: Percent > From % and Percent <= To %
+            </div>
+
+            <div class="form-footer">
+                <a href="#" class="btn-save" onclick="erpAction('Create Grading Submit')">
+                    <i class="fa fa-save"></i> Create
+                </a>
+            </div>
+        </div>
+
+        <div class="right-list">
+            <div class="top-actions">
+                <a href="#" class="btn-action bg-blue" onclick="erpAction('Status Active')"><i class="fa fa-check"></i> Active</a>
+                <a href="#" class="btn-action bg-orange" onclick="erpAction('Status In-Active')"><i class="fa fa-times"></i> In-Active</a>
+                <a href="#" class="btn-action bg-red" onclick="erpAction('Status Delete')"><i class="fa fa-trash"></i> Delete</a>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th style="width: 50px;">S.N.</th>
+                        <th>GROUP</th>
+                        <th>GRADE SCALE DETAIL</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5" class="empty-msg">
+                            No Grading System data found. Please Filter Grading System to show.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * JavaScript Call Function
+     * Sabhi buttons ke liye single point of contact.
+     */
+    function erpAction(action) {
+        console.log("PHP Hook: " + action);
+        alert("Action Triggered: " + action);
+        // Baad mein yahan AJAX logic laga sakte hain
+    }
+
+    // Default anchor link behavior ko disable karne ke liye
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if(this.getAttribute('onclick')) e.preventDefault();
+        });
+    });
+</script>
+
+</body>
+</html>
