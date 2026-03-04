@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholarship Manager - Detail</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 10px; }
+        .erp-card { background: #fff; border: 1px solid #ddd; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); position: relative; }
+
+        /* Top Breadcrumb Title */
+        .top-breadcrumb { text-align: center; color: #337ab7; font-size: 15px; margin-bottom: 15px; font-weight: bold; border-bottom: 1px solid #f1f1f1; padding-bottom: 10px; }
+        .top-breadcrumb span { color: #999; font-weight: normal; }
+
+        /* Navigation Tabs Below Title */
+        .nav-tabs-wrapper { display: flex; justify-content: center; gap: 4px; margin-bottom: 25px; flex-wrap: wrap; }
+        .nav-tab-item { padding: 6px 12px; font-size: 13px; color: white !important; text-decoration: none !important; border-radius: 3px; display: flex; align-items: center; gap: 6px; background: #337ab7; }
+        .nav-tab-item.active { background: #5cb85c; }
+
+        /* Main Layout */
+        .page-flex { display: flex; gap: 20px; align-items: flex-start; }
+        .side-form { flex: 0 0 350px; }
+        .data-list { flex: 1; }
+
+        /* Create Form Section */
+        .form-border-box { border: 1px solid #ddd; }
+        .form-head { color: #337ab7; font-weight: bold; padding: 10px; font-size: 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #eee; }
+        .form-row-item { display: flex; align-items: stretch; border-bottom: 1px solid #eee; }
+        .form-label-box { background: #f9f9f9; min-width: 80px; padding: 12px; font-size: 11px; font-weight: bold; text-align: right; border-right: 1px solid #ddd; display: flex; align-items: center; justify-content: flex-end; color: #333; }
+        .form-input-box { flex: 1; border: none; padding: 10px; outline: none; font-size: 13px; border-left: 3px solid red; }
+        
+        .form-footer-action { text-align: right; background: #f5f5f5; padding: 15px; }
+        .btn-create-action { background: #337ab7; color: white !important; padding: 10px 25px; text-decoration: none !important; border-radius: 2px; font-size: 14px; cursor: pointer; display: inline-block; }
+
+        /* Table Toolbar */
+        .action-toolbar { display: flex; justify-content: flex-end; gap: 5px; margin-bottom: 15px; }
+        .btn-status-toggle { padding: 5px 12px; font-size: 12px; color: white !important; text-decoration: none !important; border-radius: 3px; display: flex; align-items: center; gap: 5px; }
+        .bg-blue { background: #337ab7; }
+        .bg-orange { background: #f0ad4e; }
+        .bg-red { background: #d9534f; }
+
+        /* Table Styling */
+        .scholarship-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid #ddd; }
+        .scholarship-table th { background: #f5fafd; color: #337ab7; padding: 12px 10px; text-align: left; border: 1px solid #ddd; text-transform: uppercase; }
+        .scholarship-table td { padding: 15px 10px; border: 1px solid #ddd; color: #666; }
+        .table-top-line { border-top: 2px solid #d9534f; }
+        .no-data-msg { text-align: center; padding: 30px !important; font-style: italic; color: #999; }
+
+    </style>
+</head>
+<body class="notranslate">
+
+<div class="erp-card">
+    <div class="top-breadcrumb">Scholarship Manager <span>» Detail</span></div>
+
+    <div class="nav-tabs-wrapper">
+        <a href="javascript:void(0)" class="nav-tab-item" onclick="handleJS('TAB_PLACEMENT')"><i class="fa fa-list"></i> Placement</a>
+        <a href="javascript:void(0)" class="nav-tab-item active" onclick="handleJS('TAB_SCHOLARSHIP')"><i class="fa fa-list"></i> Scholarship</a>
+        <a href="javascript:void(0)" class="nav-tab-item" onclick="handleJS('TAB_ATTACH_DOC')"><i class="fa fa-list"></i> Attach Document</a>
+        <a href="javascript:void(0)" class="nav-tab-item" onclick="handleJS('TAB_ACADEMIC')"><i class="fa fa-list"></i> Academic Info</a>
+        <a href="javascript:void(0)" class="nav-tab-item" onclick="handleJS('TAB_DEGREE')"><i class="fa fa-list"></i> Degree</a>
+        <a href="javascript:void(0)" class="nav-tab-item" onclick="handleJS('TAB_STATE')"><i class="fa fa-list"></i> State</a>
+        <a href="javascript:void(0)" class="nav-tab-item" onclick="handleJS('TAB_APP_TYPE')"><i class="fa fa-list"></i> Application Type</a>
+    </div>
+
+    <div class="page-flex">
+        <div class="side-form">
+            <div class="form-border-box">
+                <div class="form-head"><i class="fa fa-search"></i> Create Scholarship</div>
+                
+                <div class="form-row-item">
+                    <div class="form-label-box">TITLE</div>
+                    <input type="text" class="form-input-box" id="scholar_title_input" placeholder="">
+                </div>
+
+                <div class="form-footer-action">
+                    <a href="javascript:void(0)" class="btn-create-action" onclick="submitScholarship()">
+                        <i class="fa fa-save"></i> Create
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-list">
+            <div class="action-toolbar">
+                <a href="javascript:void(0)" class="btn-status-toggle bg-blue" onclick="handleJS('BULK_ACTIVE')"><i class="fa fa-check"></i> Active</a>
+                <a href="javascript:void(0)" class="btn-status-toggle bg-orange" onclick="handleJS('BULK_INACTIVE')"><i class="fa fa-times"></i> In-Active</a>
+                <a href="javascript:void(0)" class="btn-status-toggle bg-red" onclick="handleJS('BULK_DELETE')"><i class="fa fa-trash"></i> Delete</a>
+            </div>
+
+            <table class="scholarship-table">
+                <thead class="table-top-line">
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th style="width: 80px;">S.N.</th>
+                        <th>SCHOLARSHIP</th>
+                        <th style="width: 120px;">STATUS</th>
+                    </tr>
+                </thead>
+                <tbody id="scholarshipGrid">
+                    <tr>
+                        <td colspan="4" class="no-data-msg">No Scholarship data found.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * Logic for Scholarship Submission
+     */
+    function submitScholarship() {
+        const titleVal = document.getElementById('scholar_title_input').value;
+        if(!titleVal) {
+            alert("Please enter Title");
+            return;
+        }
+        handleJS('CREATE_SCHOLARSHIP', titleVal);
+    }
+
+    /**
+     * Central JavaScript Function for PHP/Backend Callbacks
+     */
+    function handleJS(action, payload = "") {
+        console.log("Triggered: " + action + " | Payload: " + payload);
+        alert("Action: " + action + "\nReady for PHP integration.");
+    }
+</script>
+
+</body>
+</html>
