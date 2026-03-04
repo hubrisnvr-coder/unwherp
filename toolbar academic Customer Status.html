@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Status Manager - Detail</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .erp-wrapper { background: #fff; border: 1px solid #ddd; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+        /* Page Title */
+        .page-header { text-align: center; color: #337ab7; font-size: 18px; margin-bottom: 25px; font-weight: bold; }
+        .page-header span { color: #999; font-weight: normal; }
+
+        /* Layout Structure */
+        .main-container { display: flex; gap: 20px; align-items: flex-start; }
+        .left-side { flex: 0 0 320px; }
+        .right-side { flex: 1; }
+
+        /* Left Side: Create Form */
+        .form-box { border: 1px solid #ddd; }
+        .form-title { color: #337ab7; font-weight: bold; padding: 10px; font-size: 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #eee; }
+        .form-group { display: flex; align-items: stretch; border-bottom: 1px solid #eee; }
+        .label-box { background: #eee; min-width: 90px; padding: 12px; font-size: 11px; font-weight: bold; text-align: right; border-right: 1px solid #ddd; display: flex; align-items: center; justify-content: flex-end; color: #333; }
+        .input-box { flex: 1; border: none; padding: 10px; outline: none; font-size: 14px; border-left: 3px solid red; }
+        
+        .form-actions { text-align: right; background: #f5f5f5; padding: 15px; }
+        .btn-save { background: #337ab7; color: white !important; padding: 10px 25px; text-decoration: none !important; border-radius: 2px; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+
+        /* Right Side: Toolbar */
+        .top-toolbar { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .bulk-actions { display: flex; gap: 5px; }
+        .utility-links { display: flex; gap: 2px; }
+
+        .btn-status-bulk { padding: 5px 12px; font-size: 12px; color: white !important; text-decoration: none !important; border-radius: 3px; display: flex; align-items: center; gap: 5px; }
+        .bg-blue { background: #337ab7; }
+        .bg-orange { background: #f0ad4e; }
+        .bg-red { background: #d9534f; }
+        
+        .btn-icon-tool { border: 1px solid #ccc; background: #fff; padding: 6px 12px; color: #337ab7; text-decoration: none !important; font-size: 13px; }
+
+        /* Data Table */
+        .table-controls { display: flex; justify-content: space-between; background: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-bottom: none; font-size: 13px; }
+        .search-field { border: 1px solid #ddd; padding: 4px 8px; outline: none; }
+
+        .main-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid #ddd; }
+        .main-table th { background: #f5fafd; color: #337ab7; padding: 10px; text-align: left; border: 1px solid #ddd; text-transform: uppercase; }
+        .main-table td { padding: 8px 10px; border: 1px solid #ddd; vertical-align: middle; }
+        .header-stripe { border-top: 2px solid #d9534f; }
+
+        /* Status Toggle UI */
+        .status-dropdown-box { position: relative; display: inline-block; }
+        .status-pill { color: white !important; padding: 4px 10px; border-radius: 3px; font-size: 11px; text-decoration: none !important; display: flex; align-items: center; gap: 8px; cursor: pointer; min-width: 80px; }
+        .active-pill { background: #337ab7; }
+        .inactive-pill { background: #f0ad4e; }
+
+        .dropdown-content { display: none; position: absolute; background: white; border: 1px solid #ddd; z-index: 100; min-width: 100px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .dropdown-content a { display: block; padding: 8px; color: #333; text-decoration: none; font-size: 12px; border-bottom: 1px solid #eee; }
+        .dropdown-content a:hover { background: #f8f8f8; color: #337ab7; }
+        .status-dropdown-box:hover .dropdown-content { display: block; }
+
+        /* Row Action Icons */
+        .row-tool-box { display: flex; justify-content: flex-end; gap: 5px; }
+        .btn-edit { background: #5cb85c; color: white !important; padding: 5px 8px; border-radius: 3px; text-decoration: none !important; }
+        .btn-del { background: #d9534f; color: white !important; padding: 5px 8px; border-radius: 3px; text-decoration: none !important; }
+
+        /* Table Footer */
+        .footer-info { display: flex; justify-content: space-between; padding: 15px 0; font-size: 13px; color: #666; }
+        .pagination-box { display: flex; gap: 2px; }
+        .page-link { padding: 6px 14px; border: 1px solid #ddd; text-decoration: none; color: #337ab7; }
+        .page-link.current { background: #337ab7; color: white; border-color: #337ab7; }
+    </style>
+</head>
+<body class="notranslate">
+
+<div class="erp-wrapper">
+    <div class="page-header">Customer Status Manager <span>» Detail</span></div>
+
+    <div class="main-container">
+        <div class="left-side">
+            <div class="form-box">
+                <div class="form-title"><i class="fa fa-search"></i> Create Customer Status</div>
+                <div class="form-group">
+                    <div class="label-box">STATUS</div>
+                    <input type="text" class="input-box" id="cust_status_val" placeholder="">
+                </div>
+                <div class="form-actions">
+                    <a href="javascript:void(0)" class="btn-save" onclick="jsCaller('CREATE_STATUS', document.getElementById('cust_status_val').value)">
+                        <i class="fa fa-save"></i> Create
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="top-toolbar">
+                <div class="bulk-actions">
+                    <a href="javascript:void(0)" class="btn-status-bulk bg-blue" onclick="jsCaller('BULK_ACTIVE')"><i class="fa fa-check"></i> Active</a>
+                    <a href="javascript:void(0)" class="btn-status-bulk bg-orange" onclick="jsCaller('BULK_INACTIVE')"><i class="fa fa-times"></i> In-Active</a>
+                    <a href="javascript:void(0)" class="btn-status-bulk bg-red" onclick="jsCaller('BULK_DELETE')"><i class="fa fa-trash"></i> Delete</a>
+                </div>
+                <div class="utility-links">
+                    <a href="javascript:void(0)" class="btn-icon-tool" onclick="jsCaller('SEARCH_TOGGLE')"><i class="fa fa-search"></i></a>
+                    <a href="javascript:void(0)" class="btn-icon-tool" onclick="jsCaller('REFRESH')"><i class="fa fa-refresh"></i> Refresh</a>
+                    <a href="javascript:void(0)" class="btn-icon-tool" onclick="jsCaller('COPY')"><i class="fa fa-copy"></i></a>
+                    <a href="javascript:void(0)" class="btn-icon-tool" onclick="jsCaller('EXPORT')"><i class="fa fa-database"></i></a>
+                    <a href="javascript:void(0)" class="btn-icon-tool" onclick="jsCaller('PRINT')"><i class="fa fa-print"></i></a>
+                </div>
+            </div>
+
+            <div class="table-controls">
+                <div>Display <select><option>All</option></select> records</div>
+                <div>Search: <input type="text" class="search-field" onkeyup="jsCaller('FILTER_TABLE', this.value)"></div>
+            </div>
+
+            <table class="main-table">
+                <thead class="header-stripe">
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th style="width: 50px;">S.N.</th>
+                        <th>CUSTOMER STATUS</th>
+                        <th>STATUS</th>
+                        <th style="width: 80px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="statusTableContent">
+                    </tbody>
+            </table>
+
+            <div class="footer-info">
+                <div id="entryText">Showing 1 to 5 of 5 entries</div>
+                <div class="pagination-box">
+                    <a href="javascript:void(0)" class="page-link" onclick="jsCaller('PREV_PAGE')">Previous</a>
+                    <a href="javascript:void(0)" class="page-link current">1</a>
+                    <a href="javascript:void(0)" class="page-link" onclick="jsCaller('NEXT_PAGE')">Next</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Full content as per screenshot
+    const customerStatuses = [
+        "New Customer - [1]",
+        "Annual Contract - [2]",
+        "Office Contract - [3]",
+        "Individual - [4]",
+        "inquiry/Lead - [5]"
+    ];
+
+    const tableContainer = document.getElementById('statusTableContent');
+
+    // Generating Table Rows
+    customerStatuses.forEach((statusName, idx) => {
+        tableContainer.innerHTML += `
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>${idx + 1}</td>
+                <td>${statusName}</td>
+                <td>
+                    <div class="status-dropdown-box">
+                        <a href="javascript:void(0)" class="status-pill active-pill" id="stat-pill-${idx}">
+                            Active <i class="fa fa-caret-down"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="javascript:void(0)" onclick="updateStatusUI(${idx}, 'Active')">Active</a>
+                            <a href="javascript:void(0)" onclick="updateStatusUI(${idx}, 'In-Active')">In-Active</a>
+                        </div>
+                    </div>
+                </td>
+                <td class="row-tool-box">
+                    <a href="javascript:void(0)" class="btn-edit" onclick="jsCaller('EDIT', '${statusName}')"><i class="fa fa-pencil"></i></a>
+                    <a href="javascript:void(0)" class="btn-del" onclick="jsCaller('DELETE', '${statusName}')"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        `;
+    });
+
+    /**
+     * UI Status Change Logic
+     */
+    function updateStatusUI(rowId, newState) {
+        const targetBtn = document.getElementById('stat-pill-' + rowId);
+        targetBtn.innerHTML = `${newState} <i class="fa fa-caret-down"></i>`;
+        
+        if(newState === 'Active') {
+            targetBtn.className = 'status-pill active-pill';
+        } else {
+            targetBtn.className = 'status-pill inactive-pill';
+        }
+        jsCaller('UPDATE_DB_STATUS', `Row ${rowId+1} to ${newState}`);
+    }
+
+    /**
+     * Central JS Hook for future PHP connection
+     */
+    function jsCaller(actionType, payload = "") {
+        console.log("PHP Ready: " + actionType + " | Data: " + payload);
+        // Only alert for main actions
+        if(actionType !== 'UPDATE_DB_STATUS' && actionType !== 'FILTER_TABLE') {
+            alert(actionType + (payload ? ": " + payload : ""));
+        }
+    }
+</script>
+
+</body>
+</html>
