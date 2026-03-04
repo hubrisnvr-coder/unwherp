@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Documents Manager | SoftSolution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        :root {
+            --primary-blue: #337ab7;
+            --success-green: #5cb85c;
+            --warning-orange: #f0ad4e;
+            --danger-red: #d9534f;
+            --dark-blue: #2e6da4;
+            --label-bg: #f5f5f5;
+            --border-color: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0; padding: 20px; font-size: 13px;
+        }
+
+        .main-container {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+
+        .page-header {
+            text-align: center; color: var(--primary-blue);
+            font-size: 15px; padding: 10px; border-bottom: 1px solid #eee; margin: 0;
+        }
+
+        /* Top Navigation */
+        .top-nav { display: flex; justify-content: center; gap: 5px; padding: 15px; flex-wrap: wrap; }
+        .nav-btn {
+            display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px;
+            border-radius: 4px; text-decoration: none; color: white; font-size: 12px;
+            background-color: var(--primary-blue); cursor: pointer; border: none;
+        }
+        .nav-btn.active { background-color: var(--success-green); }
+
+        /* Main Layout Split */
+        .content-wrapper { display: flex; gap: 20px; padding: 15px; border-top: 1px solid #eee; }
+        
+        /* Left Form Section */
+        .form-section { flex: 0 0 35%; }
+        .section-title { color: var(--primary-blue); font-size: 16px; margin-bottom: 15px; display: block; }
+        
+        .form-row { display: flex; border: 1px solid #ccc; margin-bottom: 10px; border-radius: 2px; height: 34px; overflow: hidden; }
+        .form-label { 
+            background: var(--label-bg); min-width: 120px; font-weight: bold; 
+            display: flex; align-items: center; justify-content: flex-end; 
+            padding-right: 15px; border-right: 1px solid #ccc; font-size: 11px;
+        }
+        .form-input { flex: 1; border: none; outline: none; padding: 0 10px; font-size: 13px; }
+        .required-border { border-left: 2px solid red; } /* Red indicator on image */
+
+        .textarea-row { height: 80px; align-items: flex-start; }
+        .textarea-row .form-label { height: 100%; padding-top: 10px; }
+        .form-textarea { flex: 1; border: none; outline: none; padding: 10px; resize: none; font-family: inherit; }
+
+        .form-footer { background: #f5f5f5; padding: 15px; text-align: center; border: 1px solid #ddd; border-top: none; }
+        .btn-upload { 
+            background: var(--dark-blue); color: white; border: none; padding: 8px 25px; 
+            border-radius: 4px; cursor: pointer; font-size: 16px; display: inline-flex; align-items: center; gap: 8px;
+        }
+
+        /* Right Table Section */
+        .table-section { flex: 1; }
+        .table-actions { display: flex; justify-content: flex-end; gap: 5px; margin-bottom: 10px; }
+        .action-btn { color: white; padding: 5px 12px; border-radius: 4px; font-size: 12px; text-decoration: none; display: flex; align-items: center; gap: 5px; }
+        .btn-active { background: var(--primary-blue); }
+        .btn-inactive { background: var(--warning-orange); }
+        .btn-delete { background: var(--danger-red); }
+
+        .data-table { width: 100%; border-collapse: collapse; border: 1px solid #ddd; }
+        .data-table th { 
+            background: #eef1f5; color: var(--primary-blue); padding: 10px; 
+            text-align: left; border-bottom: 1px solid #ddd; border-top: 2px solid red; font-size: 12px;
+        }
+        .data-table td { padding: 12px 10px; border-bottom: 1px solid #eee; color: #666; }
+        .no-data { text-align: center; color: #999; font-style: italic; padding: 20px !important; }
+
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <h3 class="page-header">Student Documents Manager » Detail</h3>
+
+    <div class="top-nav">
+        <a class="nav-btn" onclick="jsCall('Detail')"><i class="fa fa-list"></i> Detail</a>
+        <a class="nav-btn" onclick="jsCall('Registration')"><i class="fa fa-plus"></i> Registration</a>
+        <a class="nav-btn" onclick="jsCall('Bulk')"><i class="fa fa-upload"></i> Bulk Registration</a>
+        <a class="nav-btn" onclick="jsCall('Transfer')"><i class="fa fa-exchange"></i> Transfer</a>
+        <a class="nav-btn active" onclick="jsCall('Documents')"><i class="fa fa-file-text-o"></i> Documents</a>
+        <a class="nav-btn" onclick="jsCall('Notes')"><i class="fa fa-sticky-note-o"></i> Notes</a>
+        <a class="nav-btn" onclick="jsCall('Fees')"><i class="fa fa-calculator"></i> Balance Fees</a>
+        <a class="nav-btn" onclick="jsCall('Library')"><i class="fa fa-book"></i> Library</a>
+        <a class="nav-btn" onclick="jsCall('Attendance')"><i class="fa fa-calendar-check-o"></i> Attendance</a>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="form-section">
+            <span class="section-title"><i class="fa fa-search"></i> Create Student Documents</span>
+            <form id="docForm" action="upload_doc.php" method="POST" enctype="multipart/form-data">
+                <div class="form-row">
+                    <div class="form-label">REG.NO.</div>
+                    <input type="text" name="reg_no" class="form-input required-border" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">TITLE</div>
+                    <input type="text" name="doc_title" class="form-input required-border" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">SELECT FILE</div>
+                    <input type="file" name="student_file" class="form-input" style="padding-top: 5px;">
+                </div>
+                <div class="form-row textarea-row">
+                    <div class="form-label">DESCRIPTION</div>
+                    <textarea name="description" class="form-textarea"></textarea>
+                </div>
+                <div class="form-footer">
+                    <a class="btn-upload" onclick="handleUpload()">
+                        <i class="fa fa-save"></i> upload
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-section">
+            <div class="table-actions">
+                <a class="action-btn btn-active" onclick="jsCall('Mark Active')"><i class="fa fa-check"></i> Active</a>
+                <a class="action-btn btn-inactive" onclick="jsCall('Mark In-Active')"><i class="fa fa-close"></i> In-Active</a>
+                <a class="action-btn btn-delete" onclick="jsCall('Delete Selected')"><i class="fa fa-trash"></i> Delete</a>
+            </div>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th>S.N.</th>
+                        <th>REG.NO.</th>
+                        <th>STUDENT DOCUMENTS</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5" class="no-data">No Student Documents data found. Please Filter Student Documents to show.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * Navigation & Action Handler
+     */
+    function jsCall(actionName) {
+        console.log("System Action Call: " + actionName);
+        alert("Triggering: " + actionName);
+    }
+
+    /**
+     * Handle File Upload Button
+     */
+    function handleUpload() {
+        const reg = document.getElementsByName('reg_no')[0].value;
+        const title = document.getElementsByName('doc_title')[0].value;
+
+        if(!reg || !title) {
+            alert("Please fill REG.NO and TITLE (Red marked fields)");
+            return;
+        }
+
+        console.log("Initiating PHP Upload Process...");
+        // document.getElementById('docForm').submit();
+        alert("Upload logic called. Ready for PHP connect.");
+    }
+</script>
+
+</body>
+</html>
