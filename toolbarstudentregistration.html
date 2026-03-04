@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration | ERP 107</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        :root {
+            --primary-blue: #337ab7;
+            --success-green: #5cb85c;
+            --dark-blue: #2e6da4;
+            --border-color: #ddd;
+            --bg-light: #f9f9f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg-light);
+            margin: 0; padding: 20px; font-size: 13px;
+        }
+
+        .main-container {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            min-height: 200px;
+        }
+
+        .page-breadcrumb {
+            text-align: center; color: var(--primary-blue);
+            font-size: 15px; padding: 12px; border-bottom: 1px solid #eee; margin: 0;
+            font-weight: 500;
+        }
+
+        /* Top Navigation Buttons */
+        .top-navbar { 
+            display: flex; justify-content: center; gap: 5px; padding: 15px; 
+            flex-wrap: wrap; 
+        }
+        
+        .nav-btn {
+            display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px;
+            border-radius: 4px; text-decoration: none; color: white; font-size: 12px;
+            background-color: var(--primary-blue); cursor: pointer; border: none;
+            transition: 0.2s;
+        }
+
+        .nav-btn:hover { background-color: var(--dark-blue); }
+
+        /* Active State for Registration */
+        .nav-btn.active { background-color: var(--success-green); }
+
+        /* Shifted Bulk Import Section */
+        .shifted-action-bar {
+            padding: 10px 15px;
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid #eee;
+            background: #fff;
+        }
+
+        .bulk-reg-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .bulk-reg-btn:hover { background-color: var(--dark-blue); }
+
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <h3 class="page-breadcrumb">Student Manager » Registration</h3>
+
+    <div class="top-navbar">
+        <a class="nav-btn" onclick="navigateERP('erp100.php', 'Detail')">
+            <i class="fa fa-list"></i> Detail
+        </a>
+        <a class="nav-btn active" onclick="navigateERP('erp107.php', 'Registration')">
+            <i class="fa fa-plus"></i> Registration
+        </a>
+        <a class="nav-btn" onclick="navigateERP('erp102.php', 'Bulk Registration')">
+            <i class="fa fa-upload"></i> Bulk Registration
+        </a>
+        <a class="nav-btn" onclick="navigateERP('erp103.php', 'Transfer')">
+            <i class="fa fa-exchange"></i> Transfer
+        </a>
+        <a class="nav-btn" onclick="navigateERP('erp104.php', 'Documents')">
+            <i class="fa fa-file-text-o"></i> Documents
+        </a>
+        <a class="nav-btn" onclick="navigateERP('erp105.php', 'Notes')">
+            <i class="fa fa-sticky-note-o"></i> Notes
+        </a>
+        <a class="nav-btn" onclick="navigateERP('fees.php', 'Balance Fees')">
+            <i class="fa fa-calculator"></i> Balance Fees
+        </a>
+        <a class="nav-btn" onclick="navigateERP('library.php', 'Library')">
+            <i class="fa fa-book"></i> Library
+        </a>
+        <a class="nav-btn" onclick="navigateERP('attendance.php', 'Attendance')">
+            <i class="fa fa-calendar-check-o"></i> Attendance
+        </a>
+    </div>
+
+    <div class="shifted-action-bar">
+        <a class="bulk-reg-btn" onclick="navigateERP('erp102.php', 'Bulk Student Registration')">
+            <i class="fa fa-upload"></i> Bulk Student Registration
+        </a>
+    </div>
+
+    <div id="form-content-area" style="padding: 20px;">
+        </div>
+</div>
+
+<script>
+    /**
+     * Navigation via JavaScript
+     * Connects to PHP later
+     */
+    function navigateERP(url, pageName) {
+        console.log("Navigating to: " + pageName);
+        alert("JavaScript call for: " + pageName);
+        // window.location.href = url;
+    }
+
+    window.onload = function() {
+        console.log("ERP 107 Ready. Layout adjusted as per screenshot.");
+    };
+</script>
+
+<!--yanha se form wala section porsen sure ho rha hai -->
+<div class="erp108-wrapper-container">
+    <style>
+        .erp108-wrapper-container {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff;
+            border: 1px solid #ddd;
+            display: flex;
+            min-height: 850px;
+        }
+
+        /* Sidebar Styling */
+        .erp108-side-nav {
+            flex: 0 0 200px;
+            background: #f1f3f6;
+            border-right: 1px solid #ddd;
+        }
+
+        .erp108-side-nav a {
+            display: block;
+            padding: 14px 18px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .erp108-side-nav a.active {
+            background: #337ab7;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        /* Main Content Styling */
+        .erp108-form-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .section-header-blue {
+            background: #f5f5f5;
+            color: #337ab7;
+            padding: 8px 15px;
+            font-size: 13px;
+            font-weight: bold;
+            border: 1px solid #ddd;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .section-header-orange {
+            color: #f0ad4e;
+            font-weight: bold;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            margin-top: 25px;
+            font-size: 14px;
+        }
+
+        /* Grid System */
+        .form-row-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .input-field-group {
+            display: flex;
+            border: 1px solid #ccc;
+            height: 38px;
+            align-items: center;
+            background: #fff;
+        }
+
+        .input-field-group label {
+            background: #f9f9f9;
+            min-width: 145px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: right;
+            padding-right: 12px;
+            border-right: 1px solid #ccc;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            color: #444;
+        }
+
+        .input-field-group input, .input-field-group select, .input-field-group textarea {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 0 10px;
+            font-size: 13px;
+            height: 100%;
+            color: #333;
+        }
+
+        /* Red Mandatory Mark */
+        .red-border {
+            border-left: 4px solid #d9534f !important;
+        }
+
+        .form-footer-buttons {
+            text-align: center;
+            padding: 25px;
+            background: #f8f8f8;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+        }
+
+        .btn-erp {
+            padding: 10px 22px;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+    </style>
+
+    <div class="erp108-side-nav">
+        <a class="active" onclick="erpCall('General Info', this)"><i class="fa fa-info-circle"></i> General Info</a>
+        <a onclick="erpCall('Academic Info', this)"><i class="fa fa-graduation-cap"></i> Academic Info</a>
+        <a onclick="erpCall('Profile Image', this)"><i class="fa fa-user"></i> Profile Image</a>
+        <a onclick="erpCall('Attach Document', this)"><i class="fa fa-paperclip"></i> Attach Document</a>
+        <a onclick="erpCall('Extra Info', this)"><i class="fa fa-plus"></i> Extra Info</a>
+    </div>
+
+    <div class="erp108-form-content">
+        <form id="erp108_final_form">
+            <div class="section-header-blue">General Info</div>
+            <div class="form-row-grid">
+                <div class="input-field-group"><label>REG.NO.</label><input type="text" name="reg_no"></div>
+                <div class="input-field-group"><label>REG. DATE</label><input type="date" name="reg_date" class="red-border"></div>
+                <div class="input-field-group"><label>UNIQUE STUDENT ID</label><input type="text" name="unique_id"></div>
+                
+                <div class="input-field-group" style="grid-column: span 2;"><label>PROGRAM/CLASS</label><select name="class"><option>Select Program/Class</option></select></div>
+                <div class="input-field-group"><label>SEMESTER/SECTION</label><select name="section" class="red-border"><option>Select Semester/Section</option></select></div>
+
+                <div class="input-field-group"><label>BATCH</label><select name="batch"><option>2025-26</option></select></div>
+                <div class="input-field-group" style="grid-column: span 2;"><label>ACADEMIC STATUS</label><select name="status"><option>New Admission</option></select></div>
+
+                <div class="input-field-group" style="grid-column: span 2;"><label>NAME OF STUDENT</label><input type="text" name="student_name" class="red-border"></div>
+                <div style="background: transparent;"></div>
+
+                <div class="input-field-group"><label>DATE OF BIRTH</label><input type="date" name="dob" class="red-border"></div>
+                <div class="input-field-group"><label>GENDER</label><select name="gender" class="red-border"><option>Select Gender</option></select></div>
+                <div class="input-field-group"><label>BLOOD GROUP</label><select name="bg"><option>Select Blood Group</option></select></div>
+
+                <div class="input-field-group"><label>NATIONALITY</label><input type="text" name="nationality" class="red-border"></div>
+                <div class="input-field-group"><label>ID. 1</label><input type="text" name="id1"></div>
+                <div class="input-field-group"><label>ID. 2</label><input type="text" name="id2"></div>
+
+                <div class="input-field-group"><label>ID. 3</label><input type="text" name="id3"></div>
+                <div class="input-field-group"><label>ID. 4</label><input type="text" name="id4"></div>
+                <div class="input-field-group"><label>MOTHER TONGUE</label><input type="text" name="mother_tongue"></div>
+
+                <div class="input-field-group"><label>RELIGION</label><input type="text" name="religion"></div>
+                <div class="input-field-group" style="grid-column: span 2;"><label>CASTE</label><input type="text" name="caste"></div>
+
+                <div class="input-field-group"><label>E-MAIL</label><input type="email" name="email"></div>
+                <div class="input-field-group" style="grid-column: span 2; height: 60px;">
+                    <label style="height: 100%;">EXTRA INFO</label>
+                    <textarea name="extra_info" style="padding: 10px;"></textarea>
+                </div>
+            </div>
+
+            <!--yanha se prosnel form wala section sure ho rha hai -->
+              <div class="erp110-parental-full">
+    <style>
+        .erp110-parental-full {
+            width: 100%;
+            background: #fff;
+            padding: 10px 0;
+        }
+
+        .header-orange-tag {
+            background: #f0ad4e;
+            color: #fff;
+            padding: 6px 15px;
+            font-size: 13px;
+            font-weight: bold;
+            display: inline-block;
+            border-radius: 4px 4px 0 0;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+
+        .row-grid-full {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns for full display */
+            gap: 12px;
+            border-top: 1px solid #f0ad4e;
+            padding: 15px 0;
+            margin-bottom: 10px;
+        }
+
+        .input-group-110 {
+            display: flex;
+            border: 1px solid #ccc;
+            height: 40px;
+            align-items: center;
+            background: #fff;
+        }
+
+        .input-group-110 label {
+            background: #f1f3f6;
+            min-width: 160px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: right;
+            padding-right: 12px;
+            border-right: 1px solid #ccc;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            color: #333;
+        }
+
+        .input-group-110 input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 0 12px;
+            font-size: 14px;
+            height: 100%;
+        }
+
+        .req-border-110 {
+            border-left: 4px solid #d9534f !important;
+        }
+    </style>
+
+    <div class="header-orange-tag">Father's Detail</div>
+    <div class="row-grid-full">
+        <div class="input-group-110" style="grid-column: span 1;">
+            <label>FATHER NAME</label>
+            <input type="text" name="f_name" class="req-border-110">
+        </div>
+        <div style="grid-column: span 2;"></div> <div class="input-group-110"><label>ELIGIBILITY</label><input type="text" name="f_elig"></div>
+        <div class="input-group-110"><label>OCCUPATION</label><input type="text" name="f_occ"></div>
+        <div class="input-group-110"><label>OFFICE</label><input type="text" name="f_office"></div>
+
+        <div class="input-group-110"><label>OFFICE NUMBER</label><input type="text" name="f_off_num"></div>
+        <div class="input-group-110"><label>RESIDENCE NUMBER</label><input type="text" name="f_res_num"></div>
+        <div class="input-group-110"><label>MOBILE 1</label><input type="text" name="f_mob1"></div>
+
+        <div class="input-group-110"><label>MOBILE 2</label><input type="text" name="f_mob2"></div>
+        <div class="input-group-110" style="grid-column: span 1;">
+            <label>E-MAIL</label>
+            <input type="email" name="f_email">
+        </div>
+        <div></div>
+    </div>
+
+    <div class="header-orange-tag">Mother's Detail</div>
+    <div class="row-grid-full">
+        <div class="input-group-110" style="grid-column: span 1;">
+            <label>MOTHER FATHER NAME</label>
+            <input type="text" name="m_name" class="req-border-110">
+        </div>
+        <div style="grid-column: span 2;"></div>
+
+        <div class="input-group-110"><label>ELIGIBILITY</label><input type="text" name="m_elig"></div>
+        <div class="input-group-110"><label>OCCUPATION</label><input type="text" name="m_occ"></div>
+        <div class="input-group-110"><label>OFFICE</label><input type="text" name="m_office"></div>
+
+        <div class="input-group-110"><label>OFFICE NUMBER</label><input type="text" name="m_off_num"></div>
+        <div class="input-group-110"><label>RESIDENCE NUMBER</label><input type="text" name="m_res_num"></div>
+        <div class="input-group-110"><label>MOBILE 1</label><input type="text" name="m_mob1"></div>
+
+        <div class="input-group-110"><label>MOBILE 2</label><input type="text" name="m_mob2"></div>
+        <div class="input-group-110" style="grid-column: span 1;">
+            <label>E-MAIL</label>
+            <input type="email" name="m_email">
+        </div>
+        <div></div>
+    </div>
+</div>
+            <!-- or yanha par prosnel from wala porsen poora ho rha hai -->
+
+            <div class="form-footer-buttons">
+                <a class="btn-erp" style="background:#999;" onclick="formAction('Reset')"><i class="fa fa-refresh"></i> Reset</a>
+                <a class="btn-erp" style="background:#337ab7;" onclick="formAction('Register')"><i class="fa fa-save"></i> Register</a>
+                <a class="btn-erp" style="background:#5cb85c;" onclick="formAction('RegisterAdd')"><i class="fa fa-plus"></i> Register And Add Another</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function erpCall(section, btn) {
+            document.querySelectorAll('.erp108-side-nav a').forEach(a => a.classList.remove('active'));
+            btn.classList.add('active');
+            console.log("Section: " + section);
+        }
+
+        function formAction(type) {
+            alert("Action: " + type);
+            if(type === 'Reset') document.getElementById('erp108_final_form').reset();
+        }
+    </script>
+</div>
+
+<!--or yanha par form wala section poora ho rha hai-->
+</body>
+</html>
