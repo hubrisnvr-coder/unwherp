@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Info Manager - Detail</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 10px; }
+        .erp-container { background: #fff; border: 1px solid #ddd; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+        /* Top Title */
+        .page-title { text-align: center; color: #337ab7; font-size: 15px; margin-bottom: 15px; font-weight: bold; border-bottom: 1px solid #f1f1f1; padding-bottom: 10px; }
+        .page-title span { color: #999; font-weight: normal; }
+
+        /* Manager Tabs */
+        .manager-tabs { display: flex; justify-content: center; gap: 4px; margin-bottom: 25px; flex-wrap: wrap; }
+        .tab-btn { padding: 6px 12px; font-size: 13px; color: white !important; text-decoration: none !important; border-radius: 3px; display: flex; align-items: center; gap: 6px; background: #337ab7; }
+        .tab-btn.active { background: #5cb85c; }
+
+        /* Main Grid Layout */
+        .main-flex { display: flex; gap: 20px; align-items: flex-start; }
+        .left-side { flex: 0 0 350px; }
+        .right-side { flex: 1; }
+
+        /* Create Form Section */
+        .form-box { border: 1px solid #ddd; }
+        .form-title { color: #337ab7; font-weight: bold; padding: 10px; font-size: 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #eee; }
+        .row-field { display: flex; align-items: stretch; border-bottom: 1px solid #eee; }
+        .label-cell { background: #f9f9f9; min-width: 80px; padding: 12px; font-size: 11px; font-weight: bold; text-align: right; border-right: 1px solid #ddd; display: flex; align-items: center; justify-content: flex-end; color: #333; }
+        .input-cell { flex: 1; border: none; padding: 10px; outline: none; font-size: 13px; border-left: 3px solid red; }
+        
+        .footer-btn-area { text-align: right; background: #f5f5f5; padding: 15px; }
+        .btn-create { background: #337ab7; color: white !important; padding: 10px 25px; text-decoration: none !important; border-radius: 2px; font-size: 14px; cursor: pointer; display: inline-block; }
+
+        /* Right Side Toolbar */
+        .top-toolbar { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .action-btns { display: flex; gap: 5px; }
+        .util-btns { display: flex; gap: 2px; }
+
+        .btn-action { padding: 5px 12px; font-size: 12px; color: white !important; text-decoration: none !important; border-radius: 3px; display: flex; align-items: center; gap: 5px; }
+        .btn-util { border: 1px solid #ccc; background: #fff; color: #337ab7 !important; padding: 6px 12px; text-decoration: none !important; }
+        .bg-blue { background: #337ab7; }
+        .bg-orange { background: #f0ad4e; }
+        .bg-red { background: #d9534f; }
+
+        /* Filter Bar */
+        .filter-row { display: flex; justify-content: space-between; background: #f9f9f9; padding: 8px; border: 1px solid #ddd; border-bottom: none; font-size: 13px; }
+        .search-input { border: 1px solid #ddd; padding: 4px; outline: none; }
+
+        /* Data Table */
+        .info-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid #ddd; }
+        .info-table th { background: #f5fafd; color: #337ab7; padding: 10px; text-align: left; border: 1px solid #ddd; text-transform: uppercase; }
+        .info-table td { padding: 10px; border: 1px solid #ddd; color: #555; }
+        .table-accent { border-top: 2px solid #d9534f; }
+
+        /* Status & Action Buttons */
+        .status-pill { color: white !important; padding: 3px 8px; border-radius: 3px; font-size: 11px; text-decoration: none !important; display: inline-block; min-width: 65px; text-align: center; }
+        .status-active { background: #337ab7; }
+        .status-inactive { background: #f0ad4e; }
+        .btn-edit-icon { color: #5cb85c !important; font-size: 16px; margin-right: 8px; text-decoration: none; }
+        .btn-del-icon { color: #d9534f !important; font-size: 16px; text-decoration: none; }
+
+        .footer-pagination { display: flex; justify-content: space-between; padding: 15px 0; font-size: 13px; color: #666; }
+    </style>
+</head>
+<body class="notranslate">
+
+<div class="erp-container">
+    <div class="page-title">Academic Info Manager <span>» Detail</span></div>
+
+    <div class="manager-tabs">
+        <a href="javascript:void(0)" class="tab-btn" onclick="jsCall('NAV_PLACEMENT')"><i class="fa fa-list"></i> Placement</a>
+        <a href="javascript:void(0)" class="tab-btn" onclick="jsCall('NAV_SCHOLARSHIP')"><i class="fa fa-list"></i> Scholarship</a>
+        <a href="javascript:void(0)" class="tab-btn" onclick="jsCall('NAV_ATTACH')"><i class="fa fa-list"></i> Attach Document</a>
+        <a href="javascript:void(0)" class="tab-btn active" onclick="jsCall('NAV_ACADEMIC')"><i class="fa fa-list"></i> Academic Info</a>
+        <a href="javascript:void(0)" class="tab-btn" onclick="jsCall('NAV_DEGREE')"><i class="fa fa-list"></i> Degree</a>
+        <a href="javascript:void(0)" class="tab-btn" onclick="jsCall('NAV_STATE')"><i class="fa fa-list"></i> State</a>
+        <a href="javascript:void(0)" class="tab-btn" onclick="jsCall('NAV_APP')"><i class="fa fa-list"></i> Application Type</a>
+    </div>
+
+    <div class="main-flex">
+        <div class="left-side">
+            <div class="form-box">
+                <div class="form-title"><i class="fa fa-search"></i> Create Academic Info</div>
+                <div class="row-field">
+                    <div class="label-cell">TITLE</div>
+                    <input type="text" class="input-cell" id="academic_title" placeholder="">
+                </div>
+                <div class="footer-btn-area">
+                    <a href="javascript:void(0)" class="btn-create" onclick="submitAcademic()">
+                        <i class="fa fa-save"></i> Create
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="top-toolbar">
+                <div class="action-btns">
+                    <a href="javascript:void(0)" class="btn-action bg-blue" onclick="jsCall('BULK_ACTIVE')"><i class="fa fa-check"></i> Active</a>
+                    <a href="javascript:void(0)" class="btn-action bg-orange" onclick="jsCall('BULK_INACTIVE')"><i class="fa fa-times"></i> In-Active</a>
+                    <a href="javascript:void(0)" class="btn-action bg-red" onclick="jsCall('BULK_DELETE')"><i class="fa fa-trash"></i> Delete</a>
+                </div>
+                <div class="util-btns">
+                    <a href="javascript:void(0)" class="btn-util" onclick="jsCall('SEARCH_MODE')"><i class="fa fa-search"></i></a>
+                    <a href="javascript:void(0)" class="btn-util" onclick="jsCall('REFRESH')"><i class="fa fa-refresh"></i> Refresh</a>
+                    <a href="javascript:void(0)" class="btn-util" onclick="jsCall('COPY')"><i class="fa fa-copy"></i></a>
+                    <a href="javascript:void(0)" class="btn-util" onclick="jsCall('DATABASE')"><i class="fa fa-database"></i></a>
+                    <a href="javascript:void(0)" class="btn-util" onclick="jsCall('PRINT')"><i class="fa fa-print"></i></a>
+                </div>
+            </div>
+
+            <div class="filter-row">
+                <div>Display <select><option>All</option></select> records</div>
+                <div>Search: <input type="text" class="search-input" onkeyup="jsCall('FILTER_TABLE', this.value)"></div>
+            </div>
+
+            <table class="info-table">
+                <thead class="table-accent">
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th style="width: 60px;">S.N.</th>
+                        <th>ACADEMIC INFO</th>
+                        <th style="width: 100px;">STATUS</th>
+                        <th style="width: 60px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="academicTableBody">
+                    </tbody>
+            </table>
+
+            <div class="footer-pagination">
+                <div>Showing 1 to 2 of 2 entries</div>
+                <div>
+                    <a href="javascript:void(0)" onclick="jsCall('PREV')">Previous</a>
+                    <a href="javascript:void(0)" style="background:#337ab7; color:white; padding:2px 8px; text-decoration:none;">1</a>
+                    <a href="javascript:void(0)" onclick="jsCall('NEXT')">Next</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Entries from screenshot
+    const academicData = [
+        "High School - [1]",
+        "Intermediate - [2]"
+    ];
+
+    function renderAcademicTable() {
+        const tbody = document.getElementById('academicTableBody');
+        tbody.innerHTML = '';
+        academicData.forEach((title, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>${index + 1}</td>
+                    <td>${title}</td>
+                    <td>
+                        <a href="javascript:void(0)" 
+                           id="status-pill-${index}" 
+                           class="status-pill status-active" 
+                           onclick="toggleAcademicStatus(${index})">
+                           Active <i class="fa fa-caret-down"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" class="btn-edit-icon" onclick="jsCall('EDIT', ${index})"><i class="fa fa-pencil-square-o"></i></a>
+                        <a href="javascript:void(0)" class="btn-del-icon" onclick="jsCall('DELETE', ${index})"><i class="fa fa-trash-o"></i></a>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    // Toggle Status Function (Active/In-Active)
+    function toggleAcademicStatus(index) {
+        const pill = document.getElementById(`status-pill-${index}`);
+        const isActive = pill.classList.contains('status-active');
+        
+        if (isActive) {
+            pill.classList.remove('status-active');
+            pill.classList.add('status-inactive');
+            pill.innerHTML = 'In-Active <i class="fa fa-caret-down"></i>';
+            jsCall('STATUS_UPDATE', `ID:${index} -> INACTIVE`);
+        } else {
+            pill.classList.remove('status-inactive');
+            pill.classList.add('status-active');
+            pill.innerHTML = 'Active <i class="fa fa-caret-down"></i>';
+            jsCall('STATUS_UPDATE', `ID:${index} -> ACTIVE`);
+        }
+    }
+
+    function submitAcademic() {
+        const val = document.getElementById('academic_title').value;
+        if(!val) return alert("Title is required");
+        jsCall('CREATE_ACADEMIC', val);
+    }
+
+    // Central JS Call for PHP Hooks
+    function jsCall(action, data = "") {
+        console.log("Action Triggered: " + action + " | Data: " + data);
+        // Alert only for non-status changes for cleaner testing
+        if(!['STATUS_UPDATE', 'FILTER_TABLE'].includes(action)) {
+            alert("Action: " + action + (data ? "\nData: " + data : ""));
+        }
+    }
+
+    // Initial Load
+    renderAcademicTable();
+</script>
+
+</body>
+</html>
