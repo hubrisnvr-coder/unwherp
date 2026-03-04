@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Status Manager - Detail</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .erp-container { background: #fff; border: 1px solid #ddd; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+        /* Header */
+        .page-header { text-align: center; color: #337ab7; font-size: 18px; margin-bottom: 25px; font-weight: bold; }
+        .page-header span { color: #999; font-weight: normal; }
+
+        /* Layout */
+        .main-flex { display: flex; gap: 20px; align-items: flex-start; }
+        .left-panel { flex: 0 0 320px; }
+        .right-panel { flex: 1; }
+
+        /* Form Styling */
+        .section-title { color: #337ab7; font-weight: bold; margin-bottom: 15px; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .form-row { display: flex; align-items: stretch; margin-bottom: 15px; border: 1px solid #ddd; }
+        .label-cell { background: #eee; min-width: 80px; padding: 8px; font-size: 11px; font-weight: bold; text-align: right; border-right: 1px solid #ddd; display: flex; align-items: center; justify-content: flex-end; color: #333; }
+        .input-cell { flex: 1; border: none; padding: 8px; outline: none; font-size: 14px; border-left: 3px solid red; }
+        
+        .form-footer { text-align: right; background: #f5f5f5; padding: 15px; border: 1px solid #ddd; border-top: none; }
+        .btn-create { background: #337ab7; color: white !important; padding: 10px 22px; text-decoration: none !important; border-radius: 2px; font-size: 14px; cursor: pointer; }
+
+        /* Right Panel Tools */
+        .tool-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .btn-grp { display: flex; gap: 5px; }
+        .util-grp { display: flex; gap: 2px; }
+
+        .btn-status-top { padding: 4px 12px; font-size: 12px; color: white !important; text-decoration: none !important; border-radius: 3px; display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .bg-blue { background: #337ab7; }
+        .bg-orange { background: #f0ad4e; }
+        .bg-red { background: #d9534f; }
+        .btn-tool { border: 1px solid #ccc; background: #fff; padding: 5px 10px; color: #337ab7; text-decoration: none !important; font-size: 13px; cursor: pointer; }
+
+        /* Table Styling */
+        .filter-row { display: flex; justify-content: space-between; background: #f9f9f9; padding: 8px; border: 1px solid #ddd; border-bottom: none; font-size: 13px; }
+        .search-box { border: 1px solid #ddd; padding: 3px 8px; outline: none; }
+
+        .data-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid #ddd; }
+        .data-table th { background: #f5fafd; color: #337ab7; padding: 10px; text-align: left; border: 1px solid #ddd; text-transform: uppercase; }
+        .data-table td { padding: 8px 10px; border: 1px solid #ddd; vertical-align: middle; }
+        .red-header-line { border-top: 2px solid #d9534f; }
+
+        /* Working Status Button */
+        .status-dropdown { position: relative; display: inline-block; }
+        .status-btn { color: white !important; padding: 4px 8px; border-radius: 3px; font-size: 11px; text-decoration: none !important; display: flex; align-items: center; gap: 8px; cursor: pointer; min-width: 80px; }
+        .active-ui { background: #337ab7; }
+        .inactive-ui { background: #f0ad4e; }
+
+        .status-menu { display: none; position: absolute; background: white; border: 1px solid #ddd; z-index: 100; min-width: 100px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .status-menu a { display: block; padding: 8px; color: #333; text-decoration: none; font-size: 12px; border-bottom: 1px solid #eee; }
+        .status-menu a:hover { background: #f9f9f9; color: #337ab7; }
+        .status-dropdown:hover .status-menu { display: block; }
+
+        /* Action Icons */
+        .action-icons { display: flex; justify-content: flex-end; gap: 5px; }
+        .btn-icon { background: #5cb85c; color: white !important; padding: 5px 8px; border-radius: 3px; text-decoration: none !important; cursor: pointer; }
+        .btn-icon.del { background: #d9534f; }
+
+        .footer-nav { display: flex; justify-content: space-between; padding: 15px 0; font-size: 13px; color: #666; }
+        .page-list { display: flex; gap: 2px; }
+        .page-item { padding: 5px 12px; border: 1px solid #ddd; text-decoration: none; color: #337ab7; cursor: pointer; }
+        .page-item.active { background: #337ab7; color: white; border-color: #337ab7; }
+    </style>
+</head>
+<body class="notranslate">
+
+<div class="erp-container">
+    <div class="page-header">Student Status Manager <span>» Detail</span></div>
+
+    <div class="main-flex">
+        <div class="left-panel">
+            <div class="section-title"><i class="fa fa-search"></i> Create Student Status</div>
+            <div class="form-row">
+                <div class="label-cell">STATUS</div>
+                <input type="text" class="input-cell" id="status_input_val">
+            </div>
+            <div class="form-footer">
+                <a href="javascript:void(0)" class="btn-create" onclick="triggerERP('Create Status', document.getElementById('status_input_val').value)">
+                    <i class="fa fa-save"></i> Create
+                </a>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="tool-bar">
+                <div class="btn-grp">
+                    <a href="javascript:void(0)" class="btn-status-top bg-blue" onclick="triggerERP('Bulk Active')"><i class="fa fa-check"></i> Active</a>
+                    <a href="javascript:void(0)" class="btn-status-top bg-orange" onclick="triggerERP('Bulk In-Active')"><i class="fa fa-times"></i> In-Active</a>
+                    <a href="javascript:void(0)" class="btn-status-top bg-red" onclick="triggerERP('Bulk Delete')"><i class="fa fa-trash"></i> Delete</a>
+                </div>
+                <div class="util-grp">
+                    <a href="javascript:void(0)" class="btn-tool" onclick="triggerERP('Search Tool')"><i class="fa fa-search"></i></a>
+                    <a href="javascript:void(0)" class="btn-tool" onclick="triggerERP('Refresh')"><i class="fa fa-refresh"></i> Refresh</a>
+                    <a href="javascript:void(0)" class="btn-tool" onclick="triggerERP('Copy')"><i class="fa fa-copy"></i></a>
+                    <a href="javascript:void(0)" class="btn-tool" onclick="triggerERP('DB')"><i class="fa fa-database"></i></a>
+                    <a href="javascript:void(0)" class="btn-tool" onclick="triggerERP('Print')"><i class="fa fa-print"></i></a>
+                </div>
+            </div>
+
+            <div class="filter-row">
+                <div>Display <select><option>All</option></select> records</div>
+                <div>Search: <input type="text" class="search-box"></div>
+            </div>
+
+            <table class="data-table">
+                <thead class="red-header-line">
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th style="width: 50px;">S.N.</th>
+                        <th>STUDENT STATUS</th>
+                        <th>STATUS</th>
+                        <th style="width: 80px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="statusTableBody">
+                    </tbody>
+            </table>
+
+            <div class="footer-nav">
+                <div id="entryInfo">Showing 1 to 8 of 8 entries</div>
+                <div class="page-list">
+                    <a href="javascript:void(0)" class="page-item" onclick="triggerERP('Prev')">Previous</a>
+                    <a href="javascript:void(0)" class="page-item active">1</a>
+                    <a href="javascript:void(0)" class="page-item" onclick="triggerERP('Next')">Next</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Exact list from screenshot
+    const statusData = [
+        "New Admission - [1]",
+        "Continue - [2]",
+        "Pass Out - [3]",
+        "Back Continue - [4]",
+        "Drop Out - [5]",
+        "Transfer in - [6]",
+        "Transfer Out - [7]",
+        "Online Registration - [8]"
+    ];
+
+    const tbody = document.getElementById('statusTableBody');
+
+    // Generating Table Rows
+    statusData.forEach((status, index) => {
+        tbody.innerHTML += `
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>${index + 1}</td>
+                <td>${status}</td>
+                <td>
+                    <div class="status-dropdown">
+                        <a href="javascript:void(0)" class="status-btn active-ui" id="btn-stat-${index}">
+                            Active <i class="fa fa-caret-down"></i>
+                        </a>
+                        <div class="status-menu">
+                            <a href="javascript:void(0)" onclick="toggleUI(${index}, 'Active')">Active</a>
+                            <a href="javascript:void(0)" onclick="toggleUI(${index}, 'In-Active')">In-Active</a>
+                        </div>
+                    </div>
+                </td>
+                <td class="action-icons">
+                    <a href="javascript:void(0)" class="btn-icon" onclick="triggerERP('Edit', '${status}')"><i class="fa fa-pencil"></i></a>
+                    <a href="javascript:void(0)" class="btn-icon del" onclick="triggerERP('Delete', '${status}')"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        `;
+    });
+
+    /**
+     * Toggles the UI status visually and calls PHP-ready function
+     */
+    function toggleUI(id, state) {
+        const btn = document.getElementById('btn-stat-' + id);
+        btn.innerHTML = `${state} <i class="fa fa-caret-down"></i>`;
+        
+        if(state === 'Active') {
+            btn.classList.add('active-ui');
+            btn.classList.remove('inactive-ui');
+        } else {
+            btn.classList.add('inactive-ui');
+            btn.classList.remove('active-ui');
+        }
+        triggerERP('Update Status UI', `Entry ${id+1} to ${state}`);
+    }
+
+    /**
+     * Central JS Function for all button actions
+     */
+    function triggerERP(action, info = "") {
+        console.log("PHP-Hook Triggered: " + action + " | Data: " + info);
+        alert(action + (info ? ": " + info : ""));
+    }
+</script>
+
+</body>
+</html>
