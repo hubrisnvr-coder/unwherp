@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staffs Manager - Bulk Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .staff-import-container { background: #fff; border: 1px solid #ddd; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+        /* Top Title */
+        .page-title { text-align: center; color: #337ab7; font-size: 18px; margin-bottom: 20px; font-weight: bold; }
+        .page-title span { color: #999; font-weight: normal; }
+
+        /* Navigation Buttons */
+        .nav-button-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; margin-bottom: 30px; }
+        .btn-nav { text-decoration: none !important; color: #fff !important; padding: 7px 14px; font-size: 13px; border-radius: 4px; display: inline-flex; align-items: center; gap: 7px; border: none; }
+        .btn-blue { background: #337ab7; }
+        .btn-green { background: #5cb85c; } /* Active tab */
+
+        /* Clickable CSV Template Heading */
+        .import-link-wrapper { margin-bottom: 25px; }
+        .csv-template-link {
+            color: #337ab7;
+            font-size: 24px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 400;
+            transition: color 0.2s;
+        }
+        .csv-template-link:hover { color: #23527c; text-decoration: underline; }
+
+        /* File Upload Box */
+        .file-upload-box { border: 1px solid #ddd; background: #f9f9f9; padding: 40px 20px; display: flex; align-items: center; }
+        .file-label { background: #eee; padding: 10px 20px; font-size: 13px; font-weight: bold; border-right: 1px solid #ccc; margin-right: 20px; text-transform: uppercase; }
+
+        /* Submit Area */
+        .submit-container { background: #f5f5f5; padding: 20px; text-align: center; border: 1px solid #ddd; border-top: none; }
+        .btn-import-submit { background: #337ab7; color: white !important; border: none; padding: 10px 25px; font-size: 16px; cursor: pointer; border-radius: 2px; display: inline-flex; align-items: center; gap: 10px; text-decoration: none !important; }
+    </style>
+</head>
+<body>
+
+<div class="staff-import-container">
+    <div class="page-title">Staffs Manager <span>» Import</span></div>
+
+    <div class="nav-button-group">
+        <a href="#" class="btn-nav btn-blue" data-name="Staff Detail"><i class="fa fa-list"></i> Staff Detail</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Registration"><i class="fa fa-plus"></i> Registration</a>
+        <a href="#" class="btn-nav btn-green" data-name="Bulk Registration"><i class="fa fa-upload"></i> Bulk Registration</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Documents"><i class="fa fa-file-text"></i> Documents</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Notes"><i class="fa fa-sticky-note"></i> Notes</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Payroll"><i class="fa fa-calculator"></i> Payroll</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Library"><i class="fa fa-book"></i> Library</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Attendance"><i class="fa fa-calendar-check-o"></i> Attendance</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Designation"><i class="fa fa-star"></i> Designation</a>
+    </div>
+
+    <div class="import-link-wrapper">
+        <a href="#" class="csv-template-link" id="csvDownloadBtn" data-name="Download CSV Template">
+            <i class="fa fa-download"></i> CSV Template for Bulk Staff Import
+        </a>
+    </div>
+
+    <form id="importForm" action="#" method="POST" enctype="multipart/form-data">
+        <div class="file-upload-box">
+            <div class="file-label">FILE</div>
+            <input type="file" name="staff_csv" id="staff_csv_input">
+        </div>
+
+        <div class="submit-container">
+            <a href="#" class="btn-import-submit" id="submitBtn" data-name="Import File Action">
+                <i class="fa fa-upload"></i> Import
+            </a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Universal Click Handler for all buttons and links
+    document.querySelectorAll('a').forEach(el => {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
+            const actionName = this.getAttribute('data-name');
+            if(actionName) {
+                console.log("PHP Hook Triggered: " + actionName);
+                alert("Working: " + actionName);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
