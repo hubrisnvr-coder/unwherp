@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>Course/Subject Manager - Detail</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        /* CSS Style - Clean and Scalable for PHP integration */
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .erp-container { background: #fff; border: 1px solid #ddd; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+        /* Page Title */
+        .page-header { text-align: center; color: #337ab7; font-size: 18px; margin-bottom: 20px; font-weight: bold; }
+        .page-header span { color: #999; font-weight: normal; }
+
+        /* Navigation Tabs */
+        .nav-tabs { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; margin-bottom: 25px; }
+        .tab-btn { text-decoration: none !important; color: #fff !important; padding: 7px 12px; font-size: 12px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-blue { background: #337ab7; }
+        .btn-green { background: #5cb85c; }
+
+        /* Layout Structure */
+        .flex-layout { display: flex; gap: 20px; align-items: flex-start; }
+        .form-panel { flex: 0 0 420px; }
+        .table-panel { flex: 1; }
+
+        /* Form Styling */
+        .section-title { color: #337ab7; font-weight: bold; margin-bottom: 15px; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .form-row { display: flex; align-items: stretch; margin-bottom: 8px; border: 1px solid #ddd; }
+        .label-cell { background: #eee; min-width: 140px; padding: 8px; font-size: 11px; font-weight: bold; text-align: right; border-right: 1px solid #ddd; display: flex; align-items: center; justify-content: flex-end; color: #333; }
+        .input-cell { flex: 1; border: none; padding: 8px; outline: none; font-size: 13px; }
+        
+        /* Required field indicator */
+        .req-border { border-left: 3px solid red; }
+
+        /* Multi-column input row */
+        .form-row-half { flex: 1; display: flex; border-right: 1px solid #ddd; }
+        .form-row-half:last-child { border-right: none; }
+        .label-half { background: #eee; min-width: 70px; padding: 8px; font-size: 11px; font-weight: bold; text-align: right; border-right: 1px solid #ddd; display: flex; align-items: center; justify-content: flex-end; }
+
+        /* Action Buttons */
+        .action-row { display: flex; justify-content: flex-end; gap: 5px; margin-bottom: 10px; }
+        .btn-action { padding: 4px 12px; font-size: 12px; color: white !important; text-decoration: none !important; border-radius: 3px; display: flex; align-items: center; gap: 5px; }
+        .bg-active { background: #337ab7; }
+        .bg-orange { background: #f0ad4e; }
+        .bg-red { background: #d9534f; }
+
+        /* Table Styling */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 12px; border: 1px solid #ddd; }
+        .data-table th { background: #f5fafd; color: #337ab7; padding: 10px; text-align: left; border: 1px solid #ddd; text-transform: uppercase; }
+        .data-table td { padding: 10px; border: 1px solid #ddd; vertical-align: middle; }
+        .empty-msg { text-align: center; color: #888; padding: 30px !important; border-top: 2px solid #d9534f !important; }
+
+        /* Footer */
+        .form-footer { text-align: right; background: #f5f5f5; padding: 15px; border: 1px solid #ddd; border-top: none; margin-top: 20px; }
+        .btn-create { background: #337ab7; color: white !important; padding: 10px 25px; text-decoration: none !important; display: inline-flex; align-items: center; gap: 8px; border-radius: 2px; font-size: 14px; }
+    </style>
+</head>
+<body class="notranslate">
+
+<div class="erp-container">
+    <div class="page-header">Course / Subject Manager <span>» Detail</span></div>
+
+    <div class="nav-tabs">
+        <a href="#" class="tab-btn btn-blue" onclick="erpSignal('Dept Head')"><i class="fa fa-list"></i> Department Head</a>
+        <a href="#" class="tab-btn btn-blue" onclick="erpSignal('Dept')"><i class="fa fa-list"></i> Department</a>
+        <a href="#" class="tab-btn btn-blue" onclick="erpSignal('Prog')"><i class="fa fa-list"></i> Program/Class</a>
+        <a href="#" class="tab-btn btn-blue" onclick="erpSignal('Sem')"><i class="fa fa-list"></i> Semester/Section</a>
+        <a href="#" class="tab-btn btn-blue" onclick="erpSignal('Batch')"><i class="fa fa-list"></i> Batch</a>
+        <a href="#" class="tab-btn btn-green" onclick="erpSignal('Course')"><i class="fa fa-list"></i> Course/Subject</a>
+        <a href="#" class="tab-btn btn-blue" onclick="erpSignal('Grading')"><i class="fa fa-list"></i> Grading System</a>
+    </div>
+
+    <div class="flex-layout">
+        <div class="form-panel">
+            <div class="section-title"><i class="fa fa-search"></i> Create Course / Subject</div>
+            
+            <div class="form-row">
+                <div class="label-cell">COURSE / SUBJECT</div>
+                <input type="text" class="input-cell req-border" placeholder="e.g. English" id="course_name">
+            </div>
+            
+            <div class="form-row">
+                <div class="label-cell">CODE</div>
+                <input type="text" class="input-cell req-border" placeholder="e.g. E01" id="course_code">
+            </div>
+
+            <div class="form-row">
+                <div class="form-row-half">
+                    <div class="label-half">FM (T)</div>
+                    <input type="text" class="input-cell" id="fm_t">
+                </div>
+                <div class="form-row-half">
+                    <div class="label-half">PM (T)</div>
+                    <input type="text" class="input-cell" id="pm_t">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-row-half">
+                    <div class="label-half">FM (P)</div>
+                    <input type="text" class="input-cell" id="fm_p">
+                </div>
+                <div class="form-row-half">
+                    <div class="label-half">PM (P)</div>
+                    <input type="text" class="input-cell" id="pm_p">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-row-half">
+                    <div class="label-half">COURSE FEE</div>
+                    <input type="text" class="input-cell" id="fee">
+                </div>
+                <div class="form-row-half">
+                    <div class="label-half">CREDIT HRS.</div>
+                    <input type="text" class="input-cell req-border" id="credit_hrs">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="label-cell">SUBJECT TYPE</div>
+                <select class="input-cell req-border" id="sub_type">
+                    <option>Compulsory</option>
+                    <option>Optional</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="label-cell">CLASS TYPE</div>
+                <select class="input-cell req-border" id="class_type">
+                    <option>Theory</option>
+                    <option>Practical</option>
+                    <option>Both</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="label-cell">TEACHER/STAFF</div>
+                <select class="input-cell" id="teacher">
+                    <option>Select Teacher</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="label-cell">DESCRIPTION</div>
+                <textarea class="input-cell" rows="3" id="description"></textarea>
+            </div>
+
+            <div class="form-footer">
+                <a href="#" class="btn-create" onclick="erpSignal('Create Subject Submit')">
+                    <i class="fa fa-save"></i> Create
+                </a>
+            </div>
+        </div>
+
+        <div class="table-panel">
+            <div class="action-row">
+                <a href="#" class="btn-action bg-active" onclick="erpSignal('Status Active')"><i class="fa fa-check"></i> Active</a>
+                <a href="#" class="btn-action bg-orange" onclick="erpSignal('Status In-Active')"><i class="fa fa-times"></i> In-Active</a>
+                <a href="#" class="btn-action bg-red" onclick="erpSignal('Bulk Delete')"><i class="fa fa-trash"></i> Delete</a>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th style="width: 50px;">S.N.</th>
+                        <th>COURSE / SUBJECT</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="4" class="empty-msg">
+                            No Course / Subject data found. Please Filter Course / Subject to show.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * Centralized JS Call for PHP connection
+     */
+    function erpSignal(actionName) {
+        console.log("Triggering Action: " + actionName);
+        alert("Working: " + actionName);
+        // Baad mein yahan se PHP file par AJAX request bhej sakte hain
+    }
+
+    // Default anchor link behavior ko disable karne ke liye
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if(this.getAttribute('onclick')) e.preventDefault();
+        });
+    });
+</script>
+
+</body>
+</html>
