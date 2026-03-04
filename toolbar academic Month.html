@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>Month Manager - Detail</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .erp-container { background: #fff; border: 1px solid #ddd; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); position: relative; }
+        .page-header { text-align: center; color: #337ab7; font-size: 18px; margin-bottom: 25px; font-weight: bold; }
+        .page-header span { color: #999; font-weight: normal; }
+        .main-flex { display: flex; gap: 20px; align-items: flex-start; }
+        .left-panel { flex: 0 0 320px; }
+        .right-panel { flex: 1; }
+        .section-title { color: #337ab7; font-weight: bold; margin-bottom: 15px; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .form-row { display: flex; align-items: stretch; margin-bottom: 15px; border: 1px solid #ddd; }
+        .label-cell { background: #eee; min-width: 80px; padding: 8px; font-size: 11px; font-weight: bold; text-align: right; border-right: 1px solid #ddd; display: flex; align-items: center; justify-content: flex-end; color: #333; }
+        .input-cell { flex: 1; border: none; padding: 8px; outline: none; font-size: 14px; border-left: 3px solid red; }
+        .form-footer { text-align: right; background: #f5f5f5; padding: 15px; border: 1px solid #ddd; border-top: none; }
+        .btn-create { background: #337ab7; color: white !important; padding: 10px 22px; text-decoration: none !important; display: inline-flex; align-items: center; gap: 8px; border-radius: 2px; font-size: 14px; }
+        .top-tools { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .status-group { display: flex; gap: 5px; }
+        .utility-group { display: flex; gap: 2px; }
+        .btn-status { padding: 4px 12px; font-size: 12px; color: white !important; text-decoration: none !important; border-radius: 3px; display: flex; align-items: center; gap: 5px; }
+        .bg-blue { background: #337ab7; }
+        .bg-orange { background: #f0ad4e; }
+        .bg-red { background: #d9534f; }
+        .btn-tool { border: 1px solid #ccc; background: #fff; padding: 5px 10px; color: #337ab7; text-decoration: none !important; font-size: 13px; }
+        .filter-header { display: flex; justify-content: space-between; background: #f9f9f9; padding: 8px; border: 1px solid #ddd; border-bottom: none; font-size: 13px; }
+        .search-input { border: 1px solid #ddd; padding: 3px 8px; outline: none; }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid #ddd; }
+        .data-table th { background: #f5fafd; color: #337ab7; padding: 10px; text-align: left; border: 1px solid #ddd; text-transform: uppercase; }
+        .data-table td { padding: 8px 10px; border: 1px solid #ddd; vertical-align: middle; }
+        .table-red-top { border-top: 2px solid #d9534f; }
+        
+        /* Status Dropdown Style */
+        .status-select-box { background: #337ab7; color: white; border: none; border-radius: 3px; font-size: 11px; padding: 4px 5px; outline: none; cursor: pointer; }
+        .status-select-box option { background: white; color: black; }
+
+        .icon-edit { background: #5cb85c; color: white; padding: 5px; border-radius: 3px; cursor: pointer; }
+        .icon-delete { background: #d9534f; color: white; padding: 5px; border-radius: 3px; cursor: pointer; }
+        .pagination-row { display: flex; justify-content: space-between; padding: 15px 0; font-size: 13px; color: #666; }
+        .page-list { display: flex; gap: 2px; }
+        .page-link { padding: 5px 12px; border: 1px solid #ddd; text-decoration: none; color: #337ab7; }
+        .page-link.active { background: #337ab7; color: white; border-color: #337ab7; }
+    </style>
+</head>
+<body class="notranslate">
+
+<div class="erp-container">
+    <div class="page-header">Month Manager <span>» Detail</span></div>
+
+    <div class="main-flex">
+        <div class="left-panel">
+            <div class="section-title"><i class="fa fa-search"></i> Create Month</div>
+            <div class="form-row">
+                <div class="label-cell">MONTH</div>
+                <input type="text" class="input-cell" id="month_input">
+            </div>
+            <div class="form-footer">
+                <a href="#" class="btn-create" onclick="triggerAction('Create Month Submit')"><i class="fa fa-save"></i> Create</a>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="top-tools">
+                <div class="status-group">
+                    <a href="#" class="btn-status bg-blue" onclick="triggerAction('Bulk Active')"><i class="fa fa-check"></i> Active</a>
+                    <a href="#" class="btn-status bg-orange" onclick="triggerAction('Bulk In-Active')"><i class="fa fa-times"></i> In-Active</a>
+                    <a href="#" class="btn-status bg-red" onclick="triggerAction('Bulk Delete')"><i class="fa fa-trash"></i> Delete</a>
+                </div>
+                <div class="utility-group">
+                    <a href="#" class="btn-tool" onclick="triggerAction('Tool Search')"><i class="fa fa-search"></i></a>
+                    <a href="#" class="btn-tool" onclick="triggerAction('Tool Refresh')"><i class="fa fa-refresh"></i> Refresh</a>
+                    <a href="#" class="btn-tool" onclick="triggerAction('Tool Copy')"><i class="fa fa-copy"></i></a>
+                    <a href="#" class="btn-tool" onclick="triggerAction('Tool Database')"><i class="fa fa-database"></i></a>
+                    <a href="#" class="btn-tool" onclick="triggerAction('Tool Print')"><i class="fa fa-print"></i></a>
+                </div>
+            </div>
+
+            <div class="filter-header">
+                <div>Display <select><option>All</option></select> records</div>
+                <div>Search: <input type="text" class="search-input"></div>
+            </div>
+
+            <table class="data-table">
+                <thead class="table-red-top">
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th style="width: 50px;">S.N.</th>
+                        <th>MONTH</th>
+                        <th>STATUS</th>
+                        <th style="width: 80px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="monthTableBody">
+                    </tbody>
+            </table>
+
+            <div class="pagination-row">
+                <div>Showing 1 to 12 of 12 entries</div>
+                <div class="page-list">
+                    <a href="#" class="page-link">Previous</a>
+                    <a href="#" class="page-link active">1</a>
+                    <a href="#" class="page-link">Next</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const tableBody = document.getElementById('monthTableBody');
+
+    months.forEach((month, index) => {
+        const row = `
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>${index + 1}</td>
+                <td>${month}</td>
+                <td>
+                    <select class="status-select-box" onchange="triggerAction('Change Status ' + '${month}')">
+                        <option value="active">Active</option>
+                        <option value="inactive">In-Active</option>
+                    </select>
+                </td>
+                <td style="text-align: right;">
+                    <a href="#" onclick="triggerAction('Edit ${month}')"><i class="fa fa-pencil-square-o icon-edit"></i></a>
+                    <a href="#" onclick="triggerAction('Delete ${month}')"><i class="fa fa-trash icon-delete"></i></a>
+                </td>
+            </tr>
+        `;
+        tableBody.innerHTML += row;
+    });
+
+    function triggerAction(actionName) {
+        console.log("PHP Hook: " + actionName);
+        alert("Working: " + actionName);
+    }
+
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if(this.getAttribute('onclick')) e.preventDefault();
+        });
+    });
+</script>
+</body>
+</html>
