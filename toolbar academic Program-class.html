@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>Program/Class Manager - Detail</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        /* CSS Style - Clean and Professional */
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .erp-container { background: #fff; border: 1px solid #ddd; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+        /* Page Title */
+        .page-title { text-align: center; color: #337ab7; font-size: 18px; margin-bottom: 20px; font-weight: bold; }
+        .page-title span { color: #999; font-weight: normal; }
+
+        /* Top Navigation Buttons */
+        .nav-button-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; margin-bottom: 25px; }
+        .btn-nav { text-decoration: none !important; color: #fff !important; padding: 7px 12px; font-size: 13px; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px; border: none; transition: 0.3s; }
+        .btn-blue { background: #337ab7; }
+        .btn-green { background: #5cb85c; } /* Active tab color */
+
+        /* Main Content Layout */
+        .content-layout { display: flex; gap: 20px; margin-top: 20px; }
+        .left-panel { flex: 0 0 380px; }
+        .right-panel { flex: 1; }
+
+        /* Form Styling */
+        .panel-header { color: #337ab7; font-weight: bold; margin-bottom: 15px; font-size: 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .field-row { display: flex; align-items: stretch; margin-bottom: 8px; border: 1px solid #ddd; }
+        .field-label { background: #eee; min-width: 150px; padding: 8px; font-size: 11px; font-weight: bold; text-align: right; border-right: 1px solid #ddd; display: flex; align-items: center; justify-content: flex-end; color: #333; }
+        .field-input { flex: 1; border: none; padding: 8px; outline: none; font-size: 13px; }
+        
+        /* Red line for required fields */
+        .req-border { border-left: 3px solid red; }
+
+        /* Form Footer */
+        .form-footer { text-align: right; background: #f5f5f5; padding: 15px; border: 1px solid #ddd; border-top: none; margin-top: 20px; }
+        .btn-create { background: #337ab7; color: white !important; padding: 10px 25px; text-decoration: none !important; display: inline-flex; align-items: center; gap: 8px; border-radius: 2px; cursor: pointer; font-size: 14px; }
+
+        /* Right Panel Controls */
+        .action-row { display: flex; justify-content: flex-end; gap: 5px; margin-bottom: 15px; }
+        .btn-action { padding: 4px 12px; font-size: 12px; color: white !important; border-radius: 3px; text-decoration: none !important; display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .bg-active { background: #337ab7; }
+        .bg-orange { background: #f0ad4e; }
+        .bg-red { background: #d9534f; }
+
+        /* Table Styling */
+        table { width: 100%; border-collapse: collapse; font-size: 12px; border: 1px solid #ddd; }
+        th { background: #f5fafd; color: #337ab7; padding: 10px; text-align: center; border: 1px solid #ddd; font-weight: bold; text-transform: uppercase; }
+        td { padding: 10px; border: 1px solid #ddd; vertical-align: middle; }
+        
+        .empty-table-msg { text-align: center; color: #666; padding: 25px; border-top: 2px solid #d9534f; } /* Red top border for empty state */
+    </style>
+</head>
+<body class="notranslate">
+
+<div class="erp-container">
+    <div class="page-title">Program/Class Manager <span>» Detail</span></div>
+
+    <div class="nav-button-group">
+        <a href="#" class="btn-nav btn-blue" onclick="appAction('Department Head')"><i class="fa fa-list"></i> Department Head</a>
+        <a href="#" class="btn-nav btn-blue" onclick="appAction('Department')"><i class="fa fa-list"></i> Department</a>
+        <a href="#" class="btn-nav btn-green" onclick="appAction('Program/Class')"><i class="fa fa-list"></i> Program/Class</a>
+        <a href="#" class="btn-nav btn-blue" onclick="appAction('Semester/Section')"><i class="fa fa-list"></i> Semester/Section</a>
+        <a href="#" class="btn-nav btn-blue" onclick="appAction('Batch')"><i class="fa fa-list"></i> Batch</a>
+        <a href="#" class="btn-nav btn-blue" onclick="appAction('Course/Subject')"><i class="fa fa-list"></i> Course/Subject</a>
+        <a href="#" class="btn-nav btn-blue" onclick="appAction('Grading System')"><i class="fa fa-list"></i> Grading System</a>
+    </div>
+
+    <div class="content-layout">
+        <div class="left-panel">
+            <div class="panel-header"><i class="fa fa-search"></i> Create Program/Class</div>
+            
+            <div class="field-row">
+                <div class="field-label">PROGRAM/CLASS</div>
+                <input type="text" class="field-input" id="program_class" placeholder="e.g. Class One/Bachelor of Business Admin">
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">CODE</div>
+                <input type="text" class="field-input req-border" id="code">
+            </div>
+
+            <div class="field-row">
+                <div class="field-label">GRADING TYPE</div>
+                <select class="field-input" id="grading_type">
+                    <option value=""></option>
+                </select>
+            </div>
+
+            <div class="field-row">
+                <div class="field-label">SCALE</div>
+                <input type="text" class="field-input" id="scale">
+            </div>
+
+            <div class="field-row">
+                <div class="field-label">DURATION</div>
+                <input type="text" class="field-input" id="duration">
+            </div>
+
+            <div class="field-row">
+                <div class="field-label">CREDIT REQUIRED</div>
+                <input type="text" class="field-input" id="credit_req">
+            </div>
+
+            <div class="field-row">
+                <div class="field-label">REGISTRATION VALID PERIOD</div>
+                <input type="text" class="field-input" id="valid_period">
+            </div>
+
+            <div class="field-row">
+                <div class="field-label">SORTING ORDER</div>
+                <input type="text" class="field-input req-border" id="sort_order">
+            </div>
+
+            <div class="form-footer">
+                <a href="#" class="btn-create" onclick="appAction('Create Program Submit')">
+                    <i class="fa fa-save"></i> Create
+                </a>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="action-row">
+                <a href="#" class="btn-action bg-active" onclick="appAction('Set Active')"><i class="fa fa-check"></i> Active</a>
+                <a href="#" class="btn-action bg-orange" onclick="appAction('Set In-Active')"><i class="fa fa-times"></i> In-Active</a>
+                <a href="#" class="btn-action bg-red" onclick="appAction('Delete Selected')"><i class="fa fa-trash"></i> Delete</a>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th style="width: 60px;">S.N.</th>
+                        <th>CODE - PROGRAM/CLASS</th>
+                        <th>STATUS</th>
+                        <th>SEMESTER/SECTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5" class="empty-table-msg">
+                            No Program/Class data found. Please Filter Program/Class to show.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * JavaScript Handler
+     * Baad mein PHP/AJAX ke liye connect karne ke liye taiyaar hai.
+     */
+    function appAction(action) {
+        console.log("Action Triggered: " + action);
+        alert("Action Triggered: " + action);
+    }
+
+    // Default link behavior ko rokne ke liye (preventDefault)
+    document.querySelectorAll('a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            if(this.getAttribute('onclick')) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
