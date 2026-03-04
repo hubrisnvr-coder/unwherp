@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day Manager - Detail</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .erp-container { background: #fff; border: 1px solid #ddd; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .page-header { text-align: center; color: #337ab7; font-size: 18px; margin-bottom: 25px; font-weight: bold; }
+        .page-header span { color: #999; font-weight: normal; }
+        .main-flex { display: flex; gap: 20px; align-items: flex-start; }
+        .left-panel { flex: 0 0 320px; }
+        .right-panel { flex: 1; }
+
+        /* Form Styling */
+        .section-title { color: #337ab7; font-weight: bold; margin-bottom: 15px; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .form-row { display: flex; align-items: stretch; margin-bottom: 15px; border: 1px solid #ddd; }
+        .label-cell { background: #eee; min-width: 80px; padding: 8px; font-size: 11px; font-weight: bold; text-align: right; border-right: 1px solid #ddd; display: flex; align-items: center; justify-content: flex-end; color: #333; }
+        .input-cell { flex: 1; border: none; padding: 8px; outline: none; font-size: 14px; border-left: 3px solid red; }
+        .form-footer { text-align: right; background: #f5f5f5; padding: 15px; border: 1px solid #ddd; border-top: none; }
+        .btn-create { background: #337ab7; color: white !important; padding: 10px 22px; text-decoration: none !important; border-radius: 2px; font-size: 14px; cursor: pointer; }
+
+        /* Table Styling */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid #ddd; }
+        .data-table th { background: #f5fafd; color: #337ab7; padding: 10px; text-align: left; border: 1px solid #ddd; text-transform: uppercase; }
+        .data-table td { padding: 8px 10px; border: 1px solid #ddd; vertical-align: middle; }
+        .red-line-top { border-top: 2px solid #d9534f; }
+
+        /* REAL-TIME STATUS DROPDOWN */
+        .status-wrapper { position: relative; display: inline-block; }
+        .status-display { color: white !important; padding: 4px 10px; border-radius: 3px; font-size: 11px; text-decoration: none !important; display: flex; align-items: center; gap: 8px; cursor: pointer; min-width: 85px; }
+        .status-active { background: #337ab7; }
+        .status-inactive { background: #f0ad4e; }
+
+        .status-menu { display: none; position: absolute; background: white; border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 100; min-width: 110px; border-radius: 3px; top: 100%; left: 0; }
+        .status-menu a { color: #333; padding: 8px 12px; display: block; text-decoration: none; font-size: 12px; border-bottom: 1px solid #eee; }
+        .status-menu a:hover { background: #f5f5f5; color: #337ab7; }
+        .status-wrapper:hover .status-menu { display: block; }
+
+        /* Action Icons */
+        .action-icons { display: flex; justify-content: flex-end; gap: 5px; }
+        .icon-link { background: #5cb85c; color: white !important; padding: 5px 8px; border-radius: 3px; text-decoration: none !important; cursor: pointer; }
+        .icon-link.delete { background: #d9534f; }
+    </style>
+</head>
+<body class="notranslate">
+
+<div class="erp-container">
+    <div class="page-header">Day Manager <span>» Detail</span></div>
+
+    <div class="main-flex">
+        <div class="left-panel">
+            <div class="section-title"><i class="fa fa-search"></i> Create Day</div>
+            <div class="form-row">
+                <div class="label-cell">DAY</div>
+                <input type="text" class="input-cell" id="new_day_name">
+            </div>
+            <div class="form-footer">
+                <a href="javascript:void(0)" class="btn-create" onclick="erpCall('CREATE', document.getElementById('new_day_name').value)">
+                    <i class="fa fa-save"></i> Create
+                </a>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <table class="data-table">
+                <thead class="red-line-top">
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th style="width: 50px;">S.N.</th>
+                        <th>DAY</th>
+                        <th>STATUS</th>
+                        <th style="width: 80px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="dayTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const tbody = document.getElementById('dayTableBody');
+
+    // Generating Rows with Unique IDs for Status Change
+    days.forEach((day, index) => {
+        tbody.innerHTML += `
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>${index + 1}</td>
+                <td>${day}</td>
+                <td>
+                    <div class="status-wrapper">
+                        <a href="javascript:void(0)" class="status-display status-active" id="status-btn-${index}">
+                            Active <i class="fa fa-caret-down"></i>
+                        </a>
+                        <div class="status-menu">
+                            <a href="javascript:void(0)" onclick="updateStatus(${index}, 'Active')"><i class="fa fa-check"></i> Active</a>
+                            <a href="javascript:void(0)" onclick="updateStatus(${index}, 'In-Active')"><i class="fa fa-times"></i> In-Active</a>
+                        </div>
+                    </div>
+                </td>
+                <td class="action-icons">
+                    <a href="javascript:void(0)" class="icon-link" onclick="erpCall('EDIT', '${day}')"><i class="fa fa-pencil"></i></a>
+                    <a href="javascript:void(0)" class="icon-link delete" onclick="erpCall('DELETE', '${day}')"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        `;
+    });
+
+    /**
+     * Updates the UI and triggers the PHP/JS call
+     */
+    function updateStatus(index, newStatus) {
+        const btn = document.getElementById('status-btn-' + index);
+        
+        // Change Text
+        btn.innerHTML = `${newStatus} <i class="fa fa-caret-down"></i>`;
+        
+        // Change Color Class
+        if(newStatus === 'Active') {
+            btn.classList.add('status-active');
+            btn.classList.remove('status-inactive');
+        } else {
+            btn.classList.add('status-inactive');
+            btn.classList.remove('status-active');
+        }
+
+        // Call Central Function for PHP
+        erpCall('STATUS_UPDATE', `Day Index ${index} set to ${newStatus}`);
+    }
+
+    function erpCall(type, data) {
+        console.log(`Action: ${type} | Data: ${data}`);
+        // Alert for verification
+        if(type !== 'STATUS_UPDATE') alert(type + ": " + data);
+    }
+</script>
+
+</body>
+</html>
