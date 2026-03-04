@@ -139,6 +139,90 @@
         console.log("ERP 107 Ready. Layout adjusted as per screenshot.");
     };
 </script>
+<!--yanha se form wala porsen sure ho rha hai -->
+<div class="erp-main-layout">
+    <style>
+        .erp-main-layout {
+            display: flex;
+            width: 100%;
+            min-height: 900px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            border: 1px solid #ddd;
+        }
 
+        /* Sidebar Navigation */
+        .erp-sidebar {
+            width: 200px;
+            background: #f1f3f6;
+            border-right: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .erp-sidebar button {
+            width: 100%;
+            padding: 15px;
+            text-align: left;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+        }
+
+        .erp-sidebar button.active {
+            background: #337ab7;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Content Area for Iframe */
+        .erp-content-pane {
+            flex: 1;
+            padding: 0; /* Padding hta di taaki iframe full screen dikhe */
+            background: #fff;
+        }
+
+        .iframe-container {
+            width: 100%;
+            height: 100%;
+            min-height: 900px;
+            border: none;
+            display: block;
+        }
+    </style>
+
+    <div class="erp-sidebar">
+        <button class="active" onclick="switchTab('general', this)"><i class="fa fa-info-circle"></i> General Info</button>
+        <button onclick="switchTab('academic', this)"><i class="fa fa-graduation-cap"></i> Academic Info</button>
+        <button onclick="switchTab('profile', this)"><i class="fa fa-user"></i> Profile Image</button>
+        <button onclick="switchTab('docs', this)"><i class="fa fa-paperclip"></i> Attach Document</button>
+        <button onclick="switchTab('extra', this)"><i class="fa fa-plus"></i> Extra Info</button>
+    </div>
+
+    <div class="erp-content-pane">
+        <iframe id="erp_iframe" src="style1.html" class="iframe-container"></iframe>
+    </div>
+
+    <script>
+        function switchTab(type, btn) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.erp-sidebar button').forEach(b => b.classList.remove('active'));
+            
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            const iframe = document.getElementById('erp_iframe');
+            
+            // Iframe ka source change karein
+            iframe.src = type + ".php"; 
+        }
+    </script>
+</div>
+<!--or yanha par form wala prosen poora ho rha hai-->
 </body>
 </html>
