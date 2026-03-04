@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staffs Manager - Filter Update</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f7f6; margin: 0; padding: 20px; }
+        .staff-manager-container { background: #fff; border: 1px solid #ddd; padding: 15px; }
+        
+        /* Nav Buttons Styling */
+        .nav-button-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 5px; margin-bottom: 20px; }
+        .btn-nav { text-decoration: none; color: #fff; padding: 8px 15px; font-size: 13px; border-radius: 4px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: none; }
+        .btn-green { background: #5cb85c; } 
+        .btn-blue { background: #337ab7; }
+
+        /* Filter Section */
+        .filter-header { 
+            border: 1px solid #bce8f1; 
+            padding: 10px; 
+            text-align: center; 
+            color: #31708f; 
+            font-weight: bold; 
+            font-size: 16px; 
+            cursor: pointer; 
+            background: #fff;
+            margin-top: 20px;
+        }
+
+        .filter-content {
+            display: none; /* Default hidden, toggle on click */
+            border: 1px solid #ddd;
+            border-top: none;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+
+        .filter-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-field {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            height: 35px;
+            background: #fff;
+        }
+
+        .filter-field label {
+            background: #eee;
+            padding: 0 10px;
+            font-size: 12px;
+            font-weight: bold;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            border-right: 1px solid #ccc;
+        }
+
+        .filter-field input, .filter-field select {
+            border: none;
+            padding: 0 10px;
+            height: 100%;
+            outline: none;
+        }
+
+        .btn-filter-submit {
+            background: #337ab7;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 2px;
+        }
+
+        /* Action Buttons & Table */
+        .action-group { display: flex; justify-content: center; gap: 5px; margin: 20px 0; }
+        .btn-action { text-decoration: none; color: #fff; padding: 5px 12px; font-size: 12px; border-radius: 3px; display: inline-flex; align-items: center; gap: 5px; }
+        .bg-export { background: #5cb85c; }
+        .bg-active { background: #337ab7; }
+        .bg-inactive { background: #f0ad4e; }
+        .bg-delete { background: #d9534f; }
+        .bg-blue { background: #337ab7; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid #ddd; }
+        th { background: #f5fafd; color: #337ab7; padding: 12px 10px; text-align: left; border: 1px solid #ddd; text-transform: uppercase; }
+        td { padding: 15px 10px; border: 1px solid #ddd; }
+        .no-data { text-align: center; color: #666; padding: 30px; border-top: 2px solid #d9534f; }
+    </style>
+</head>
+<body>
+
+<div class="staff-manager-container">
+    <div style="text-align: center; color: #337ab7; font-weight: bold; margin-bottom: 20px;">Staffs Manager <span style="color:#999; font-weight:normal;">» Detail</span></div>
+
+    <div class="nav-button-group">
+        <a href="#" class="btn-nav btn-green" data-name="Staff Detail"><i class="fa fa-list"></i> Staff Detail</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Registration"><i class="fa fa-plus"></i> Registration</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Bulk Registration"><i class="fa fa-users"></i> Bulk Registration</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Documents"><i class="fa fa-file-text"></i> Documents</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Notes"><i class="fa fa-sticky-note"></i> Notes</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Payroll"><i class="fa fa-calculator"></i> Payroll</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Library"><i class="fa fa-book"></i> Library</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Attendance"><i class="fa fa-calendar-check-o"></i> Attendance</a>
+        <a href="#" class="btn-nav btn-blue" data-name="Designation"><i class="fa fa-star"></i> Designation</a>
+    </div>
+
+    <div class="filter-header" id="filterToggle">
+        <i class="fa fa-angle-double-down"></i> Filter Staffs <i class="fa fa-filter"></i>
+    </div>
+    <div class="filter-content" id="filterBox">
+        <div class="filter-row">
+            <div class="filter-field">
+                <label>REG.NO.</label>
+                <input type="text" placeholder="">
+            </div>
+            <div class="filter-field">
+                <label>JOIN DATE</label>
+                <input type="date" style="width:130px;">
+                <span style="padding: 0 5px; background: #eee; height: 100%; display: flex; align-items: center; border-left:1px solid #ccc; border-right:1px solid #ccc;"><i class="fa fa-exchange"></i></span>
+                <input type="date" style="width:130px;">
+            </div>
+            <div class="filter-field">
+                <label>DESIGNATION</label>
+                <select>
+                    <option>Select Designation</option>
+                </select>
+            </div>
+            <div class="filter-field">
+                <label>STATUS</label>
+                <select>
+                    <option>Status</option>
+                    <option>Active</option>
+                    <option>In-Active</option>
+                </select>
+            </div>
+            <button class="btn-filter-submit" data-name="Filter Submit">
+                <i class="fa fa-filter"></i> Filter
+            </button>
+        </div>
+    </div>
+
+    <div class="action-group">
+        <a href="#" class="btn-action bg-export" data-name="Export"><i class="fa fa-file-excel-o"></i> Export</a>
+        <a href="#" class="btn-action bg-active" data-name="Active"><i class="fa fa-check"></i> Active</a>
+        <a href="#" class="btn-action bg-inactive" data-name="In-Active"><i class="fa fa-times"></i> In-Active</a>
+        <a href="#" class="btn-action bg-delete" data-name="Delete"><i class="fa fa-trash"></i> Delete</a>
+        <a href="#" class="btn-action bg-blue" data-name="Reset Login"><i class="fa fa-user"></i> Create/Reset Login</a>
+        <a href="#" class="btn-action bg-blue" data-name="Lib Member"><i class="fa fa-book"></i> Create Library Member</a>
+    </div>
+
+    <div style="overflow-x:auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 25px;"><input type="checkbox"></th>
+                    <th>S.N.</th><th>REG.NO.</th><th>STAFF NAME</th><th>PHONE</th>
+                    <th>DESIGNATION</th><th>QUALIFICATION</th><th>STATUS</th><th>ACTION</th><th>SERVICE ACTIVATION</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="10" class="no-data">No Staffs data found. Please Filter Staffs to show.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Filter Toggle Logic
+    const filterToggle = document.getElementById('filterToggle');
+    const filterBox = document.getElementById('filterBox');
+
+    filterToggle.addEventListener('click', function() {
+        if (filterBox.style.display === "block") {
+            filterBox.style.display = "none";
+            this.querySelector('i').className = "fa fa-angle-double-down";
+        } else {
+            filterBox.style.display = "block";
+            this.querySelector('i').className = "fa fa-angle-double-up";
+        }
+    });
+
+    // Button Click Handlers
+    document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('click', function(e) {
+            if (this.id === 'filterToggle') return;
+            e.preventDefault();
+            const actionName = this.getAttribute('data-name');
+            if(actionName) {
+                console.log("PHP Action: " + actionName);
+                alert("Working: " + actionName);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
