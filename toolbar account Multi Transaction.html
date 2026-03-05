@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 158 - Multi Transaction Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Top Header */
+        .page-header-main { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .header-text { font-size: 13px; font-weight: bold; color: #337ab7; margin: 0; }
+        .settings-gear { position: absolute; right: 15px; top: 8px; color: #f0ad4e; font-size: 16px; cursor: pointer; }
+
+        /* Navigation */
+        .nav-container { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; }
+        .erp-btn {
+            display: inline-block;
+            text-decoration: none !important;
+            margin: 2px;
+            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 3px;
+            color: #ffffff !important;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+        .bg-active-green { background-color: #5cb85c; }
+
+        /* Multi-Transaction Table */
+        .transaction-container { background: #fff; margin: 20px; border: 1px solid #eee; overflow-x: auto; }
+        .multi-table { width: 100%; border-collapse: collapse; }
+        .multi-table thead th { 
+            background-color: #eef5f9; 
+            color: #337ab7; 
+            border: 1px solid #dee2e6; 
+            padding: 10px; 
+            text-align: center;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+        .multi-table tbody td { border: 1px solid #eee; padding: 5px; vertical-align: middle; }
+        
+        /* Inputs */
+        .form-control-custom { 
+            border: 1px solid #ccc; 
+            border-radius: 2px; 
+            height: 30px; 
+            font-size: 11px; 
+            padding: 4px 8px; 
+            width: 100%; 
+            outline: none; 
+        }
+        .form-control-custom:focus { border-color: #66afe9; }
+
+        /* Red Mandatory border for specific inputs */
+        .mandatory-border { border-left: 2px solid #d9534f !important; }
+        .orange-border { border: 1px solid #f0ad4e !important; }
+
+        /* Action Buttons */
+        .btn-add-row { background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 3px; }
+        .btn-delete-row { background-color: #d9534f; color: white; border: none; padding: 5px 10px; border-radius: 3px; }
+        .btn-drag { background-color: #337ab7; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: move; }
+
+        .form-footer { background: #f9f9f9; padding: 15px; text-align: center; border-top: 1px solid #eee; margin-top: 20px; }
+        .btn-footer { padding: 6px 15px; font-size: 12px; border-radius: 3px; border: none; margin: 0 5px; color: #fff; cursor: pointer; }
+        .bg-grey { background-color: #99abb4; }
+        .bg-save { background-color: #337ab7; }
+
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <p class="header-text">Transaction Manager <span style="color:#999; font-weight:normal;">» Multi Transaction</span></p>
+    <div class="settings-gear" onclick="logAction('Settings')"><i class="fa fa-cog"></i></div>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-blue" onclick="logAction('Student Fee')"><i class="fa fa-users"></i> Student Fee</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Staff Payroll')"><i class="fa fa-user-tie"></i> Staff Payroll</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Ledger')"><i class="fa fa-book"></i> Ledger</button>
+    <button class="erp-btn bg-green" onclick="logAction('Transactions')"><i class="fa fa-exchange-alt"></i> Transactions</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Bank')"><i class="fa fa-university"></i> Bank</button>
+</div>
+
+<div class="nav-container" style="background: #f9f9f9; padding: 5px;">
+    <button class="erp-btn bg-blue" onclick="logAction('Detail Tab')"><i class="fa fa-list"></i> Detail</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Add Transaction Tab')"><i class="fa fa-plus"></i> Transaction</button>
+    <button class="erp-btn bg-active-green" onclick="logAction('Multi Transaction Tab')"><i class="fa fa-plus"></i> Multi Adjustment Transaction</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Acc To Acc')"><i class="fa fa-exchange-alt"></i> Acc To Acc</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Ledgers List')"><i class="fa fa-address-book"></i> Ledgers</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Acc Group')"><i class="fa fa-layer-group"></i> Acc Group</button>
+</div>
+
+<div class="transaction-container">
+    <form id="multiTransactionForm">
+        <table class="multi-table" id="txnTable">
+            <thead>
+                <tr>
+                    <th width="40px"></th>
+                    <th width="150px">Date</th>
+                    <th width="250px">Ledger</th>
+                    <th>Description</th>
+                    <th width="150px">DR. Amount</th>
+                    <th width="150px">CR. Amount</th>
+                    <th width="40px" style="background-color: #337ab7; color: white;">
+                        <button type="button" class="btn-add-row" onclick="addRow()"><i class="fa fa-plus"></i></button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center"><button type="button" class="btn-drag"><i class="fa fa-arrows-alt"></i></button></td>
+                    <td><input type="date" name="date[]" class="form-control-custom orange-border"></td>
+                    <td>
+                        <select name="ledger[]" class="form-control-custom">
+                            <option>Choose a Ledger/Transaction Head...</option>
+                            <option>Cash</option>
+                            <option>Bank</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="desc[]" class="form-control-custom mandatory-border" placeholder="Description"></td>
+                    <td><input type="number" name="dr_amt[]" class="form-control-custom mandatory-border" value="0"></td>
+                    <td><input type="number" name="cr_amt[]" class="form-control-custom mandatory-border" value="0"></td>
+                    <td class="text-center">
+                        <button type="button" class="btn-delete-row" onclick="deleteRow(this)"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="form-footer">
+            <button type="button" class="btn-footer bg-grey" onclick="resetForm()">
+                <i class="fa fa-undo"></i> Reset
+            </button>
+            <button type="button" class="btn-footer bg-save" onclick="submitForm('Save')">
+                <i class="fa fa-save"></i> Save
+            </button>
+            <button type="button" class="btn-footer bg-active-green" onclick="submitForm('Save & Add Another')">
+                <i class="fa fa-plus-circle"></i> Save And Add Another
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Console log actions
+    function logAction(msg) {
+        console.log("%c Action: " + msg, "color: #337ab7; font-weight: bold; border: 1px solid #337ab7; padding: 2px 5px;");
+    }
+
+    // Add New Row Function
+    function addRow() {
+        logAction("New Row Added");
+        const table = document.getElementById("txnTable").getElementsByTagName('tbody')[0];
+        const newRow = table.insertRow();
+        
+        // Date initialization for new row
+        const today = new Date().toISOString().split('T')[0];
+
+        newRow.innerHTML = `
+            <td class="text-center"><button type="button" class="btn-drag"><i class="fa fa-arrows-alt"></i></button></td>
+            <td><input type="date" name="date[]" class="form-control-custom orange-border" value="${today}"></td>
+            <td>
+                <select name="ledger[]" class="form-control-custom">
+                    <option>Choose a Ledger/Transaction Head...</option>
+                    <option>Cash</option>
+                    <option>Bank</option>
+                </select>
+            </td>
+            <td><input type="text" name="desc[]" class="form-control-custom mandatory-border" placeholder="Description"></td>
+            <td><input type="number" name="dr_amt[]" class="form-control-custom mandatory-border" value="0"></td>
+            <td><input type="number" name="cr_amt[]" class="form-control-custom mandatory-border" value="0"></td>
+            <td class="text-center">
+                <button type="button" class="btn-delete-row" onclick="deleteRow(this)"><i class="fa fa-trash"></i></button>
+            </td>
+        `;
+    }
+
+    // Delete Row Function
+    function deleteRow(btn) {
+        const row = btn.parentNode.parentNode;
+        const tbody = row.parentNode;
+        if(tbody.rows.length > 1) {
+            row.parentNode.removeChild(row);
+            logAction("Row Deleted");
+        } else {
+            alert("At least one row is required.");
+        }
+    }
+
+    // Reset Form
+    function resetForm() {
+        document.getElementById("multiTransactionForm").reset();
+        logAction("Form Reset");
+    }
+
+    // Submit Logic for Console
+    function submitForm(type) {
+        const form = document.getElementById("multiTransactionForm");
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+            if(!data[key]) data[key] = [];
+            data[key].push(value);
+        });
+
+        console.log("%c Submitting Multi-Transaction (" + type + ")", "color: #449d44; font-weight: bold; font-size: 12px;");
+        console.table(data);
+        alert(type + " Successful! Check Console for data structure.");
+    }
+
+    // Set today's date on load
+    window.onload = function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.querySelector('input[type="date"]').value = today;
+    };
+</script>
+
+</body>
+</html>
