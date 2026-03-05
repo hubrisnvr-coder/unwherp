@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 163 - Chart of Accounts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Top Navigation Styles */
+        .page-header-main { background: #fff; padding: 5px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .settings-gear { position: absolute; right: 15px; top: 8px; color: #f0ad4e; font-size: 18px; cursor: pointer; }
+        
+        .nav-container { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; }
+        .erp-btn {
+            display: inline-block;
+            margin: 2px;
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            color: #ffffff !important;
+            border: none;
+            cursor: pointer;
+            text-decoration: none !important;
+        }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+
+        /* Filter Section */
+        .filter-header { 
+            background: #fff; 
+            border: 1px solid #c8d9e2; 
+            padding: 8px; 
+            text-align: center; 
+            color: #337ab7; 
+            cursor: pointer; 
+            margin: 10px 15px;
+            font-weight: bold;
+        }
+        .filter-content { 
+            display: none; 
+            background: #fff; 
+            margin: 0 15px 15px 15px; 
+            padding: 15px; 
+            border: 1px solid #ddd; 
+            border-top: none; 
+        }
+
+        /* Report Header */
+        .report-card { background: #fff; margin: 15px; padding: 20px; border: 1px solid #ddd; border-radius: 4px; }
+        .university-title { font-size: 22px; font-weight: bold; text-align: center; color: #333; margin-bottom: 2px; }
+        .university-info { text-align: center; font-size: 13px; color: #555; margin-bottom: 15px; }
+        .report-title { 
+            font-size: 16px; 
+            font-weight: bold; 
+            text-align: center; 
+            text-transform: uppercase; 
+            border-bottom: 1px solid #333; 
+            display: inline-block; 
+            width: 100%; 
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        /* Table Styling */
+        .erp-table { width: 100%; border-collapse: collapse; }
+        .erp-table thead th { 
+            background-color: #eef5f9; 
+            color: #337ab7; 
+            border: 1px solid #dee2e6; 
+            padding: 8px; 
+            text-align: center; 
+            font-size: 11px;
+            border-bottom: 2px solid red; /* ERP Theme Red Line */
+        }
+        .erp-table tbody td { border: 1px solid #eee; padding: 6px 10px; vertical-align: middle; }
+        
+        .col-id { width: 40px; text-align: center; color: #777; }
+        .col-text { color: #333; }
+        .text-blue { color: #337ab7; font-weight: 500; }
+
+        /* Print Button */
+        .btn-print { background-color: #337ab7; color: white; border: none; padding: 5px 15px; border-radius: 4px; float: right; }
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="color:#337ab7;">Account Group Manager</strong> <span style="color:#999;">» Detail</span>
+    <div class="settings-gear" onclick="logAction('Settings')"><i class="fa fa-cog"></i></div>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-blue" onclick="logAction('Student Fee')"><i class="fa fa-users"></i> Student Fee</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Staff Payroll')"><i class="fa fa-user-tie"></i> Staff Payroll</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Ledger')"><i class="fa fa-book"></i> Ledger</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Transactions')"><i class="fa fa-exchange-alt"></i> Transactions</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Bank')"><i class="fa fa-university"></i> Bank</button>
+</div>
+
+<div class="nav-container" style="background:#f9f9f9;">
+    <button class="erp-btn bg-blue" onclick="logAction('Detail')"><i class="fa fa-list"></i> Detail</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Transaction')"><i class="fa fa-plus"></i> Transaction</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Multi Adj')"><i class="fa fa-plus-circle"></i> Multi Adjustment Transaction</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Acc To Acc')"><i class="fa fa-exchange-alt"></i> Acc To Acc</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Ledgers')"><i class="fa fa-address-book"></i> Ledgers</button>
+    <button class="erp-btn bg-green" onclick="logAction('Acc Group')"><i class="fa fa-layer-group"></i> Acc Group</button>
+</div>
+
+<div class="filter-header" onclick="toggleFilter()">
+    <i class="fa fa-search"></i> Filter Transaction <i class="fa fa-chevron-down ms-2" id="filterIcon"></i>
+</div>
+<div class="filter-content" id="filterBox">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Select Group</label>
+            <select class="form-select form-select-sm shadow-none" id="groupSelect">
+                <option value="">Choose a Group...</option>
+                <option value="13">CASH</option>
+                <option value="68">PURCHASES</option>
+            </select>
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+            <button class="btn btn-primary btn-sm w-100" onclick="logAction('Filter Applied')"><i class="fa fa-filter"></i> Filter</button>
+        </div>
+    </div>
+</div>
+
+<div class="report-card">
+    <button class="btn-print" onclick="window.print(); logAction('Print Triggered');">
+        <i class="fa fa-print"></i> Print
+    </button>
+    <div class="clearfix"></div>
+
+    <div class="university-title">UNIVERSITY ERP</div>
+    <div class="university-info">
+        Roorkee<br>
+        8888888888 , roorkee@gmail.com
+    </div>
+
+    <div class="report-title">CHART OF ACCOUNTS</div>
+
+    <div class="table-responsive">
+        <table class="erp-table">
+            <thead>
+                <tr>
+                    <th>TYPE</th>
+                    <th colspan="2">GROUP</th>
+                    <th colspan="2">ACCOUNT</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <tr>
+                    <td class="col-text">Asset</td>
+                    <td class="col-id">13</td>
+                    <td class="col-text">CASH</td>
+                    <td class="col-id">13_1</td>
+                    <td class="text-blue">Cash A/C</td>
+                </tr>
+                <tr>
+                    <td class="col-text">Part of Calculation of Net Purchases</td>
+                    <td class="col-id">68</td>
+                    <td class="col-text">PURCHASES</td>
+                    <td class="col-id">68_2</td>
+                    <td class="text-blue">Purchase A/C</td>
+                </tr>
+                <tr>
+                    <td class="col-text">Revenue</td>
+                    <td class="col-id">77</td>
+                    <td class="col-text">SALES</td>
+                    <td class="col-id">77_3</td>
+                    <td class="text-blue">Sales A/C</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Console Action Logger
+    function logAction(msg) {
+        console.log("%c [ERP 163]: " + msg + " Clicked", "color: #337ab7; font-weight: bold; border-left: 3px solid #f0ad4e; padding-left: 8px;");
+    }
+
+    // Toggle Filter Functionality
+    function toggleFilter() {
+        const box = document.getElementById('filterBox');
+        const icon = document.getElementById('filterIcon');
+        
+        if (box.style.display === "block") {
+            box.style.display = "none";
+            icon.className = "fa fa-chevron-down ms-2";
+            logAction("Filter Hidden");
+        } else {
+            box.style.display = "block";
+            icon.className = "fa fa-chevron-up ms-2";
+            logAction("Filter Shown");
+        }
+    }
+
+    // Initial Load
+    window.onload = function() {
+        console.log("ERP 163 - Chart of Accounts Loaded.");
+        console.log("Status: Ready for PHP integration. Use id='tableBody' for dynamic rows.");
+    };
+</script>
+
+</body>
+</html>
