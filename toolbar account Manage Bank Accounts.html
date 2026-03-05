@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 164 - Bank Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Top Header & Settings */
+        .page-header-main { background: #fff; padding: 6px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .settings-gear { position: absolute; right: 15px; top: 8px; color: #f0ad4e; font-size: 18px; cursor: pointer; border: 1px solid #f0ad4e; border-radius: 4px; padding: 2px 5px; background: #fff8ee; }
+        
+        /* Navigation Buttons */
+        .nav-container { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
+        .erp-btn {
+            display: inline-block;
+            margin: 2px;
+            font-size: 11px;
+            padding: 5px 12px;
+            border-radius: 4px;
+            color: #ffffff !important;
+            border: none;
+            cursor: pointer;
+            text-decoration: none !important;
+            font-weight: 500;
+        }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+        .bg-orange { background-color: #f0ad4e; }
+        .bg-red { background-color: #d9534f; }
+
+        /* Filter Section Styling */
+        .filter-wrapper { margin: 15px; border: 1px solid #c8d9e2; border-radius: 4px; overflow: hidden; background: #fff; }
+        .filter-header { 
+            background: #fff; 
+            padding: 8px; 
+            text-align: center; 
+            color: #337ab7; 
+            cursor: pointer; 
+            font-weight: bold;
+            border-bottom: 1px solid #eee;
+        }
+        .filter-content { display: block; padding: 20px; background: #f9f9f9; }
+        
+        /* Form Label Styling to match screenshot */
+        .label-box { 
+            background: #eee; 
+            border: 1px solid #ddd; 
+            padding: 6px; 
+            font-weight: bold; 
+            text-align: right; 
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            text-transform: uppercase;
+            height: 32px;
+        }
+        .input-box { border-radius: 0; border: 1px solid #ddd; height: 32px; font-size: 11px; }
+
+        /* Action Buttons (Active/In-Active/Delete) */
+        .bulk-actions { text-align: center; margin-bottom: 15px; }
+        .btn-action { font-size: 10px; padding: 3px 10px; border-radius: 3px; color: #fff; border: none; margin: 0 2px; }
+
+        /* Table Styling */
+        .table-container { background: #fff; margin: 0 15px; border: 1px solid #ddd; }
+        .erp-table { width: 100%; border-collapse: collapse; }
+        .erp-table thead th { 
+            background-color: #eef5f9; 
+            color: #337ab7; 
+            border: 1px solid #dee2e6; 
+            padding: 10px; 
+            text-align: center; 
+            font-size: 11px;
+            border-bottom: 2px solid red; /* Identity of this ERP */
+        }
+        .erp-table tbody td { border: 1px solid #eee; padding: 8px; text-align: center; color: #666; }
+        .no-data-msg { padding: 10px; color: #777; text-align: left; font-style: italic; }
+
+        /* Filter Submit Button */
+        .btn-filter-submit { background-color: #337ab7; color: white; border: none; padding: 8px 20px; border-radius: 4px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="color:#337ab7;">Bank Manager</strong> <span style="color:#999;">» Detail</span>
+    <div class="settings-gear" onclick="logAction('Settings Page')"><i class="fa fa-cog"></i></div>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-blue" onclick="logAction('Student Fee')"><i class="fa fa-users"></i> Student Fee</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Staff Payroll')"><i class="fa fa-user-tie"></i> Staff Payroll</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Ledger')"><i class="fa fa-book"></i> Ledger</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Transactions')"><i class="fa fa-exchange-alt"></i> Transactions</button>
+    <button class="erp-btn bg-green" onclick="logAction('Bank')"><i class="fa fa-university"></i> Bank</button>
+</div>
+
+<div class="nav-container" style="background:#f9f9f9; padding: 5px;">
+    <button class="erp-btn bg-green" onclick="logAction('Manage Bank')"><i class="fa fa-university"></i> Manage Bank</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Add New Bank')"><i class="fa fa-plus"></i> Add New Bank</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Transactions Detail')"><i class="fa fa-list"></i> Transactions Detail</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Bank Transaction')"><i class="fa fa-exchange-alt"></i> Bank Transaction</button>
+</div>
+
+<div class="filter-wrapper">
+    <div class="filter-header" onclick="toggleFilter()">
+        <i class="fa fa-chevron-down ms-2" id="filterIcon"></i> Filter Bank <i class="fa fa-filter ms-2"></i>
+    </div>
+    <div class="filter-content" id="filterBox">
+        <form id="bankFilterForm" onsubmit="event.preventDefault(); logAction('Filter Applied');">
+            <div class="row g-0 mb-2">
+                <div class="col-md-2 label-box">Bank</div>
+                <div class="col-md-4"><input type="text" name="bank_name" class="form-control input-box" placeholder="Search Bank"></div>
+                <div class="col-md-2 label-box">Account Name</div>
+                <div class="col-md-4"><input type="text" name="acc_name" class="form-control input-box" placeholder="Search Account Name"></div>
+            </div>
+            <div class="row g-0 mb-3">
+                <div class="col-md-2 label-box">Account Number</div>
+                <div class="col-md-4"><input type="text" name="acc_num" class="form-control input-box" placeholder="Search Account Number"></div>
+                <div class="col-md-2 label-box">Branch</div>
+                <div class="col-md-4"><input type="text" name="branch" class="form-control input-box" placeholder="Search Branch"></div>
+            </div>
+            <div class="text-end">
+                <button type="submit" class="btn-filter-submit"><i class="fa fa-filter"></i> Filter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="bulk-actions">
+    <button class="btn-action bg-blue" onclick="logAction('Bulk Active')"><i class="fa fa-check"></i> Active</button>
+    <button class="btn-action bg-orange" onclick="logAction('Bulk In-Active')"><i class="fa fa-times"></i> In-Active</button>
+    <button class="btn-action bg-red" onclick="logAction('Bulk Delete')"><i class="fa fa-trash"></i> Delete</button>
+</div>
+
+<div class="table-container">
+    <div class="table-responsive">
+        <table class="erp-table">
+            <thead>
+                <tr>
+                    <th width="40px"><input type="checkbox" id="checkAll" onclick="toggleCheckboxes(this)"></th>
+                    <th>S.N.</th>
+                    <th>BANK</th>
+                    <th>BRANCH</th>
+                    <th>ACNUMBER</th>
+                    <th>ACNAME</th>
+                    <th>BALANCE</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody id="bankTableBody">
+                <tr>
+                    <td colspan="8" class="no-data-msg">No Bank data found. Please Filter Bank to show.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Console Logger for All Buttons
+    function logAction(action) {
+        console.log("%c [ERP-164 Action]: " + action, "color: #337ab7; font-weight: bold; border-left: 4px solid #449d44; padding-left: 10px;");
+    }
+
+    // Filter Toggle (Hide/Show)
+    function toggleFilter() {
+        const box = document.getElementById('filterBox');
+        const icon = document.getElementById('filterIcon');
+        
+        if (box.style.display === "none") {
+            box.style.display = "block";
+            icon.className = "fa fa-chevron-down ms-2";
+            logAction("Filter Section Expanded");
+        } else {
+            box.style.display = "none";
+            icon.className = "fa fa-chevron-up ms-2";
+            logAction("Filter Section Collapsed");
+        }
+    }
+
+    // Toggle All Checkboxes
+    function toggleCheckboxes(master) {
+        const checkboxes = document.querySelectorAll('#bankTableBody input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = master.checked);
+        logAction("Select All: " + master.checked);
+    }
+
+    // Initial State
+    window.onload = function() {
+        console.log("ERP 164 - Bank Manager Detail Page Ready.");
+    };
+</script>
+
+</body>
+</html>
