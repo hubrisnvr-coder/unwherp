@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 145 - Enhanced Filter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 12px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .page-header-main { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
+        .header-text { font-size: 16px; font-weight: bold; color: #337ab7; margin: 0; }
+        
+        .btn-nav-bar { background: #fff; padding: 10px; border-bottom: 1px solid #ddd; text-align: center; }
+        .erp-btn { display: inline-block; text-decoration: none !important; margin: 2px; font-size: 11px; padding: 6px 12px; border-radius: 3px; color: #fff !important; border: none; cursor: pointer; }
+        .erp-btn:hover { filter: brightness(0.85); color: #fff !important; }
+
+        .bg-green { background-color: #5cb85c; }
+        .bg-blue { background-color: #337ab7; }
+        .bg-sky { background-color: #5bc0de; }
+        .bg-orange { background-color: #f0ad4e; }
+        .bg-dark-blue { background-color: #2c5079; }
+
+        /* Filter Styling */
+        .filter-container { margin-top: 10px; border: 1px solid #ddd; background: #fff; }
+        .filter-header { background: #fff; padding: 8px; cursor: pointer; color: #337ab7; font-weight: bold; text-align: center; border-bottom: 1px solid #ddd; }
+        .form-label-custom { background: #f9f9f9; border: 1px solid #ddd; font-weight: bold; padding: 5px; display: flex; align-items: center; justify-content: center; min-height: 32px; text-align: center; }
+        .form-control-custom { border-radius: 0; border: 1px solid #ddd; height: 32px; font-size: 11px; }
+
+        .list-header { color: #337ab7; text-align: center; padding: 10px; font-weight: bold; }
+        .info-strip { background-color: #337ab7; color: white; padding: 5px 15px; font-size: 11px; }
+        .table thead th { background-color: #ebf3f9; color: #337ab7; border: 1px solid #dee2e6; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <h1 class="header-text">Fees Collection Manager <span style="color:#999; font-weight:normal;">» Detail</span></h1>
+</div>
+
+<div class="btn-nav-bar">
+    <a href="#" class="erp-btn bg-green" onclick="handleAction(event, 'Student Fee')">Student Fee</a>
+    <a href="#" class="erp-btn bg-blue" onclick="handleAction(event, 'Staff Payroll')">Staff Payroll</a>
+    <a href="#" class="erp-btn bg-blue" onclick="handleAction(event, 'Ledger')">Ledger</a>
+    <a href="#" class="erp-btn bg-blue" onclick="handleAction(event, 'Bank')">Bank</a>
+    <br>
+    <a href="#" class="erp-btn bg-blue" onclick="handleAction(event, 'Add Fees')">Add Fees</a>
+    <a href="#" class="erp-btn bg-green" onclick="handleAction(event, 'Quick Receive')">Quick Receive</a>
+    <a href="#" class="erp-btn bg-orange" onclick="handleAction(event, 'Balance Fees')">Balance Fees</a>
+</div>
+
+<div class="container-fluid px-3">
+    <div class="filter-container">
+        <div class="filter-header" onclick="toggleFilter()">
+            <i class="fa fa-caret-down" id="toggleIcon"></i> Filter Student & Collect Fees <i class="fa fa-filter"></i>
+        </div>
+        <div class="filter-body" id="filterContent">
+            <form id="erpForm">
+                <div class="row g-0">
+                    <div class="col-md-1"><div class="form-label-custom">REG.NO.</div></div>
+                    <div class="col-md-2"><input type="text" name="reg_no" class="form-control form-control-custom"></div>
+                    
+                    <div class="col-md-1"><div class="form-label-custom">REG. DATE</div></div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <input type="date" class="form-control form-control-custom">
+                            <span class="input-group-text py-0" style="height:32px;">⇌</span>
+                            <input type="date" class="form-control form-control-custom">
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-1"><div class="form-label-custom">STATUS</div></div>
+                    <div class="col-md-2">
+                        <select class="form-select form-control-custom">
+                            <option selected>Select Academic Status</option>
+                            <option>Back Continue</option>
+                            <option>Continue</option>
+                            <option>Drop Out</option>
+                            <option>New Admission</option>
+                            <option>Online Registration</option>
+                            <option>Pass Out</option>
+                            <option>Transfer in</option>
+                            <option>Transfer Out</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select form-control-custom">
+                            <option selected>Status</option>
+                            <option>Active</option>
+                            <option>In-Active</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2"><div class="form-label-custom">PROGRAM/CLASS</div></div>
+                    <div class="col-md-4"><select class="form-select form-control-custom"><option>Select Program/Class</option></select></div>
+                    <div class="col-md-2"><div class="form-label-custom">SEMESTER/SECTION</div></div>
+                    <div class="col-md-2"><select class="form-select form-control-custom"><option>Select Semester/Section</option></select></div>
+                    <div class="col-md-1"><div class="form-label-custom">BATCH</div></div>
+                    <div class="col-md-1"><select class="form-select form-control-custom"><option>Select Batch</option><option>2025-26</option></select></div>
+
+                    <div class="col-md-2"><div class="form-label-custom">NAME OF STUDENT</div></div>
+                    <div class="col-md-2"><input type="text" class="form-control form-control-custom" placeholder="First Name"></div>
+                    <div class="col-md-2"><input type="text" class="form-control form-control-custom" placeholder="Middle Name"></div>
+                    <div class="col-md-2"><input type="text" class="form-control form-control-custom" placeholder="Last Name"></div>
+                    <div class="col-md-1"><div class="form-label-custom">GENDER</div></div>
+                    <div class="col-md-3">
+                        <select class="form-select form-control-custom">
+                            <option>MALE</option>
+                            <option>FEMALE</option>
+                            <option>OTHER</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2"><div class="form-label-custom">BLOOD GROUP</div></div>
+                    <div class="col-md-2">
+                        <select class="form-select form-control-custom">
+                            <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+                            <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1"><div class="form-label-custom">DATE OF BIRTH</div></div>
+                    <div class="col-md-3"><input type="date" class="form-control form-control-custom"></div>
+                    <div class="col-md-2"><div class="form-label-custom">UNIQUE STUDENT ID</div></div>
+                    <div class="col-md-2"><input type="text" class="form-control form-control-custom"></div>
+
+                    <div class="col-md-1"><div class="form-label-custom">NATIONALITY</div></div>
+                    <div class="col-md-2"><input type="text" class="form-control form-control-custom"></div>
+                    <div class="col-md-1"><div class="form-label-custom">ID. 1</div></div>
+                    <div class="col-md-2"><input type="text" class="form-control form-control-custom"></div>
+                    <div class="col-md-1"><div class="form-label-custom">ID. 2</div></div>
+                    <div class="col-md-2"><input type="text" class="form-control form-control-custom"></div>
+                    <div class="col-md-1"><div class="form-label-custom">ID. 3</div></div>
+                    <div class="col-md-2"><input type="text" class="form-control form-control-custom"></div>
+
+                    <div class="col-md-1"><div class="form-label-custom">ID. 4</div></div>
+                    <div class="col-md-2"><input type="text" class="form-control form-control-custom"></div>
+                    <div class="col-md-1"><div class="form-label-custom">MOTHER TONGUE</div></div>
+                    <div class="col-md-2"><input type="text" class="form-control form-control-custom"></div>
+                    <div class="col-md-1"><div class="form-label-custom">RELIGION</div></div>
+                    <div class="col-md-2"><input type="text" class="form-control form-control-custom"></div>
+                    <div class="col-md-1"><div class="form-label-custom">CASTE</div></div>
+                    <div class="col-md-2"><input type="text" class="form-control form-control-custom"></div>
+
+                    <div class="col-md-1"><div class="form-label-custom">E-MAIL</div></div>
+                    <div class="col-md-11"><input type="email" class="form-control form-control-custom"></div>
+                </div>
+
+                <div class="text-end mt-2 p-2">
+                    <button type="button" class="erp-btn bg-dark-blue px-4" onclick="handleAction(event, 'Filter Data')">
+                        <i class="fa fa-filter"></i> Filter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="list-header"><i class="fa fa-list"></i> Student List</div>
+    <div class="info-strip">Fees Collection Record list on table. Filter Fees Collection using the filter.</div>
+    <div class="table-responsive">
+        <table class="table table-bordered bg-white">
+            <thead>
+                <tr>
+                    <th>S.N.</th>
+                    <th>Program/Class</th>
+                    <th>Semester/Section</th>
+                    <th>Reg. No.</th>
+                    <th>Name</th>
+                    <th>Contact No.</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="7" class="text-center py-4 text-muted">No Student data found. Please use filter.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function handleAction(e, name) {
+        e.preventDefault();
+        console.log("Button Triggered: " + name);
+    }
+
+    function toggleFilter() {
+        const content = document.getElementById('filterContent');
+        const icon = document.getElementById('toggleIcon');
+        if (content.style.display === "none") {
+            content.style.display = "block";
+            icon.className = "fa fa-caret-down";
+            console.log("Filter: Shown");
+        } else {
+            content.style.display = "none";
+            icon.className = "fa fa-caret-right";
+            console.log("Filter: Hidden");
+        }
+    }
+</script>
+</body>
+</html>
