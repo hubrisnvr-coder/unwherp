@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 155 - Fee Head Collection Report Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Navigation & Headers */
+        .page-header-main { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .header-text { font-size: 13px; font-weight: bold; color: #337ab7; margin: 0; }
+        .settings-gear { position: absolute; right: 15px; top: 8px; color: #f0ad4e; font-size: 16px; cursor: pointer; }
+
+        .nav-container { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; }
+        .erp-btn {
+            display: inline-block;
+            text-decoration: none !important;
+            margin: 2px;
+            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 3px;
+            color: #ffffff !important;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        /* ERP Theme Colors */
+        .bg-blue { background-color: #337ab7; }
+        .bg-vibrant-green { background-color: #449d44; }
+        .bg-sky { background-color: #5bc0de; }
+
+        /* Filter Section Styling (ERP 155 Match) */
+        .filter-container { margin: 10px; border: 1px solid #ddd; background: #fff; border-radius: 2px; }
+        .filter-header { 
+            background: #fff; padding: 6px; cursor: pointer; color: #337ab7; 
+            font-weight: bold; text-align: center; font-size: 11px;
+        }
+        .filter-body { padding: 10px; border-top: 1px solid #eee; display: block; }
+        
+        .form-label-box { 
+            background: #f9f9f9; border: 1px solid #ddd; font-weight: bold; 
+            padding: 5px; display: flex; align-items: center; justify-content: center; 
+            height: 28px; text-align: center; font-size: 9px; text-transform: uppercase;
+        }
+        .form-control-custom { border-radius: 0; border: 1px solid #ddd; height: 28px; font-size: 10px; padding: 2px 5px; width: 100%; outline: none; }
+
+        /* Report Paper Styling */
+        .report-paper { background: #fff; margin: 15px; padding: 25px; border: 1px solid #ddd; min-height: 400px; }
+        .univ-title { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 2px; }
+        .report-heading { font-weight: bold; font-size: 15px; margin: 15px 0; border-bottom: 1px solid #333; display: inline-block; padding: 0 40px; }
+
+        /* Table Styling */
+        .report-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .report-table thead th { 
+            border: 1px solid #dee2e6; background: #fff; color: #337ab7; 
+            padding: 6px; font-size: 11px; text-align: center; border-top: 2px solid red;
+        }
+        .report-table tbody td { border: 1px solid #eee; padding: 8px; text-align: center; font-size: 10px; }
+        
+        .total-row { background-color: #ff4500; color: white; font-weight: bold; }
+        .total-row td { border: 1px solid #ff4500 !important; padding: 5px; }
+
+        .print-btn-container { text-align: right; margin: 10px 15px; }
+
+        @media print {
+            .nav-container, .filter-container, .print-btn-container, .page-header-main { display: none; }
+            .report-paper { border: none; margin: 0; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <p class="header-text">Fee Head Collection Report Manager <span style="color:#999; font-weight:normal;">» Detail</span></p>
+    <div class="settings-gear" onclick="logAction('Settings Gear')"><i class="fa fa-cog"></i></div>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-blue" onclick="logAction('Student Fee')"><i class="fa fa-users"></i> Student Fee</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Staff Payroll')"><i class="fa fa-user-tie"></i> Staff Payroll</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Ledger')"><i class="fa fa-book"></i> Ledger</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Transactions')"><i class="fa fa-exchange-alt"></i> Transactions</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Bank')"><i class="fa fa-university"></i> Bank</button>
+</div>
+
+<div class="nav-container" style="background: #f9f9f9; padding: 5px;">
+    <button class="erp-btn bg-blue" onclick="logAction('Cash Book')">Cash Book</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Fee Collection')">Fee Collection</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Online Payment')">Online Payment</button>
+    <button class="erp-btn bg-vibrant-green" onclick="logAction('Fee Collection Head')">Fee Collection Head</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Fee Balance Statement')">Fee Balance Statement</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Statement of Ledger')">Statement of Ledger</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Ledger Balance')">Ledger Balance</button>
+</div>
+
+<div class="filter-container">
+    <div class="filter-header" onclick="toggleFilter()">
+        <i class="fa fa-angle-double-down" id="toggleIcon" style="color:#f0ad4e;"></i> Filter Fee Head Collection Report <i class="fa fa-filter"></i>
+    </div>
+    <div id="filterBody" class="filter-body">
+        <div class="row g-0 align-items-center">
+            <div class="col-md-1">
+                <div class="form-label-box">HEAD</div>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control-custom">
+                    <option selected>Select Fee Head</option>
+                    <option>Tuition Fee</option>
+                    <option>Exam Fee</option>
+                </select>
+            </div>
+            
+            <div class="col-md-1">
+                <div class="form-label-box">RANGE</div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group g-0">
+                    <input type="date" class="form-control-custom">
+                    <span class="input-group-text p-1" style="height:28px; font-size:10px;">⇌</span>
+                    <input type="date" class="form-control-custom">
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="form-label-box">TYPE</div>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control-custom">
+                    <option selected>Select Report Type...</option>
+                    <option>Detailed</option>
+                    <option>Summary</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="text-end mt-3">
+            <button class="erp-btn bg-blue px-4" style="font-size:11px;" onclick="logAction('Filter Clicked')">
+                <i class="fa fa-filter"></i> Filter
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="print-btn-container">
+    <button class="btn btn-primary btn-sm" onclick="window.print()">
+        <i class="fa fa-print"></i> Print
+    </button>
+</div>
+
+<div class="report-paper">
+    <div class="text-center">
+        <h2 class="univ-title">UNIVERSITY ERP</h2>
+        <p class="m-0">Roorkee</p>
+        <p class="m-0">8888888888 , roorkee@gmail.com</p>
+        <div class="report-heading">Fee Head Collection Report - 03/05/2026</div>
+    </div>
+
+    <table class="report-table">
+        <thead>
+            <tr>
+                <th width="10%">S.N.</th>
+                <th width="60%">HEAD</th>
+                <th width="30%">AMOUNT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3" style="color: #999; padding: 30px;">No Fee Head Collection Report data found. Please Filter Fee Head Collection Report to show.</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="total-row">
+                <td colspan="2" class="text-end pe-4">Total</td>
+                <td>0</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script>
+    // Console Logging for Actions
+    function logAction(name) {
+        console.log("%c Action: " + name + " Triggered", "color: #337ab7; font-weight: bold; border-left: 3px solid #f0ad4e; padding-left: 5px;");
+    }
+
+    // Filter Show/Hide Toggle
+    function toggleFilter() {
+        const body = document.getElementById('filterBody');
+        const icon = document.getElementById('toggleIcon');
+        
+        if (body.style.display === "none") {
+            body.style.display = "block";
+            icon.className = "fa fa-angle-double-down";
+            console.log("Filter: Visible");
+        } else {
+            body.style.display = "none";
+            icon.className = "fa fa-angle-double-right";
+            console.log("Filter: Hidden");
+        }
+    }
+</script>
+
+</body>
+</html>
