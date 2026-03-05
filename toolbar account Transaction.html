@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 157 - Transaction Manager Add</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Top Page Header */
+        .page-header-main { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .header-text { font-size: 13px; font-weight: bold; color: #337ab7; margin: 0; }
+        .settings-gear { position: absolute; right: 15px; top: 8px; color: #f0ad4e; font-size: 16px; cursor: pointer; }
+
+        /* Navigation Containers */
+        .nav-container { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; }
+        .erp-btn {
+            display: inline-block;
+            text-decoration: none !important;
+            margin: 2px;
+            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 3px;
+            color: #ffffff !important;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        /* ERP Theme Colors */
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+        .bg-sky { background-color: #5bc0de; }
+        .bg-active-green { background-color: #5cb85c; }
+
+        /* Form Styling (ERP 157 Match) */
+        .form-section { background: #fff; margin: 20px auto; padding: 0; border: 1px solid #eee; max-width: 95%; }
+        
+        .form-row { display: flex; border-bottom: 1px solid #f1f1f1; align-items: stretch; }
+        .label-cell { 
+            background-color: #f9f9f9; 
+            width: 250px; 
+            padding: 10px 15px; 
+            font-weight: bold; 
+            text-align: right; 
+            display: flex; 
+            align-items: center; 
+            justify-content: flex-end;
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+        .input-cell { flex: 1; padding: 8px 15px; position: relative; }
+        
+        /* Mandatory Red Line */
+        .mandatory-line { 
+            position: absolute; 
+            left: 0; 
+            top: 5px; 
+            bottom: 5px; 
+            width: 2px; 
+            background-color: #d9534f; 
+        }
+
+        .form-control-custom { 
+            border-radius: 2px; 
+            border: 1px solid #ccc; 
+            height: 32px; 
+            font-size: 11px; 
+            padding: 5px 10px; 
+            width: 100%; 
+            outline: none; 
+            color: #555;
+        }
+        .form-control-custom:focus { border-color: #66afe9; }
+        
+        textarea.form-control-custom { height: 80px; resize: vertical; }
+
+        /* Footer Actions */
+        .form-footer { background: #f9f9f9; padding: 15px; text-align: center; border-top: 1px solid #eee; }
+        .btn-action { 
+            padding: 6px 15px; 
+            font-size: 12px; 
+            border-radius: 3px; 
+            border: none; 
+            margin: 0 5px; 
+            color: #fff; 
+            cursor: pointer;
+        }
+        .bg-grey { background-color: #99abb4; }
+        .bg-save { background-color: #337ab7; }
+
+        /* Star Styling */
+        .star-red { color: #d9534f; margin-left: 3px; font-size: 12px; }
+
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <p class="header-text">Transaction Manager <span style="color:#999; font-weight:normal;">» Add</span></p>
+    <div class="settings-gear" onclick="logAction('Settings Gear')"><i class="fa fa-cog"></i></div>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-blue" onclick="logAction('Student Fee')"><i class="fa fa-users"></i> Student Fee</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Staff Payroll')"><i class="fa fa-user-tie"></i> Staff Payroll</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Ledger')"><i class="fa fa-book"></i> Ledger</button>
+    <button class="erp-btn bg-green" onclick="logAction('Transactions')"><i class="fa fa-exchange-alt"></i> Transactions</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Bank')"><i class="fa fa-university"></i> Bank</button>
+</div>
+
+<div class="nav-container" style="background: #f9f9f9; padding: 5px;">
+    <button class="erp-btn bg-blue" onclick="logAction('Detail Tab')"><i class="fa fa-list"></i> Detail</button>
+    <button class="erp-btn bg-active-green" onclick="logAction('Add Transaction Tab')"><i class="fa fa-plus"></i> Transaction</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Multi Adjustment')"><i class="fa fa-plus"></i> Multi Adjustment Transaction</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Acc To Acc')"><i class="fa fa-exchange-alt"></i> Acc To Acc</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Ledgers List')"><i class="fa fa-address-book"></i> Ledgers</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Acc Group')"><i class="fa fa-layer-group"></i> Acc Group</button>
+</div>
+
+<div class="form-section">
+    <form id="transactionForm">
+        <div class="form-row">
+            <div class="label-cell">Date <span class="star-red">*</span></div>
+            <div class="input-cell">
+                <div class="mandatory-line"></div>
+                <input type="date" class="form-control-custom" id="transDate">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="label-cell">Ledger/Transaction Head <span class="star-red">*</span></div>
+            <div class="input-cell">
+                <div class="mandatory-line"></div>
+                <select class="form-control-custom" id="ledgerHead">
+                    <option value="">Choose a Ledger/Transaction Head...</option>
+                    <option value="1">Cash In Hand</option>
+                    <option value="2">Bank Account</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="label-cell">Account Type <span class="star-red">*</span></div>
+            <div class="input-cell">
+                <div class="mandatory-line"></div>
+                <select class="form-control-custom" id="accType">
+                    <option value="debit">Debit (+)</option>
+                    <option value="credit">Credit (-)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="label-cell">Amount <span class="star-red">*</span></div>
+            <div class="input-cell">
+                <div class="mandatory-line"></div>
+                <input type="number" class="form-control-custom" placeholder="Amount" id="amount">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="label-cell">Description <span class="star-red">*</span></div>
+            <div class="input-cell">
+                <div class="mandatory-line"></div>
+                <textarea class="form-control-custom" placeholder="Description" id="description"></textarea>
+            </div>
+        </div>
+
+        <div class="form-footer">
+            <button type="button" class="btn-action bg-grey" onclick="resetForm()">
+                <i class="fa fa-undo"></i> Reset
+            </button>
+            <button type="button" class="btn-action bg-save" onclick="saveData('Save')">
+                <i class="fa fa-save"></i> Save
+            </button>
+            <button type="button" class="btn-action bg-active-green" onclick="saveData('Save & Add Another')">
+                <i class="fa fa-plus-circle"></i> Save And Add Another
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Console Action Logger
+    function logAction(actionName) {
+        console.log("%c Action: " + actionName, "color: #449d44; font-weight: bold; border: 1px solid #449d44; padding: 2px 8px; border-radius: 4px;");
+    }
+
+    // Reset Form Function
+    function resetForm() {
+        document.getElementById('transactionForm').reset();
+        logAction("Form Reset Clicked");
+    }
+
+    // Save Data Logic
+    function saveData(btnType) {
+        const data = {
+            date: document.getElementById('transDate').value,
+            ledger: document.getElementById('ledgerHead').value,
+            type: document.getElementById('accType').value,
+            amount: document.getElementById('amount').value,
+            desc: document.getElementById('description').value
+        };
+
+        console.log("%c Submitting Data via " + btnType, "color: #337ab7; font-weight: bold;");
+        console.table(data);
+        
+        if(!data.date || !data.amount) {
+            alert("Please fill mandatory fields!");
+        } else {
+            alert(btnType + " Successful! (Check Console for Data)");
+        }
+    }
+
+    // Initialize with Today's Date
+    window.onload = function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('transDate').value = today;
+    };
+</script>
+
+</body>
+</html>
