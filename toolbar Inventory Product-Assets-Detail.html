@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 186 - Product/Assets Manager List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 13px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header */
+        .page-header-main { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
+        
+        /* Navigation Tabs */
+        .nav-container { background: #fff; padding: 8px; border-bottom: 1px solid #ddd; display: flex; justify-content: center; gap: 5px; }
+        .erp-btn { font-size: 12px; padding: 6px 12px; border-radius: 4px; color: #fff !important; border: none; font-weight: 600; cursor: pointer; }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+
+        /* Filter Section Wrapper */
+        .filter-wrapper { margin: 15px; border: 1px solid #c8d9e2; border-radius: 4px; background: #fff; }
+        .filter-header { 
+            background: #fff; padding: 10px; text-align: center; color: #337ab7; 
+            cursor: pointer; font-weight: bold; font-size: 14px; border-bottom: 1px solid #eee;
+        }
+        .filter-content { padding: 20px; background: #fdfdfd; }
+
+        /* Form Layout */
+        .f-row { display: flex; align-items: stretch; margin-bottom: 5px; }
+        .f-label { background: #eee; border: 1px solid #ddd; padding: 8px; font-weight: bold; text-align: right; width: 160px; text-transform: uppercase; font-size: 11px; }
+        .f-input-box { border: 1px solid #ddd; height: 35px; width: 100%; padding: 0 10px; outline: none; }
+        .f-input-red { border-left: 2px solid red; }
+
+        /* Action Buttons Area */
+        .btn-filter { background-color: #1a4d80; color: white; border: none; padding: 8px 25px; border-radius: 4px; font-weight: bold; float: right; margin-top: 10px; }
+
+        /* Table Area */
+        .status-bar { text-align: center; margin: 20px 0 10px 0; }
+        .btn-status { font-size: 12px; padding: 5px 15px; color: #fff; border-radius: 4px; margin: 0 2px; border: none; font-weight: bold; }
+
+        .table-container { background: #fff; margin: 0 15px; border: 1px solid #ddd; }
+        .erp-table { width: 100%; border-collapse: collapse; }
+        .erp-table thead th { background-color: #eef5f9; color: #337ab7; border: 1px solid #dee2e6; padding: 10px; text-align: center; font-size: 12px; text-transform: uppercase; }
+        .red-line-top { border-top: 3px solid red !important; }
+        .erp-table tbody td { border: 1px solid #dee2e6; padding: 10px; text-align: center; color: #888; font-style: italic; }
+
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="color:#337ab7; font-size: 16px;">Product/Assets Manager</strong> <span style="color:#999;">» List</span>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-green" onclick="btnLog('Detail/List Tab Active', 'green')"><i class="fa fa-list"></i> Detail</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Registration Tab Clicked', 'blue')"><i class="fa fa-plus-circle"></i> Registration</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Bulk Registration Clicked', 'blue')"><i class="fa fa-upload"></i> Bulk Registration</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Category Tab Clicked', 'blue')"><i class="fa fa-tags"></i> Category</button>
+</div>
+
+<div class="filter-wrapper">
+    <div class="filter-header" onclick="toggleFilter()">
+        <i class="fa fa-chevron-down me-2" id="toggleIcon"></i> Filter Product/Assets <i class="fa fa-filter"></i>
+    </div>
+    <div class="filter-content" id="filterBox">
+        <form action="filter_results.php" method="GET" id="searchForm">
+            <div class="row g-0">
+                <div class="col-md-6 d-flex f-row pe-md-2">
+                    <div class="f-label">CATEGORY</div>
+                    <select name="category" class="f-input-box f-input-red">
+                        <option value="">Select Category</option>
+                    </select>
+                </div>
+                <div class="col-md-6 d-flex f-row">
+                    <select name="sub_category" class="f-input-box">
+                        <option value="">Select Sub Category....</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 d-flex f-row pe-md-2">
+                    <div class="f-label">CODE</div>
+                    <input type="text" name="code" class="f-input-box">
+                </div>
+                <div class="col-md-8 d-flex f-row">
+                    <div class="f-label">NAME</div>
+                    <input type="text" name="name" class="f-input-box">
+                </div>
+
+                <div class="col-md-4 d-flex f-row pe-md-2">
+                    <div class="f-label">WARRANTY/EXPIRE</div>
+                    <input type="text" name="warranty" class="f-input-box">
+                </div>
+                <div class="col-md-4 d-flex f-row pe-md-2">
+                    <div class="f-label">PRICE</div>
+                    <div class="d-flex w-100 flex-column">
+                        <input type="text" name="price_from" class="f-input-box" placeholder="From">
+                        <div class="text-center small">-TO-</div>
+                        <input type="text" name="price_to" class="f-input-box" placeholder="To">
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex f-row">
+                    <div class="f-label">STATUS</div>
+                    <select name="status" class="f-input-box">
+                        <option value="">Status</option>
+                        <option value="1">Active</option>
+                        <option value="0">In-Active</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="clearfix">
+                <button type="submit" class="btn-filter" onclick="btnLog('Filter/Search Clicked', 'navy')">
+                    <i class="fa fa-filter"></i> Filter
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="status-bar">
+    <button class="btn-status bg-primary" onclick="btnLog('Bulk Action: Active', 'blue')"><i class="fa fa-check"></i> Active</button>
+    <button class="btn-status" style="background:#f0ad4e;" onclick="btnLog('Bulk Action: In-Active', 'orange')"><i class="fa fa-times"></i> In-Active</button>
+    <button class="btn-status" style="background:#d9534f;" onclick="btnLog('Bulk Action: Delete', 'red')"><i class="fa fa-trash"></i> Delete</button>
+</div>
+
+<div class="table-container">
+    <table class="erp-table">
+        <thead>
+            <tr class="red-line-top">
+                <th width="40"><input type="checkbox" onclick="btnLog('Master Checkbox Toggled', 'black')"></th>
+                <th>CODE</th>
+                <th>CATEGORY</th>
+                <th>IMAGE</th>
+                <th>NAME</th>
+                <th>PRICE</th>
+                <th>STOCK</th>
+                <th>STATUS</th>
+                <th width="50"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="9">No Product/Assets data found.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Console Logging System
+    function btnLog(msg, color) {
+        console.log(`%c [ERP-186] %c ${msg}`, 
+        `color: white; background: ${color}; padding: 3px 8px; border-radius: 4px; font-weight: bold;`, 
+        "color: #111; font-weight: bold; border-bottom: 1px solid #ccc;");
+    }
+
+    // Filter Hide/Show Toggle
+    function toggleFilter() {
+        const box = document.getElementById('filterBox');
+        const icon = document.getElementById('toggleIcon');
+        if (box.style.display === "none") {
+            box.style.display = "block";
+            icon.className = "fa fa-chevron-down me-2";
+            btnLog("Filter Section: Opened", "green");
+        } else {
+            box.style.display = "none";
+            icon.className = "fa fa-chevron-up me-2";
+            btnLog("Filter Section: Closed", "red");
+        }
+    }
+
+    // PHP Form Simulation
+    document.getElementById('searchForm').onsubmit = function(e) {
+        e.preventDefault();
+        btnLog("Searching with selected filters...", "purple");
+        alert("Searching filters submitted to backend!");
+    };
+
+    window.onload = function() {
+        btnLog("ERP 186 Product List Loaded", "black");
+    };
+</script>
+
+</body>
+</html>
