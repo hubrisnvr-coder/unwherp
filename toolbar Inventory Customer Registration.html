@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 189 & 190 - Customer Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 13px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header */
+        .page-header-main { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
+        
+        /* Navigation Tabs */
+        .nav-container { background: #fff; padding: 8px; border-bottom: 1px solid #ddd; display: flex; justify-content: center; gap: 5px; }
+        .erp-btn { font-size: 12px; padding: 6px 12px; border-radius: 4px; color: #fff !important; border: none; font-weight: 600; cursor: pointer; }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+
+        /* Main Wrapper */
+        .form-wrapper { margin: 15px; border: 1px solid #c8d9e2; border-radius: 4px; background: #fff; overflow: hidden; }
+        
+        /* Sub Tabs Styling */
+        .sub-tabs { padding: 10px 15px 0 15px; display: flex; gap: 5px; background: #f9f9f9; border-bottom: 1px solid #ddd; }
+        .sub-tab-item { padding: 8px 15px; border: 1px solid #ddd; border-bottom: none; border-radius: 4px 4px 0 0; cursor: pointer; font-weight: 600; background: #fff; color: #337ab7; }
+        .sub-tab-item.active-orange { color: #f0ad4e; border-top: 2px solid #f0ad4e; border-bottom: 1px solid white; margin-bottom: -1px; }
+        .sub-tab-item.active-blue { background: #337ab7; color: #fff; border-top: 2px solid #337ab7; }
+
+        /* Form Layout */
+        .f-row { display: flex; align-items: stretch; margin-bottom: 4px; }
+        .f-label { background: #eee; border: 1px solid #ddd; padding: 8px; font-weight: bold; text-align: right; width: 150px; text-transform: uppercase; font-size: 11px; }
+        .f-input-box { border: 1px solid #ddd; height: 35px; width: 100%; padding: 0 10px; outline: none; }
+        .required-border { border-left: 2px solid red; }
+        
+        .info-strip { background: #337ab7; color: white; padding: 5px 15px; font-size: 12px; display: inline-block; border-radius: 0 15px 15px 0; margin: 15px; }
+        
+        /* Image Section (ERP 190) */
+        .profile-pic-container { padding: 40px; text-align: center; }
+        .image-preview-box { border: 1px solid #ddd; padding: 5px; display: inline-block; margin-left: 20px; vertical-align: middle; }
+        .image-preview-box img { width: 100px; height: 100px; background: #eee; }
+
+        /* Footer */
+        .form-footer { background: #eee; padding: 15px; text-align: right; border-top: 1px solid #ddd; }
+        .btn-reset { background: #aaa; color: #fff; border: none; padding: 8px 25px; border-radius: 4px; margin-right: 5px; }
+        .btn-register { background: #1a4d80; color: #fff; border: none; padding: 8px 25px; border-radius: 4px; font-weight: bold; }
+        
+        .bulk-reg-btn { background: #337ab7; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; float: right; margin: 10px; font-size: 11px; }
+
+        .hidden-section { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="color:#337ab7; font-size: 16px;">Customer Manager</strong> <span style="color:#999;">» Registration</span>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-blue" onclick="btnLog('Detail Tab', 'blue')"><i class="fa fa-list"></i> Detail</button>
+    <button class="erp-btn bg-green" onclick="btnLog('Registration Tab Active', 'green')"><i class="fa fa-plus-circle"></i> Registration</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Bulk Registration', 'blue')"><i class="fa fa-upload"></i> Bulk Registration</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Documents', 'blue')"><i class="fa fa-file-alt"></i> Documents</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Notes', 'blue')"><i class="fa fa-sticky-note"></i> Notes</button>
+</div>
+
+<button class="bulk-reg-btn" onclick="btnLog('Bulk Customer Registration Clicked', 'navy')">
+    <i class="fa fa-upload"></i> Bulk Customer Registration
+</button>
+<div class="clearfix"></div>
+
+<div class="form-wrapper">
+    <div class="sub-tabs">
+        <div class="sub-tab-item active-orange" id="tabGeneral" onclick="switchTab('general')">General Information</div>
+        <div class="sub-tab-item" id="tabProfile" onclick="switchTab('profile')">Profile Images</div>
+    </div>
+
+    <form action="save_customer.php" method="POST" id="customerForm" enctype="multipart/form-data">
+        
+        <div id="sectionGeneral" class="p-3">
+            <div class="info-strip mb-3">Red mark input field are required.</div>
+            
+            <div class="row g-0 f-row">
+                <div class="col-md-3 d-flex">
+                    <div class="f-label">REGNO</div>
+                    <input type="text" name="regno" class="f-input-box bg-light" value="CUS946091" readonly>
+                </div>
+                <div class="col-md-5 d-flex">
+                    <div class="f-label">NAME</div>
+                    <input type="text" name="name" class="f-input-box required-border" required>
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">E-MAIL</div>
+                    <input type="email" name="email" class="f-input-box">
+                </div>
+            </div>
+
+            <div class="row g-0 f-row">
+                <div class="col-md-8 d-flex">
+                    <div class="f-label">ADDRESS</div>
+                    <input type="text" name="address" class="f-input-box">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">TYPE</div>
+                    <select name="customer_type" class="f-input-box required-border">
+                        <option value="New Customer">New Customer</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-0 f-row">
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">TEL</div>
+                    <input type="text" name="tel" class="f-input-box">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">MOBILE 1</div>
+                    <input type="text" name="mobile1" class="f-input-box">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">MOBILE 2</div>
+                    <input type="text" name="mobile2" class="f-input-box">
+                </div>
+            </div>
+
+            <div class="row g-0 f-row">
+                <div class="col-md-12 d-flex">
+                    <div class="f-label" style="width: 150px;">OPENING BALANCE <span class="text-danger">*</span></div>
+                    <select name="balance_type" class="f-input-box" style="width: 250px;">
+                        <option value="Debit">Debit (+)</option>
+                        <option value="Credit">Credit (-)</option>
+                    </select>
+                    <input type="number" name="amount" class="f-input-box" placeholder="Amount">
+                </div>
+            </div>
+
+            <div class="row g-0 f-row">
+                <div class="col-md-12 d-flex">
+                    <div class="f-label">EXTRA INFO</div>
+                    <textarea name="extra_info" class="f-input-box" style="height: 100px; padding: 10px;"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div id="sectionProfile" class="hidden-section p-3">
+            <div style="text-align: center; color: #d9534f; padding: 15px; font-weight: bold; border-bottom: 1px solid #eee;">
+                <i class="fa fa-plus"></i> Profile Pictures
+            </div>
+            <div class="profile-pic-container">
+                <div class="d-inline-flex align-items-center">
+                    <div class="f-label">CUSTOMER</div>
+                    <input type="file" name="customer_image" class="f-input-box" style="width: 300px; padding-top: 5px;">
+                    <div class="image-preview-box">
+                        <img src="https://via.placeholder.com/100?text=Avatar" alt="Preview">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-footer">
+            <button type="reset" class="btn-reset" onclick="btnLog('Form Reset', 'gray')">Reset</button>
+            <button type="submit" class="btn-register" onclick="btnLog('Saving Data...', 'navy')">Register</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function btnLog(msg, color) {
+        console.log(`%c [ERP-LOG] %c ${msg}`, 
+        `color: white; background: ${color}; padding: 3px 8px; border-radius: 4px; font-weight: bold;`, 
+        "color: #000; font-weight: bold;");
+    }
+
+    // Swapping sections logic
+    function switchTab(type) {
+        const genSec = document.getElementById('sectionGeneral');
+        const proSec = document.getElementById('sectionProfile');
+        const genTab = document.getElementById('tabGeneral');
+        const proTab = document.getElementById('tabProfile');
+
+        if (type === 'general') {
+            genSec.classList.remove('hidden-section');
+            proSec.classList.add('hidden-section');
+            genTab.classList.add('active-orange');
+            proTab.classList.remove('active-blue');
+            btnLog("Tab: General Information", "orange");
+        } else {
+            genSec.classList.add('hidden-section');
+            proSec.classList.remove('hidden-section');
+            genTab.classList.remove('active-orange');
+            proTab.classList.add('active-blue');
+            btnLog("Tab: Profile Images (ERP 190)", "blue");
+        }
+    }
+
+    document.getElementById('customerForm').onsubmit = function(e) {
+        e.preventDefault();
+        btnLog("PHP POST data ready for save_customer.php", "purple");
+        alert("Success: Customer registered successfully!");
+    };
+</script>
+
+</body>
+</html>
