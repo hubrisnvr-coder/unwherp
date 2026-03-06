@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 199 - Books Add</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header & Nav */
+        .page-header { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .gear-icon { position: absolute; right: 15px; top: 10px; color: #f0ad4e; font-size: 18px; cursor: pointer; }
+
+        .nav-wrap { background: #fff; padding: 8px; border-bottom: 1px solid #ddd; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .nav-row { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+
+        .btn-erp { font-size: 10px; padding: 4px 10px; border-radius: 4px; border: none; color: #fff !important; font-weight: 600; text-decoration: none; }
+        .bg-green { background-color: #5cb85c; }
+        .bg-blue { background-color: #337ab7; }
+        .bg-orange { background-color: #f0ad4e; }
+        .bg-navy { background-color: #1a4d80; }
+
+        /* Main Registration Form */
+        .form-container { margin: 15px; border: 1px solid #c8d9e2; border-radius: 4px; background: #fff; }
+        .form-title { padding: 10px; color: #337ab7; font-weight: bold; border-bottom: 1px solid #eee; cursor: pointer; }
+        .bulk-btn-top { float: right; margin-top: -5px; }
+
+        /* Form Layout */
+        .f-row { display: flex; align-items: stretch; margin-bottom: 2px; }
+        .f-label { background: #eee; border: 1px solid #ddd; padding: 6px; font-weight: bold; text-align: right; width: 140px; text-transform: uppercase; font-size: 10px; display: flex; align-items: center; justify-content: flex-end; }
+        .f-input { border: 1px solid #ddd; height: 30px; width: 100%; padding: 0 8px; outline: none; }
+        .req-border { border-left: 2px solid red !important; }
+
+        /* Footer Buttons */
+        .form-footer { background: #eee; padding: 15px; text-align: center; display: flex; justify-content: center; gap: 10px; }
+        .btn-footer { padding: 8px 25px; border-radius: 4px; color: white; border: none; font-weight: bold; font-size: 13px; }
+        .btn-reset { background: #a5abb7; }
+        .btn-save { background: #337ab7; }
+        .btn-save-add { background: #5cb85c; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:#337ab7;">Books Manager</strong> <span style="color:#999;">» Books Add</span>
+    <i class="fa fa-cog gear-icon"></i>
+</div>
+
+<div class="nav-wrap">
+    <div class="nav-row">
+        <button class="btn-erp bg-green" onclick="log('Nav: Book Detail')"><i class="fa fa-book"></i> Book Detail</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: History')"><i class="fa fa-history"></i> Issue History</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Membership')"><i class="fa fa-users"></i> Membership</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Students')"><i class="fa fa-user-graduate"></i> Students Member</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Staffs')"><i class="fa fa-user-tie"></i> Staffs Member</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Student Req')"><i class="fa fa-user-plus"></i> Student Request</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Staff Req')"><i class="fa fa-user-tag"></i> Staff Request</button>
+        <button class="btn-erp bg-orange" onclick="log('Nav: Period Over')"><i class="fa fa-clock"></i> Return Period Over</button>
+    </div>
+    <div class="nav-row">
+        <button class="btn-erp bg-blue" onclick="log('Nav: Book Detail Sub')">Book Detail</button>
+        <button class="btn-erp bg-green" onclick="log('Nav: New Book Active')"><i class="fa fa-plus"></i> New Book</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Bulk Import')">Bulk Import</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Category')">Book Category</button>
+    </div>
+</div>
+
+<div class="form-container">
+    <div class="form-title" onclick="toggleForm()">
+        <i class="fa fa-plus text-primary me-1"></i> Books
+        <button class="btn-erp bg-green bulk-btn-top" onclick="event.stopPropagation(); log('Bulk Import CSV Clicked')">
+            <i class="fa fa-upload"></i> Bulk Import From CSV
+        </button>
+    </div>
+
+    <div id="registrationForm">
+        <form action="save_book.php" method="POST" enctype="multipart/form-data">
+            <div class="p-3">
+                <div class="f-row">
+                    <div class="f-label">ISBN NUMBER</div>
+                    <input type="text" name="isbn" class="f-input req-border">
+                </div>
+
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">CODE</div>
+                        <input type="text" name="code" class="f-input req-border">
+                    </div>
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">START</div>
+                        <input type="text" name="start" class="f-input req-border">
+                    </div>
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">END</div>
+                        <input type="text" name="end" class="f-input req-border">
+                    </div>
+                </div>
+
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">STARTCODE</div>
+                        <input type="text" name="startcode" class="f-input" readonly style="background:#f9f9f9;">
+                    </div>
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">ENDCODE</div>
+                        <input type="text" name="endcode" class="f-input" readonly style="background:#f9f9f9;">
+                    </div>
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">TOTAL QUANTITY</div>
+                        <input type="text" name="total_qty" class="f-input" readonly style="background:#f9f9f9;">
+                    </div>
+                </div>
+
+                <div class="row g-0">
+                    <div class="col-md-6 d-flex f-row">
+                        <div class="f-label">BOOK NAME</div>
+                        <input type="text" name="book_name" class="f-input req-border">
+                    </div>
+                    <div class="col-md-6 d-flex f-row">
+                        <div class="f-label">SUB TITLE</div>
+                        <input type="text" name="sub_title" class="f-input">
+                    </div>
+                </div>
+
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">CATEGORY</div>
+                        <select name="category" class="f-input">
+                            <option>Select Category</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">EDITION</div>
+                        <input type="text" name="edition" class="f-input">
+                    </div>
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">EDITION YEAR</div>
+                        <input type="text" name="edition_year" class="f-input">
+                    </div>
+                </div>
+
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">LANGUAGE</div>
+                        <input type="text" name="language" class="f-input">
+                    </div>
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">PUBLISHER</div>
+                        <input type="text" name="publisher" class="f-input">
+                    </div>
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">PUBLISH YEAR</div>
+                        <input type="text" name="publish_year" class="f-input">
+                    </div>
+                </div>
+
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">SERIES</div>
+                        <input type="text" name="series" class="f-input">
+                    </div>
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">AUTHOR</div>
+                        <input type="text" name="author" class="f-input req-border">
+                    </div>
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">RACK LOCATION</div>
+                        <input type="text" name="rack" class="f-input">
+                    </div>
+                </div>
+
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">PRICE</div>
+                        <input type="text" name="price" class="f-input req-border">
+                    </div>
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">PAGE</div>
+                        <input type="text" name="page" class="f-input">
+                    </div>
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">SOURCE</div>
+                        <input type="text" name="source" class="f-input">
+                    </div>
+                </div>
+
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex f-row">
+                        <div class="f-label">BOOKS STATUS</div>
+                        <select name="status" class="f-input req-border">
+                            <option>Select Status</option>
+                        </select>
+                    </div>
+                    <div class="col-md-8 d-flex f-row">
+                        <div class="f-label">NOTES</div>
+                        <textarea name="notes" class="f-input" style="height: 60px; padding: 5px;"></textarea>
+                    </div>
+                </div>
+
+                <div class="f-row mt-2">
+                    <div class="f-label">BOOK IMAGE</div>
+                    <div class="f-input d-flex align-items: center; border: 1px solid #ddd; padding: 5px;">
+                        <input type="file" name="book_image">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-footer">
+                <button type="reset" class="btn-footer btn-reset" onclick="log('Form Reset', 'grey')"><i class="fa fa-undo"></i> Reset</button>
+                <button type="submit" class="btn-footer btn-save" onclick="log('Saving Book...', 'blue')"><i class="fa fa-save"></i> Save</button>
+                <button type="button" class="btn-footer btn-save-add" onclick="log('Save and Add Another Book', 'green')"><i class="fa fa-plus-circle"></i> Save And Add Another</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // 1. Console Logging
+    function log(msg, color = "#1a4d80") {
+        console.log(`%c [ERP-199] %c ${msg}`, 
+        `color: white; background: ${color}; padding: 2px 8px; border-radius: 3px; font-weight: bold;`, 
+        "color: #000; font-weight: bold;");
+    }
+
+    // 2. Toggle Form (Filter Button logic)
+    function toggleForm() {
+        const form = document.getElementById('registrationForm');
+        if (form.classList.contains('hidden')) {
+            form.classList.remove('hidden');
+            log("Registration Form: Visible", "green");
+        } else {
+            form.classList.add('hidden');
+            log("Registration Form: Hidden", "red");
+        }
+    }
+
+    // 3. Validation and Calculation
+    window.onload = function() {
+        log("Books Add Page Initialized");
+        
+        // Example logic for Start/End Code calculation (Dynamic feeling for PHP)
+        const startInput = document.getElementsByName('start')[0];
+        const endInput = document.getElementsByName('end')[0];
+        const totalInput = document.getElementsByName('total_qty')[0];
+
+        function calculate() {
+            const s = parseInt(startInput.value) || 0;
+            const e = parseInt(endInput.value) || 0;
+            if(e >= s) {
+                totalInput.value = (e - s) + 1;
+            }
+        }
+
+        startInput.oninput = calculate;
+        endInput.oninput = calculate;
+    };
+</script>
+
+</body>
+</html>
