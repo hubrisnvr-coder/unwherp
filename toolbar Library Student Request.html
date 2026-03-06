@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 205 - Student Book Request List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Breadcrumb/Header */
+        .page-header { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .gear-icon { position: absolute; right: 15px; top: 10px; color: #f0ad4e; font-size: 18px; cursor: pointer; }
+
+        /* Navigation Layers */
+        .nav-wrap { background: #fff; padding: 10px; border-bottom: 1px solid #ddd; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .nav-row { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+
+        .btn-erp { font-size: 10px; padding: 4px 10px; border-radius: 4px; border: none; color: #fff !important; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 5px; }
+        .bg-green { background-color: #5cb85c; }
+        .bg-blue { background-color: #337ab7; }
+        .bg-orange { background-color: #f0ad4e; }
+
+        /* Filter Section Styling (Exact as Screenshot) */
+        .filter-container { margin: 15px 20px; }
+        .filter-header { color: #337ab7; font-weight: bold; text-align: center; cursor: pointer; margin-bottom: 10px; font-size: 13px; text-transform: uppercase; }
+        .filter-box { background: #fff; border: 1px solid #c8d9e2; border-radius: 4px; display: block; }
+        
+        .f-row { display: flex; border-bottom: 1px solid #eee; }
+        .f-group { display: flex; flex: 1; border-right: 1px solid #eee; }
+        .f-group:last-child { border-right: none; }
+        
+        .f-label { background: #f9f9f9; padding: 8px; font-weight: bold; width: 140px; text-align: right; border-right: 1px solid #eee; display: flex; align-items: center; justify-content: flex-end; font-size: 10px; text-transform: uppercase; }
+        .f-input-area { flex: 1; padding: 5px; display: flex; align-items: center; gap: 5px; }
+        .f-control { width: 100%; border: 1px solid #ddd; height: 26px; padding: 0 8px; outline: none; border-radius: 2px; font-size: 11px; }
+        
+        .date-sep { color: #999; font-weight: bold; padding: 0 5px; }
+
+        /* Filter Footer */
+        .filter-footer { background: #f9f9f9; padding: 15px; text-align: right; border-top: 1px solid #eee; }
+        .btn-filter-submit { background: #337ab7; color: white; border: none; padding: 6px 20px; border-radius: 3px; font-weight: bold; }
+
+        /* Table Section */
+        .table-title { text-align: center; color: #337ab7; font-weight: bold; margin: 20px 0 10px 0; font-size: 12px; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+        .info-bar { background: #337ab7; color: #fff; padding: 8px 15px; margin: 0 20px; font-weight: bold; border-radius: 2px 2px 0 0; font-size: 11px; }
+        .table-container { background: #fff; border: 1px solid #ddd; margin: 0 20px 20px 20px; overflow-x: auto; }
+        
+        .erp-table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        .erp-table th { background: #d9edf7; color: #31708f; border: 1px solid #bce8f1; padding: 8px; text-align: center; font-weight: bold; text-transform: uppercase; }
+        .erp-table td { border: 1px solid #ddd; padding: 10px; text-align: center; color: #666; font-style: italic; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:#337ab7;">Student Book Request</strong> <span style="color:#999;">» List</span>
+    <i class="fa fa-cog gear-icon" onclick="log('Settings Clicked', 'orange')"></i>
+</div>
+
+<div class="nav-wrap">
+    <div class="nav-row">
+        <button class="btn-erp bg-blue" onclick="log('Nav: Book Detail')"><i class="fa fa-book"></i> Book Detail</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Issue History')"><i class="fa fa-history"></i> Issue History</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Membership')"><i class="fa fa-users"></i> Membership</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Students Member')"><i class="fa fa-user-graduate"></i> Students Member</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Staffs Member')"><i class="fa fa-user-tie"></i> Staffs Member</button>
+        <button class="btn-erp bg-green" onclick="log('Nav: Student Request Active')"><i class="fa fa-user-plus"></i> Student Request</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Staff Request')"><i class="fa fa-user-tag"></i> Staff Request</button>
+        <button class="btn-erp bg-orange" onclick="log('Nav: Return Period Over', 'orange')"><i class="fa fa-clock"></i> Return Period Over</button>
+    </div>
+</div>
+
+<div class="filter-container">
+    <div class="filter-header" onclick="toggleFilter()">
+        <i class="fa fa-chevron-down"></i> Filter Student Book Request <i class="fa fa-filter"></i>
+    </div>
+    
+    <div id="filterBox" class="filter-box">
+        <form action="" method="GET">
+            <div class="f-row">
+                <div class="f-group">
+                    <div class="f-label">REG.NO.</div>
+                    <div class="f-input-area"><input type="text" name="reg_no" class="f-control"></div>
+                </div>
+                <div class="f-group">
+                    <div class="f-label">REG. DATE</div>
+                    <div class="f-input-area">
+                        <input type="date" name="start_date" class="f-control">
+                        <span class="date-sep">⇄</span>
+                        <input type="date" name="end_date" class="f-control">
+                    </div>
+                </div>
+                <div class="f-group">
+                    <div class="f-label">STATUS</div>
+                    <div class="f-input-area">
+                        <select name="academic_status" class="f-control"><option>Select Academic Status</option></select>
+                        <select name="status" class="f-control"><option>Status</option></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="f-row">
+                <div class="f-group">
+                    <div class="f-label">PROGRAM/CLASS</div>
+                    <div class="f-input-area"><select name="program" class="f-control"><option>Select Program/Class</option></select></div>
+                </div>
+                <div class="f-group">
+                    <div class="f-label">SEMESTER/SECTION</div>
+                    <div class="f-input-area"><select name="semester" class="f-control"><option>Select Semester/Section</option></select></div>
+                </div>
+                <div class="f-group">
+                    <div class="f-label">BATCH</div>
+                    <div class="f-input-area"><select name="batch" class="f-control"><option>Select Batch</option></select></div>
+                </div>
+            </div>
+
+            <div class="f-row">
+                <div class="f-group" style="flex: 2;">
+                    <div class="f-label">NAME OF STUDENT</div>
+                    <div class="f-input-area">
+                        <input type="text" class="f-control" style="width: 30%;">
+                        <input type="text" class="f-control" style="width: 30%;">
+                        <input type="text" class="f-control" style="width: 30%;">
+                    </div>
+                </div>
+                <div class="f-group">
+                    <div class="f-label">GENDER</div>
+                    <div class="f-input-area"><select name="gender" class="f-control"><option value="">Select Gender</option></select></div>
+                </div>
+            </div>
+
+            <div class="f-row">
+                <div class="f-group">
+                    <div class="f-label">BLOOD GROUP</div>
+                    <div class="f-input-area"><select name="blood" class="f-control"><option value="">Select Blood Group</option></select></div>
+                </div>
+                <div class="f-group">
+                    <div class="f-label">DATE OF BIRTH</div>
+                    <div class="f-input-area">
+                        <input type="date" class="f-control">
+                        <span class="date-sep">⇄</span>
+                        <input type="date" class="f-control">
+                    </div>
+                </div>
+                <div class="f-group">
+                    <div class="f-label">UNIQUE STUDENT ID</div>
+                    <div class="f-input-area"><input type="text" class="f-control"></div>
+                </div>
+            </div>
+
+            <div class="f-row">
+                <div class="f-group"><div class="f-label">NATIONALITY</div><div class="f-input-area"><input type="text" class="f-control"></div></div>
+                <div class="f-group"><div class="f-label">ID. 1</div><div class="f-input-area"><input type="text" class="f-control"></div></div>
+                <div class="f-group"><div class="f-label">ID. 2</div><div class="f-input-area"><input type="text" class="f-control"></div></div>
+            </div>
+
+            <div class="f-row">
+                <div class="f-group"><div class="f-label">ID. 3</div><div class="f-input-area"><input type="text" class="f-control"></div></div>
+                <div class="f-group"><div class="f-label">ID. 4</div><div class="f-input-area"><input type="text" class="f-control"></div></div>
+                <div class="f-group"><div class="f-label">MOTHER TONGUE</div><div class="f-input-area"><input type="text" class="f-control"></div></div>
+            </div>
+
+            <div class="f-row">
+                <div class="f-group"><div class="f-label">RELIGION</div><div class="f-input-area"><input type="text" class="f-control"></div></div>
+                <div class="f-group"><div class="f-label">CASTE</div><div class="f-input-area"><input type="text" class="f-control"></div></div>
+                <div class="f-group"><div class="f-label">E-MAIL</div><div class="f-input-area"><input type="email" class="f-control"></div></div>
+            </div>
+
+            <div class="filter-footer">
+                <button type="submit" class="btn-filter-submit" onclick="log('Filter Button Clicked')">
+                    <i class="fa fa-filter"></i> Filter
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-title">
+    <i class="fa fa-list"></i> Student Book Request List
+</div>
+
+<div class="info-bar">
+    Student Book Request Record list on table. Filter Student Book Request using the filter.
+</div>
+
+<div class="table-container">
+    <table class="erp-table">
+        <thead>
+            <tr>
+                <th style="width: 50px;">S.N.</th>
+                <th>PROGRAM/CLASS</th>
+                <th>SEMESTER/SECTION</th>
+                <th>REG.NO.</th>
+                <th>NAME OF STUDENT</th>
+                <th>REQUEST ON</th>
+                <th>BOOK</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="7">No Student Book Request data found. Please Filter Student Book Request to show.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    /**
+     * Professional Console Logger
+     */
+    function log(message, color = "#337ab7") {
+        console.log(`%c [ERP-205] %c ${message}`, 
+        `color: white; background: ${color}; padding: 2px 8px; border-radius: 3px; font-weight: bold;`, 
+        "color: #000; font-weight: 500;");
+    }
+
+    /**
+     * Toggle Filter Section
+     */
+    function toggleFilter() {
+        const box = document.getElementById('filterBox');
+        const icon = document.querySelector('.filter-header i.fa-chevron-down, .filter-header i.fa-chevron-up');
+        
+        if (box.classList.contains('hidden')) {
+            box.classList.remove('hidden');
+            if(icon) icon.className = 'fa fa-chevron-down';
+            log("Filter Section: Visible", "green");
+        } else {
+            box.classList.add('hidden');
+            if(icon) icon.className = 'fa fa-chevron-up';
+            log("Filter Section: Hidden", "red");
+        }
+    }
+
+    window.onload = function() {
+        log("ERP 205: Student Book Request List Loaded");
+    };
+</script>
+
+</body>
+</html>
