@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 222 - Vehicle Manager</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --erp-blue: #337ab7;
+            --erp-green: #5cb85c;
+            --erp-orange: #f0ad4e;
+            --erp-red: #d9534f;
+            --erp-bg: #f4f7f6;
+            --label-bg: #eeeeee;
+            --header-blue: #d9edf7;
+        }
+
+        body { background-color: var(--erp-bg); font-size: 13px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Top Page Header */
+        .page-header { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .gear-icon { position: absolute; right: 20px; top: 12px; color: #f0ad4e; font-size: 18px; cursor: pointer; }
+
+        /* Navigation Buttons */
+        .nav-main { background: #fff; padding: 10px; display: flex; justify-content: center; gap: 5px; border-bottom: 1px solid #ddd; }
+        .btn-nav { font-size: 12px; padding: 4px 12px; border-radius: 4px; color: #fff !important; border: none; display: flex; align-items: center; gap: 5px; text-decoration: none; }
+        
+        .bg-blue { background-color: var(--erp-blue); }
+        .bg-green { background-color: var(--erp-green); }
+        .bg-orange { background-color: var(--erp-orange); }
+        .bg-red { background-color: var(--erp-red); }
+
+        /* Layout Structure */
+        .main-container { padding: 20px; display: flex; gap: 20px; align-items: flex-start; }
+        .panel-left { width: 32%; }
+        .panel-right { width: 68%; }
+
+        /* Form Card Design */
+        .erp-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; }
+        .card-title-header { padding: 10px; text-align: center; color: var(--erp-blue); font-weight: bold; border-bottom: 1px solid #eee; font-size: 15px; cursor: pointer; }
+        .card-body-custom { padding: 15px; }
+
+        /* Input Groups */
+        .input-row { display: flex; margin-bottom: 10px; align-items: stretch; }
+        .label-box { background: var(--label-bg); padding: 8px; border: 1px solid #ccc; font-weight: bold; width: 100px; text-align: center; font-size: 11px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
+        .field-box { flex-grow: 1; border: 1px solid #ccc; padding: 8px; outline: none; }
+        .red-line { border-left: 3px solid red !important; }
+
+        /* Section Title Bar */
+        .section-bar { background: #f5f5f5; padding: 6px; text-align: center; font-weight: bold; font-size: 12px; border: 1px solid #ddd; margin: 15px 0 10px 0; text-transform: uppercase; }
+
+        /* Table Design */
+        .table-toolbar { display: flex; justify-content: flex-end; gap: 5px; margin-bottom: 10px; }
+        .btn-action { padding: 3px 12px; font-size: 12px; color: #fff; border-radius: 3px; border: none; font-weight: 500; }
+        
+        .erp-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #ddd; }
+        .erp-table th { background: var(--header-blue); color: #31708f; border: 1px solid #bce8f1; padding: 10px; text-align: center; text-transform: uppercase; font-size: 12px; }
+        .erp-table td { border: 1px solid #eee; padding: 10px; text-align: center; }
+        .red-header-border { border-bottom: 2px solid red !important; }
+
+        .btn-submit-main { background: var(--erp-blue); color: #fff; border: none; padding: 8px; border-radius: 4px; width: 120px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px; float: right; }
+        .hidden { display: none; }
+        .clearfix::after { content: ""; clear: both; display: table; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:var(--erp-blue);">Vehicle Manager</strong> <span style="color:#999;">» Detail</span>
+    <i class="fa fa-cog gear-icon" onclick="erpLog('Module Settings Clicked', 'orange')"></i>
+</div>
+
+<div class="nav-main">
+    <a href="#" class="btn-nav bg-blue" onclick="erpLog('User Module Selected')"><i class="fa fa-user"></i> User</a>
+    <a href="#" class="btn-nav bg-blue" onclick="erpLog('Route Module Selected')"><i class="fa fa-route"></i> Route</a>
+    <a href="#" class="btn-nav bg-green" onclick="erpLog('Vehicle Module Active')"><i class="fa fa-bus"></i> Vehicle</a>
+</div>
+
+<div class="main-container">
+    
+    <div class="panel-left">
+        <div class="erp-card">
+            <div class="card-title-header" onclick="toggleForm()">
+                <i class="fa fa-search"></i> Create Vehicle
+            </div>
+            <div id="vehicleFormContainer" class="card-body-custom">
+                <form id="vehicleDataForm" action="save_vehicle.php" method="POST">
+                    <div class="input-row">
+                        <div class="label-box">Number</div>
+                        <input type="text" name="v_number" class="field-box red-line" placeholder="Vehicle Number">
+                    </div>
+                    <div class="input-row">
+                        <div class="label-box">Type</div>
+                        <input type="text" name="v_type" class="field-box red-line" placeholder="Vehicle Type">
+                    </div>
+                    <div class="input-row">
+                        <div class="label-box">Model</div>
+                        <input type="text" name="v_model" class="field-box red-line" placeholder="Vehicle Model">
+                    </div>
+                    <div class="input-row">
+                        <div class="label-box">Desc.</div>
+                        <textarea name="v_desc" class="field-box" rows="3" placeholder="Description"></textarea>
+                    </div>
+
+                    <div class="section-bar">Find Staff & Add</div>
+                    
+                    <div class="input-row">
+                        <select name="staff_select" class="field-box">
+                            <option value="">Select Staffs...</option>
+                        </select>
+                    </div>
+                    
+                    <button type="button" class="btn-nav bg-blue w-100 justify-content-center mb-3" onclick="erpLog('Staff Addition Triggered')">
+                        <i class="fa fa-plus"></i> Add Staff
+                    </button>
+
+                    <table class="erp-table mb-3">
+                        <thead>
+                            <tr class="red-header-border">
+                                <th>Name</th>
+                                <th>Designation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2" style="color:#999; padding: 15px;">No staff added</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="clearfix">
+                        <button type="submit" class="btn-submit-main">
+                            <i class="fa fa-save"></i> Create
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-right">
+        <div class="table-toolbar">
+            <button class="btn-action bg-blue" onclick="erpLog('Filtering Active Vehicles')"><i class="fa fa-check"></i> Active</button>
+            <button class="btn-action bg-orange" onclick="erpLog('Filtering In-Active Vehicles')"><i class="fa fa-times"></i> In-Active</button>
+            <button class="btn-action bg-red" onclick="erpLog('Delete Action Selected')"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="erp-table">
+                <thead>
+                    <tr class="red-header-border">
+                        <th style="width: 40px;"><input type="checkbox"></th>
+                        <th style="width: 50px;">S.N.</th>
+                        <th>Detail</th>
+                        <th>Staffs</th>
+                        <th style="width: 120px;">Status</th>
+                        <th style="width: 50px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6" style="padding: 30px; color: #888;">
+                            No Vehicle data found. Please Filter Vehicle to show.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * Toggle Functionality for Form (Filter Area)
+     */
+    function toggleForm() {
+        const form = document.getElementById('vehicleFormContainer');
+        form.classList.toggle('hidden');
+        erpLog(form.classList.contains('hidden') ? "Vehicle Form Hidden" : "Vehicle Form Opened");
+    }
+
+    /**
+     * Console Logging System
+     */
+    function erpLog(message, color = "#337ab7") {
+        const time = new Date().toLocaleTimeString();
+        console.log(
+            `%c [ERP-222] %c ${time} %c ${message}`, 
+            `color: white; background: ${color}; padding: 2px 8px; border-radius: 3px; font-weight: bold;`, 
+            "color: #888;",
+            "color: #000; font-weight: 500;"
+        );
+    }
+
+    // Default Initialization
+    window.onload = function() {
+        erpLog("Vehicle Manager Detail Loaded Successfully", "#5cb85c");
+    };
+</script>
+
+</body>
+</html>
