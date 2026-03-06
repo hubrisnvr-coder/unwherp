@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 228 - Food Schedule Manager</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --erp-blue: #337ab7;
+            --erp-green: #5cb85c;
+            --erp-orange: #f0ad4e;
+            --erp-red: #d9534f;
+            --erp-bg: #f4f7f6;
+            --label-bg: #eeeeee;
+            --table-header-bg: #d9edf7;
+            --border-color: #ddd;
+        }
+
+        body { 
+            background-color: var(--erp-bg); 
+            font-size: 13px; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            color: #333; 
+        }
+
+        /* Top Header */
+        .page-header { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid var(--border-color); position: relative; }
+        .gear-icon { position: absolute; right: 20px; top: 12px; color: var(--erp-orange); font-size: 18px; cursor: pointer; }
+
+        /* Right Side Module Nav */
+        .module-nav { background: #fff; padding: 10px; display: flex; justify-content: flex-end; gap: 5px; border-bottom: 1px solid var(--border-color); padding-right: 30px; }
+        .btn-mod { font-size: 12px; padding: 4px 12px; border-radius: 4px; color: #fff !important; text-decoration: none; display: flex; align-items: center; gap: 5px; border: none; }
+
+        /* Sub Navigation Tabs (Center) */
+        .sub-nav { background: #fff; padding: 15px; display: flex; justify-content: center; gap: 8px; border-bottom: 1px solid var(--border-color); }
+        .btn-sub { font-size: 13px; padding: 6px 16px; border-radius: 4px; color: #fff !important; border: none; display: flex; align-items: center; gap: 6px; }
+
+        .bg-blue { background-color: var(--erp-blue); }
+        .bg-green { background-color: var(--erp-green); }
+        .bg-orange { background-color: var(--erp-orange); }
+        .bg-red { background-color: var(--erp-red); }
+
+        /* Main Layout */
+        .main-container { padding: 20px; display: flex; gap: 20px; }
+        
+        /* Left Section: Create Form */
+        .create-panel { width: 35%; background: #fff; border: 1px solid var(--border-color); border-radius: 4px; }
+        .panel-title { color: var(--erp-blue); font-weight: bold; text-align: center; padding: 12px; border-bottom: 1px solid #eee; font-size: 15px; }
+        .panel-body { padding: 15px; background: #f9f9f9; }
+
+        .erp-input-group { display: flex; align-items: stretch; margin-bottom: 10px; }
+        .erp-label { background: var(--label-bg); padding: 8px; font-weight: bold; width: 110px; text-align: center; border: 1px solid #ccc; border-left: 3px solid red; font-size: 11px; display: flex; align-items: center; justify-content: center; }
+        .erp-field { flex-grow: 1; border: 1px solid #ccc; padding: 8px; outline: none; border-left: none; }
+
+        .find-section { background: #eee; padding: 5px 10px; font-weight: bold; text-align: center; margin-top: 15px; border: 1px solid #ccc; font-size: 12px; }
+        .btn-add-item { background: var(--erp-blue); color: white; border: none; padding: 5px 15px; border-radius: 4px; font-size: 12px; }
+
+        .btn-create-submit { background: var(--erp-blue); color: white; border: none; padding: 10px 25px; border-radius: 4px; font-weight: bold; float: right; margin-top: 15px; display: flex; align-items: center; gap: 8px; }
+
+        /* Right Section: List Table */
+        .list-panel { width: 65%; }
+        .action-row { display: flex; justify-content: flex-end; gap: 5px; margin-bottom: 10px; }
+        .btn-action { font-size: 12px; padding: 4px 12px; border-radius: 4px; color: #fff !important; border: none; }
+
+        .table-wrapper { background: #fff; border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; }
+        .erp-table { width: 100%; border-collapse: collapse; }
+        .erp-table thead tr { border-bottom: 2px solid #ff0000; }
+        .erp-table th { background: var(--table-header-bg); color: #31708f; padding: 10px; text-align: center; border: 1px solid #bce8f1; font-weight: bold; text-transform: uppercase; font-size: 11px; }
+        .erp-table td { padding: 15px; border: 1px solid #eee; text-align: center; color: #999; font-style: italic; }
+
+        .hidden { display: none; }
+        .clearfix::after { content: ""; clear: both; display: table; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:var(--erp-blue);">Food Schedule Manager</strong> <span style="color:#999;">» Detail</span>
+    <i class="fa fa-cog gear-icon" onclick="erpLog('Settings Open')"></i>
+</div>
+
+<div class="module-nav">
+    <button class="btn-mod bg-blue" onclick="erpLog('Resident Module Selected')"><i class="fa fa-users"></i> Resident</button>
+    <button class="btn-mod bg-green" onclick="erpLog('Hostel Module Selected')"><i class="fa fa-bed"></i> Hostel</button>
+    <button class="btn-mod bg-green" onclick="erpLog('Food & Meal Module Active')"><i class="fa fa-utensils"></i> Food & Meal</button>
+</div>
+
+<div class="sub-nav">
+    <button class="btn-sub bg-green" onclick="toggleCreatePanel()"><i class="fa fa-utensils"></i> Food & Meal</button>
+    <button class="btn-sub bg-blue" onclick="erpLog('Opening Eating Time...')"><i class="fa fa-history"></i> Eating Time</button>
+    <button class="btn-sub bg-blue" onclick="erpLog('Opening Food Category...')"><i class="fa fa-list"></i> Food Category</button>
+    <button class="btn-sub bg-blue" onclick="erpLog('Opening Food Item...')"><i class="fa fa-hamburger"></i> Food Item</button>
+</div>
+
+<div class="main-container">
+    
+    <div class="create-panel" id="foodCreatePanel">
+        <div class="panel-title"><i class="fa fa-search"></i> Create Food Schedule</div>
+        <div class="panel-body">
+            <form id="foodForm" action="process_food_schedule.php" method="POST">
+                <div class="erp-input-group">
+                    <div class="erp-label">HOSTELS</div>
+                    <select name="hostel_id" class="erp-field">
+                        <option value="">Select Hostel...</option>
+                    </select>
+                </div>
+                <div class="erp-input-group">
+                    <div class="erp-label">DAY</div>
+                    <select name="schedule_day" class="erp-field">
+                        <option value="">Select Day...</option>
+                    </select>
+                </div>
+                <div class="erp-input-group">
+                    <div class="erp-label">TIME</div>
+                    <select name="eating_time" class="erp-field">
+                        <option value="">Select Time...</option>
+                    </select>
+                </div>
+
+                <div class="find-section">FIND FOOD ITEM & ADD</div>
+                
+                <div class="mt-3 d-flex gap-2">
+                    <select name="food_item_search" class="erp-field">
+                        <option value="">Select Food...</option>
+                    </select>
+                    <button type="button" class="btn-add-item" onclick="erpLog('Adding Food Item to temporary list')">
+                        <i class="fa fa-plus"></i> Add Food
+                    </button>
+                </div>
+
+                <table class="table table-bordered mt-3 mb-0" style="font-size: 11px;">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-center" style="border-bottom: 2px solid red;">ITEM</th>
+                            <th style="width: 40px; border-bottom: 2px solid red;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+
+                <div class="clearfix">
+                    <button type="submit" class="btn-create-submit" onclick="erpLog('Submitting Food Schedule Form')">
+                        <i class="fa fa-save"></i> Create
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="list-panel">
+        <div class="action-row">
+            <button class="btn-action bg-blue" onclick="erpLog('Action: Mark Active')"><i class="fa fa-check"></i> Active</button>
+            <button class="btn-action bg-orange" onclick="erpLog('Action: Mark In-Active')"><i class="fa fa-times"></i> In-Active</button>
+            <button class="btn-action bg-red" onclick="erpLog('Action: Delete Selection')"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+
+        <div class="table-wrapper">
+            <table class="erp-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;"><input type="checkbox" onclick="erpLog('Select All Clicked')"></th>
+                        <th style="width: 50px;">S.N.</th>
+                        <th>HOSTEL</th>
+                        <th>DAY</th>
+                        <th>EATING TIME</th>
+                        <th>FOOD ITEM</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="7">No Food Schedule data found. Please Filter Food Schedule to show.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    /**
+     * Hide/Show logic for Create Panel (Jaisa aapne filter ke liye manga)
+     */
+    function toggleCreatePanel() {
+        const panel = document.getElementById('foodCreatePanel');
+        if (panel.style.display === "none") {
+            panel.style.display = "block";
+            erpLog("Food Schedule Create Panel: SHOWN");
+        } else {
+            panel.style.display = "none";
+            erpLog("Food Schedule Create Panel: HIDDEN");
+        }
+    }
+
+    /**
+     * Professional Console Logger
+     */
+    function erpLog(msg) {
+        const time = new Date().toLocaleTimeString();
+        console.log(`%c[ERP-228]%c ${time} - %c${msg}`, 
+            "color: white; background: #337ab7; padding: 2px 5px; border-radius: 3px;", 
+            "color: #888;", 
+            "color: #000; font-weight: bold;");
+    }
+
+    // Initial load log
+    window.onload = function() {
+        erpLog("Food Schedule Manager Page Loaded");
+    };
+</script>
+
+</body>
+</html>
