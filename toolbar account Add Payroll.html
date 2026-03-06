@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 171 - Payroll Manager Add (Active State)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        .page-header-main { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .settings-gear { position: absolute; right: 15px; top: 6px; color: #f0ad4e; border: 1px solid #f0ad4e; border-radius: 4px; padding: 2px 6px; cursor: pointer; }
+
+        /* Navigation Buttons */
+        .nav-container { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
+        .erp-btn {
+            display: inline-block; margin: 2px; font-size: 11px; padding: 5px 12px; border-radius: 4px;
+            color: #ffffff !important; border: none; cursor: pointer; text-decoration: none !important; font-weight: 500;
+            opacity: 0.6; /* Default Dim state */
+            transition: all 0.3s ease;
+        }
+
+        /* Active Button State (Present Working Button) */
+        .erp-btn.active { opacity: 1; transform: scale(1.05); box-shadow: 0 2px 5px rgba(0,0,0,0.2); border: 1px solid #000; }
+
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+        .bg-orange { background-color: #f0ad4e; }
+        .bg-light-blue { background-color: #5bc0de; }
+
+        /* Filter Section */
+        .filter-wrapper { margin: 15px; border: 1px solid #c8d9e2; border-radius: 4px; background: #fff; }
+        .filter-header { background: #fff; padding: 8px; text-align: center; color: #337ab7; cursor: pointer; font-weight: bold; border-bottom: 1px solid #eee; }
+        .filter-content { display: block; padding: 20px; background: #f9f9f9; }
+        
+        .label-box { background: #eee; border: 1px solid #ddd; padding: 6px; font-weight: bold; text-align: right; display: flex; align-items: center; justify-content: flex-end; height: 32px; }
+        .input-box { border-radius: 0; border: 1px solid #ddd; height: 32px; font-size: 11px; width: 100%; }
+
+        .info-alert { background-color: #d9edf7; color: #31708f; border: 1px solid #bce8f1; padding: 12px 15px; margin: 15px; border-radius: 4px; display: flex; justify-content: space-between; }
+        .btn-filter-submit { background-color: #337ab7; color: white; border: none; padding: 8px 20px; border-radius: 4px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="color:#337ab7;">Payroll Manager</strong> <span style="color:#999;">» Payroll Add</span>
+    <div class="settings-gear" onclick="handleButtonClick(this, 'Settings Gear')"><i class="fa fa-cog"></i></div>
+</div>
+
+<div class="nav-container" id="mainNav">
+    <button class="erp-btn bg-blue" onclick="handleButtonClick(this, 'Student Fee')"><i class="fa fa-users"></i> Student Fee</button>
+    <button class="erp-btn bg-green active" onclick="handleButtonClick(this, 'Staff Payroll')"><i class="fa fa-user-tie"></i> Staff Payroll</button>
+    <button class="erp-btn bg-blue" onclick="handleButtonClick(this, 'Ledger')"><i class="fa fa-book"></i> Ledger</button>
+    <button class="erp-btn bg-blue" onclick="handleButtonClick(this, 'Transactions')"><i class="fa fa-exchange-alt"></i> Transactions</button>
+    <button class="erp-btn bg-blue" onclick="handleButtonClick(this, 'Bank')"><i class="fa fa-university"></i> Bank</button>
+</div>
+
+<div class="nav-container" style="background:#f9f9f9; padding: 5px;" id="subNav">
+    <button class="erp-btn bg-blue" onclick="handleButtonClick(this, 'Pay History')"><i class="fa fa-history"></i> Pay History</button>
+    <button class="erp-btn bg-blue" onclick="handleButtonClick(this, 'Payroll Detail')"><i class="fa fa-list"></i> Payroll Detail</button>
+    <button class="erp-btn bg-green active" onclick="handleButtonClick(this, 'Add Payroll')"><i class="fa fa-plus"></i> Add Payroll</button>
+    <button class="erp-btn bg-blue" onclick="handleButtonClick(this, 'Pay Salary')"><i class="fa fa-money-bill-wave"></i> Pay Salary</button>
+    <button class="erp-btn bg-orange" onclick="handleButtonClick(this, 'Balance Salary')"><i class="fa fa-wallet"></i> Balance Salary</button>
+    <button class="erp-btn bg-blue" onclick="handleButtonClick(this, 'Payroll Head')"><i class="fa fa-heading"></i> Payroll Head</button>
+</div>
+
+<div class="filter-wrapper">
+    <div class="filter-header" onclick="toggleFilter()">
+        <i class="fa fa-chevron-down ms-2" id="filterIcon"></i> Filter Staffs <i class="fa fa-filter ms-2"></i>
+    </div>
+    <div class="filter-content" id="filterBox">
+        <form id="payrollForm" onsubmit="event.preventDefault(); handleButtonClick(null, 'Filter Submit Action');">
+            <div class="row g-0 align-items-center mb-2">
+                <div class="col-md-1 label-box">REG.NO.</div>
+                <div class="col-md-2"><input type="text" class="form-control input-box" name="reg_no"></div>
+                <div class="col-md-1 label-box">JOIN DATE</div>
+                <div class="col-md-3 d-flex">
+                    <input type="text" class="form-control input-box" placeholder="From">
+                    <span class="label-box" style="width:40px; justify-content:center;"><i class="fa fa-exchange-alt"></i></span>
+                    <input type="text" class="form-control input-box" placeholder="To">
+                </div>
+                <div class="col-md-1 label-box">DESIGNATION</div>
+                <div class="col-md-2"><select class="form-select input-box"><option>Select Designation</option></select></div>
+                <div class="col-md-1 label-box">STATUS</div>
+                <div class="col-md-1"><select class="form-select input-box"><option>Status</option></select></div>
+            </div>
+            <div class="text-end">
+                <button type="submit" class="btn-filter-submit"><i class="fa fa-filter"></i> Filter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="info-alert" id="infoBox">
+    <span><strong>Info:</strong> Please Filter / Search Staff to Add Manual or Attendance Base Payroll.</span>
+    <i class="fa fa-times" style="cursor:pointer;" onclick="handleButtonClick(this, 'Close Info Alert'); document.getElementById('infoBox').style.display='none';"></i>
+</div>
+
+<script>
+    // Console aur Active state handle karne wala function
+    function handleButtonClick(element, btnName) {
+        // Console logging
+        console.log("%c [ERP-LOG]: " + btnName + " Button Clicked", "color: #fff; background: #337ab7; padding: 4px 10px; border-radius: 20px; font-weight: bold;");
+
+        // Active State logic (Sirf tab agar element pass hua ho)
+        if (element && element.classList.contains('erp-btn')) {
+            // Parent container dhoondo (Main ya Sub nav)
+            const parent = element.parentElement;
+            // Us container ke saare buttons se 'active' class hatao
+            const buttons = parent.querySelectorAll('.erp-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            // Clicked button par 'active' class lagao
+            element.classList.add('active');
+        }
+    }
+
+    function toggleFilter() {
+        const box = document.getElementById('filterBox');
+        const icon = document.getElementById('filterIcon');
+        if (box.style.display === "none") {
+            box.style.display = "block";
+            icon.className = "fa fa-chevron-down ms-2";
+            handleButtonClick(null, 'Filter Expanded');
+        } else {
+            box.style.display = "none";
+            icon.className = "fa fa-chevron-up ms-2";
+            handleButtonClick(null, 'Filter Collapsed');
+        }
+    }
+
+    window.onload = function() {
+        console.log("ERP 171 Ready. Active states and console logging enabled.");
+    };
+</script>
+
+</body>
+</html>
