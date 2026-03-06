@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 207 - Library History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Breadcrumb/Header */
+        .page-header { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .gear-icon { position: absolute; right: 15px; top: 10px; color: #f0ad4e; font-size: 18px; cursor: pointer; }
+
+        /* Navigation Menu */
+        .nav-wrap { background: #fff; padding: 12px; border-bottom: 1px solid #ddd; display: flex; justify-content: center; gap: 4px; flex-wrap: wrap; }
+        .btn-erp { font-size: 10px; padding: 5px 12px; border-radius: 4px; border: none; color: #fff !important; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #5cb85c; }
+        .bg-orange { background-color: #f0ad4e; }
+
+        /* Filter Section Styling */
+        .filter-container { margin: 15px 20px; }
+        .filter-header { color: #337ab7; font-weight: bold; text-align: center; cursor: pointer; margin-bottom: 10px; font-size: 13px; text-transform: uppercase; }
+        .filter-box { background: #fff; border: 1px solid #c8d9e2; border-radius: 4px; display: block; overflow: hidden; }
+        
+        .f-row { display: flex; border-bottom: 1px solid #eee; }
+        .f-group { display: flex; flex: 1; border-right: 1px solid #eee; }
+        .f-group:last-child { border-right: none; }
+        
+        .f-label { background: #f9f9f9; padding: 8px; font-weight: bold; width: 120px; text-align: right; border-right: 1px solid #eee; display: flex; align-items: center; justify-content: flex-end; font-size: 10px; text-transform: uppercase; }
+        .f-input-area { flex: 1; padding: 5px; display: flex; align-items: center; gap: 5px; }
+        .f-control { width: 100%; border: 1px solid #ddd; height: 28px; padding: 0 8px; outline: none; border-radius: 2px; font-size: 11px; }
+        
+        .date-sep { color: #999; font-weight: bold; padding: 0 5px; font-size: 14px; }
+
+        /* Filter Footer */
+        .filter-footer { background: #f9f9f9; padding: 15px; text-align: right; border-top: 1px solid #eee; }
+        .btn-filter-submit { background: #337ab7; color: white; border: none; padding: 6px 20px; border-radius: 3px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; }
+
+        /* Table Section */
+        .table-title { text-align: center; color: #337ab7; font-weight: bold; margin: 20px 0 10px 0; font-size: 12px; }
+        .info-bar { background: #337ab7; color: #fff; padding: 8px 15px; margin: 0 20px; font-weight: bold; border-radius: 2px 2px 0 0; font-size: 11px; }
+        .table-container { background: #fff; border: 1px solid #ddd; margin: 0 20px 20px 20px; overflow-x: auto; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        
+        .erp-table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        .erp-table th { background: #d9edf7; color: #31708f; border: 1px solid #bce8f1; padding: 10px; text-align: center; font-weight: bold; text-transform: uppercase; }
+        .erp-table td { border: 1px solid #eee; padding: 12px; text-align: center; color: #666; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:#337ab7;">Library</strong> <span style="color:#999;">» History</span>
+    <i class="fa fa-cog gear-icon" onclick="log('Settings Clicked', 'orange')"></i>
+</div>
+
+<div class="nav-wrap">
+    <button class="btn-erp bg-blue" onclick="log('Nav: Book Detail')"><i class="fa fa-book"></i> Book Detail</button>
+    <button class="btn-erp bg-green" onclick="log('Nav: Issue History Active')"><i class="fa fa-history"></i> Issue History</button>
+    <button class="btn-erp bg-blue" onclick="log('Nav: Membership')"><i class="fa fa-users"></i> Membership</button>
+    <button class="btn-erp bg-blue" onclick="log('Nav: Students Member')"><i class="fa fa-user-graduate"></i> Students Member</button>
+    <button class="btn-erp bg-blue" onclick="log('Nav: Staffs Member')"><i class="fa fa-user-tie"></i> Staffs Member</button>
+    <button class="btn-erp bg-blue" onclick="log('Nav: Student Request')"><i class="fa fa-user-plus"></i> Student Request</button>
+    <button class="btn-erp bg-blue" onclick="log('Nav: Staff Request')"><i class="fa fa-user-tag"></i> Staff Request</button>
+    <button class="btn-erp bg-orange" onclick="log('Nav: Return Period Over', 'orange')"><i class="fa fa-clock"></i> Return Period Over</button>
+</div>
+
+<div class="filter-container">
+    <div class="filter-header" onclick="toggleFilter()">
+        <i class="fa fa-chevron-down" id="toggleIcon"></i> Filter Book Issue History <i class="fa fa-filter"></i>
+    </div>
+    
+    <div id="filterBox" class="filter-box">
+        <form action="" method="GET">
+            <div class="f-row">
+                <div class="f-group">
+                    <div class="f-label">BOOK</div>
+                    <div class="f-input-area">
+                        <select name="book" class="f-control"><option>Select Book</option></select>
+                    </div>
+                </div>
+                <div class="f-group">
+                    <div class="f-label">CATEGORY</div>
+                    <div class="f-input-area">
+                        <select name="category" class="f-control"><option>Select Category</option></select>
+                    </div>
+                </div>
+                <div class="f-group">
+                    <div class="f-label">STATUS</div>
+                    <div class="f-input-area">
+                        <select name="status" class="f-control"><option>Status</option></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="f-row">
+                <div class="f-group">
+                    <div class="f-label">ISSUED</div>
+                    <div class="f-input-area">
+                        <input type="date" name="issued_start" class="f-control">
+                        <span class="date-sep">⇄</span>
+                        <input type="date" name="issued_end" class="f-control">
+                    </div>
+                </div>
+                <div class="f-group">
+                    <div class="f-label">DUE</div>
+                    <div class="f-input-area">
+                        <input type="date" name="due_start" class="f-control">
+                        <span class="date-sep">⇄</span>
+                        <input type="date" name="due_end" class="f-control">
+                    </div>
+                </div>
+                <div class="f-group">
+                    <div class="f-label">RETURN</div>
+                    <div class="f-input-area">
+                        <input type="date" name="return_start" class="f-control">
+                        <span class="date-sep">⇄</span>
+                        <input type="date" name="return_end" class="f-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-footer">
+                <button type="submit" class="btn-filter-submit" onclick="log('Filter Button Clicked')">
+                    <i class="fa fa-filter"></i> Filter
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-title">
+    <i class="fa fa-list"></i> History List
+</div>
+
+<div class="info-bar">
+    History Record list on table. Filter list using the search box as you wish.
+</div>
+
+<div class="table-container">
+    <table class="erp-table">
+        <thead>
+            <tr>
+                <th style="width: 50px;">S.N.</th>
+                <th>REG. NUM.</th>
+                <th>REFERENCE NO</th>
+                <th>BOOK</th>
+                <th>CATEGORY</th>
+                <th>ISSUED ON</th>
+                <th>DUE DATE</th>
+                <th>RETURN DATE</th>
+                <th>DAY</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="9" style="padding: 20px; font-style: italic;">Book Issued History Record Not Found.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    /**
+     * Professional Console Logger
+     */
+    function log(message, color = "#337ab7") {
+        console.log(`%c [ERP-207] %c ${message}`, 
+        `color: white; background: ${color}; padding: 2px 8px; border-radius: 3px; font-weight: bold;`, 
+        "color: #000; font-weight: 500;");
+    }
+
+    /**
+     * Toggle Filter Section
+     */
+    function toggleFilter() {
+        const box = document.getElementById('filterBox');
+        const icon = document.getElementById('toggleIcon');
+        
+        if (box.classList.contains('hidden')) {
+            box.classList.remove('hidden');
+            icon.className = 'fa fa-chevron-down';
+            log("Filter Section: Visible", "green");
+        } else {
+            box.classList.add('hidden');
+            icon.className = 'fa fa-chevron-right';
+            log("Filter Section: Hidden", "red");
+        }
+    }
+
+    window.onload = function() {
+        log("ERP 207: Library History Module Loaded");
+    };
+</script>
+
+</body>
+</html>
