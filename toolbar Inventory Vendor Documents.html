@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 196 - Vendor Documents Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 13px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header Title Section */
+        .page-header-main { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .gear-icon { position: absolute; right: 15px; top: 10px; color: #f0ad4e; font-size: 20px; }
+
+        /* Navigation Tabs */
+        .nav-container { background: #fff; padding: 8px; border-bottom: 1px solid #ddd; display: flex; justify-content: center; gap: 5px; }
+        .erp-btn { font-size: 12px; padding: 6px 12px; border-radius: 4px; color: #fff !important; border: none; font-weight: 600; cursor: pointer; text-decoration: none; }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+
+        /* Main Page Structure */
+        .main-content { padding: 15px; display: flex; gap: 20px; flex-wrap: wrap; }
+        .form-side { flex: 1; min-width: 380px; background: #fff; border: 1px solid #c8d9e2; border-radius: 4px; height: fit-content; }
+        .table-side { flex: 2; min-width: 500px; }
+
+        /* Toggle Title Bar */
+        .section-title { color: #337ab7; padding: 12px; border-bottom: 1px solid #eee; font-weight: bold; font-size: 14px; text-align: center; cursor: pointer; background: #fff; }
+        .section-title:hover { background: #f9f9f9; }
+
+        /* Form Row Design */
+        .f-row { display: flex; align-items: stretch; margin-bottom: 5px; padding: 0 15px; }
+        .f-label { background: #eee; border: 1px solid #ddd; padding: 8px; font-weight: bold; text-align: right; width: 140px; text-transform: uppercase; font-size: 11px; display: flex; align-items: center; justify-content: flex-end; }
+        .f-input-box { border: 1px solid #ddd; height: 35px; width: 100%; padding: 0 10px; outline: none; }
+        .required-indicator { border-left: 2px solid red; }
+
+        /* Action Buttons */
+        .status-btns-wrapper { text-align: center; margin-bottom: 10px; }
+        .btn-status { font-size: 11px; padding: 4px 12px; color: #fff; border-radius: 4px; border: none; font-weight: bold; margin: 0 2px; }
+        
+        .upload-action-area { background: #f9f9f9; border-top: 1px solid #eee; padding: 15px; text-align: right; }
+        .btn-upload { background-color: #1a4d80; color: white; border: none; padding: 8px 30px; border-radius: 4px; font-weight: bold; font-size: 14px; }
+
+        /* Table Design */
+        .erp-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #ddd; }
+        .erp-table thead th { 
+            background-color: #eef5f9; color: #337ab7; border: 1px solid #dee2e6; 
+            padding: 10px; text-align: center; font-size: 12px; text-transform: uppercase; 
+        }
+        .red-accent-top { border-top: 3px solid red !important; }
+        .erp-table tbody td { border: 1px solid #dee2e6; padding: 20px; text-align: center; color: #888; font-style: italic; }
+
+        .hide-section { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="color:#337ab7; font-size: 15px;">Vendor Documents Manager</strong> <span style="color:#999;">» Detail</span>
+    <i class="fa fa-cog gear-icon"></i>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-blue" onclick="btnLog('Detail Tab', 'blue')"><i class="fa fa-list"></i> Detail</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Add Vendor Tab', 'blue')"><i class="fa fa-plus-circle"></i> Add</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Bulk Import Tab', 'blue')"><i class="fa fa-upload"></i> Bulk Import</button>
+    <button class="erp-btn bg-green" onclick="btnLog('Documents Tab Active', 'green')"><i class="fa fa-file-alt"></i> Documents</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Notes Tab', 'blue')"><i class="fa fa-sticky-note"></i> Notes</button>
+</div>
+
+<div class="main-content">
+    
+    <div class="form-side">
+        <div class="section-title" onclick="toggleFilterSection()">
+            <i class="fa fa-search me-1"></i> Create Vendor Documents
+        </div>
+        <div id="vendorDocFormWrapper">
+            <form action="upload_vendor_doc.php" method="POST" enctype="multipart/form-data" id="vendorDocForm">
+                <div class="py-3">
+                    <div class="f-row">
+                        <div class="f-label">REG.NO.</div>
+                        <input type="text" name="regno" class="f-input-box required-indicator" placeholder="Enter Registration No.">
+                    </div>
+                    <div class="f-row">
+                        <div class="f-label">TITLE</div>
+                        <input type="text" name="doc_title" class="f-input-box required-indicator" placeholder="Document Title">
+                    </div>
+                    <div class="f-row">
+                        <div class="f-label">SELECT FILE</div>
+                        <input type="file" name="vendor_file" class="f-input-box" style="padding-top: 5px;">
+                    </div>
+                    <div class="f-row">
+                        <div class="f-label">DESCRIPTION</div>
+                        <textarea name="description" class="f-input-box" style="height: 100px; padding: 10px;"></textarea>
+                    </div>
+                </div>
+                <div class="upload-action-area">
+                    <button type="submit" class="btn-upload" onclick="btnLog('Initiating Upload...', 'navy')">upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="table-side">
+        <div class="status-btns-wrapper">
+            <button class="btn-status bg-primary" onclick="btnLog('Status Change: Active', 'blue')"><i class="fa fa-check"></i> Active</button>
+            <button class="btn-status" style="background:#f0ad4e;" onclick="btnLog('Status Change: In-Active', 'orange')"><i class="fa fa-times"></i> In-Active</button>
+            <button class="btn-status" style="background:#d9534f;" onclick="btnLog('Action: Delete Document', 'red')"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+        
+        <table class="erp-table">
+            <thead>
+                <tr class="red-accent-top">
+                    <th width="40"><input type="checkbox" onclick="btnLog('Master Checkbox Toggled', 'black')"></th>
+                    <th>S.N.</th>
+                    <th>REG.NO.</th>
+                    <th>VENDOR DOCUMENTS</th>
+                    <th>STATUS</th>
+                    <th width="40"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="6">No Vendor Documents data found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // 1. Console Log Functionality
+    function btnLog(action, bgColor) {
+        console.log(`%c [ERP-196] %c ${action}`, 
+        `color: white; background: ${bgColor}; padding: 3px 8px; border-radius: 4px; font-weight: bold;`, 
+        "color: #111; font-weight: bold;");
+    }
+
+    // 2. Hide/Show Filter (Form) Functionality
+    function toggleFilterSection() {
+        const wrapper = document.getElementById('vendorDocFormWrapper');
+        if (wrapper.style.display === "none") {
+            wrapper.style.display = "block";
+            btnLog("Vendor Doc Form: Shown", "green");
+        } else {
+            wrapper.style.display = "none";
+            btnLog("Vendor Doc Form: Hidden", "red");
+        }
+    }
+
+    // 3. PHP-Ready Form Handling
+    document.getElementById('vendorDocForm').onsubmit = function(e) {
+        // e.preventDefault(); // PHP connectivity ke waqt ise comment rehne dein
+        const regno = document.getElementsByName('regno')[0].value;
+        const title = document.getElementsByName('doc_title')[0].value;
+
+        if(!regno || !title) {
+            alert("Error: REG.NO. and TITLE are required fields!");
+            btnLog("Validation Failed: Missing required fields", "red");
+            return false;
+        }
+
+        btnLog("Form Submission: Sending data to upload_vendor_doc.php", "purple");
+        // alert("Document process initiated!");
+    };
+
+    // Initialize Page
+    window.onload = function() {
+        btnLog("Vendor Documents Manager Page Initialized", "black");
+    };
+</script>
+
+</body>
+</html>
