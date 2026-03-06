@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 200 - Books Import</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 12px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header & Title */
+        .page-header { background: #fff; padding: 12px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .gear-icon { position: absolute; right: 15px; top: 12px; color: #f0ad4e; font-size: 18px; cursor: pointer; }
+
+        /* Navigation Menu Styles */
+        .nav-container { background: #fff; padding: 10px; border-bottom: 1px solid #ddd; text-align: center; }
+        .nav-row { display: flex; justify-content: center; gap: 4px; flex-wrap: wrap; margin-bottom: 6px; }
+        
+        .btn-erp { font-size: 11px; padding: 5px 12px; border-radius: 4px; border: none; color: #fff !important; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+        .bg-green { background-color: #5cb85c; }
+        .bg-blue { background-color: #337ab7; }
+        .bg-orange { background-color: #f0ad4e; }
+
+        /* Import Section Area */
+        .import-wrapper { margin: 20px; background: #fff; border: 1px solid #c8d9e2; border-radius: 4px; }
+        .import-header { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; color: #337ab7; }
+        .import-header h5 { margin: 0; font-size: 18px; display: flex; align-items: center; gap: 10px; }
+        
+        /* Form Field Layout */
+        .f-row { display: flex; align-items: stretch; margin-bottom: 1px; }
+        .f-label { background: #eee; border: 1px solid #ddd; padding: 10px; font-weight: bold; text-align: right; width: 160px; text-transform: uppercase; font-size: 11px; display: flex; align-items: center; justify-content: flex-end; }
+        .f-input-container { border: 1px solid #ddd; width: 100%; padding: 8px 15px; background: #fff; display: flex; align-items: center; }
+        
+        /* Bottom Action Bar */
+        .action-bar { background: #f5f5f5; padding: 25px; text-align: center; border-top: 1px solid #ddd; }
+        .btn-import { background-color: #337ab7; color: white; border: none; padding: 10px 30px; border-radius: 4px; font-weight: bold; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-import:hover { background-color: #286090; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:#337ab7; font-size: 14px;">Books Manager</strong> <span style="color:#999;">» Import</span>
+    <i class="fa fa-cog gear-icon" onclick="log('Settings Icon Clicked', 'orange')"></i>
+</div>
+
+<div class="nav-container">
+    <div class="nav-row">
+        <button class="btn-erp bg-green" onclick="log('Nav: Book Detail', 'green')"><i class="fa fa-book"></i> Book Detail</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Issue History', 'blue')"><i class="fa fa-history"></i> Issue History</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Membership', 'blue')"><i class="fa fa-users"></i> Membership</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Students Member', 'blue')"><i class="fa fa-user-graduate"></i> Students Member</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Staffs Member', 'blue')"><i class="fa fa-user-tie"></i> Staffs Member</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Student Request', 'blue')"><i class="fa fa-user-plus"></i> Student Request</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Staff Request', 'blue')"><i class="fa fa-user-tag"></i> Staff Request</button>
+        <button class="btn-erp bg-orange" onclick="log('Nav: Return Period Over', 'orange')"><i class="fa fa-clock"></i> Return Period Over</button>
+    </div>
+    <div class="nav-row">
+        <button class="btn-erp bg-blue" onclick="log('Sub-Nav: Book Detail', 'blue')"><i class="fa fa-list"></i> Book Detail</button>
+        <button class="btn-erp bg-blue" onclick="log('Sub-Nav: New Book', 'blue')"><i class="fa fa-plus-circle"></i> New Book</button>
+        <button class="btn-erp bg-green" onclick="log('Sub-Nav: Bulk Import Active', 'green')"><i class="fa fa-upload"></i> Bulk Import</button>
+        <button class="btn-erp bg-blue" onclick="log('Sub-Nav: Book Category', 'blue')"><i class="fa fa-th-large"></i> Book Category</button>
+    </div>
+</div>
+
+<div class="import-wrapper">
+    <div class="import-header" onclick="toggleImportSection()">
+        <h5><i class="fa fa-file-import"></i> CSV Template for Bulk Book Import</h5>
+    </div>
+
+    <div id="importContent">
+        <form action="upload_csv_process.php" method="POST" enctype="multipart/form-data" id="csvForm">
+            <div class="p-0">
+                <div class="f-row">
+                    <div class="f-label">FILE</div>
+                    <div class="f-input-container">
+                        <input type="file" name="csv_file" id="csvFile" accept=".csv" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-bar">
+                <button type="submit" class="btn-import" onclick="log('Importing CSV File...', 'navy')">
+                    <i class="fa fa-upload"></i> Import
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    /**
+     * Console Logger for Buttons
+     */
+    function log(message, bgColor) {
+        console.log(`%c [ERP-200] %c ${message}`, 
+        `color: white; background: ${bgColor}; padding: 3px 10px; border-radius: 3px; font-weight: bold;`, 
+        "color: #333; font-weight: bold;");
+    }
+
+    /**
+     * Filter/Section Toggle Logic
+     */
+    function toggleImportSection() {
+        const section = document.getElementById('importContent');
+        if (section.classList.contains('hidden')) {
+            section.classList.remove('hidden');
+            log("Import Section: Visible", "green");
+        } else {
+            section.classList.add('hidden');
+            log("Import Section: Hidden", "red");
+        }
+    }
+
+    /**
+     * PHP Ready Form Submission
+     */
+    document.getElementById('csvForm').onsubmit = function(e) {
+        const fileInput = document.getElementById('csvFile');
+        if (!fileInput.value) {
+            alert("Please select a CSV file first!");
+            log("Upload Failed: No file selected", "red");
+            return false;
+        }
+        log("File Validated. Sending to upload_csv_process.php", "purple");
+        // e.preventDefault(); // Uncomment this line if you want to stay on page during testing
+    };
+
+    window.onload = function() {
+        log("ERP 200 Page Loaded - Ready for PHP Work", "black");
+    };
+</script>
+
+</body>
+</html>
