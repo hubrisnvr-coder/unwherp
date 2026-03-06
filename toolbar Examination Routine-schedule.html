@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 215 - Exam Routine Manager</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --erp-blue: #337ab7;
+            --erp-green: #5cb85c;
+            --erp-bg: #f4f7f6;
+            --label-bg: #eeeeee;
+        }
+
+        body { background-color: var(--erp-bg); font-size: 13px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header Section */
+        .page-header { background: #fff; padding: 12px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .gear-icon { position: absolute; right: 20px; top: 15px; color: #f0ad4e; font-size: 20px; cursor: pointer; }
+
+        /* Top Navigation Bar */
+        .nav-wrap { background: #fff; padding: 12px; border-bottom: 1px solid #ddd; display: flex; justify-content: center; gap: 8px; }
+        .btn-erp { font-size: 12px; padding: 6px 15px; border-radius: 4px; border: none; color: #fff !important; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .bg-blue { background-color: var(--erp-blue); }
+        .bg-green { background-color: var(--erp-green); }
+
+        /* Target Exam Container */
+        .target-container { margin: 25px 20px; background: #fff; border: 1px solid #bce8f1; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .target-header { background: #fff; padding: 12px; text-align: center; color: var(--erp-blue); font-weight: bold; cursor: pointer; border-bottom: 1px solid #eee; font-size: 15px; }
+        .target-body { padding: 25px; background: #fff; transition: all 0.3s ease; }
+        
+        /* Form Row Styling */
+        .erp-row { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
+        .input-group-custom { display: flex; flex: 1; min-width: 250px; align-items: stretch; }
+        .label-custom { background: var(--label-bg); padding: 8px 12px; border: 1px solid #ccc; font-weight: bold; width: 150px; text-align: center; color: #000; text-transform: uppercase; font-size: 11px; display: flex; align-items: center; justify-content: center; }
+        .field-custom { flex-grow: 1; border: 1px solid #ccc; padding: 6px 10px; outline: none; height: 38px; font-size: 13px; }
+
+        /* Action Button */
+        .btn-print-action { background: var(--erp-blue); color: white; border: none; padding: 10px 30px; border-radius: 4px; float: right; margin-top: 10px; font-weight: bold; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+        .btn-print-action:hover { background: #286090; }
+
+        .hidden { display: none; }
+
+        /* Simple Footer for spacing */
+        .footer-space { height: 50px; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:var(--erp-blue); font-size: 16px;">Exam Routine Manager</strong> <span style="color:#999; font-size: 14px;">» Print</span>
+    <i class="fa fa-cog gear-icon" onclick="erpLog('Settings Clicked', 'orange')"></i>
+</div>
+
+<div class="nav-wrap">
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Exam Type')"><i class="fa fa-list-alt"></i> Exam Type</button>
+    <button class="btn-erp bg-green" onclick="erpLog('Nav: Schedule (Active)')"><i class="fa fa-calendar-alt"></i> Schedule</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Manage Mark Ledger')"><i class="fa fa-share-nodes"></i> Manage Mark Ledger</button>
+</div>
+
+<div class="target-container">
+    <div class="target-header" onclick="toggleFilter()">
+        <i class="fa fa-search"></i> Meet Your Target Exam
+    </div>
+    
+    <div id="targetBody" class="target-body">
+        <form id="routineForm" action="print_routine.php" method="GET">
+            <div class="erp-row">
+                <div class="input-group-custom">
+                    <div class="label-custom">Year</div>
+                    <select name="year" class="field-custom">
+                        <option value="">Select Year</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                    </select>
+                </div>
+                <div class="input-group-custom">
+                    <div class="label-custom">Month</div>
+                    <select name="month" class="field-custom">
+                        <option value="">Select Month</option>
+                        <option value="1">January</option>
+                        <option value="3">March</option>
+                    </select>
+                </div>
+                <div class="input-group-custom">
+                    <div class="label-custom">Exam</div>
+                    <select name="exam" class="field-custom">
+                        <option value="">Select Exams</option>
+                        <option value="final">Final Examination</option>
+                        <option value="mid">Mid Term</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="erp-row">
+                <div class="input-group-custom" style="flex: 2;">
+                    <div class="label-custom">Program/Class</div>
+                    <select name="program_class" class="field-custom">
+                        <option value="">Select Program/Class</option>
+                        <option value="10">Class 10</option>
+                        <option value="12">Class 12</option>
+                    </select>
+                </div>
+                <div class="input-group-custom" style="flex: 1;">
+                    <div class="label-custom">Semester/Section</div>
+                    <select name="section" class="field-custom">
+                        <option value="">Select Semester/Section</option>
+                        <option value="A">Section A</option>
+                        <option value="B">Section B</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="clearfix">
+                <button type="button" class="btn-print-action" onclick="handlePrint()">
+                    <i class="fa fa-print"></i> Print Routine/Schedule
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="footer-space"></div>
+
+<script>
+    /**
+     * Toggle Target Exam Body (Hide/Show)
+     */
+    function toggleFilter() {
+        const body = document.getElementById('targetBody');
+        body.classList.toggle('hidden');
+        erpLog(body.classList.contains('hidden') ? "Target Section Hidden" : "Target Section Visible");
+    }
+
+    /**
+     * Handle Print Button Logic
+     */
+    function handlePrint() {
+        const form = document.getElementById('routineForm');
+        const exam = form.exam.value;
+        const pClass = form.program_class.value;
+
+        if(!exam || !pClass) {
+            erpLog("Validation Failed: Please select Exam and Class", "red");
+            alert("Please select both Exam and Program/Class before printing.");
+        } else {
+            erpLog(`Generating Routine for ${exam} - ${pClass}...`, "#5cb85c");
+            // In real PHP, you would use: form.submit();
+        }
+    }
+
+    /**
+     * Professional ERP Logger
+     */
+    function erpLog(msg, color = "#337ab7") {
+        console.log(
+            `%c [ERP-215] %c ${msg}`, 
+            `color: white; background: ${color}; padding: 4px 12px; border-radius: 4px; font-weight: bold;`, 
+            "color: #333; font-weight: 500;"
+        );
+    }
+
+    window.onload = function() {
+        erpLog("Exam Routine Manager (215) Ready");
+    };
+</script>
+
+</body>
+</html>
