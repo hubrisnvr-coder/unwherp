@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 230 - Food Category Manager</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --erp-blue: #337ab7;
+            --erp-green: #5cb85c;
+            --erp-orange: #f0ad4e;
+            --erp-red: #d9534f;
+            --erp-bg: #f4f7f6;
+            --label-bg: #eeeeee;
+            --table-header-bg: #d9edf7;
+            --border-color: #ddd;
+        }
+
+        body { 
+            background-color: var(--erp-bg); 
+            font-size: 13px; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            color: #333; 
+        }
+
+        /* Page Header */
+        .page-header { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid var(--border-color); position: relative; }
+        .gear-icon { position: absolute; right: 20px; top: 12px; color: var(--erp-orange); font-size: 18px; cursor: pointer; }
+
+        /* Top Module Navigation */
+        .module-nav { background: #fff; padding: 10px; display: flex; justify-content: flex-end; gap: 5px; border-bottom: 1px solid var(--border-color); padding-right: 30px; }
+        .btn-mod { font-size: 12px; padding: 4px 12px; border-radius: 4px; color: #fff !important; text-decoration: none; display: flex; align-items: center; gap: 5px; border: none; }
+
+        /* Navigation Tabs (Center) */
+        .sub-nav { background: #fff; padding: 15px; display: flex; justify-content: center; gap: 8px; border-bottom: 1px solid var(--border-color); }
+        .btn-sub { font-size: 13px; padding: 6px 16px; border-radius: 4px; color: #fff !important; border: none; display: flex; align-items: center; gap: 6px; }
+
+        .bg-blue { background-color: var(--erp-blue); }
+        .bg-green { background-color: var(--erp-green); }
+        .bg-orange { background-color: var(--erp-orange); }
+        .bg-red { background-color: var(--erp-red); }
+
+        /* Content Layout */
+        .main-content { padding: 20px; display: flex; gap: 20px; }
+        
+        /* Left Side: Create Panel */
+        .filter-panel { width: 35%; background: #fff; border: 1px solid var(--border-color); border-radius: 4px; transition: all 0.3s ease; }
+        .panel-title { color: var(--erp-blue); font-weight: bold; text-align: center; padding: 12px; border-bottom: 1px solid #eee; font-size: 15px; }
+        .panel-body { padding: 20px; background: #f9f9f9; }
+
+        .erp-input-group { display: flex; align-items: stretch; margin-bottom: 15px; border: 1px solid #ccc; border-left: 3px solid #ff0000; }
+        .erp-label { background: var(--label-bg); padding: 10px; font-weight: bold; width: 110px; text-align: center; border-right: 1px solid #ccc; font-size: 11px; display: flex; align-items: center; justify-content: center; }
+        .erp-input { flex-grow: 1; border: none; padding: 10px; outline: none; }
+
+        .btn-create-container { padding: 15px; background: #eee; border-top: 1px solid #ddd; }
+        .btn-create-submit { background: var(--erp-blue); color: white; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold; float: right; display: flex; align-items: center; gap: 8px; }
+
+        /* Right Side: List Section */
+        .list-section { width: 65%; flex-grow: 1; }
+        .action-bar { display: flex; justify-content: flex-end; gap: 5px; margin-bottom: 10px; }
+        .btn-action { font-size: 12px; padding: 4px 12px; border-radius: 4px; color: #fff !important; border: none; }
+
+        .table-container { background: #fff; border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; }
+        .erp-table { width: 100%; border-collapse: collapse; }
+        .erp-table thead tr { border-bottom: 2px solid #ff0000; }
+        .erp-table th { background: var(--table-header-bg); color: #31708f; padding: 10px; text-align: center; border: 1px solid #bce8f1; font-weight: bold; text-transform: uppercase; font-size: 11px; }
+        .erp-table td { padding: 15px; border: 1px solid #eee; text-align: center; color: #888; font-style: italic; }
+
+        .hidden { display: none !important; }
+        .clearfix::after { content: ""; clear: both; display: table; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:var(--erp-blue);">Food Category Manager</strong> <span style="color:#999;">» Detail</span>
+    <i class="fa fa-cog gear-icon" onclick="erpLog('System Settings Clicked')"></i>
+</div>
+
+<div class="module-nav">
+    <button class="btn-mod bg-blue" onclick="erpLog('Resident Module Access')"><i class="fa fa-users"></i> Resident</button>
+    <button class="btn-mod bg-green" onclick="erpLog('Hostel Module Access')"><i class="fa fa-bed"></i> Hostel</button>
+    <button class="btn-mod bg-green" onclick="erpLog('Food & Meal Module Access')"><i class="fa fa-utensils"></i> Food & Meal</button>
+</div>
+
+<div class="sub-nav">
+    <button class="btn-sub bg-blue" onclick="erpLog('Navigating to Food & Meal')"><i class="fa fa-utensils"></i> Food & Meal</button>
+    <button class="btn-sub bg-blue" onclick="erpLog('Navigating to Eating Time')"><i class="fa fa-history"></i> Eating Time</button>
+    <button class="btn-sub bg-green" onclick="toggleFilterPanel()"><i class="fa fa-list"></i> Food Category</button>
+    <button class="btn-sub bg-blue" onclick="erpLog('Navigating to Food Item')"><i class="fa fa-hamburger"></i> Food Item</button>
+</div>
+
+<div class="main-content">
+    
+    <div class="filter-panel" id="categoryPanel">
+        <div class="panel-title"><i class="fa fa-search"></i> Create Food Category</div>
+        <div class="panel-body">
+            <form id="foodCategoryForm" method="POST" action="save_category.php">
+                <div class="erp-input-group">
+                    <div class="erp-label">CATEGORY</div>
+                    <input type="text" name="food_category_name" class="erp-input" placeholder="Enter category name..." required>
+                </div>
+                
+                <div class="btn-create-container clearfix">
+                    <button type="submit" class="btn-create-submit" onclick="erpLog('Creating New Food Category...')">
+                        <i class="fa fa-save"></i> Create
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="list-section" id="listSection">
+        <div class="action-bar">
+            <button class="btn-action bg-blue" onclick="erpLog('Bulk Action: Active')"><i class="fa fa-check"></i> Active</button>
+            <button class="btn-action bg-orange" onclick="erpLog('Bulk Action: In-Active')"><i class="fa fa-times"></i> In-Active</button>
+            <button class="btn-action bg-red" onclick="erpLog('Bulk Action: Delete')"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+
+        <div class="table-container">
+            <table class="erp-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;"><input type="checkbox" onclick="erpLog('Select All Toggle')"></th>
+                        <th style="width: 70px;">S.N.</th>
+                        <th>FOOD CATEGORY</th>
+                        <th style="width: 150px;">STATUS</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td colspan="4">No Food Category data found. Please Filter Food Category to show.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    /**
+     * Filter Toggle Logic
+     * Screenshot ke hisaab se "Food Category" tab button par click karne se left panel hide/show hota hai.
+     */
+    function toggleFilterPanel() {
+        const panel = document.getElementById('categoryPanel');
+        const listSection = document.getElementById('listSection');
+        
+        if (panel.classList.contains('hidden')) {
+            panel.classList.remove('hidden');
+            erpLog("Create Category Panel: SHOWN");
+        } else {
+            panel.classList.add('hidden');
+            erpLog("Create Category Panel: HIDDEN");
+        }
+    }
+
+    /**
+     * Professional Console Logging
+     */
+    function erpLog(message) {
+        const now = new Date();
+        const time = now.toLocaleTimeString();
+        console.log(`%c[ERP-230]%c ${time} - %c${message}`, 
+            "color: white; background: #337ab7; padding: 2px 5px; border-radius: 3px;", 
+            "color: #888;", 
+            "color: #000; font-weight: bold;");
+    }
+
+    // Initialize Page
+    window.onload = function() {
+        erpLog("Food Category Manager Detail Page Loaded");
+    };
+</script>
+
+</body>
+</html>
