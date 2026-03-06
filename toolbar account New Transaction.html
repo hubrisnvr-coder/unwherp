@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 168 - Bank Transaction Add</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header Section */
+        .page-header-main { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .settings-gear { 
+            position: absolute; right: 15px; top: 6px; color: #f0ad4e; font-size: 18px; cursor: pointer; 
+            border: 1px solid #f0ad4e; border-radius: 4px; padding: 2px 6px; background: #fff8ee; 
+        }
+
+        /* Navigation Buttons */
+        .nav-container { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
+        .erp-btn {
+            display: inline-block; margin: 2px; font-size: 11px; padding: 5px 12px; border-radius: 4px;
+            color: #ffffff !important; border: none; cursor: pointer; text-decoration: none !important; font-weight: 500;
+        }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+
+        /* Form Structure */
+        .form-container { margin: 20px auto; max-width: 98%; border: 1px solid #ccc; border-radius: 4px; background: #fff; }
+        .form-row { display: flex; border-bottom: 1px solid #eee; align-items: stretch; }
+        .label-cell { 
+            width: 200px; background: #f9f9f9; padding: 10px; font-weight: bold; 
+            text-align: right; border-right: 1px solid #ddd; text-transform: uppercase;
+            display: flex; align-items: center; justify-content: flex-end;
+        }
+        .input-cell { flex: 1; padding: 10px; position: relative; }
+        
+        .form-control-erp { 
+            width: 100%; border: 1px solid #ddd; border-radius: 0px; padding: 6px 12px; height: 34px; font-size: 12px;
+        }
+        .form-control-erp:focus { border-color: #66afea; outline: none; box-shadow: none; }
+        
+        /* Required field red line indicator as per screenshot */
+        .req-mark { color: red; margin-left: 5px; font-size: 14px; }
+        .req-border { border-left: 2px solid red !important; }
+
+        /* Footer Actions */
+        .action-footer { background: #f5f5f5; padding: 20px; text-align: center; border-top: 1px solid #ddd; }
+        .btn-footer { padding: 8px 18px; font-weight: bold; border-radius: 3px; border: none; font-size: 12px; margin: 0 5px; color: white; }
+        .btn-reset { background-color: #aeb9be; }
+        .btn-save { background-color: #337ab7; }
+        .btn-save-more { background-color: #449d44; }
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="color:#337ab7;">Bank Transaction Manager</strong> <span style="color:#999;">» Add</span>
+    <div class="settings-gear" onclick="logAction('Settings Menu')"><i class="fa fa-cog"></i></div>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-blue" onclick="logAction('Student Fee')"><i class="fa fa-users"></i> Student Fee</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Staff Payroll')"><i class="fa fa-user-tie"></i> Staff Payroll</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Ledger')"><i class="fa fa-book"></i> Ledger</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Transactions')"><i class="fa fa-exchange-alt"></i> Transactions</button>
+    <button class="erp-btn bg-green" onclick="logAction('Bank Top')"><i class="fa fa-university"></i> Bank</button>
+</div>
+
+<div class="nav-container" style="background:#f9f9f9; padding: 5px;">
+    <button class="erp-btn bg-blue" onclick="logAction('Manage Bank')"><i class="fa fa-university"></i> Manage Bank</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Add New Bank')"><i class="fa fa-plus"></i> Add New Bank</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Transactions Detail')"><i class="fa fa-list"></i> Transactions Detail</button>
+    <button class="erp-btn bg-green" onclick="logAction('Bank Transaction Tab')"><i class="fa fa-exchange-alt"></i> Bank Transaction</button>
+</div>
+
+<div class="form-container">
+    <form id="bankTransactionForm" action="process_transaction.php" method="POST">
+        
+        <div class="form-row">
+            <div class="label-cell">Date <span class="req-mark">*</span></div>
+            <div class="input-cell">
+                <input type="text" name="transaction_date" class="form-control-erp req-border" placeholder="YYYY-MM-DD">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="label-cell">Bank Name <span class="req-mark">*</span></div>
+            <div class="input-cell">
+                <select name="bank_id" class="form-select form-control-erp">
+                    <option value="">Choose a Bank...</option>
+                    <option value="1">SBI Bank</option>
+                    <option value="2">HDFC Bank</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="label-cell">Account Type <span class="req-mark">*</span></div>
+            <div class="input-cell">
+                <select name="account_type" class="form-select form-control-erp req-border">
+                    <option value="debit">Debit (+)</option>
+                    <option value="credit">Credit (-)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="label-cell">Withdraw / Deposite ID <span class="req-mark">*</span></div>
+            <div class="input-cell">
+                <input type="text" name="reference_id" class="form-control-erp" placeholder="Withdraw / Deposite ID">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="label-cell">Amount <span class="req-mark">*</span></div>
+            <div class="input-cell">
+                <input type="number" name="amount" class="form-control-erp req-border" placeholder="Amount">
+            </div>
+        </div>
+
+        <div class="form-row" style="border-bottom: none;">
+            <div class="label-cell">Description</div>
+            <div class="input-cell">
+                <textarea name="description" class="form-control-erp" style="height: 60px;" placeholder="Description"></textarea>
+            </div>
+        </div>
+
+        <div class="action-footer">
+            <button type="button" class="btn-footer btn-reset" onclick="resetForm()">
+                <i class="fa fa-sync-alt"></i> Reset
+            </button>
+            <button type="submit" class="btn-footer btn-save" onclick="logAction('Save Transaction')">
+                <i class="fa fa-save"></i> Save
+            </button>
+            <button type="button" class="btn-footer btn-save-more" onclick="logAction('Save & Add Another')">
+                <i class="fa fa-plus-square"></i> Save And Add Another
+            </button>
+        </div>
+        
+    </form>
+</div>
+
+<script>
+    // Console Interaction Logging
+    function logAction(btnName) {
+        console.log("%c [ERP-168 LOG]: " + btnName + " clicked", "color: white; background: #337ab7; padding: 3px 8px; border-radius: 3px;");
+    }
+
+    // Reset Form Functionality
+    function resetForm() {
+        if(confirm("Are you sure you want to reset all fields?")) {
+            document.getElementById('bankTransactionForm').reset();
+            logAction("Form Reset Success");
+        }
+    }
+
+    // Window Load Message
+    window.onload = function() {
+        console.log("Bank Transaction Manager (Add) Loaded.");
+        console.log("PHP Setup: Form action is set to 'process_transaction.php' with POST method.");
+    };
+</script>
+
+</body>
+</html>
