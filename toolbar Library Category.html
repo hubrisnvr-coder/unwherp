@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 201 - Book Category Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header & Nav */
+        .page-header { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .gear-icon { position: absolute; right: 15px; top: 10px; color: #f0ad4e; font-size: 18px; cursor: pointer; }
+
+        .nav-wrap { background: #fff; padding: 10px; border-bottom: 1px solid #ddd; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .nav-row { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+
+        .btn-erp { font-size: 10px; padding: 4px 10px; border-radius: 4px; border: none; color: #fff !important; font-weight: 600; text-decoration: none; }
+        .bg-green { background-color: #5cb85c; }
+        .bg-blue { background-color: #337ab7; }
+        .bg-orange { background-color: #f0ad4e; }
+        .bg-red { background-color: #d9534f; }
+
+        /* Layout Structure */
+        .main-content { padding: 15px; display: flex; gap: 20px; }
+        .left-panel { width: 35%; }
+        .right-panel { width: 65%; }
+
+        /* Card/Box Styling */
+        .erp-box { border: 1px solid #c8d9e2; border-radius: 4px; background: #fff; position: relative; }
+        .box-title { padding: 10px; color: #337ab7; font-weight: bold; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px; }
+
+        /* Form Styling */
+        .f-row { display: flex; align-items: stretch; margin-bottom: 1px; }
+        .f-label { background: #eee; border: 1px solid #ddd; padding: 8px; font-weight: bold; text-align: right; width: 100px; text-transform: uppercase; font-size: 11px; display: flex; align-items: center; justify-content: flex-end; }
+        .f-input { border: 1px solid #ddd; height: 35px; width: 100%; padding: 0 10px; outline: none; }
+        .req-border { border-left: 2px solid red !important; }
+
+        .box-footer { background: #f9f9f9; padding: 40px 15px; text-align: right; }
+        .btn-create { background: #337ab7; color: white; padding: 8px 25px; border: none; border-radius: 4px; font-weight: bold; }
+
+        /* Table Styling */
+        .status-header { display: flex; justify-content: flex-end; gap: 5px; padding: 10px; }
+        .erp-table { width: 100%; border-collapse: collapse; }
+        .erp-table th { background: #d9edf7; color: #31708f; border: 1px solid #bce8f1; padding: 10px; text-align: center; font-weight: bold; text-transform: uppercase; }
+        .erp-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        .no-data { color: #555; font-style: italic; background: #fff; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:#337ab7;">Book Category Manager</strong> <span style="color:#999;">» Detail</span>
+    <i class="fa fa-cog gear-icon" onclick="log('Settings Clicked')"></i>
+</div>
+
+<div class="nav-wrap">
+    <div class="nav-row">
+        <button class="btn-erp bg-green" onclick="log('Nav: Book Detail')"><i class="fa fa-book"></i> Book Detail</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Issue History')"><i class="fa fa-history"></i> Issue History</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Membership')"><i class="fa fa-users"></i> Membership</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Students')"><i class="fa fa-user-graduate"></i> Students Member</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Staffs')"><i class="fa fa-user-tie"></i> Staffs Member</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Student Req')"><i class="fa fa-user-plus"></i> Student Request</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Staff Req')"><i class="fa fa-user-tag"></i> Staff Request</button>
+        <button class="btn-erp bg-orange" onclick="log('Nav: Period Over')"><i class="fa fa-clock"></i> Return Period Over</button>
+    </div>
+    <div class="nav-row">
+        <button class="btn-erp bg-blue" onclick="log('Nav: Book Detail Sub')"><i class="fa fa-file-text"></i> Book Detail</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: New Book')"><i class="fa fa-plus"></i> New Book</button>
+        <button class="btn-erp bg-blue" onclick="log('Nav: Bulk Import')"><i class="fa fa-upload"></i> Bulk Import</button>
+        <button class="btn-erp bg-green" onclick="log('Nav: Book Category Active')"><i class="fa fa-pie-chart"></i> Book Category</button>
+    </div>
+</div>
+
+<div class="main-content">
+    
+    <div class="left-panel">
+        <div class="erp-box">
+            <div class="box-title" id="filterToggle" onclick="toggleForm()" style="cursor: pointer;">
+                <i class="fa fa-search"></i> Create Book Category
+            </div>
+            
+            <div id="categoryForm">
+                <form action="process_category.php" method="POST">
+                    <div class="p-3">
+                        <div class="f-row">
+                            <div class="f-label">TITLE</div>
+                            <input type="text" name="category_title" class="f-input req-border" placeholder="e.g. Printer">
+                        </div>
+                    </div>
+                    
+                    <div class="box-footer">
+                        <button type="submit" class="btn-create" onclick="log('Create Category Clicked', 'blue')">
+                            <i class="fa fa-save"></i> Create
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <div class="status-header">
+            <button class="btn-erp bg-blue" onclick="log('Filter Active')"><i class="fa fa-check"></i> Active</button>
+            <button class="btn-erp bg-orange" onclick="log('Filter In-Active')"><i class="fa fa-times"></i> In-Active</button>
+            <button class="btn-erp bg-red" onclick="log('Delete Selected')"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+
+        <div class="erp-box">
+            <table class="erp-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;"><input type="checkbox" onclick="log('Select All')"></th>
+                        <th>S.N.</th>
+                        <th>BOOK CATEGORY</th>
+                        <th>SLUG</th>
+                        <th>STATUS</th>
+                        <th style="width: 50px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6" class="no-data">No Book Category data found. Please Filter Book Category to show.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // 1. Console Logging Utility
+    function log(msg, color = "#337ab7") {
+        console.log(`%c [ERP-201] %c ${msg}`, 
+        `color: white; background: ${color}; padding: 2px 8px; border-radius: 3px; font-weight: bold;`, 
+        "color: #000; font-weight: 400;");
+    }
+
+    // 2. Hide/Show Filter (Create Section)
+    function toggleForm() {
+        const formDiv = document.getElementById('categoryForm');
+        if (formDiv.classList.contains('hidden')) {
+            formDiv.classList.remove('hidden');
+            log("Create Section: Shown", "green");
+        } else {
+            formDiv.classList.add('hidden');
+            log("Create Section: Hidden", "red");
+        }
+    }
+
+    // 3. Initialize
+    window.onload = function() {
+        log("Page Loaded: Book Category Manager");
+    };
+</script>
+
+</body>
+</html>
