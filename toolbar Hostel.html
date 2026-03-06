@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 226 - Hostel Manager Detail</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --erp-blue: #337ab7;
+            --erp-green: #5cb85c;
+            --erp-orange: #f0ad4e;
+            --erp-red: #d9534f;
+            --erp-bg: #f4f7f6;
+            --table-header-bg: #d9edf7;
+            --border-color: #ddd;
+        }
+
+        body { 
+            background-color: var(--erp-bg); 
+            font-size: 13px; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            color: #333; 
+        }
+
+        /* Top Header Navigation */
+        .page-header { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid var(--border-color); position: relative; }
+        .gear-icon { position: absolute; right: 20px; top: 12px; color: var(--erp-orange); font-size: 18px; cursor: pointer; }
+
+        /* Module Tabs (Right Side) */
+        .module-nav { background: #fff; padding: 10px; display: flex; justify-content: flex-end; gap: 5px; border-bottom: 1px solid var(--border-color); padding-right: 30px; }
+        .btn-mod { font-size: 12px; padding: 4px 12px; border-radius: 4px; color: #fff !important; text-decoration: none; display: flex; align-items: center; gap: 5px; border: none; }
+
+        /* Sub Navigation Tabs (Center) */
+        .sub-nav { background: #fff; padding: 15px; display: flex; justify-content: center; gap: 8px; border-bottom: 1px solid var(--border-color); }
+        .btn-sub { font-size: 13px; padding: 6px 16px; border-radius: 4px; color: #fff !important; border: none; display: flex; align-items: center; gap: 6px; }
+
+        /* Color Utility */
+        .bg-blue { background-color: var(--erp-blue); }
+        .bg-green { background-color: var(--erp-green); }
+        .bg-orange { background-color: var(--erp-orange); }
+        .bg-red { background-color: var(--erp-red); }
+
+        /* Action Bar (Active/Delete) */
+        .action-bar { background: #fff; padding: 15px; display: flex; justify-content: center; gap: 10px; }
+        .btn-action { font-size: 12px; padding: 5px 15px; border-radius: 4px; color: #fff !important; border: none; }
+
+        /* Table Section */
+        .table-container { background: #fff; border: 1px solid var(--border-color); margin: 0 20px 30px 20px; border-radius: 4px; overflow: hidden; }
+        .erp-table { width: 100%; border-collapse: collapse; }
+        .erp-table thead tr { border-bottom: 2px solid #ff0000; } /* Red line as per screenshot */
+        .erp-table th { background: var(--table-header-bg); color: #31708f; padding: 12px; text-align: center; border: 1px solid #bce8f1; font-weight: bold; text-transform: uppercase; font-size: 11px; }
+        .erp-table td { padding: 15px; border: 1px solid #eee; text-align: center; color: #555; }
+
+        .no-data-msg { padding: 40px; color: #888; font-style: italic; background: #fff; }
+
+        /* Filter Mock (Hidden by default for toggle) */
+        #filterSection { margin: 10px 20px; padding: 15px; background: #fff; border: 1px solid #bce8f1; border-radius: 4px; display: none; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:var(--erp-blue);">Hostel Manager</strong> <span style="color:#999;">» Detail</span>
+    <i class="fa fa-cog gear-icon" onclick="erpLog('Settings Clicked')"></i>
+</div>
+
+<div class="module-nav">
+    <button class="btn-mod bg-blue" onclick="erpLog('Resident Module Selected')"><i class="fa fa-users"></i> Resident</button>
+    <button class="btn-mod bg-green" onclick="erpLog('Hostel Module Active')"><i class="fa fa-bed"></i> Hostel</button>
+    <button class="btn-mod bg-blue" onclick="erpLog('Food & Meal Selected')"><i class="fa fa-utensils"></i> Food & Meal</button>
+</div>
+
+<div class="sub-nav">
+    <button class="btn-sub bg-green" onclick="toggleFilter()"><i class="fa fa-list"></i> Detail</button>
+    <button class="btn-sub bg-blue" onclick="erpLog('Add Hostel Page Opening...')"><i class="fa fa-plus"></i> Add Hostel</button>
+    <button class="btn-sub bg-blue" onclick="erpLog('Opening Room Type Manager...')"><i class="fa fa-th-list"></i> RoomType</button>
+    <button class="btn-sub bg-blue" onclick="erpLog('Opening Bed Status...')"><i class="fa fa-bed"></i> Bed Status</button>
+</div>
+
+<div id="filterSection">
+    <div class="row align-items-center">
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="Search Hostel Name..." id="searchInput">
+        </div>
+        <div class="col-md-2">
+            <button class="btn bg-blue w-100 text-white" onclick="erpLog('Searching...')">Filter</button>
+        </div>
+    </div>
+</div>
+
+<div class="action-bar">
+    <button class="btn-action bg-blue" onclick="erpLog('Action: Mark as Active')"><i class="fa fa-check"></i> Active</button>
+    <button class="btn-action bg-orange" onclick="erpLog('Action: Mark as In-Active')"><i class="fa fa-times"></i> In-Active</button>
+    <button class="btn-action bg-red" onclick="erpLog('Action: Delete Selected Records')"><i class="fa fa-trash"></i> Delete</button>
+</div>
+
+<div class="table-container">
+    <form id="hostelForm" method="POST" action="process_hostel.php">
+        <table class="erp-table">
+            <thead>
+                <tr>
+                    <th style="width: 40px;"><input type="checkbox" id="selectAll" onclick="toggleCheckboxes(this)"></th>
+                    <th style="width: 60px;">S.N.</th>
+                    <th>NAME</th>
+                    <th>ROOMS</th>
+                    <th>TOTALBEDS</th>
+                    <th>AVAILABLE BED</th>
+                    <th>OCCUPIED BED</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="8" class="no-data-msg">
+                        No Hostel data found. Please Filter Hostel to show.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<script>
+    /**
+     * Filter Toggle Functionality
+     * Screen shot mein mangi gayi "Filter button par hide/show" logic
+     */
+    function toggleFilter() {
+        const filter = document.getElementById('filterSection');
+        if (filter.style.display === "none" || filter.style.display === "") {
+            filter.style.display = "block";
+            erpLog("Filter Section Shown");
+        } else {
+            filter.style.display = "none";
+            erpLog("Filter Section Hidden");
+        }
+    }
+
+    /**
+     * Table Checkbox Toggle
+     */
+    function toggleCheckboxes(source) {
+        erpLog("Select All Checkbox Clicked");
+        // Logic can be added here to check all checkboxes in the table
+    }
+
+    /**
+     * Professional Console Logger
+     */
+    function erpLog(msg) {
+        const time = new Date().toLocaleTimeString();
+        console.log(`%c[ERP-226]%c ${time} - %c${msg}`, 
+            "color: white; background: #337ab7; padding: 2px 5px; border-radius: 3px;", 
+            "color: #888;", 
+            "color: #333; font-weight: bold;");
+    }
+
+    // Initial Load Log
+    window.onload = function() {
+        erpLog("Hostel Manager Detail Page Loaded Successfully");
+    };
+</script>
+
+</body>
+</html>
