@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 192 - Customer Notes Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 13px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header Title */
+        .page-header-main { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
+        
+        /* Nav Tabs */
+        .nav-container { background: #fff; padding: 8px; border-bottom: 1px solid #ddd; display: flex; justify-content: center; gap: 5px; }
+        .erp-btn { font-size: 12px; padding: 6px 12px; border-radius: 4px; color: #fff !important; border: none; font-weight: 600; cursor: pointer; }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+
+        /* Main Layout */
+        .main-content { padding: 15px; display: flex; gap: 20px; flex-wrap: wrap; }
+        .form-side { flex: 1; min-width: 350px; background: #fff; border: 1px solid #c8d9e2; border-radius: 4px; height: fit-content; }
+        .table-side { flex: 2; min-width: 500px; }
+
+        /* Section Header with Search Icon */
+        .section-title { color: #337ab7; padding: 12px; border-bottom: 1px solid #eee; font-weight: bold; font-size: 14px; text-align: center; cursor: pointer; background: #fff; }
+        .section-title:hover { background: #f9f9f9; }
+
+        /* Form styling */
+        .f-row { display: flex; align-items: stretch; margin-bottom: 5px; padding: 0 15px; }
+        .f-label { background: #eee; border: 1px solid #ddd; padding: 8px; font-weight: bold; text-align: right; width: 130px; text-transform: uppercase; font-size: 11px; display: flex; align-items: center; justify-content: flex-end; }
+        .f-input-box { border: 1px solid #ddd; height: 35px; width: 100%; padding: 0 10px; outline: none; }
+        .required-line { border-left: 2px solid red; }
+
+        /* Table Buttons & Design */
+        .status-btns { text-align: center; margin-bottom: 10px; }
+        .btn-status { font-size: 11px; padding: 4px 12px; color: #fff; border-radius: 4px; border: none; font-weight: bold; margin: 0 2px; }
+        
+        .erp-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #ddd; }
+        .erp-table thead th { 
+            background-color: #eef5f9; color: #337ab7; border: 1px solid #dee2e6; 
+            padding: 10px; text-align: center; font-size: 12px; text-transform: uppercase; 
+        }
+        .red-line-top { border-top: 3px solid red !important; }
+        .erp-table tbody td { border: 1px solid #dee2e6; padding: 15px; text-align: center; color: #888; font-style: italic; }
+
+        /* Footer Button inside Form */
+        .form-action-area { background: #f9f9f9; border-top: 1px solid #eee; padding: 15px; text-align: right; }
+        .btn-create { background-color: #1a4d80; color: white; border: none; padding: 8px 30px; border-radius: 4px; font-weight: bold; font-size: 14px; }
+        
+        .hidden-section { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="color:#337ab7; font-size: 16px;">Customer Notes Manager</strong> <span style="color:#999;">» Detail</span>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-blue" onclick="btnLog('Detail Tab', 'blue')"><i class="fa fa-list"></i> Detail</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Registration Tab', 'blue')"><i class="fa fa-plus-circle"></i> Registration</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Bulk Registration', 'blue')"><i class="fa fa-upload"></i> Bulk Registration</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Documents Tab', 'blue')"><i class="fa fa-file-alt"></i> Documents</button>
+    <button class="erp-btn bg-green" onclick="btnLog('Notes Tab Active', 'green')"><i class="fa fa-sticky-note"></i> Notes</button>
+</div>
+
+<div class="main-content">
+    
+    <div class="form-side">
+        <div class="section-title" onclick="toggleForm()">
+            <i class="fa fa-search me-1"></i> Create Customer Notes
+        </div>
+        <div id="notesFormWrapper">
+            <form action="process_notes.php" method="POST" id="customerNotesForm">
+                <div class="py-3">
+                    <div class="f-row">
+                        <div class="f-label">REG.NO.</div>
+                        <input type="text" name="regno" class="f-input-box required-line" placeholder="Enter Registration No.">
+                    </div>
+                    <div class="f-row">
+                        <div class="f-label">SUB</div>
+                        <input type="text" name="subject" class="f-input-box required-line" placeholder="Subject">
+                    </div>
+                    <div class="f-row">
+                        <div class="f-label">NOTE</div>
+                        <textarea name="customer_note" class="f-input-box" style="height: 100px; padding: 10px;"></textarea>
+                    </div>
+                </div>
+                <div class="form-action-area">
+                    <button type="submit" class="btn-create" onclick="btnLog('Creating Note...', 'navy')">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="table-side">
+        <div class="status-btns">
+            <button class="btn-status bg-primary" onclick="btnLog('Action: Active', 'blue')"><i class="fa fa-check"></i> Active</button>
+            <button class="btn-status" style="background:#f0ad4e;" onclick="btnLog('Action: In-Active', 'orange')"><i class="fa fa-times"></i> In-Active</button>
+            <button class="btn-status" style="background:#d9534f;" onclick="btnLog('Action: Delete', 'red')"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+        
+        <table class="erp-table">
+            <thead>
+                <tr class="red-line-top">
+                    <th width="40"><input type="checkbox" onclick="btnLog('Select All Checked', 'black')"></th>
+                    <th>S.N.</th>
+                    <th>REG.NO.</th>
+                    <th>CUSTOMER NOTES</th>
+                    <th>STATUS</th>
+                    <th width="40"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="6">No Customer Notes data found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // 1. Console Log Function
+    function btnLog(msg, color) {
+        console.log(`%c [ERP-192] %c ${msg}`, 
+        `color: white; background: ${color}; padding: 3px 8px; border-radius: 4px; font-weight: bold;`, 
+        "color: #111; font-weight: bold;");
+    }
+
+    // 2. Filter/Toggle Function (Hide/Show Form)
+    function toggleForm() {
+        const wrapper = document.getElementById('notesFormWrapper');
+        if (wrapper.style.display === "none") {
+            wrapper.style.display = "block";
+            btnLog("Notes Form: Displayed", "green");
+        } else {
+            wrapper.style.display = "none";
+            btnLog("Notes Form: Hidden", "red");
+        }
+    }
+
+    // 3. PHP Ready Form Submission Logic
+    document.getElementById('customerNotesForm').onsubmit = function(e) {
+        // e.preventDefault(); // Filhaal alert dekhne ke liye isko uncomment kar sakte hain
+        const regno = document.getElementsByName('regno')[0].value;
+        const sub = document.getElementsByName('subject')[0].value;
+
+        if(!regno || !sub) {
+            alert("Please fill required fields (REG.NO. and SUB)");
+            return false;
+        }
+
+        btnLog("Form data ready for PHP processing", "purple");
+        // alert("Note created successfully!");
+    };
+
+    // Load Check
+    window.onload = function() {
+        btnLog("ERP 192 Page Initialized", "black");
+    };
+</script>
+
+</body>
+</html>
