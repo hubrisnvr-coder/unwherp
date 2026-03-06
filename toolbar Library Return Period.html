@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 208/209 - Return Period Over</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header Section */
+        .page-header { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .gear-icon { position: absolute; right: 15px; top: 10px; color: #f0ad4e; font-size: 18px; cursor: pointer; }
+
+        /* Navigation Bar */
+        .nav-wrap { background: #fff; padding: 10px; border-bottom: 1px solid #ddd; display: flex; justify-content: center; gap: 4px; flex-wrap: wrap; }
+        .btn-erp { font-size: 10px; padding: 5px 12px; border-radius: 4px; border: none; color: #fff !important; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #5cb85c; }
+
+        /* Action Bar (Reminder Section) */
+        .action-bar { padding: 15px 20px; display: flex; align-items: center; gap: 15px; }
+        .to-label { background: #337ab7; color: white; padding: 3px 8px; border-radius: 3px; font-weight: bold; }
+        .check-group { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #666; }
+        .btn-reminder { background: #337ab7; color: white; border: none; padding: 4px 12px; border-radius: 4px; font-size: 11px; display: flex; align-items: center; gap: 5px; }
+
+        /* Custom Tabs Styling */
+        .custom-tabs { margin: 0 20px; border-bottom: 1px solid #ddd; display: flex; gap: 5px; }
+        .tab-item { padding: 8px 15px; border: 1px solid #ddd; border-bottom: none; border-radius: 5px 5px 0 0; cursor: pointer; background: #f9f9f9; display: flex; align-items: center; gap: 8px; font-weight: bold; color: #666; transition: 0.3s; }
+        .tab-item.active { background: #fff; color: #337ab7; border-top: 3px solid #5cb85c; margin-bottom: -1px; }
+        .badge-count { background: #f0ad4e; color: white; border-radius: 50%; padding: 1px 6px; font-size: 10px; }
+
+        /* Table Styling */
+        .table-title { text-align: center; color: #337ab7; font-weight: bold; margin: 20px 0 10px 0; font-size: 12px; }
+        .table-container { background: #fff; border: 1px solid #ddd; margin: 0 20px 20px 20px; overflow-x: auto; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .erp-table { width: 100%; border-collapse: collapse; min-width: 900px; }
+        .erp-table th { background: #d9edf7; color: #31708f; border: 1px solid #bce8f1; padding: 10px; text-align: center; font-weight: bold; text-transform: uppercase; }
+        .erp-table td { border: 1px solid #eee; padding: 12px; text-align: center; color: #777; }
+        .red-line { border-bottom: 2px solid red; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:#337ab7;">Library Manager</strong> <span style="color:#999;">» Return Period Over</span>
+    <i class="fa fa-cog gear-icon" onclick="erpLog('Settings Clicked', '#f0ad4e')"></i>
+</div>
+
+<div class="nav-wrap">
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Book Detail')"><i class="fa fa-book"></i> Book Detail</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Issue History')"><i class="fa fa-history"></i> Issue History</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Membership')"><i class="fa fa-users"></i> Membership</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Students Member')"><i class="fa fa-user-graduate"></i> Students Member</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Staffs Member')"><i class="fa fa-user-tie"></i> Staffs Member</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Student Request')"><i class="fa fa-user-plus"></i> Student Request</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Staff Request')"><i class="fa fa-user-tag"></i> Staff Request</button>
+    <button class="btn-erp bg-green" onclick="erpLog('Nav: Return Period Active')"><i class="fa fa-clock"></i> Return Period Over</button>
+</div>
+
+<div class="action-bar">
+    <span class="to-label">To</span>
+    <div class="check-group">
+        <input type="checkbox" id="checkStudent" name="target_student"> <label for="checkStudent">Student</label>
+        <input type="checkbox" id="checkStaff" name="target_staff"> <label for="checkStaff">Staff</label>
+    </div>
+    <button class="btn-reminder" onclick="erpLog('Reminder Sent Successfully!', '#5cb85c')">
+        <i class="fa fa-envelope"></i> Send Reminder
+    </button>
+</div>
+
+<div class="custom-tabs">
+    <div id="tabStudent" class="tab-item active" onclick="switchTab('student')">
+        <i class="fa fa-users" style="color:#5cb85c;"></i> Student Return Period Over <span class="badge-count">0</span>
+    </div>
+    <div id="tabStaff" class="tab-item" onclick="switchTab('staff')">
+        <i class="fa fa-user-tie" style="color:#f0ad4e;"></i> Staff Return Period Over <span class="badge-count">0</span>
+    </div>
+</div>
+
+<div id="contentStudent">
+    <div class="table-title">
+        <i class="fa fa-list"></i> Student Book Return Over Period List
+    </div>
+    <div class="table-container">
+        <table class="erp-table">
+            <thead>
+                <tr class="red-line">
+                    <th style="width: 50px;">S.N.</th>
+                    <th>REG.NO.</th>
+                    <th>MEMBER NAME</th>
+                    <th>REF. NO.</th>
+                    <th>BOOK NAME</th>
+                    <th>ISSUED ON</th>
+                    <th>DUE DATE</th>
+                    <th>DAY</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="8">Student Book Return Over Period Record Not Found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="contentStaff" class="hidden">
+    <div class="table-title">
+        <i class="fa fa-list"></i> Staff Book Return Over Period List
+    </div>
+    <div class="table-container">
+        <table class="erp-table">
+            <thead>
+                <tr class="red-line">
+                    <th style="width: 50px;">S.N.</th>
+                    <th>REG.NO.</th>
+                    <th>MEMBER NAME</th>
+                    <th>REF. NO.</th>
+                    <th>BOOK NAME</th>
+                    <th>ISSUED ON</th>
+                    <th>DUE DATE</th>
+                    <th>DAY</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="8">Staff Book Return Over Period Record Not Found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    /**
+     * Logic to switch between Student and Staff Tabs
+     */
+    function switchTab(type) {
+        const tabStudent = document.getElementById('tabStudent');
+        const tabStaff = document.getElementById('tabStaff');
+        const contentStudent = document.getElementById('contentStudent');
+        const contentStaff = document.getElementById('contentStaff');
+
+        if (type === 'student') {
+            tabStudent.classList.add('active');
+            tabStaff.classList.remove('active');
+            contentStudent.classList.remove('hidden');
+            contentStaff.classList.add('hidden');
+            erpLog('Switched to Student List');
+        } else {
+            tabStaff.classList.add('active');
+            tabStudent.classList.remove('active');
+            contentStaff.classList.remove('hidden');
+            contentStudent.classList.add('hidden');
+            erpLog('Switched to Staff List');
+        }
+    }
+
+    /**
+     * Professional Console Logger
+     */
+    function erpLog(message, color = "#337ab7") {
+        console.log(`%c [ERP-Library] %c ${message}`, 
+        `color: white; background: ${color}; padding: 2px 8px; border-radius: 3px; font-weight: bold;`, 
+        "color: #000; font-weight: 500;");
+    }
+
+    window.onload = function() {
+        erpLog("ERP 208/209 Merged Module Loaded Successfully");
+    };
+</script>
+
+</body>
+</html>
