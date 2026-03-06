@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 174 - Statement of Account</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header & Settings */
+        .page-header-main { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .settings-gear { 
+            position: absolute; right: 15px; top: 6px; color: #f0ad4e; font-size: 18px; cursor: pointer; 
+            border: 1px solid #f0ad4e; border-radius: 4px; padding: 2px 6px; background: #fff8ee; 
+        }
+
+        /* Navigation Buttons */
+        .nav-container { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
+        .erp-btn {
+            display: inline-block; margin: 2px; font-size: 11px; padding: 5px 12px; border-radius: 4px;
+            color: #ffffff !important; border: none; cursor: pointer; text-decoration: none !important; font-weight: 500;
+            opacity: 0.65; transition: all 0.2s;
+        }
+        .erp-btn.active { opacity: 1; transform: scale(1.05); box-shadow: 0 2px 4px rgba(0,0,0,0.2); border: 1px solid #000; }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+
+        /* Yellow Warning Alert */
+        .warning-strip { background-color: #fcf8e3; border: 1px solid #faebcc; color: #8a6d3b; padding: 10px 15px; margin: 15px; border-radius: 4px; position: relative; }
+        .close-alert { position: absolute; right: 10px; top: 8px; cursor: pointer; opacity: 0.5; }
+
+        /* Filter Section */
+        .filter-wrapper { margin: 15px; border: 1px solid #c8d9e2; border-radius: 4px; background: #fff; }
+        .filter-header { 
+            background: #fff; padding: 8px; text-align: center; color: #337ab7; 
+            cursor: pointer; font-weight: bold; border-bottom: 1px solid #eee; font-size: 12px;
+        }
+        .filter-content { display: none; padding: 20px; background: #f9f9f9; }
+        
+        .label-box { 
+            background: #eee; border: 1px solid #ddd; padding: 6px; font-weight: bold; 
+            text-align: right; display: flex; align-items: center; justify-content: flex-end;
+            text-transform: uppercase; height: 32px;
+        }
+        .input-box { border-radius: 0; border: 1px solid #ddd; height: 32px; font-size: 11px; width: 100%; }
+
+        /* Statement Print Header */
+        .statement-header { text-align: center; margin-top: 30px; margin-bottom: 20px; }
+        .univ-name { font-size: 22px; font-weight: bold; color: #333; margin-bottom: 0; }
+        .univ-sub { font-size: 14px; color: #666; }
+        .statement-title { font-size: 18px; font-weight: bold; color: #333; margin-top: 15px; text-transform: uppercase; }
+
+        /* Print Button */
+        .print-btn-wrapper { text-align: right; margin: 0 15px 10px 15px; }
+        .btn-print { background-color: #337ab7; color: white; border: none; padding: 5px 15px; border-radius: 4px; font-weight: bold; }
+
+        /* Statement Table */
+        .table-container { background: #fff; margin: 0 15px; border: 1px solid #ddd; }
+        .erp-table { width: 100%; border-collapse: collapse; }
+        .erp-table thead th { 
+            background-color: #eef5f9; color: #337ab7; border: 1px solid #dee2e6; 
+            padding: 8px; text-align: center; font-size: 11px;
+        }
+        .erp-table tbody td { border: 1px solid #dee2e6; padding: 8px; text-align: center; color: #666; }
+        
+        .red-line-top { border-top: 2px solid red !important; }
+
+        /* Orange Grand Total Footer */
+        .grand-total-row { background-color: #ff5722 !important; color: white !important; font-weight: bold; }
+        .grand-total-row td { border: 1px solid #e64a19 !important; }
+
+        .btn-filter-submit { background-color: #337ab7; color: white; border: none; padding: 8px 20px; border-radius: 4px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="color:#337ab7;">Ledger Transaction Manager</strong> <span style="color:#999;">» Detail</span>
+    <div class="settings-gear" onclick="handleAction(this, 'Settings Gear')"><i class="fa fa-cog"></i></div>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Student Fee')"><i class="fa fa-users"></i> Student Fee</button>
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Staff Payroll')"><i class="fa fa-user-tie"></i> Staff Payroll</button>
+    <button class="erp-btn bg-green active" onclick="handleAction(this, 'Ledger')"><i class="fa fa-book"></i> Ledger</button>
+    <button class="erp-btn bg-green" onclick="handleAction(this, 'Transactions')"><i class="fa fa-exchange-alt"></i> Transactions</button>
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Bank')"><i class="fa fa-university"></i> Bank</button>
+</div>
+
+<div class="warning-strip" id="alertBox">
+    <i class="fa fa-exclamation-triangle"></i> Filter Statement with your Target Ledger
+    <span class="close-alert" onclick="handleAction(null, 'Close Alert'); document.getElementById('alertBox').style.display='none';">×</span>
+</div>
+
+<div class="nav-container" style="background:#f9f9f9; padding: 5px;">
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Detail View')"><i class="fa fa-list"></i> Detail</button>
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Add Transaction')"><i class="fa fa-plus"></i> Transaction</button>
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Multi Adjustment')"><i class="fa fa-sync"></i> Multi Adjustment Transaction</button>
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Acc To Acc')"><i class="fa fa-exchange-alt"></i> Acc To Acc</button>
+    <button class="erp-btn bg-green active" onclick="handleAction(this, 'Ledgers List')"><i class="fa fa-book-open"></i> Ledgers</button>
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Acc Group')"><i class="fa fa-layer-group"></i> Acc Group</button>
+</div>
+
+<div class="filter-wrapper">
+    <div class="filter-header" onclick="toggleFilter()">
+        <i class="fa fa-search ms-2"></i> Filter Transaction <i class="fa fa-chevron-down ms-2" id="filterIcon"></i>
+    </div>
+    <div class="filter-content" id="filterBox">
+        <form id="statementForm" action="statement_report.php" method="GET">
+            <div class="row g-0 align-items-center">
+                <div class="col-md-1 label-box">LEDGER</div>
+                <div class="col-md-4">
+                    <select name="target_ledger" class="form-select input-box">
+                        <option value="">Choose a Ledger...</option>
+                    </select>
+                </div>
+                
+                <div class="col-md-1 label-box">DATE RANGE</div>
+                <div class="col-md-4 d-flex">
+                    <input type="text" name="date_from" class="form-control input-box" placeholder="YYYY-MM-DD">
+                    <span class="label-box" style="width:40px; justify-content:center;"><i class="fa fa-exchange-alt"></i></span>
+                    <input type="text" name="date_to" class="form-control input-box" placeholder="YYYY-MM-DD">
+                </div>
+
+                <div class="col-md-2 text-center">
+                    <button type="submit" class="btn-filter-submit" onclick="handleAction(null, 'Filter Submit')"><i class="fa fa-filter"></i> Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="print-btn-wrapper">
+    <button class="btn-print" onclick="window.print(); handleAction(null, 'Print Statement');"><i class="fa fa-print"></i> Print</button>
+</div>
+
+<div class="statement-header">
+    <div class="univ-name">UNIVERSITY ERP</div>
+    <div class="univ-sub">Roorkee</div>
+    <div class="univ-sub">8888888888 , roorkee@gmail.com</div>
+    <div class="statement-title">STATEMENT OF ACCOUNT</div>
+</div>
+
+<div class="table-container">
+    <div class="table-responsive">
+        <table class="erp-table">
+            <thead>
+                <tr style="background-color: #fff;">
+                   <th colspan="3" style="text-align:left; border-right:none; color: #337ab7;">DATE:</th>
+                   <th colspan="3" style="text-align:right; border-left:none; color: #337ab7;">A/C NO. / NAME :</th>
+                </tr>
+                <tr class="red-line-top">
+                    <th width="5%">SN</th>
+                    <th width="12%">DATE</th>
+                    <th width="43%">DESCRIPTION</th>
+                    <th width="13%">DEBIT (+)</th>
+                    <th width="13%">CREDIT (-)</th>
+                    <th width="14%">BALANCE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="6" style="padding:15px; color:#888; text-align:left;">No Ledger Transaction data found. Please Filter Ledger Transaction to show.</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="grand-total-row">
+                    <td colspan="3" style="text-align:right; padding-right:15px;">Grand Total:</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<script>
+    // 1. Console & Active State Handler
+    function handleAction(element, btnName) {
+        console.log("%c [ERP-174 LOG]: " + btnName + " Button Triggered", "color: #fff; background: #337ab7; padding: 4px 10px; border-radius: 4px; font-weight: bold;");
+        
+        if (element && element.classList.contains('erp-btn')) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.erp-btn').forEach(b => b.classList.remove('active'));
+            element.classList.add('active');
+        }
+    }
+
+    // 2. Filter Toggle Logic
+    function toggleFilter() {
+        const box = document.getElementById('filterBox');
+        const icon = document.getElementById('filterIcon');
+        if (box.style.display === "none" || box.style.display === "") {
+            box.style.display = "block";
+            icon.className = "fa fa-chevron-up ms-2";
+            handleAction(null, "Filter Section Expanded");
+        } else {
+            box.style.display = "none";
+            icon.className = "fa fa-chevron-down ms-2";
+            handleAction(null, "Filter Section Collapsed");
+        }
+    }
+
+    // Form Submit Console Log
+    document.getElementById('statementForm').onsubmit = function(e) {
+        e.preventDefault();
+        handleAction(null, "Fetching Statement Records...");
+    };
+
+    window.onload = function() {
+        console.log("ERP 174 - Statement of Account Page Loaded.");
+    };
+</script>
+
+</body>
+</html>
