@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 177 - Student Attendance Detail (Enhanced)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Text size badhaya gaya hai readability ke liye */
+        body { background-color: #f4f7f6; font-size: 13px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        .page-header-main { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .settings-gear { 
+            position: absolute; right: 20px; top: 8px; color: #f0ad4e; font-size: 20px; cursor: pointer; 
+            border: 1px solid #f0ad4e; border-radius: 4px; padding: 4px 8px; background: #fff8ee; 
+        }
+
+        .nav-container { background: #fff; padding: 12px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        
+        /* Buttons styling */
+        .erp-btn {
+            display: inline-block; font-size: 12px; padding: 6px 14px; border-radius: 4px;
+            color: #fff !important; border: none; cursor: pointer; text-decoration: none !important; font-weight: 500;
+            transition: 0.3s;
+        }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+        .erp-btn:hover { opacity: 0.8; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .active-tab { border: 2px solid #000; font-weight: bold; }
+
+        /* Filter UI */
+        .filter-wrapper { margin: 15px; border: 1px solid #c8d9e2; border-radius: 4px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .filter-header { 
+            background: #fff; padding: 10px; text-align: center; color: #337ab7; 
+            cursor: pointer; font-weight: bold; font-size: 14px; border-bottom: 1px solid #eee;
+        }
+        .filter-content { display: block; padding: 20px; background: #f9f9f9; }
+        
+        .f-label { background: #eee; border: 1px solid #ddd; padding: 6px; font-weight: bold; text-align: right; width: 140px; text-transform: uppercase; flex-shrink: 0; font-size: 11px; }
+        .f-input-box { border: 1px solid #ddd; height: 34px; font-size: 13px; width: 100%; padding-left: 8px; outline: none; }
+        .f-input-box:focus { border-color: #337ab7; }
+        .f-sep { background: #eee; border: 1px solid #ddd; padding: 5px; width: 40px; text-align: center; line-height: 22px; }
+
+        /* Table Styling */
+        .table-container { background: #fff; margin: 0 15px; border: 1px solid #ddd; overflow-x: auto; }
+        .erp-table { width: 100%; border-collapse: collapse; min-width: 1500px; }
+        .erp-table thead th { 
+            background-color: #eef5f9; color: #337ab7; border: 1px solid #dee2e6; 
+            padding: 8px 4px; text-align: center; font-size: 11px; white-space: nowrap;
+        }
+        .erp-table tbody td { border: 1px solid #dee2e6; padding: 8px; text-align: center; color: #555; }
+        .red-line-top { border-top: 3px solid red !important; }
+
+        /* Action Buttons */
+        .status-bar { margin: 15px; text-align: center; }
+        .btn-status { font-size: 12px; padding: 6px 15px; color: #fff; border-radius: 4px; margin: 0 5px; border: none; cursor: pointer; }
+        .btn-filter-submit { background-color: #1a4d80; color: white; border: none; padding: 10px 30px; border-radius: 4px; font-weight: bold; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="font-size: 16px; color:#337ab7;">Student Attendance Manager</strong> <span style="color:#999;">» Detail View</span>
+    <div class="settings-gear" onclick="consoleLog('System Settings Gear')"><i class="fa fa-cog"></i></div>
+</div>
+
+<div class="nav-container">
+    <div>
+        <button class="erp-btn bg-green active-tab" onclick="consoleLog('View Attendance Detail')"><i class="fa fa-list"></i> Attendance Detail</button>
+        <button class="erp-btn bg-blue" onclick="consoleLog('Add/Edit Student Attendance')"><i class="fa fa-plus"></i> Add / Edit Student Attendance</button>
+        <button class="erp-btn bg-blue" onclick="consoleLog('Attendance Report Download')"><i class="fa fa-file-alt"></i> Student Attendance Report</button>
+    </div>
+    <div>
+        <button class="erp-btn bg-green" onclick="consoleLog('Regular Attendance View')"><i class="fa fa-calendar-check"></i> Student Regular Attendance</button>
+        <button class="erp-btn bg-blue" onclick="consoleLog('Subject Wise Attendance')"><i class="fa fa-book"></i> Student Subject Wise Attendance</button>
+        <button class="erp-btn bg-blue" onclick="consoleLog('Staff Attendance Manager')"><i class="fa fa-user-tie"></i> Staff Attendance</button>
+    </div>
+</div>
+
+<div class="filter-wrapper">
+    <div class="filter-header" onclick="toggleFilter()">
+        <i class="fa fa-chevron-down me-2" id="filterIcon"></i> FILTER STUDENT ATTENDANCE DATA <i class="fa fa-filter ms-2"></i>
+    </div>
+    <div class="filter-content" id="filterBox">
+        <form id="attendanceForm">
+            <div class="row g-3">
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">REG.NO.</div>
+                    <input type="text" name="reg_no" class="f-input-box" placeholder="Enter Registration No.">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">REG. DATE</div>
+                    <input type="date" class="f-input-box">
+                    <div class="f-sep">to</div>
+                    <input type="date" class="f-input-box">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">STATUS</div>
+                    <select class="f-input-box"><option>All Academic Status</option></select>
+                    <select class="f-input-box ms-1"><option>Active</option></select>
+                </div>
+
+                <div class="col-md-6 d-flex">
+                    <div class="f-label">PROGRAM / CLASS</div>
+                    <select class="f-input-box"><option>-- Select Program --</option></select>
+                </div>
+                <div class="col-md-6 d-flex">
+                    <div class="f-label">SEMESTER</div>
+                    <select class="f-input-box"><option>-- Select Semester --</option></select>
+                </div>
+
+                <div class="col-md-12 d-flex">
+                    <div class="f-label">STUDENT NAME</div>
+                    <input type="text" class="f-input-box" placeholder="First Name">
+                    <input type="text" class="f-input-box mx-1" placeholder="Middle Name">
+                    <input type="text" class="f-input-box" placeholder="Last Name">
+                </div>
+
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">YEAR / MONTH</div>
+                    <select class="f-input-box"><option>2024</option></select>
+                    <select class="f-input-box ms-1"><option>March</option></select>
+                </div>
+
+                <div class="col-md-8 text-end">
+                    <button type="reset" class="btn btn-secondary btn-sm me-2" onclick="consoleLog('Filter Form Reset')">Reset</button>
+                    <button type="submit" class="btn-filter-submit" onclick="consoleLog('Attendance Filter Submitted')"><i class="fa fa-search"></i> FETCH DATA</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="status-bar">
+    <button class="btn-status bg-primary" onclick="consoleLog('Status Changed: ACTIVE')"><i class="fa fa-check-circle"></i> Mark Active</button>
+    <button class="btn-status" style="background:#f0ad4e;" onclick="consoleLog('Status Changed: INACTIVE')"><i class="fa fa-pause-circle"></i> Mark In-Active</button>
+    <button class="btn-status" style="background:#d9534f;" onclick="consoleLog('Action: DELETE SELECTED RECORDS')"><i class="fa fa-trash-alt"></i> Delete Selected</button>
+</div>
+
+<div class="table-container">
+    <table class="erp-table">
+        <thead>
+            <tr class="red-line-top">
+                <th><input type="checkbox" onclick="consoleLog('Master Checkbox Toggled')"></th>
+                <th>S.N.</th>
+                <th>YEAR</th>
+                <th>MONTH</th>
+                <th>REG.NO.</th>
+                <th>STUDENT NAME</th>
+                <script>
+                    for(let i=1; i<=31; i++) {
+                        document.write(`<th title="Date ${i}">${i}</th>`);
+                    }
+                </script>
+                <th style="background:#e8f5e9">PRES.</th>
+                <th style="background:#ffebee">ABS.</th>
+                <th style="background:#fff3e0">LATE</th>
+                <th style="background:#e3f2fd">LEAVE</th>
+                <th style="background:#f3e5f5">HOLI.</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="45" style="padding:40px; font-size: 16px; color:#999; text-align:center; background:#fff;">
+                    <i class="fa fa-info-circle me-2"></i> No Attendance Record Found. Please use the filter above.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Console Function with Colors
+    function consoleLog(msg) {
+        console.log(`%c [ERP SYSTEM] %c ${msg}`, 
+            "color: white; background: #1a4d80; padding: 4px; border-radius: 3px; font-weight: bold;", 
+            "color: #1a4d80; font-weight: bold; border: 1px solid #1a4d80; padding: 3px;");
+    }
+
+    // Filter Toggle with Icon change
+    function toggleFilter() {
+        const box = document.getElementById('filterBox');
+        const icon = document.getElementById('filterIcon');
+        if (box.style.display === "none") {
+            box.style.display = "block";
+            icon.className = "fa fa-chevron-down me-2";
+            consoleLog("Filter Expanded");
+        } else {
+            box.style.display = "none";
+            icon.className = "fa fa-chevron-up me-2";
+            consoleLog("Filter Collapsed");
+        }
+    }
+
+    // Prevent Form reload for demo and log data
+    document.getElementById('attendanceForm').onsubmit = function(e) {
+        e.preventDefault();
+        consoleLog("Executing Database Query for Attendance...");
+    };
+
+    window.onload = function() {
+        consoleLog("ERP 177 Initialized & Ready");
+    };
+</script>
+
+</body>
+</html>
