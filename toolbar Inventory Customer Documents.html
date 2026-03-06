@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 191 - Customer Documents Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 13px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header */
+        .page-header-main { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
+        
+        /* Navigation Tabs */
+        .nav-container { background: #fff; padding: 8px; border-bottom: 1px solid #ddd; display: flex; justify-content: center; gap: 5px; }
+        .erp-btn { font-size: 12px; padding: 6px 12px; border-radius: 4px; color: #fff !important; border: none; font-weight: 600; cursor: pointer; }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+
+        /* Layout Structure */
+        .main-content { padding: 15px; display: flex; gap: 20px; flex-wrap: wrap; }
+        .form-side { flex: 1; min-width: 350px; background: #fff; border: 1px solid #c8d9e2; border-radius: 4px; }
+        .table-side { flex: 2; min-width: 500px; }
+
+        /* Section Titles */
+        .section-title { color: #337ab7; padding: 15px; border-bottom: 1px solid #eee; font-weight: bold; font-size: 14px; text-align: center; cursor: pointer; }
+        .section-title:hover { background: #f9f9f9; }
+
+        /* Form Styling */
+        .f-row { display: flex; align-items: stretch; margin-bottom: 5px; padding: 0 15px; }
+        .f-label { background: #eee; border: 1px solid #ddd; padding: 8px; font-weight: bold; text-align: right; width: 140px; text-transform: uppercase; font-size: 11px; }
+        .f-input-box { border: 1px solid #ddd; height: 35px; width: 100%; padding: 0 10px; outline: none; }
+        .required-line { border-left: 2px solid red; }
+
+        /* Table Styling */
+        .status-btns { text-align: center; margin-bottom: 10px; }
+        .btn-status { font-size: 11px; padding: 4px 12px; color: #fff; border-radius: 4px; border: none; font-weight: bold; margin: 0 2px; }
+        
+        .erp-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #ddd; }
+        .erp-table thead th { 
+            background-color: #eef5f9; color: #337ab7; border: 1px solid #dee2e6; 
+            padding: 10px; text-align: center; font-size: 12px; text-transform: uppercase; 
+        }
+        .red-line-top { border-top: 3px solid red !important; }
+        .erp-table tbody td { border: 1px solid #dee2e6; padding: 15px; text-align: center; color: #888; font-style: italic; }
+
+        /* Action Buttons */
+        .btn-upload { background-color: #1a4d80; color: white; border: none; padding: 8px 25px; border-radius: 4px; font-weight: bold; float: right; margin: 15px; }
+        .hidden-form { display: none; }
+
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="color:#337ab7; font-size: 16px;">Customer Documents Manager</strong> <span style="color:#999;">» Detail</span>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-blue" onclick="btnLog('Detail Tab Clicked', 'blue')"><i class="fa fa-list"></i> Detail</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Registration Tab Clicked', 'blue')"><i class="fa fa-plus-circle"></i> Registration</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Bulk Registration Clicked', 'blue')"><i class="fa fa-upload"></i> Bulk Registration</button>
+    <button class="erp-btn bg-green" onclick="btnLog('Documents Tab Active', 'green')"><i class="fa fa-file-alt"></i> Documents</button>
+    <button class="erp-btn bg-blue" onclick="btnLog('Notes Tab Clicked', 'blue')"><i class="fa fa-sticky-note"></i> Notes</button>
+</div>
+
+<div class="main-content">
+    
+    <div class="form-side">
+        <div class="section-title" onclick="toggleForm()">
+            <i class="fa fa-search me-1"></i> Create Customer Documents
+        </div>
+        <div id="documentFormContent">
+            <form action="upload_doc.php" method="POST" enctype="multipart/form-data" id="docForm">
+                <div class="py-3">
+                    <div class="f-row">
+                        <div class="f-label">REG.NO.</div>
+                        <input type="text" name="regno" class="f-input-box required-line" placeholder="Enter Registration No.">
+                    </div>
+                    <div class="f-row">
+                        <div class="f-label">TITLE</div>
+                        <input type="text" name="doc_title" class="f-input-box required-line" placeholder="Document Title">
+                    </div>
+                    <div class="f-row">
+                        <div class="f-label">SELECT FILE</div>
+                        <input type="file" name="customer_file" class="f-input-box" style="padding-top: 5px;">
+                    </div>
+                    <div class="f-row">
+                        <div class="f-label">DESCRIPTION</div>
+                        <textarea name="description" class="f-input-box" style="height: 80px; padding: 10px;"></textarea>
+                    </div>
+                </div>
+                <div class="clearfix" style="background: #f9f9f9; border-top: 1px solid #eee;">
+                    <button type="submit" class="btn-upload" onclick="btnLog('Uploading Document...', 'navy')">upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="table-side">
+        <div class="status-btns">
+            <button class="btn-status bg-primary" onclick="btnLog('Set Status: Active', 'blue')"><i class="fa fa-check"></i> Active</button>
+            <button class="btn-status" style="background:#f0ad4e;" onclick="btnLog('Set Status: In-Active', 'orange')"><i class="fa fa-times"></i> In-Active</button>
+            <button class="btn-status" style="background:#d9534f;" onclick="btnLog('Action: Delete', 'red')"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+        
+        <table class="erp-table">
+            <thead>
+                <tr class="red-line-top">
+                    <th width="40"><input type="checkbox" onclick="btnLog('Select All Documents', 'black')"></th>
+                    <th>S.N.</th>
+                    <th>REG.NO.</th>
+                    <th>CUSTOMER DOCUMENTS</th>
+                    <th>STATUS</th>
+                    <th width="40"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="6">No Customer Documents data found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // 1. Console Log Helper
+    function btnLog(msg, color) {
+        console.log(`%c [ERP-191] %c ${msg}`, 
+        `color: white; background: ${color}; padding: 3px 8px; border-radius: 4px; font-weight: bold;`, 
+        "color: #111; font-weight: bold;");
+    }
+
+    // 2. Toggle Form Section (Hide/Show)
+    function toggleForm() {
+        const content = document.getElementById('documentFormContent');
+        if (content.style.display === "none") {
+            content.style.display = "block";
+            btnLog("Form Section: Shown", "green");
+        } else {
+            content.style.display = "none";
+            btnLog("Form Section: Hidden", "red");
+        }
+    }
+
+    // 3. Form Submit Simulation (For PHP connectivity)
+    document.getElementById('docForm').onsubmit = function(e) {
+        e.preventDefault();
+        const regno = document.getElementsByName('regno')[0].value;
+        if(!regno) {
+            alert("Please enter REG.NO.");
+            return;
+        }
+        btnLog("Submitting Form to upload_doc.php...", "purple");
+        alert("Success: Document data sent to server!");
+    };
+
+    // Initialization
+    window.onload = function() {
+        btnLog("ERP 191 - Documents Manager Loaded", "black");
+    };
+</script>
+
+</body>
+</html>
