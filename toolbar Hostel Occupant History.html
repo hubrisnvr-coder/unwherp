@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 225 - Resident History</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --erp-blue: #337ab7;
+            --erp-green: #5cb85c;
+            --erp-dark-blue: #2e6da4;
+            --erp-bg: #f4f7f6;
+            --label-bg: #eeeeee;
+            --table-header-bg: #d9edf7;
+            --border-color: #ddd;
+        }
+
+        body { background-color: var(--erp-bg); font-size: 13px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Top Header */
+        .page-header { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid var(--border-color); position: relative; }
+        .gear-icon { position: absolute; right: 20px; top: 12px; color: #f0ad4e; font-size: 18px; cursor: pointer; }
+
+        /* Module Navigation */
+        .module-nav { background: #fff; padding: 10px; display: flex; justify-content: flex-end; gap: 5px; border-bottom: 1px solid var(--border-color); padding-right: 50px; }
+        .btn-mod { font-size: 12px; padding: 4px 12px; border-radius: 4px; color: #fff !important; text-decoration: none; display: flex; align-items: center; gap: 5px; border: none; }
+        
+        /* Sub Navigation Tabs */
+        .sub-nav { background: #fff; padding: 10px; display: flex; justify-content: center; gap: 5px; border-bottom: 1px solid var(--border-color); }
+        .btn-sub { font-size: 12px; padding: 5px 15px; border-radius: 4px; color: #fff !important; border: none; display: flex; align-items: center; gap: 6px; }
+
+        .bg-blue { background-color: var(--erp-blue); }
+        .bg-green { background-color: var(--erp-green); }
+
+        /* Filter Section */
+        .filter-section { margin: 20px; background: #fff; border: 1px solid #bce8f1; border-radius: 4px; }
+        .filter-header { background: #fff; padding: 10px; text-align: center; color: var(--erp-blue); font-weight: bold; cursor: pointer; border-bottom: 1px solid #eee; font-size: 15px; }
+        .filter-body { padding: 20px; transition: all 0.3s ease; }
+        
+        /* Input Styling */
+        .input-row { display: flex; align-items: stretch; margin-bottom: 12px; }
+        .label-text { background: var(--label-bg); padding: 8px; border: 1px solid #ccc; font-weight: bold; width: 110px; text-align: center; color: #000; text-transform: uppercase; font-size: 11px; display: flex; align-items: center; justify-content: center; }
+        .field-input { flex-grow: 1; border: 1px solid #ccc; padding: 8px; outline: none; height: 38px; font-size: 13px; }
+        
+        .btn-filter-submit { background: var(--erp-dark-blue); color: white; border: none; padding: 8px 25px; border-radius: 4px; float: right; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+
+        /* List Title */
+        .list-header-title { text-align: center; font-weight: bold; color: var(--erp-blue); margin: 20px 0 10px 0; display: block; font-size: 15px; text-transform: capitalize; }
+        
+        /* Information Bar */
+        .info-msg-bar { background: var(--erp-blue); color: #fff; padding: 10px 15px; margin: 10px 20px; font-weight: 500; font-size: 13px; }
+        
+        /* Table Styling */
+        .table-container { background: #fff; border: 1px solid var(--border-color); margin: 0 20px 30px 20px; overflow-x: auto; }
+        .erp-table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        .erp-table thead tr { border-bottom: 2px solid #ff0000; }
+        .erp-table th { background: var(--table-header-bg); color: #31708f; padding: 12px; text-align: center; border: 1px solid #bce8f1; font-weight: bold; text-transform: uppercase; font-size: 11px; }
+        .erp-table td { padding: 12px; border: 1px solid #eee; text-align: center; color: #555; font-size: 12px; }
+
+        .hidden { display: none; }
+        .clearfix::after { content: ""; clear: both; display: table; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:var(--erp-blue);">Resident Manager</strong> <span style="color:#999;">» History</span>
+    <i class="fa fa-cog gear-icon" onclick="logAction('Settings Module Clicked', 'orange')"></i>
+</div>
+
+<div class="module-nav">
+    <button class="btn-mod bg-green" onclick="logAction('Resident Module Selected')"><i class="fa fa-users"></i> Resident</button>
+    <button class="btn-mod bg-green" onclick="logAction('Hostel Module Selected')"><i class="fa fa-bed"></i> Hostel</button>
+    <button class="btn-mod bg-blue" onclick="logAction('Food & Meal Module Selected')"><i class="fa fa-utensils"></i> Food & Meal</button>
+</div>
+
+<div class="sub-nav">
+    <button class="btn-sub bg-blue" onclick="logAction('Navigating to Detail View')"><i class="fa fa-list"></i> Detail</button>
+    <button class="btn-sub bg-blue" onclick="logAction('Navigating to Registration View')"><i class="fa fa-plus"></i> Registration</button>
+    <button class="btn-sub bg-green" onclick="logAction('History View Active')"><i class="fa fa-history"></i> History</button>
+</div>
+
+<div class="filter-section">
+    <div class="filter-header" onclick="toggleFilter()">
+        <i class="fa fa-angle-double-down"></i> Filter Resident History <i class="fa fa-filter"></i>
+    </div>
+    <div id="filterArea" class="filter-body">
+        <form id="historyFilterForm" method="GET" action="history_process.php">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="input-row">
+                        <div class="label-text">Type</div>
+                        <select name="res_type" class="field-input">
+                            <option value="">Select Type</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-row">
+                        <div class="label-text">Reg No.</div>
+                        <input type="text" name="reg_no" class="field-input" placeholder="">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-row">
+                        <div class="label-text">Year</div>
+                        <select name="history_year" class="field-input">
+                            <option value="">Select Year</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-row">
+                        <div class="label-text">History Type</div>
+                        <select name="history_type" class="field-input">
+                            <option value="">Select History...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="input-row">
+                        <div class="label-text">Hostel</div>
+                        <select name="hostel_id" class="field-input">
+                            <option value="">Select Hostel...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-row">
+                        <div class="label-text">Room</div>
+                        <select name="room_id" class="field-input">
+                            <option value="">Select Room</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-row">
+                        <div class="label-text">Bed</div>
+                        <select name="bed_id" class="field-input">
+                            <option value="">Select Bed</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <button type="button" class="btn-filter-submit" onclick="logAction('Filtering Resident History Data...')">
+                    <i class="fa fa-filter"></i> Filter
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<span class="list-header-title"><i class="fa fa-list"></i> Resident History List</span>
+
+<div class="info-msg-bar">
+    Resident Record list on table. Filter Resident using the filter.
+</div>
+
+<div class="table-container">
+    <table class="erp-table">
+        <thead>
+            <tr>
+                <th style="width: 50px;">S.N.</th>
+                <th>Year</th>
+                <th>Hostel</th>
+                <th>Room</th>
+                <th>Bed</th>
+                <th>Type</th>
+                <th>Reg.No.</th>
+                <th>Name</th>
+                <th>History</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="10" style="padding: 40px; color: #999; font-style: italic;">
+                    No Resident data found. Please Filter Resident to show.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    /**
+     * Filter Toggle Logic
+     */
+    function toggleFilter() {
+        const filterArea = document.getElementById('filterArea');
+        filterArea.classList.toggle('hidden');
+        logAction(filterArea.classList.contains('hidden') ? "History Filter Collapsed" : "History Filter Expanded");
+    }
+
+    /**
+     * Console Logger for ERP 225
+     */
+    function logAction(message, color = "#337ab7") {
+        const time = new Date().toLocaleTimeString();
+        console.log(
+            `%c [ERP-225] %c ${time} %c ${message}`, 
+            `color: white; background: ${color}; padding: 2px 8px; border-radius: 3px; font-weight: bold;`, 
+            "color: #888;",
+            "color: #333; font-weight: 500;"
+        );
+    }
+
+    // Initialization Log
+    window.onload = function() {
+        logAction("Resident History Page Loaded Successfully", "#5cb85c");
+    };
+</script>
+
+</body>
+</html>
