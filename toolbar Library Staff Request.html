@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 206 - Staff Book Request List</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --erp-blue: #337ab7;
+            --erp-green: #5cb85c;
+            --erp-orange: #f0ad4e;
+            --erp-bg: #f4f7f6;
+            --table-header-bg: #d9edf7;
+        }
+
+        body { background-color: var(--erp-bg); font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header & Breadcrumb */
+        .page-header { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .gear-icon { position: absolute; right: 20px; top: 12px; color: var(--erp-orange); font-size: 18px; cursor: pointer; }
+
+        /* Navigation Menu */
+        .nav-wrap { background: #fff; padding: 12px; border-bottom: 1px solid #ddd; display: flex; justify-content: center; gap: 4px; flex-wrap: wrap; }
+        .btn-erp { font-size: 10px; padding: 5px 12px; border-radius: 4px; border: none; color: #fff !important; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+        .bg-blue { background-color: var(--erp-blue); }
+        .bg-green { background-color: var(--erp-green); }
+        .bg-orange { background-color: var(--erp-orange); }
+
+        /* Filter Section */
+        .filter-container { margin: 20px; }
+        .filter-header { color: var(--erp-blue); font-weight: bold; text-align: center; cursor: pointer; margin-bottom: 12px; font-size: 14px; text-transform: uppercase; }
+        .filter-box { background: #fff; border: 1px solid #c8d9e2; border-radius: 4px; overflow: hidden; }
+        
+        .f-row { display: flex; border-bottom: 1px solid #eee; flex-wrap: wrap; }
+        .f-group { display: flex; flex: 1; min-width: 300px; border-right: 1px solid #eee; }
+        .f-group:last-child { border-right: none; }
+        
+        .f-label { background: #f9f9f9; padding: 10px; font-weight: bold; width: 150px; text-align: right; border-right: 1px solid #eee; display: flex; align-items: center; justify-content: flex-end; font-size: 10px; text-transform: uppercase; }
+        .f-input-area { flex: 1; padding: 8px; display: flex; align-items: center; gap: 8px; }
+        .f-control { width: 100%; border: 1px solid #ddd; height: 30px; padding: 0 10px; outline: none; border-radius: 3px; font-size: 11px; transition: border 0.3s; }
+        .f-control:focus { border-color: var(--erp-blue); }
+        
+        .date-sep { color: #aaa; font-weight: bold; font-size: 16px; }
+
+        .filter-footer { background: #f9f9f9; padding: 15px; text-align: right; border-top: 1px solid #eee; }
+        .btn-filter-submit { background: var(--erp-blue); color: white; border: none; padding: 8px 25px; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; }
+
+        /* Table & Info Bar */
+        .table-title { text-align: center; color: var(--erp-blue); font-weight: bold; margin: 25px 0 10px 0; font-size: 13px; }
+        .info-bar { background: var(--erp-blue); color: #fff; padding: 10px 20px; margin: 0 20px; font-weight: bold; border-radius: 3px 3px 0 0; font-size: 11px; }
+        
+        .table-container { background: #fff; border: 1px solid #ddd; margin: 0 20px 25px 20px; overflow-x: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .erp-table { width: 100%; border-collapse: collapse; min-width: 900px; }
+        .erp-table th { background: var(--table-header-bg); color: #31708f; border: 1px solid #bce8f1; padding: 10px; text-align: center; font-weight: bold; text-transform: uppercase; }
+        .erp-table td { border: 1px solid #eee; padding: 15px; text-align: center; color: #777; font-style: italic; }
+
+        /* Utility */
+        .hidden { display: none; }
+        .rotate-icon { transform: rotate(180deg); }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:var(--erp-blue);">Staff Book Request</strong> <span style="color:#999;">» List</span>
+    <i class="fa fa-cog gear-icon" onclick="erpLog('Global Settings Opened', 'orange')"></i>
+</div>
+
+<div class="nav-wrap">
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Book Detail')"><i class="fa fa-book"></i> Book Detail</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Issue History')"><i class="fa fa-history"></i> Issue History</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Membership')"><i class="fa fa-users"></i> Membership</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Students Member')"><i class="fa fa-user-graduate"></i> Students Member</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Staffs Member')"><i class="fa fa-user-tie"></i> Staffs Member</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Student Request')"><i class="fa fa-user-plus"></i> Student Request</button>
+    <button class="btn-erp bg-green" onclick="erpLog('Nav: Staff Request Active')"><i class="fa fa-user-tag"></i> Staff Request</button>
+    <button class="btn-erp bg-orange" onclick="erpLog('Nav: Return Period Over', 'orange')"><i class="fa fa-clock"></i> Return Period Over</button>
+</div>
+
+<div class="filter-container">
+    <div class="filter-header" onclick="toggleFilter()">
+        <i class="fa fa-chevron-down toggle-arrow"></i> Filter Staff Book Request <i class="fa fa-filter"></i>
+    </div>
+    
+    <div id="filterBox" class="filter-box">
+        <form action="staff_request_backend.php" method="GET">
+            <div class="f-row">
+                <div class="f-group">
+                    <div class="f-label">REG.NO.</div>
+                    <div class="f-input-area">
+                        <input type="text" name="reg_no" class="f-control" placeholder="Enter Registration No.">
+                    </div>
+                </div>
+                <div class="f-group">
+                    <div class="f-label">JOIN DATE</div>
+                    <div class="f-input-area">
+                        <input type="date" name="join_start" class="f-control">
+                        <span class="date-sep">⇄</span>
+                        <input type="date" name="join_end" class="f-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="f-row">
+                <div class="f-group">
+                    <div class="f-label">DESIGNATION</div>
+                    <div class="f-input-area">
+                        <select name="designation" class="f-control">
+                            <option value="">Select Designation</option>
+                            <option value="professor">Professor</option>
+                            <option value="assistant_professor">Assistant Professor</option>
+                            <option value="lecturer">Lecturer</option>
+                            <option value="staff">Staff</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="f-group">
+                    <div class="f-label">STATUS</div>
+                    <div class="f-input-area">
+                        <select name="status" class="f-control">
+                            <option value="">Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-footer">
+                <button type="submit" class="btn-filter-submit" onclick="erpLog('Executing Filter Query...', 'navy')">
+                    <i class="fa fa-filter"></i> Filter
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-title">
+    <i class="fa fa-list"></i> Staff Book Request List
+</div>
+
+<div class="info-bar">
+    Staff Book Request Record list on table. Filter Staff Book Request using the filter.
+</div>
+
+<div class="table-container">
+    <table class="erp-table">
+        <thead>
+            <tr>
+                <th style="width: 60px;">S.N.</th>
+                <th>REG.NO.</th>
+                <th>STAFF NAME</th>
+                <th>DESIGNATION</th>
+                <th>REQUEST ON</th>
+                <th>BOOK</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="6">No Staff Book Request data found. Please Filter Staff Book Request to show.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    /**
+     * Console Logger for Buttons
+     */
+    function erpLog(msg, bgColor = "#337ab7") {
+        console.log(`%c [ERP-206] %c ${msg}`, 
+        `color: white; background: ${bgColor}; padding: 3px 10px; border-radius: 4px; font-weight: bold;`, 
+        "color: #333; font-weight: 500;");
+    }
+
+    /**
+     * Filter Hide/Show Logic
+     */
+    function toggleFilter() {
+        const box = document.getElementById('filterBox');
+        const arrow = document.querySelector('.toggle-arrow');
+        
+        if (box.style.display === "none") {
+            box.style.display = "block";
+            arrow.classList.remove('rotate-icon');
+            erpLog("Filter Section: Shown", "green");
+        } else {
+            box.style.display = "none";
+            arrow.classList.add('rotate-icon');
+            erpLog("Filter Section: Hidden", "red");
+        }
+    }
+
+    // Initialize Page
+    window.onload = function() {
+        erpLog("ERP 206: Staff Book Request List Module Loaded");
+    };
+</script>
+
+</body>
+</html>
