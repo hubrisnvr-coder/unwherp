@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 217 - Transport User Manager</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --erp-blue: #337ab7;
+            --erp-green: #5cb85c;
+            --erp-orange: #f0ad4e;
+            --erp-red: #d9534f;
+            --erp-bg: #f4f7f6;
+            --label-bg: #eeeeee;
+            --table-header-bg: #d9edf7;
+        }
+
+        body { background-color: var(--erp-bg); font-size: 13px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Main Header */
+        .page-header { background: #fff; padding: 12px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .gear-icon { position: absolute; right: 20px; top: 15px; color: var(--erp-orange); font-size: 20px; cursor: pointer; }
+
+        /* Navigation Tabs */
+        .nav-wrap { background: #fff; padding: 12px; border-bottom: 1px solid #ddd; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .sub-nav { display: flex; justify-content: center; gap: 5px; margin-top: 10px; }
+        .btn-erp { font-size: 12px; padding: 6px 15px; border-radius: 4px; border: none; color: #fff !important; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        
+        .bg-blue { background-color: var(--erp-blue); }
+        .bg-green { background-color: var(--erp-green); }
+        .bg-dark-blue { background-color: #2e6da4; }
+
+        /* Filter Section Styling */
+        .filter-container { margin: 20px; background: #fff; border: 1px solid #bce8f1; border-radius: 4px; overflow: hidden; }
+        .filter-header { background: #fff; padding: 10px; text-align: center; color: var(--erp-blue); font-weight: bold; cursor: pointer; border-bottom: 1px solid #eee; font-size: 15px; }
+        .filter-body { padding: 20px; background: #fff; transition: 0.3s ease; }
+        
+        .input-group-custom { display: flex; flex: 1; min-width: 250px; margin-bottom: 12px; align-items: stretch; }
+        .label-custom { background: var(--label-bg); padding: 8px 10px; border: 1px solid #ccc; font-weight: bold; width: 140px; text-align: center; color: #000; text-transform: uppercase; font-size: 11px; display: flex; align-items: center; justify-content: center; }
+        .field-custom { flex-grow: 1; border: 1px solid #ccc; padding: 6px; outline: none; height: 38px; font-size: 13px; }
+
+        .btn-filter-action { background: var(--erp-blue); color: white; border: none; padding: 8px 25px; border-radius: 3px; float: right; margin-top: 5px; font-weight: bold; font-size: 13px; display: flex; align-items: center; gap: 5px; }
+
+        /* Table & Action Bar */
+        .section-title { text-align: center; font-weight: bold; color: var(--erp-blue); margin: 25px 0 10px 0; display: block; font-size: 15px; }
+        .action-bar { background: #fff; padding: 10px 20px; border-top: 1px solid #ddd; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .info-bar { background: var(--erp-blue); color: #fff; padding: 10px 15px; margin: 0 20px; font-weight: bold; font-size: 13px; }
+        
+        .table-outer { background: #fff; border: 1px solid #ddd; margin: 0 20px 20px 20px; overflow-x: auto; }
+        .erp-table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        .erp-table thead tr { border-bottom: 3px solid red; } 
+        .erp-table th { background: var(--table-header-bg); color: #31708f; padding: 12px; text-align: center; border: 1px solid #bce8f1; font-weight: bold; text-transform: uppercase; font-size: 12px; }
+        .erp-table td { padding: 12px; border: 1px solid #eee; text-align: center; color: #555; font-size: 13px; }
+
+        .btn-status { font-size: 11px; padding: 4px 10px; border-radius: 3px; border: none; color: #fff; font-weight: bold; display: flex; align-items: center; gap: 4px; }
+        .bg-orange { background-color: var(--erp-orange); }
+        .bg-red { background-color: var(--erp-red); }
+
+        .hidden { display: none; }
+        .clearfix::after { content: ""; clear: both; display: table; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <strong style="color:var(--erp-blue); font-size: 16px;">Transport User Manager</strong> <span style="color:#999; font-size: 14px;">» Detail</span>
+    <i class="fa fa-cog gear-icon" onclick="erpLog('Global Settings Clicked', 'orange')"></i>
+</div>
+
+<div class="nav-wrap">
+    <button class="btn-erp bg-green" onclick="erpLog('User Tab Active')"><i class="fa fa-user"></i> User</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Route Tab Clicked')"><i class="fa fa-route"></i> Route</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Vehicle Tab Clicked')"><i class="fa fa-bus"></i> Vehicle</button>
+</div>
+
+<div class="sub-nav">
+    <button class="btn-erp bg-green" onclick="erpLog('Detail View Active')"><i class="fa fa-list"></i> Detail</button>
+    <button class="btn-erp bg-dark-blue" onclick="erpLog('Registration Form Clicked')"><i class="fa fa-plus"></i> Registration</button>
+    <button class="btn-erp bg-dark-blue" onclick="erpLog('History Clicked')"><i class="fa fa-history"></i> History</button>
+</div>
+
+<div class="filter-container">
+    <div class="filter-header" onclick="toggleFilter()">
+        <i class="fa fa-angle-double-down"></i> Filter Transport User <i class="fa fa-filter"></i>
+    </div>
+    <div id="filterBody" class="filter-body">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="input-group-custom"><div class="label-custom">Type</div><select class="field-custom" name="type"><option>Select Type</option></select></div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group-custom"><div class="label-custom">Reg No.</div><input type="text" class="field-custom" name="reg_no"></div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group-custom"><div class="label-custom">Route</div><select class="field-custom" name="route"><option>Select Route...</option></select></div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <div class="input-group-custom"><div class="label-custom">Vehicle</div><select class="field-custom" name="vehicle"><option>Select Vehicle</option></select></div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group-custom"><div class="label-custom">Status</div><select class="field-custom" name="status"><option>Select Status...</option></select></div>
+            </div>
+        </div>
+        <div class="clearfix">
+            <button class="btn-filter-action" onclick="erpLog('Searching Database...')"><i class="fa fa-filter"></i> Filter</button>
+        </div>
+    </div>
+</div>
+
+<span class="section-title"><i class="fa fa-list"></i> Transport User List</span>
+
+<div class="action-bar" style="margin: 0 20px; border: 1px solid #ddd; border-bottom: none;">
+    <div class="input-group-custom" style="max-width: 400px; margin-bottom: 0;">
+        <div class="label-custom">Route</div>
+        <select class="field-custom"><option>Select Route...</option></select>
+    </div>
+    <div class="input-group-custom" style="max-width: 400px; margin-bottom: 0;">
+        <div class="label-custom">Vehicle</div>
+        <select class="field-custom"><option>Select Vehicle...</option></select>
+    </div>
+</div>
+
+<div class="action-bar" style="margin: 0 20px; border: 1px solid #ddd; border-top: none; padding-top: 0;">
+    <button class="btn-status bg-blue" onclick="erpLog('Shifting User...')"><i class="fa fa-exchange-alt"></i> Shift Now</button>
+    <button class="btn-status bg-green" onclick="erpLog('Activating Records...')"><i class="fa fa-check"></i> Active</button>
+    <button class="btn-status bg-orange" onclick="erpLog('Setting Leave Status...')"><i class="fa fa-door-open"></i> Leave</button>
+    <button class="btn-status bg-red" onclick="erpLog('Deleting Selected Data...')"><i class="fa fa-trash"></i> Delete</button>
+</div>
+
+<div class="info-bar">
+    Transport User Record list on table. Filter Transport User using the filter.
+</div>
+<div class="table-outer">
+    <table class="erp-table">
+        <thead>
+            <tr>
+                <th style="width: 50px;"><input type="checkbox" style="transform: scale(1.2);"></th>
+                <th style="width: 70px;">S.N.</th>
+                <th>Routes</th>
+                <th>Vehicle</th>
+                <th>Type</th>
+                <th>Reg. No.</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="9" style="padding: 40px; color: #999;">No Transport User data found. Please Filter Transport User to show.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    /**
+     * Toggle Filter Section
+     */
+    function toggleFilter() {
+        const target = document.getElementById('filterBody');
+        target.classList.toggle('hidden');
+        erpLog(target.classList.contains('hidden') ? "Filter Panel Closed" : "Filter Panel Opened");
+    }
+
+    /**
+     * Console Logger for ERP actions
+     */
+    function erpLog(msg, color = "#337ab7") {
+        console.log(
+            `%c [ERP-217] %c ${msg}`, 
+            `color: white; background: ${color}; padding: 4px 12px; border-radius: 4px; font-weight: bold;`, 
+            "color: #333; font-weight: 500;"
+        );
+    }
+
+    window.onload = function() {
+        erpLog("Transport User Module (217) Loaded Successfully", "#5cb85c");
+    };
+</script>
+
+</body>
+</html>
