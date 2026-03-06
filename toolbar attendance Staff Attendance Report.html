@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 181 - Student Attendance Report Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Base Styling */
+        body { background-color: #f4f7f6; font-size: 14px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Top Breadcrumb Header */
+        .page-header-main { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .settings-gear { 
+            position: absolute; right: 20px; top: 8px; color: #f0ad4e; font-size: 22px; cursor: pointer; 
+            border: 1px solid #f0ad4e; border-radius: 4px; padding: 4px 10px; background: #fff8ee; 
+        }
+
+        /* Navigation Menu */
+        .nav-container { background: #fff; padding: 10px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; flex-wrap: wrap; }
+        .erp-btn {
+            font-size: 13px; padding: 7px 16px; border-radius: 4px; color: #fff !important; 
+            border: none; cursor: pointer; text-decoration: none !important; font-weight: 600; transition: 0.3s; margin-bottom: 5px;
+        }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+        .active-tab { border: 2px solid #000; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+
+        /* Advanced Filter Section */
+        .filter-wrapper { margin: 15px; border: 1px solid #c8d9e2; border-radius: 4px; background: #fff; }
+        .filter-header { 
+            background: #fff; padding: 12px; text-align: center; color: #337ab7; 
+            cursor: pointer; font-weight: bold; font-size: 16px; border-bottom: 1px solid #eee;
+        }
+        .filter-content { display: block; padding: 20px; background: #fdfdfd; }
+        
+        .f-label { background: #eee; border: 1px solid #ddd; padding: 8px; font-weight: bold; text-align: right; width: 160px; text-transform: uppercase; font-size: 11px; flex-shrink: 0; }
+        .f-input-box { border: 1px solid #ddd; height: 38px; font-size: 14px; width: 100%; padding: 0 10px; outline: none; border-radius: 0; }
+        .f-input-box:focus { border-color: #337ab7; background-color: #fff; box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6); }
+        .f-sep { background: #eee; border: 1px solid #ddd; padding: 8px; width: 45px; text-align: center; font-weight: bold; }
+
+        /* Report Table Area */
+        .report-container { background: #fff; margin: 0 15px 20px 15px; border: 1px solid #ddd; min-height: 200px; }
+        .no-data-msg { padding: 60px; text-align: center; color: #999; font-size: 16px; }
+
+        /* Footer Action Buttons */
+        .btn-filter-submit { background-color: #1a4d80; color: white; border: none; padding: 10px 30px; border-radius: 4px; font-weight: bold; font-size: 15px; }
+        .btn-print-lg { background-color: #337ab7; color: white; padding: 10px 25px; border-radius: 4px; font-weight: bold; border: none; font-size: 16px; float: right; margin: 15px; }
+        
+        /* Matching Screenshot Detail */
+        .red-line-header { border-top: 3px solid #d9534f; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="color:#337ab7; font-size: 18px;">Staff Attendance Report</strong> <span style="color:#999;">» Detail</span>
+    <div class="settings-gear" onclick="btnLog('Settings Clicked', 'orange')"><i class="fa fa-cog"></i></div>
+</div>
+
+<div class="nav-container">
+    <div>
+        <button class="erp-btn bg-blue" onclick="btnLog('Attendance Detail', 'blue')"><i class="fa fa-list"></i> Attendance Detail</button>
+        <button class="erp-btn bg-blue" onclick="btnLog('Add/Edit Report', 'blue')"><i class="fa fa-plus-circle"></i> Add / Edit Student Attendance Report</button>
+        <button class="erp-btn bg-green active-tab" onclick="btnLog('Report Detail Active', 'green')"><i class="fa fa-file-alt"></i> Student Attendance Report</button>
+    </div>
+    <div>
+        <button class="erp-btn bg-blue" onclick="btnLog('Regular Attendance', 'blue')"><i class="fa fa-calendar-alt"></i> Student Regular Attendance</button>
+        <button class="erp-btn bg-blue" onclick="btnLog('Subject Wise Attendance', 'blue')"><i class="fa fa-book"></i> Student Subject Wise Attendance</button>
+        <button class="erp-btn bg-blue" onclick="btnLog('Staff Attendance', 'blue')"><i class="fa fa-user-tie"></i> Staff Attendance</button>
+    </div>
+</div>
+
+<div class="filter-wrapper">
+    <div class="filter-header" onclick="toggleFilter()">
+        <i class="fa fa-chevron-down me-2" id="filterIcon"></i> Filter Student Attendance Report <i class="fa fa-filter ms-2"></i>
+    </div>
+    <div class="filter-content" id="filterBox">
+        <form id="erp181Form" action="process_report.php" method="POST">
+            
+            <div class="row g-2 mb-2">
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">REG.NO.</div>
+                    <input type="text" name="reg_no" class="f-input-box" placeholder="Registration No.">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">REG. DATE</div>
+                    <input type="date" name="start_date" class="f-input-box">
+                    <div class="f-sep">⇄</div>
+                    <input type="date" name="end_date" class="f-input-box">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">STATUS</div>
+                    <select name="academic_status" class="f-input-box"><option>Select Academic Status</option></select>
+                    <select name="current_status" class="f-input-box ms-1"><option>Status</option></select>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-2">
+                <div class="col-md-6 d-flex">
+                    <div class="f-label">PROGRAM/CLASS</div>
+                    <select name="program" class="f-input-box"><option>Select Program/Class</option></select>
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">SEMESTER/SECTION</div>
+                    <select name="semester" class="f-input-box"><option>Select Semester/Section</option></select>
+                </div>
+                <div class="col-md-2 d-flex">
+                    <div class="f-label" style="width:80px">BATCH</div>
+                    <select name="batch" class="f-input-box"><option>Select Batch</option></select>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-2">
+                <div class="col-md-8 d-flex">
+                    <div class="f-label">NAME OF STUDENT</div>
+                    <input type="text" name="fname" class="f-input-box" placeholder="First Name">
+                    <input type="text" name="mname" class="f-input-box mx-1" placeholder="Middle Name">
+                    <input type="text" name="lname" class="f-input-box" placeholder="Last Name">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">GENDER</div>
+                    <select name="gender" class="f-input-box"><option>Select Gender</option></select>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-2">
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">BLOOD GROUP</div>
+                    <select name="blood_group" class="f-input-box"><option>Select Blood Group</option></select>
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">DATE OF BIRTH</div>
+                    <input type="date" name="dob_from" class="f-input-box">
+                    <div class="f-sep">⇄</div>
+                    <input type="date" name="dob_to" class="f-input-box">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">UNIQUE STUDENT ID</div>
+                    <input type="text" name="student_id" class="f-input-box">
+                </div>
+            </div>
+
+            <div class="row g-2 mb-2">
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">NATIONALITY</div>
+                    <input type="text" name="nat" class="f-input-box">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">ID. 1</div>
+                    <input type="text" name="id1" class="f-input-box">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">ID. 2</div>
+                    <input type="text" name="id2" class="f-input-box">
+                </div>
+            </div>
+
+            <div class="row g-2 mb-2">
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">ID. 3</div>
+                    <input type="text" name="id3" class="f-input-box">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">ID. 4</div>
+                    <input type="text" name="id4" class="f-input-box">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">MOTHER TONGUE</div>
+                    <input type="text" name="mtongue" class="f-input-box">
+                </div>
+            </div>
+
+            <div class="row g-2 mb-2">
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">RELIGION</div>
+                    <input type="text" name="rel" class="f-input-box">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">CASTE</div>
+                    <input type="text" name="caste" class="f-input-box">
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="f-label">E-MAIL</div>
+                    <input type="email" name="email" class="f-input-box">
+                </div>
+            </div>
+
+            <div class="row g-2">
+                <div class="col-md-3 d-flex">
+                    <div class="f-label" style="width:100px">YEAR</div>
+                    <select name="rep_year" class="f-input-box"><option>Select Year</option></select>
+                </div>
+                <div class="col-md-3 d-flex">
+                    <div class="f-label" style="width:100px">MONTH</div>
+                    <select name="rep_month" class="f-input-box"><option>Select Month</option></select>
+                </div>
+                <div class="col-md-3 d-flex">
+                    <div class="f-label" style="width:100px">DATE</div>
+                    <input type="date" name="rep_date" class="f-input-box">
+                </div>
+                <div class="col-md-3 d-flex">
+                    <div class="f-label" style="width:100px">STATUS</div>
+                    <select name="rep_status" class="f-input-box"><option>Select Status</option></select>
+                </div>
+            </div>
+
+            <div class="text-end mt-4">
+                <button type="submit" class="btn-filter-submit" onclick="btnLog('Filter Button Clicked', 'navy')">
+                    <i class="fa fa-filter"></i> Filter
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<button class="btn-print-lg" onclick="btnLog('Printing Report...', 'blue'); window.print();">
+    <i class="fa fa-print"></i> Print
+</button>
+
+<div class="report-container">
+    <div class="red-line-header"></div>
+    <div class="no-data-msg">
+        <i class="fa fa-search fa-3x mb-3 d-block" style="color:#ccc"></i>
+        Please Filter Student Attendance Report to show detailed data.
+    </div>
+</div>
+
+<script>
+    // 1. Professional Console Logger
+    function btnLog(action, bgColor) {
+        console.log(`%c [ERP-181 SYSTEM] %c ${action}`, 
+        `color: white; background: ${bgColor}; padding: 3px 10px; border-radius: 4px; font-weight: bold;`, 
+        "color: #111; font-weight: 500;");
+    }
+
+    // 2. Filter Section Toggle
+    function toggleFilter() {
+        const box = document.getElementById('filterBox');
+        const icon = document.getElementById('filterIcon');
+        if (box.style.display === "none") {
+            box.style.display = "block";
+            icon.className = "fa fa-chevron-down me-2";
+            btnLog("Filter Section Visible", "#1a4d80");
+        } else {
+            box.style.display = "none";
+            icon.className = "fa fa-chevron-up me-2";
+            btnLog("Filter Section Hidden", "#1a4d80");
+        }
+    }
+
+    // 3. Form Submit Handler (PHP Prep)
+    document.getElementById('erp181Form').onsubmit = function(e) {
+        e.preventDefault(); // Demo ke liye page reload roka hai
+        btnLog("Querying Database for Report...", "purple");
+        alert("Filter lag gaya hai! Data fetch karne ki process start ho gayi hai.");
+    };
+
+    // Auto-load Signal
+    window.onload = function() {
+        btnLog("ERP 181 Report Detail Page Loaded Successfully", "#333");
+    };
+</script>
+
+</body>
+</html>
