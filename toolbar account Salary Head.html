@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 173 - Payroll Head Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header & Settings */
+        .page-header-main { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .settings-gear { 
+            position: absolute; right: 15px; top: 6px; color: #f0ad4e; font-size: 18px; cursor: pointer; 
+            border: 1px solid #f0ad4e; border-radius: 4px; padding: 2px 6px; background: #fff8ee; 
+        }
+
+        /* Navigation */
+        .nav-container { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
+        .erp-btn {
+            display: inline-block; margin: 2px; font-size: 11px; padding: 5px 12px; border-radius: 4px;
+            color: #ffffff !important; border: none; cursor: pointer; text-decoration: none !important; font-weight: 500;
+            opacity: 0.6; transition: all 0.3s;
+        }
+        .erp-btn.active { opacity: 1; transform: scale(1.05); border: 1px solid #000; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+        .bg-orange { background-color: #f0ad4e; }
+
+        /* Create Section (Left Side) */
+        .create-title { color: #337ab7; font-weight: bold; border-bottom: 1px solid #c8d9e2; padding-bottom: 8px; margin-bottom: 15px; text-align: center; }
+        .label-box { 
+            background: #eee; border: 1px solid #ddd; padding: 6px; font-weight: bold; 
+            text-align: right; display: flex; align-items: center; justify-content: flex-end;
+            text-transform: uppercase; height: 32px;
+        }
+        .input-box { border-radius: 0; border: 1px solid #ddd; height: 32px; font-size: 11px; width: 100%; }
+
+        /* Table Section (Right Side) */
+        .action-btns-row { margin-bottom: 10px; text-align: center; }
+        .btn-status { font-size: 10px; padding: 4px 10px; border-radius: 4px; color: #fff; border: none; margin: 0 2px; }
+        .bg-active { background-color: #337ab7; }
+        .bg-inactive { background-color: #f0ad4e; }
+        .bg-delete { background-color: #d9534f; }
+
+        .erp-table { width: 100%; border-collapse: collapse; background: #fff; }
+        .erp-table thead th { 
+            background-color: #eef5f9; color: #337ab7; border: 1px solid #dee2e6; 
+            padding: 10px; text-align: center; font-size: 11px;
+        }
+        .erp-table tbody td { border: 1px solid #eee; padding: 8px; text-align: center; color: #888; }
+        .red-line-top { border-top: 2px solid red !important; }
+
+        /* Layout */
+        .main-content { padding: 20px; }
+        .form-panel { background: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .btn-create { background-color: #337ab7; color: white; border: none; padding: 6px 20px; border-radius: 4px; font-weight: bold; }
+        .btn-reset { background-color: #abbac3; color: white; border: none; padding: 6px 20px; border-radius: 4px; font-weight: bold; }
+
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="color:#337ab7;">Payroll Head Manager</strong> <span style="color:#999;">» Detail</span>
+    <div class="settings-gear" onclick="handleAction(this, 'Top Settings')"><i class="fa fa-cog"></i></div>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Student Fee')"><i class="fa fa-users"></i> Student Fee</button>
+    <button class="erp-btn bg-green active" onclick="handleAction(this, 'Staff Payroll')"><i class="fa fa-user-tie"></i> Staff Payroll</button>
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Ledger')"><i class="fa fa-book"></i> Ledger</button>
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Transactions')"><i class="fa fa-exchange-alt"></i> Transactions</button>
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Bank')"><i class="fa fa-university"></i> Bank</button>
+</div>
+
+<div class="nav-container" style="background:#f9f9f9; padding: 5px;">
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Pay History')"><i class="fa fa-history"></i> Pay History</button>
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Payroll Detail')"><i class="fa fa-list"></i> Payroll Detail</button>
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Add Payroll')"><i class="fa fa-plus"></i> Add Payroll</button>
+    <button class="erp-btn bg-blue" onclick="handleAction(this, 'Pay Salary')"><i class="fa fa-money-bill-wave"></i> Pay Salary</button>
+    <button class="erp-btn bg-orange" onclick="handleAction(this, 'Balance Salary')"><i class="fa fa-wallet"></i> Balance Salary</button>
+    <button class="erp-btn bg-green active" onclick="handleAction(this, 'Payroll Head')"><i class="fa fa-heading"></i> Payroll Head</button>
+</div>
+
+<div class="main-content">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="form-panel">
+                <div class="create-title"><i class="fa fa-search"></i> Create Payroll Head</div>
+                <form id="payrollHeadForm" action="insert_head.php" method="POST">
+                    <div class="row g-0 align-items-center mb-4">
+                        <div class="col-4 label-box">TITLE</div>
+                        <div class="col-8">
+                            <input type="text" name="head_title" class="form-control input-box" placeholder="e.g. Monthly Salary">
+                        </div>
+                    </div>
+                    <div class="text-end border-top pt-3">
+                        <button type="reset" class="btn-reset" onclick="handleAction(null, 'Form Reset')"><i class="fa fa-undo"></i> Reset</button>
+                        <button type="submit" class="btn-create" onclick="handleAction(null, 'Create Head Submit')"><i class="fa fa-save"></i> Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="action-btns-row">
+                <button class="btn-status bg-active" onclick="handleAction(null, 'Filter Active')"><i class="fa fa-check"></i> Active</button>
+                <button class="btn-status bg-inactive" onclick="handleAction(null, 'Filter In-Active')"><i class="fa fa-times"></i> In-Active</button>
+                <button class="btn-status bg-delete" onclick="handleAction(null, 'Bulk Delete')"><i class="fa fa-trash"></i> Delete</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="erp-table">
+                    <thead>
+                        <tr class="red-line-top">
+                            <th width="5%"><input type="checkbox" onclick="handleAction(null, 'Select All Rows')"></th>
+                            <th width="10%">S.N.</th>
+                            <th width="65%">PAYROLL HEAD</th>
+                            <th width="20%">STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4" style="padding:20px;">No Payroll Head data found. Please Filter Payroll Head to show.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. All Button Console & Active Class Toggle
+    function handleAction(element, actionName) {
+        console.log("%c [ERP-173 LOG]: " + actionName + " executed.", "color: #fff; background: #337ab7; padding: 3px 10px; border-radius: 5px; font-weight: bold;");
+        
+        if (element && element.classList.contains('erp-btn')) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.erp-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+        }
+    }
+
+    // Form Submit Override (for testing)
+    document.getElementById('payrollHeadForm').onsubmit = function(e) {
+        const title = this.head_title.value;
+        if(!title) {
+            alert("Please enter a Title");
+            return false;
+        }
+        // yahan aap actual AJAX ya PHP call handle kar sakte hain
+    };
+
+    window.onload = function() {
+        console.log("ERP 173 - Payroll Head Manager Detail Page Loaded Successfully.");
+    };
+</script>
+
+</body>
+</html>
