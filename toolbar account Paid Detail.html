@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 169 - Payroll Manager Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-size: 11px; font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+        
+        /* Header & Settings Gear */
+        .page-header-main { background: #fff; padding: 8px; text-align: center; border-bottom: 1px solid #ddd; position: relative; }
+        .settings-gear { 
+            position: absolute; right: 15px; top: 6px; color: #f0ad4e; font-size: 18px; cursor: pointer; 
+            border: 1px solid #f0ad4e; border-radius: 4px; padding: 2px 6px; background: #fff8ee; 
+        }
+
+        /* Navigation Buttons */
+        .nav-container { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
+        .erp-btn {
+            display: inline-block; margin: 2px; font-size: 11px; padding: 5px 12px; border-radius: 4px;
+            color: #ffffff !important; border: none; cursor: pointer; text-decoration: none !important; font-weight: 500;
+        }
+        .bg-blue { background-color: #337ab7; }
+        .bg-green { background-color: #449d44; }
+        .bg-orange { background-color: #f0ad4e; }
+        .bg-light-blue { background-color: #5bc0de; }
+
+        /* Filter Section Styling */
+        .filter-wrapper { margin: 15px; border: 1px solid #c8d9e2; border-radius: 4px; overflow: hidden; background: #fff; }
+        .filter-header { 
+            background: #fff; padding: 8px; text-align: center; color: #337ab7; 
+            cursor: pointer; font-weight: bold; border-bottom: 1px solid #eee;
+        }
+        .filter-content { display: block; padding: 20px; background: #f9f9f9; }
+        
+        /* Label & Input Box Styling */
+        .label-box { 
+            background: #eee; border: 1px solid #ddd; padding: 6px; font-weight: bold; 
+            text-align: right; display: flex; align-items: center; justify-content: flex-end;
+            text-transform: uppercase; height: 32px;
+        }
+        .input-box { border-radius: 0; border: 1px solid #ddd; height: 32px; font-size: 11px; }
+
+        /* Status Alert Bar */
+        .status-info-bar { 
+            background-color: #337ab7; color: white; padding: 8px 15px; 
+            margin: 0 15px 15px 15px; border-radius: 4px; font-weight: 500;
+        }
+
+        /* ERP Table Layout */
+        .table-container { background: #fff; margin: 0 15px; border: 1px solid #ddd; }
+        .erp-table { width: 100%; border-collapse: collapse; }
+        .erp-table thead th { 
+            background-color: #eef5f9; color: #337ab7; border: 1px solid #dee2e6; 
+            padding: 10px; text-align: center; font-size: 11px;
+        }
+        /* Identity Red Line */
+        .header-divider { border-bottom: 2px solid red !important; }
+        .erp-table tbody td { border: 1px solid #eee; padding: 8px; text-align: center; color: #666; }
+        
+        /* Footer/Total Row Styling */
+        .total-row { background-color: #ff4500 !important; color: white !important; font-weight: bold; }
+        .total-label { text-align: right !important; padding-right: 25px !important; }
+
+        .btn-filter-submit { background-color: #337ab7; color: white; border: none; padding: 8px 20px; border-radius: 4px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="page-header-main">
+    <strong style="color:#337ab7;">Payroll Manager</strong> <span style="color:#999;">» Detail</span>
+    <div class="settings-gear" onclick="logAction('Global Settings Clicked')"><i class="fa fa-cog"></i></div>
+</div>
+
+<div class="nav-container">
+    <button class="erp-btn bg-blue" onclick="logAction('Student Fee Nav')"><i class="fa fa-users"></i> Student Fee</button>
+    <button class="erp-btn bg-green" onclick="logAction('Staff Payroll Nav')"><i class="fa fa-user-tie"></i> Staff Payroll</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Ledger Nav')"><i class="fa fa-book"></i> Ledger</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Transactions Nav')"><i class="fa fa-exchange-alt"></i> Transactions</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Bank Nav')"><i class="fa fa-university"></i> Bank</button>
+</div>
+
+<div class="nav-container" style="background:#f9f9f9; padding: 5px;">
+    <button class="erp-btn bg-green" onclick="logAction('Pay History Clicked')"><i class="fa fa-history"></i> Pay History</button>
+    <button class="erp-btn bg-light-blue" onclick="logAction('Payroll Detail Clicked')"><i class="fa fa-list"></i> Payroll Detail</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Add Payroll Clicked')"><i class="fa fa-plus"></i> Add Payroll</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Pay Salary Clicked')"><i class="fa fa-money-bill-wave"></i> Pay Salary</button>
+    <button class="erp-btn bg-orange" onclick="logAction('Balance Salary Clicked')"><i class="fa fa-wallet"></i> Balance Salary</button>
+    <button class="erp-btn bg-blue" onclick="logAction('Payroll Head Clicked')"><i class="fa fa-heading"></i> Payroll Head</button>
+</div>
+
+<div class="filter-wrapper">
+    <div class="filter-header" onclick="toggleFilter()">
+        <i class="fa fa-chevron-down ms-2" id="filterIcon"></i> Filter Paid Payroll <i class="fa fa-filter ms-2"></i>
+    </div>
+    <div class="filter-content" id="filterBox">
+        <form id="payrollFilterForm" onsubmit="event.preventDefault(); logAction('Payroll Filter Applied');">
+            <div class="row g-0 mb-2">
+                <div class="col-md-1 label-box">REG.NO.</div>
+                <div class="col-md-2">
+                    <input type="text" name="reg_no" class="form-control input-box" placeholder="Reg. No.">
+                </div>
+                <div class="col-md-1 label-box">JOIN DATE</div>
+                <div class="col-md-3 d-flex">
+                    <input type="text" name="join_from" class="form-control input-box" placeholder="YYYY-MM-DD">
+                    <span class="label-box" style="width:40px; justify-content:center;"><i class="fa fa-exchange-alt"></i></span>
+                    <input type="text" name="join_to" class="form-control input-box" placeholder="YYYY-MM-DD">
+                </div>
+                <div class="col-md-1 label-box">DESIGNATION</div>
+                <div class="col-md-2">
+                    <select name="designation" class="form-select input-box">
+                        <option value="">Select Designation</option>
+                    </select>
+                </div>
+                <div class="col-md-1 label-box">STATUS</div>
+                <div class="col-md-1">
+                    <select name="status" class="form-select input-box">
+                        <option value="">Status</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row g-0 mb-3">
+                <div class="col-md-1 label-box">DATE</div>
+                <div class="col-md-3 d-flex">
+                    <input type="text" name="pay_from" class="form-control input-box" placeholder="YYYY-MM-DD">
+                    <span class="label-box" style="width:40px; justify-content:center;"><i class="fa fa-exchange-alt"></i></span>
+                    <input type="text" name="pay_to" class="form-control input-box" placeholder="YYYY-MM-DD">
+                </div>
+                <div class="col-md-1 label-box">HEAD</div>
+                <div class="col-md-4">
+                    <select name="payroll_head" class="form-select input-box">
+                        <option value="">Select Payroll Head</option>
+                    </select>
+                </div>
+                <div class="col-md-1 label-box">METHOD</div>
+                <div class="col-md-2">
+                    <select name="pay_method" class="form-select input-box">
+                        <option value="">Select Method</option>
+                    </select>
+                </div>
+            </div>
+            <div class="text-end">
+                <button type="submit" class="btn-filter-submit" onclick="logAction('Filter Button Clicked')"><i class="fa fa-filter"></i> Filter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mb-2" style="color: #337ab7; font-weight: bold;">
+    <i class="fa fa-list"></i> Salary Paid History
+</div>
+
+<div class="status-info-bar">
+    Salary Paid Record list on table. Filter Salary Paid using the filter.
+</div>
+
+<div class="table-container">
+    <div class="table-responsive">
+        <table class="erp-table">
+            <thead>
+                <tr class="header-divider">
+                    <th width="50px">S.N.</th>
+                    <th>REG.NO.</th>
+                    <th>STAFF NAME</th>
+                    <th>HEAD</th>
+                    <th>DATE</th>
+                    <th>AMOUNT</th>
+                    <th>METHOD</th>
+                    <th>USER</th>
+                </tr>
+            </thead>
+            <tbody id="payrollTableBody">
+                <tr>
+                    <td colspan="8" style="text-align: left; padding: 12px; color: #888; font-style: italic;">
+                        No Salary Paid data found. Please Filter Salary Paid to show.
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="total-row">
+                    <td colspan="5" class="total-label">Total</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Console Action Logger for all buttons
+    function logAction(msg) {
+        console.log("%c [ERP-169]: " + msg, "color: #449d44; font-weight: bold; border-left: 4px solid #337ab7; padding-left: 10px;");
+    }
+
+    // Filter Toggle (Hide/Show)
+    function toggleFilter() {
+        const box = document.getElementById('filterBox');
+        const icon = document.getElementById('filterIcon');
+        
+        if (box.style.display === "none") {
+            box.style.display = "block";
+            icon.className = "fa fa-chevron-down ms-2";
+            logAction("Filter Section Expanded");
+        } else {
+            box.style.display = "none";
+            icon.className = "fa fa-chevron-up ms-2";
+            logAction("Filter Section Collapsed");
+        }
+    }
+
+    // Initialize Page
+    window.onload = function() {
+        console.log("ERP 169 - Payroll Manager Detail Page Ready.");
+    };
+</script>
+
+</body>
+</html>
