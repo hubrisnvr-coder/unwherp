@@ -1555,13 +1555,13 @@
 
              <!--yanha se double toolbar Academic wala porsen sure ho rha hai -->
          <style>
-    /* Main Container */
+    /* 1. Base Styling (Same Rahegi) */
     .erp-zoom-nav-minimal {
         position: relative;
     }
 
-    /* Sub-menu (Level 2) */
-    .nested-dropdown-list {
+    /* Academic specific sub-menu */
+    .erp-zoom-nav-minimal .nested-dropdown-list {
         position: absolute;
         top: 0;
         background: #ffffff;
@@ -1577,29 +1577,30 @@
         border: 1px solid #d1d5db;
         z-index: 10001;
         
-        /* DEFAULT (100% Zoom): Right side khulega */
+        /* 90% Display / Badi screen par: RIGHT side khulega */
         left: 100%;
         right: auto;
     }
 
-    /* Zoom / Responsive Logic (Width kam hone par auto-flip) */
-    @media (max-width: 1350px) {
-        .nested-dropdown-list {
-            left: auto;
-            right: 100%;
-            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
+    /* 2. SPECIFIC ZOOM LOGIC: Sirf Academic ke liye */
+    /* Humne yahan class add kar di hai (.erp-zoom-nav-minimal) */
+    @media (max-width: 1550px) { 
+        .erp-zoom-nav-minimal .nested-dropdown-list {
+            left: auto !important;
+            right: 100% !important; /* Ab 100% zoom par ye LEFT ho jayega */
+            box-shadow: -4px 4px 12px rgba(0,0,0,0.12) !important;
         }
     }
 
+    /* Baki common styling jo overlap nahi karegi */
     .hover-dropdown-list li {
         position: relative;
         list-style: none;
     }
 
-    /* Link Styling - Clean & Uniform Padding */
     .hover-dropdown-list li a {
         display: block !important;
-        padding: 10px 20px !important; /* Uniform spacing without arrows */
+        padding: 10px 20px !important;
         color: #4b5563 !important;
         text-decoration: none;
         font-size: 13px;
@@ -1608,26 +1609,19 @@
         white-space: nowrap;
     }
 
-    /* Balanced Blue Hover */
     .hover-dropdown-list li:hover > a {
         background-color: #3a7cbd !important;
         color: #ffffff !important;
     }
 
-    /* Show sub-menu on hover */
     .hover-dropdown-list li:hover > .nested-dropdown-list {
         opacity: 1;
         visibility: visible;
     }
 
-    /* Sub-menu items (inner) */
     .nested-dropdown-list li a {
         padding: 10px 15px !important;
         border-bottom: 1px solid #f9fafb;
-    }
-    
-    .nested-dropdown-list li:last-child a {
-        border-bottom: none;
     }
 </style>
 
