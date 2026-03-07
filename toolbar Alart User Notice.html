@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 232 - User Notice Manager</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --erp-blue: #337ab7;
+            --erp-green: #5cb85c;
+            --erp-orange: #f0ad4e;
+            --erp-red: #d9534f;
+            --erp-bg: #fdfdfd;
+            --label-bg: #eeeeee;
+            --border-color: #e2e2e2;
+        }
+
+        body { 
+            background-color: #fff; 
+            font-size: 13px; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            color: #333; 
+        }
+
+        /* Top Header */
+        .page-header { 
+            padding: 10px; 
+            text-align: center; 
+            border-bottom: 1px dotted #ccc; 
+            position: relative; 
+            margin-bottom: 5px;
+        }
+        .gear-icon { 
+            position: absolute; 
+            right: 15px; 
+            top: 10px; 
+            color: var(--erp-orange); 
+            font-size: 24px; 
+            cursor: pointer;
+            background: #fff;
+            padding: 5px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        /* Breadcrumb-style Title */
+        .title-text { font-size: 14px; font-weight: 500; }
+        .title-text strong { color: var(--erp-blue); }
+        .title-text span { color: #999; }
+
+        /* Navigation Bar */
+        .nav-container {
+            background-color: #f5f5f5;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .btn-erp {
+            font-size: 13px;
+            padding: 6px 14px;
+            border-radius: 4px;
+            color: #fff !important;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .btn-erp:hover { opacity: 0.9; }
+
+        .bg-detail { background-color: var(--erp-green); }
+        .bg-blue { background-color: var(--erp-blue); }
+
+        /* Content Area */
+        .main-content { padding: 20px; }
+        
+        /* PHP-Ready Form Section (Hidden by default, shown via toggle) */
+        .notice-form-panel { 
+            max-width: 800px; 
+            margin: 0 auto 20px auto; 
+            border: 1px solid var(--border-color);
+            background: #fff;
+            border-radius: 4px;
+        }
+        .panel-header {
+            background: #f9f9f9;
+            padding: 10px;
+            font-weight: bold;
+            color: var(--erp-blue);
+            border-bottom: 1px solid #eee;
+        }
+
+        .erp-input-group { 
+            display: flex; 
+            margin: 15px; 
+            border: 1px solid #ccc; 
+            border-left: 3px solid #ff0000; 
+        }
+        .erp-label { 
+            background: var(--label-bg); 
+            padding: 10px; 
+            width: 120px; 
+            font-weight: bold; 
+            text-align: center; 
+            border-right: 1px solid #ccc;
+        }
+        .erp-input { flex-grow: 1; border: none; padding: 10px; outline: none; }
+
+        /* Empty State */
+        .no-data {
+            padding: 20px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <div class="title-text">
+        <strong>User Notice Manager</strong> <span>» Detail</span>
+    </div>
+    <i class="fa fa-cog gear-icon" onclick="erpAction('Settings Open')"></i>
+</div>
+
+<div class="nav-container">
+    <button class="btn-erp bg-detail" onclick="erpAction('Detail Tab Clicked')">
+        <i class="fa fa-list-ul"></i> Detail
+    </button>
+    <button class="btn-erp bg-blue" onclick="toggleNoticeForm()">
+        <i class="fa fa-plus"></i> Create Notice
+    </button>
+    <button class="btn-erp bg-detail" onclick="erpAction('Notice View Clicked')">
+        <i class="fa fa-file-alt"></i> Notice
+    </button>
+    <button class="btn-erp bg-blue" onclick="erpAction('Sms/Email Tab Clicked')">
+        <i class="fa fa-envelope"></i> Sms/Email
+    </button>
+</div>
+
+<div class="main-content">
+    
+    <div id="noticePanel" class="notice-form-panel hidden">
+        <div class="panel-header">NEW NOTICE FORM</div>
+        <form action="save_notice.php" method="POST">
+            <div class="erp-input-group">
+                <div class="erp-label">TITLE</div>
+                <input type="text" name="notice_title" class="erp-input" placeholder="Enter notice title..." required>
+            </div>
+            <div class="erp-input-group">
+                <div class="erp-label">MESSAGE</div>
+                <textarea name="notice_msg" class="erp-input" rows="4" style="resize:none;"></textarea>
+            </div>
+            <div class="p-3 text-end">
+                <button type="submit" class="btn btn-primary" onclick="erpAction('Submitting Notice')">
+                    <i class="fa fa-save"></i> Save Notice
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div id="dataSection">
+        <div class="no-data">
+            No data found.
+        </div>
+    </div>
+
+</div>
+
+<script>
+    /**
+     * Filter/Form Toggle Logic
+     * Screenshot ke buttons ke logic ke hisaab se 'Create Notice' 
+     * par click karne se input section show/hide hota hai.
+     */
+    function toggleNoticeForm() {
+        const panel = document.getElementById('noticePanel');
+        if (panel.classList.contains('hidden')) {
+            panel.classList.remove('hidden');
+            erpAction("Create Notice Form: OPENED");
+        } else {
+            panel.classList.add('hidden');
+            erpAction("Create Notice Form: CLOSED");
+        }
+    }
+
+    /**
+     * Professional Console Logging for ERP
+     */
+    function erpAction(msg) {
+        const time = new Date().toLocaleTimeString();
+        console.log(`%c[ERP-232]%c ${time} - %c${msg}`, 
+            "color: white; background: #337ab7; padding: 2px 5px; border-radius: 3px;", 
+            "color: #888;", 
+            "color: #000; font-weight: bold;");
+    }
+
+    // Initial Load
+    window.onload = function() {
+        erpAction("User Notice Manager Detail Page Ready.");
+    };
+</script>
+
+</body>
+</html>
