@@ -1733,11 +1733,11 @@
         list-style: none;
     }
 
-    /* Link Styling - Uniform Padding */
+    /* Link Styling - Arrow space removed, padding normalized */
     .hover-dropdown-list li a {
         display: block !important;
-        position: relative; /* Arrow positioning ke liye */
-        padding: 10px 15px 10px 35px !important; /* Left mein space fix kar di arrow ke liye */
+        position: relative;
+        padding: 10px 15px !important; /* Padding normal kar di hai */
         color: #4b5563 !important;
         text-decoration: none;
         font-size: 13px;
@@ -1745,25 +1745,10 @@
         transition: all 0.2s;
     }
 
-    /* Arrow Button - Precision Position & Small Size */
-    .sub-menu-arrow-left {
-        position: absolute;
-        left: 12px;         /* Left se bilkul barabar alignment */
-        top: 50%;
-        transform: translateY(-50%); /* Vertical center */
-        font-size: 7px;     /* Kaafi chota size */
-        color: #9ca3af;
-        transition: color 0.2s;
-    }
-
     /* Balanced Blue Hover */
     .hover-dropdown-list li:hover > a {
         background-color: #3a7cbd !important;
         color: #ffffff !important;
-    }
-
-    .hover-dropdown-list li:hover > a .sub-menu-arrow-left {
-        color: #ffffff;
     }
 
     .hover-dropdown-list li:hover > .nested-dropdown-list-left {
@@ -1773,7 +1758,7 @@
 
     /* Inner sub-menu items - Simple Clean List */
     .nested-dropdown-list-left li a {
-        padding: 10px 15px !important; /* Sub-items mein arrow nahi hai to normal padding */
+        padding: 10px 15px !important;
         border-bottom: 1px solid #f9fafb;
     }
 
@@ -1788,49 +1773,20 @@
 
     <ul class="hover-dropdown-list" style="padding: 0; margin: 0;">
         <li>
-            <a href="toolbarapplication.html">
-                <i class="fas fa-chevron-left sub-menu-arrow-left"></i> 
-                Application
-            </a>
-            <!--
-            <ul class="nested-dropdown-list-left">
-                <li><a href="#">Leave Application</a></li>
-                <li><a href="#">TC Application</a></li>
-            </ul>
-            -->
+            <a href="toolbarapplication.html">Application</a>
         </li>
         <li>
-            <a href="toolbarmeeting.html">
-                <i class="fas fa-chevron-left sub-menu-arrow-left"></i> 
-                Meeting
-            </a>
-            <!--
-            <ul class="nested-dropdown-list-left">
-                <li><a href="#">Parent-Teacher Meet</a></li>
-                <li><a href="#">Staff Meeting</a></li>
-            </ul>
-            -->
+            <a href="toolbarmeeting.html">Meeting</a>
         </li>
         <li>
-            <a href="#">
-                <i class="fas fa-chevron-left sub-menu-arrow-left"></i> 
-                Alert
-            </a>
+            <a href="#">Alert</a>
             <ul class="nested-dropdown-list-left">
                 <li><a href="toolbar Alart User Notice.html">User Notice </a></li>
                 <li><a href="toolbar Alart smsandemail.html">SMS & Email</a></li>
             </ul>
         </li>
         <li>
-            <a href="toolbarassignment.html">
-                <i class="fas fa-chevron-left sub-menu-arrow-left"></i> 
-                Assignment
-            </a>
-            <!--
-            <ul class="nested-dropdown-list-left">
-                <li><a href="#">Daily Homework</a></li>
-            </ul>
-            -->
+            <a href="toolbarassignment.html">Assignment</a>
         </li>
     </ul>
 </div>
@@ -1838,7 +1794,44 @@
         </div>
     </div>
     </section>
+<!--yanhse se mai dekh rha hu css toolbar ke hover 
+ ke size ko kam karne ke liye extra line jodi hai maine or yanha se ye code sure ho rha hai  -->
 
+<style>
+/* ===== COMPACT DROPDOWN SIZE FIX ===== */
+
+/* Hover dropdown width */
+.hover-dropdown-list{
+    min-width:160px !important;
+}
+
+/* First hover list item */
+.hover-dropdown-list li a{
+    padding:6px 12px !important;
+    font-size:12px !important;
+    line-height:1.2 !important;
+}
+
+/* Double hover dropdown width */
+.nested-dropdown-list{
+    min-width:160px !important;
+}
+
+/* Double hover list item */
+.nested-dropdown-list li a{
+    padding:6px 10px !important;
+    font-size:12px !important;
+    line-height:1.2 !important;
+}
+
+/* overall dropdown compact */
+.hover-dropdown-list,
+.nested-dropdown-list{
+    padding:3px 0 !important;
+}
+</style>
+<!--or yanha par toolbar hover ka size zyda ho rha tha vo kam karne ke liye extra css hai ye or 
+yana par ye poori ho gyi hai -->
     <!-- Active logic script -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -1903,6 +1896,28 @@ document.querySelectorAll('.dropdown-item').forEach(item => {
 -->
     <iframe src="dashboard_home.html" name="main_content" id="erp_frame" style="width: 100%; border: none; display: block;"></iframe>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <!-- ynaha se hover ko or click karne par turant hide karne ke liye js lgayi hai -->
+<script id="dropdown-close-fix">
+document.addEventListener("DOMContentLoaded", function () {
+
+    const dropdownItems = document.querySelectorAll(".hover-dropdown-list a, .nested-dropdown-list a");
+
+    dropdownItems.forEach(function(item){
+        item.addEventListener("click", function(){
+
+            let parentDropdown = this.closest(".hover-dropdown-list, .nested-dropdown-list");
+
+            if(parentDropdown){
+                parentDropdown.style.opacity = "0";
+                parentDropdown.style.visibility = "hidden";
+            }
+
+        });
+    });
+
+});
+</script>
+    <!-- ynaha se hover ko or click karne par turant hide karne ke liye js lgayi hai or 
+     yanha par poori ho gyi hai js  -->
 </body>
 </html>
