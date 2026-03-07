@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration | ERP 107</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        :root {
+            --primary-blue: #337ab7;
+            --success-green: #5cb85c;
+            --dark-blue: #2e6da4;
+            --border-color: #ddd;
+            --bg-light: #f9f9f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg-light);
+            margin: 0; padding: 20px; font-size: 13px;
+        }
+
+        .main-container {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            min-height: 200px;
+        }
+
+        .page-breadcrumb {
+            text-align: center; color: var(--primary-blue);
+            font-size: 15px; padding: 12px; border-bottom: 1px solid #eee; margin: 0;
+            font-weight: 500;
+        }
+
+        /* Top Navigation Buttons */
+        .top-navbar { 
+            display: flex; justify-content: center; gap: 5px; padding: 15px; 
+            flex-wrap: wrap; 
+        }
+        
+        .nav-btn {
+            display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px;
+            border-radius: 4px; text-decoration: none; color: white; font-size: 12px;
+            background-color: var(--primary-blue); cursor: pointer; border: none;
+            transition: 0.2s;
+        }
+
+        .nav-btn:hover { background-color: var(--dark-blue); }
+
+        /* Active State for Registration */
+        .nav-btn.active { background-color: var(--success-green); }
+
+        /* Shifted Bulk Import Section */
+        .shifted-action-bar {
+            padding: 10px 15px;
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid #eee;
+            background: #fff;
+        }
+
+        .bulk-reg-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .bulk-reg-btn:hover { background-color: var(--dark-blue); }
+
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <h3 class="page-breadcrumb">Student Manager » Registration</h3>
+
+    <div class="top-navbar">
+        <a class="nav-btn" onclick="navigateERP('erp100.php', 'Detail')">
+            <i class="fa fa-list"></i> Detail
+        </a>
+        <a class="nav-btn active" onclick="navigateERP('erp107.php', 'Registration')">
+            <i class="fa fa-plus"></i> Registration
+        </a>
+        <a class="nav-btn" onclick="navigateERP('erp102.php', 'Bulk Registration')">
+            <i class="fa fa-upload"></i> Bulk Registration
+        </a>
+        <a class="nav-btn" onclick="navigateERP('erp103.php', 'Transfer')">
+            <i class="fa fa-exchange"></i> Transfer
+        </a>
+        <a class="nav-btn" onclick="navigateERP('erp104.php', 'Documents')">
+            <i class="fa fa-file-text-o"></i> Documents
+        </a>
+        <a class="nav-btn" onclick="navigateERP('erp105.php', 'Notes')">
+            <i class="fa fa-sticky-note-o"></i> Notes
+        </a>
+        <a class="nav-btn" onclick="navigateERP('fees.php', 'Balance Fees')">
+            <i class="fa fa-calculator"></i> Balance Fees
+        </a>
+        <a class="nav-btn" onclick="navigateERP('library.php', 'Library')">
+            <i class="fa fa-book"></i> Library
+        </a>
+        <a class="nav-btn" onclick="navigateERP('attendance.php', 'Attendance')">
+            <i class="fa fa-calendar-check-o"></i> Attendance
+        </a>
+    </div>
+
+    <div class="shifted-action-bar">
+        <a class="bulk-reg-btn" onclick="navigateERP('erp102.php', 'Bulk Student Registration')">
+            <i class="fa fa-upload"></i> Bulk Student Registration
+        </a>
+    </div>
+
+    <div id="form-content-area" style="padding: 20px;">
+        </div>
+</div>
+
+<script>
+    /**
+     * Navigation via JavaScript
+     * Connects to PHP later
+     */
+    function navigateERP(url, pageName) {
+        console.log("Navigating to: " + pageName);
+        alert("JavaScript call for: " + pageName);
+        // window.location.href = url;
+    }
+
+    window.onload = function() {
+        console.log("ERP 107 Ready. Layout adjusted as per screenshot.");
+    };
+</script>
+<!--yanha se form wala porsen sure ho rha hai -->
+<div class="erp-main-layout">
+    <style>
+        .erp-main-layout {
+            display: flex;
+            width: 100%;
+            min-height: 900px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            border: 1px solid #ddd;
+        }
+
+        /* Sidebar Navigation */
+        .erp-sidebar {
+            width: 200px;
+            background: #f1f3f6;
+            border-right: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .erp-sidebar button {
+            width: 100%;
+            padding: 15px;
+            text-align: left;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+        }
+
+        .erp-sidebar button.active {
+            background: #337ab7;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Content Area for Iframe */
+        .erp-content-pane {
+            flex: 1;
+            padding: 0; /* Padding hta di taaki iframe full screen dikhe */
+            background: #fff;
+        }
+
+        .iframe-container {
+            width: 100%;
+            height: 100%;
+            min-height: 900px;
+            border: none;
+            display: block;
+        }
+    </style>
+
+    <div class="erp-sidebar">
+        <button class="active" onclick="switchTab('general', this)"><i class="fa fa-info-circle"></i> General Info</button>
+        <button onclick="switchTab('academic', this)"><i class="fa fa-graduation-cap"></i> Academic Info</button>
+        <button onclick="switchTab('profile', this)"><i class="fa fa-user"></i> Profile Image</button>
+        <button onclick="switchTab('docs', this)"><i class="fa fa-paperclip"></i> Attach Document</button>
+        <button onclick="switchTab('extra', this)"><i class="fa fa-plus"></i> Extra Info</button>
+    </div>
+
+    <div class="erp-content-pane">
+        <iframe id="erp_iframe" src="style1.html" class="iframe-container"></iframe>
+    </div>
+
+    <script>
+        function switchTab(type, btn) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.erp-sidebar button').forEach(b => b.classList.remove('active'));
+            
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            const iframe = document.getElementById('erp_iframe');
+            
+            // Iframe ka source change karein
+            iframe.src = type + ".php"; 
+        }
+    </script>
+</div>
+<!--or yanha par form wala prosen poora ho rha hai-->
+</body>
+</html>
