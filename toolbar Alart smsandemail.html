@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 233 - SMS / Email Manager</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --erp-blue: #337ab7;
+            --erp-green: #5cb85c;
+            --erp-orange: #f0ad4e;
+            --erp-red: #d9534f;
+            --erp-light-bg: #f9f9f9;
+            --table-header-bg: #d9edf7;
+            --border-color: #ddd;
+        }
+
+        body { 
+            background-color: #fff; 
+            font-size: 13px; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            color: #333; 
+        }
+
+        /* Top Header Area */
+        .page-header { 
+            background: #fff; 
+            padding: 10px; 
+            text-align: center; 
+            border-bottom: 1px dotted #ccc; 
+            position: relative; 
+        }
+        .gear-icon { 
+            position: absolute; 
+            right: 15px; 
+            top: 8px; 
+            color: var(--erp-orange); 
+            font-size: 24px; 
+            cursor: pointer;
+            background: #fff;
+            padding: 4px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .title-text { font-size: 14px; margin-bottom: 5px; }
+        .title-text strong { color: var(--erp-blue); }
+        .title-text span { color: #999; }
+
+        /* Navigation Bar Styling */
+        .nav-container {
+            background-color: var(--erp-light-bg);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .btn-erp {
+            font-size: 12px;
+            padding: 5px 12px;
+            border-radius: 4px;
+            color: #fff !important;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .bg-green { background-color: var(--erp-green); }
+        .bg-blue { background-color: var(--erp-blue); }
+
+        /* Main Content Section */
+        .content-body { padding: 20px; }
+
+        /* Filter Panel (Hide/Show Logic) */
+        .filter-section {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .filter-header {
+            background: #f5f5f5;
+            padding: 10px;
+            font-weight: bold;
+            color: var(--erp-blue);
+            border-bottom: 1px solid #eee;
+        }
+        .filter-body { padding: 15px; background: #fafafa; }
+
+        /* ERP Input Groups */
+        .erp-group { display: flex; margin-bottom: 15px; border: 1px solid #ccc; border-left: 3px solid #ff0000; }
+        .erp-label { background: #eee; padding: 10px; width: 130px; font-weight: bold; text-align: center; border-right: 1px solid #ccc; }
+        .erp-input { flex-grow: 1; border: none; padding: 10px; outline: none; }
+
+        /* Action Buttons Row */
+        .action-row { display: flex; justify-content: flex-end; gap: 5px; margin-bottom: 10px; }
+        .btn-sm-erp { font-size: 12px; padding: 4px 10px; border-radius: 4px; color: #fff; border: none; }
+        
+        .bg-active { background-color: var(--erp-blue); }
+        .bg-inactive { background-color: var(--erp-orange); }
+        .bg-delete { background-color: var(--erp-red); }
+
+        /* Table Styling */
+        .table-container { border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; }
+        .erp-table { width: 100%; border-collapse: collapse; }
+        .erp-table thead tr { border-bottom: 2px solid #ff0000; }
+        .erp-table th { 
+            background: var(--table-header-bg); 
+            color: #31708f; 
+            padding: 10px; 
+            text-align: center; 
+            border: 1px solid #bce8f1; 
+            font-weight: bold;
+            font-size: 11px;
+        }
+        .erp-table td { padding: 15px; border: 1px solid #eee; color: #666; font-size: 13px; }
+
+        .hidden { display: none !important; }
+        .clearfix::after { content: ""; clear: both; display: table; }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <div class="title-text">
+        <strong>SMS / Email Manager</strong> <span>» Detail</span>
+    </div>
+    <i class="fa fa-cog gear-icon" onclick="erpLog('Global Manager Settings Clicked')"></i>
+</div>
+
+<div class="nav-container">
+    <button class="btn-erp bg-green" onclick="erpLog('Nav: Detail View')"><i class="fa fa-list"></i> Detail</button>
+    <button class="btn-erp bg-blue" onclick="toggleFilter()"><i class="fa fa-users"></i> Group Message</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Student & Guardian')"><i class="fa fa-plus"></i> Student & Guardian</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Staff Management')"><i class="fa fa-user-tie"></i> Staff</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Individual Message')"><i class="fa fa-plus"></i> Individual</button>
+    <button class="btn-erp bg-blue" onclick="erpLog('Nav: Notice History')"><i class="fa fa-file-alt"></i> Notice</button>
+    <button class="btn-erp bg-green" onclick="erpLog('Nav: SMS/Email Settings')"><i class="fa fa-envelope"></i> Sms/Email</button>
+</div>
+
+<div class="content-body">
+    
+    <div id="filterPanel" class="filter-section hidden">
+        <div class="filter-header"><i class="fa fa-search"></i> Send Group Message</div>
+        <div class="filter-body">
+            <form id="msgForm" action="send_group_msg.php" method="POST">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="erp-group">
+                            <div class="erp-label">GROUP TYPE</div>
+                            <select name="group_type" class="erp-input">
+                                <option value="all">All Users</option>
+                                <option value="student">Students</option>
+                                <option value="staff">Staff</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="erp-group">
+                            <div class="erp-label">MESSAGE TYPE</div>
+                            <select name="msg_type" class="erp-input">
+                                <option value="sms">SMS</option>
+                                <option value="email">Email</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="erp-group">
+                    <div class="erp-label" style="height: 80px;">MESSAGE</div>
+                    <textarea name="message_body" class="erp-input" style="height: 80px; resize: none;"></textarea>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary btn-sm" onclick="erpLog('Sending Message...')">
+                        <i class="fa fa-paper-plane"></i> Send Now
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="action-row">
+        <button class="btn-sm-erp bg-active" onclick="erpLog('Action: Mark Active')"><i class="fa fa-check"></i> Active</button>
+        <button class="btn-sm-erp bg-inactive" onclick="erpLog('Action: Mark In-Active')"><i class="fa fa-times"></i> In-Active</button>
+        <button class="btn-sm-erp bg-delete" onclick="erpLog('Action: Delete Records')"><i class="fa fa-trash"></i> Delete</button>
+    </div>
+
+    <div class="table-container">
+        <table class="erp-table">
+            <thead>
+                <tr>
+                    <th style="width: 50px;"><input type="checkbox" onclick="erpLog('Select All toggled')"></th>
+                    <th style="width: 80px;">S.N.</th>
+                    <th>MESSAGE DETAIL</th>
+                    <th style="width: 100px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="4" class="text-start">No data found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    /**
+     * Filter Toggle Logic
+     * 'Group Message' button click par hide/show hoga.
+     */
+    function toggleFilter() {
+        const panel = document.getElementById('filterPanel');
+        if (panel.classList.contains('hidden')) {
+            panel.classList.remove('hidden');
+            erpLog("Group Message Filter: SHOWN");
+        } else {
+            panel.classList.add('hidden');
+            erpLog("Group Message Filter: HIDDEN");
+        }
+    }
+
+    /**
+     * Professional ERP Logging
+     */
+    function erpLog(msg) {
+        const time = new Date().toLocaleTimeString();
+        console.log(`%c[ERP-233]%c ${time} - %c${msg}`, 
+            "color: white; background: #337ab7; padding: 2px 5px; border-radius: 3px;", 
+            "color: #888;", 
+            "color: #000; font-weight: bold;");
+    }
+
+    // Initial Load
+    window.onload = function() {
+        erpLog("SMS / Email Manager Detail Page Loaded Successfully.");
+    };
+</script>
+
+</body>
+</html>
