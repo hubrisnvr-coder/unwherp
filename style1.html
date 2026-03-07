@@ -461,8 +461,8 @@
                         <li><a href="toolbarmeeting.html">Meeting/OnlineClass</a></li>
                         <li><a href="toolbarassignment.html">Assignment</a></li>
                         <li><a href="toolbaruploaddownload.html">Upload/Download</a></li>
-                        <li><a href="toolbar Alart User Notice.html">Alart User Notice </a></li>
-                        <li><a href="toolbar Alart SMS & Email.html">Alart SMS & Email</a></li>
+                        <li><a href="toolbar Alart User Notice.html">Alart User Notice</a></li>
+                        <li><a href="toolbar Alart smsandemail.html">Alart SMS & Email</a></li>
                         <li><a href="toolbarpostalexchange.html"> Front Desk Postal Exchange </a></li>
                         <li><a href="toolbarvisitorlogs.html">Front Desk Visitor Log</a></li>
                         <li><a href="admincontrolemail.html">Help</a></li>
@@ -503,67 +503,778 @@
                 </ul>
             </div>
 
-            <div class="toolbar-item">
-                <i class="fas fa-users"></i><p>Student & Staff</p>
-                <ul class="hover-dropdown-list">
-                    <li><a href="#">Student</a></li>
-                    <li><a href="#">Guardian</a></li>
-                    <li><a href="#">Staff</a></li>
-                </ul>
-            </div>
+            <!---yanhse se double toolbar wala prosen sure ho rha hai -->
+             <style>
+    /* Unique class to avoid any overlap */
+    .erp-multi-level {
+        position: relative;
+    }
 
-            <div class="toolbar-item">
-                <i class="fas fa-calculator"></i><p>Account</p>
-                <ul class="hover-dropdown-list">
-                    <li><a href="#">Fee Collection</a></li>
-                    <li><a href="#">Fee Report</a></li>
-                    <li><a href="#">Ledger & Transaction</a></li>
-                    <li><a href="#">Separate Banking</a></li>
-                    <li><a href="#">Payroll</a></li>
-                    <li><a href="#">Account Report</a></li>
-                </ul>
-            </div>
+    /* Sub-menu (Level 2) alignment */
+    .nested-dropdown-list {
+        position: absolute;
+        top: 0;             
+        left: 100%;         
+        background: #ffffff;
+        list-style: none;
+        padding: 5px 0;
+        margin: 0;
+        min-width: 200px;
+        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
+        border-radius: 4px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        border: 1px solid #d1d5db;
+        z-index: 10001;
+    }
 
-            <div class="toolbar-item">
-                <i class="fas fa-shopping-cart"></i><p>Inventory</p>
-                <ul class="hover-dropdown-list">
-                    <li><a href="#">Class Assets</a></li>
-                    <li><a href="#">Product/Assets</a></li>
-                    <li><a href="#">Customer</a></li>
-                    <li><a href="#">Vendor</a></li>
-                </ul>
-            </div>
+    /* Zoom-Responsive: Flip to left if space is tight */
+    @media (max-width: 1350px) {
+        .nested-dropdown-list {
+            left: auto;
+            right: 100%;
+            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
+        }
+    }
 
-            <div class="toolbar-item">
-                <i class="fas fa-book"></i><p>Library</p>
-                <ul class="hover-dropdown-list">
-                    <li><a href="#">Books</a></li>
-                    <li><a href="#">Members</a></li>
-                    <li><a href="#">Book Request</a></li>
-                    <li><a href="#">Issue History</a></li>
-                    <li><a href="#">Return Period Over</a></li>
-                    <li><a href="#">Circulation Setting</a></li>
-                </ul>
-            </div>
+    /* List item container */
+    .hover-dropdown-list li {
+        position: relative; 
+        list-style: none;
+    }
 
-            <div class="toolbar-item">
-                <i class="fas fa-calendar-check"></i><p>Attendance</p>
-                <ul class="hover-dropdown-list">
-                    <li><a href="#">Student Attendance</a></li>
-                    <li><a href="#">Staff Attendance</a></li>
-                    <li><a href="#">Attendance Report</a></li>
-                    <li><a href="#">Monthly Report</a></li>
-                    <li><a href="#">Monthly Calendar</a></li>
-                </ul>
-            </div>
+    /* Link Styling - Clean & Minimal (No Arrows) */
+    .hover-dropdown-list li a {
+        display: block !important;
+        padding: 10px 20px !important; 
+        color: #4b5563 !important;
+        text-decoration: none;
+        font-size: 13px;
+        border-bottom: 1px solid #f3f4f6;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
 
-            <div class="toolbar-item">
-                <i class="fas fa-chart-line"></i><p>Exam</p>
-                <ul class="hover-dropdown-list">
-                    <li><a href="#">Offline-Manual Exam</a></li>
-                </ul>
-            </div>
+    /* Professional Blue Hover */
+    .hover-dropdown-list li:hover > a {
+        background-color: #3a7cbd !important; 
+        color: #ffffff !important;           
+    }
 
+    /* Show sub-menu on hover */
+    .hover-dropdown-list li:hover > .nested-dropdown-list {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Nested items specific styling */
+    .nested-dropdown-list li a {
+        padding: 10px 15px !important;
+        border-bottom: 1px solid #f9fafb;
+    }
+
+    .nested-dropdown-list li:last-child a {
+        border-bottom: none;
+    }
+</style>
+
+<div class="toolbar-item erp-multi-level">
+    <i class="fas fa-users"></i>
+    <p style="margin: 5px 0 0; font-size: 12px;">Student & Staff</p>
+
+    <ul class="hover-dropdown-list" style="padding: 0; margin: 0;">
+        <li>
+            <a href="#">Student</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">New Registration</a></li>
+                <li><a href="#">Student Directory</a></li>
+                <li><a href="#">Bulk ID Generate</a></li>
+                <li><a href="#">Promotion Area</a></li>
+                <li><a href="#">Student Logs</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Guardian</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Guardian Directory</a></li>
+                <li><a href="#">Map Student</a></li>
+                <li><a href="#">Notification Logs</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Staff</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Staff Directory</a></li>
+                <li><a href="#">Payroll Master</a></li>
+                <li><a href="#">Attendance</a></li>
+                <li><a href="#">Leave Status</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script>
+    // Console log for click tracking (PHP ready)
+    document.querySelectorAll('.erp-multi-level a').forEach(el => {
+        el.addEventListener('click', function() {
+            console.log("Action: " + this.innerText.trim());
+        });
+    });
+</script>
+            <!---yanhse se double toolbar student and staff wala prosen poora  ho rha hai -->
+
+            <!--yanhse se double toolbar account wala prosen sure ho rha hai -->
+             <style>
+    /* Unique class to avoid any overlap */
+    .erp-account-level {
+        position: relative;
+    }
+
+    /* Sub-menu (Level 2) */
+    .nested-dropdown-list {
+        position: absolute;
+        top: 0;             
+        left: 100%;         
+        background: #ffffff;
+        list-style: none;
+        padding: 5px 0;
+        margin: 0;
+        min-width: 210px;
+        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
+        border-radius: 4px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        border: 1px solid #d1d5db;
+        z-index: 10001;
+    }
+
+    /* Zoom / Responsive Logic (Auto-flip to left when space is tight) */
+    @media (max-width: 1350px) {
+        .nested-dropdown-list {
+            left: auto;
+            right: 100%;
+            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
+        }
+    }
+
+    /* List item container */
+    .hover-dropdown-list li {
+        position: relative; 
+        list-style: none;
+    }
+
+    /* Link Styling - Clean & Minimal (No Arrows) */
+    .hover-dropdown-list li a {
+        display: block !important;
+        padding: 10px 20px !important; 
+        color: #4b5563 !important;
+        text-decoration: none;
+        font-size: 13px;
+        border-bottom: 1px solid #f3f4f6;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    /* Balanced Blue Hover */
+    .hover-dropdown-list li:hover > a {
+        background-color: #3a7cbd !important; 
+        color: #ffffff !important;           
+    }
+
+    /* Show sub-menu on hover */
+    .hover-dropdown-list li:hover > .nested-dropdown-list {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Nested items specific styling */
+    .nested-dropdown-list li a {
+        padding: 10px 15px !important;
+        border-bottom: 1px solid #f9fafb;
+    }
+
+    .nested-dropdown-list li:last-child a {
+        border-bottom: none;
+    }
+</style>
+
+<div class="toolbar-item erp-account-level">
+    <i class="fas fa-calculator"></i>
+    <p style="margin: 5px 0 0; font-size: 12px;">Account</p>
+
+    <ul class="hover-dropdown-list" style="padding: 0; margin: 0;">
+        <li>
+            <a href="#">Fee Collection</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Collect Fee</a></li>
+                <li><a href="#">Search Fees Payment</a></li>
+                <li><a href="#">Fees Master</a></li>
+                <li><a href="#">Fees Group</a></li>
+                <li><a href="#">Fees Carry Forward</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Fee Report</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Daily Collection Report</a></li>
+                <li><a href="#">Fees Due Report</a></li>
+                <li><a href="#">Fees Statement</a></li>
+                <li><a href="#">Balance Fees Report</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Ledger & Transaction</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Add Expense</a></li>
+                <li><a href="#">Search Expense</a></li>
+                <li><a href="#">Expense Head</a></li>
+                <li><a href="#">Income Master</a></li>
+                <li><a href="#">Transaction History</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Separate Banking</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Bank Account List</a></li>
+                <li><a href="#">Bank Reconciliation</a></li>
+                <li><a href="#">Online Payment Logs</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Payroll</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Staff Salary</a></li>
+                <li><a href="#">Payslip Generate</a></li>
+                <li><a href="#">Salary Report</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Account Report</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Profit & Loss</a></li>
+                <li><a href="#">Balance Sheet</a></li>
+                <li><a href="#">Income-Expense Graph</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script>
+    // Console log for click tracking (PHP ready)
+    document.querySelectorAll('.erp-account-level a').forEach(el => {
+        el.addEventListener('click', function() {
+            console.log("Account Action: " + this.innerText.trim());
+        });
+    });
+</script>  
+            <!--yanhse se double toolbar account wala prosen poora  ho rha hai -->
+
+            <!--yanha se double toolbar Inventory wala porsen sure ho rha hai -->
+             <style>
+    /* Unique class to avoid any overlap */
+    .erp-inventory-level {
+        position: relative;
+    }
+
+    /* Sub-menu (Level 2) alignment */
+    .nested-dropdown-list {
+        position: absolute;
+        top: 0;             
+        left: 100%;         
+        background: #ffffff;
+        list-style: none;
+        padding: 5px 0;
+        margin: 0;
+        min-width: 200px;
+        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
+        border-radius: 4px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        border: 1px solid #d1d5db;
+        z-index: 10001;
+    }
+
+    /* Zoom / Responsive Logic (Auto-flip to left when space is tight) */
+    @media (max-width: 1350px) {
+        .nested-dropdown-list {
+            left: auto;
+            right: 100%;
+            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
+        }
+    }
+
+    /* List item container */
+    .hover-dropdown-list li {
+        position: relative; 
+        list-style: none;
+    }
+
+    /* Link Styling - Clean & Minimal (No Arrows) */
+    .hover-dropdown-list li a {
+        display: block !important;
+        padding: 10px 20px !important; 
+        color: #4b5563 !important;
+        text-decoration: none;
+        font-size: 13px;
+        border-bottom: 1px solid #f3f4f6;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    /* Balanced Blue Hover */
+    .hover-dropdown-list li:hover > a {
+        background-color: #3a7cbd !important; 
+        color: #ffffff !important;           
+    }
+
+    /* Show sub-menu on hover */
+    .hover-dropdown-list li:hover > .nested-dropdown-list {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Nested items specific styling (Inner list) */
+    .nested-dropdown-list li a {
+        padding: 10px 15px !important;
+        border-bottom: 1px solid #f9fafb;
+    }
+
+    .nested-dropdown-list li:last-child a {
+        border-bottom: none;
+    }
+</style>
+
+<div class="toolbar-item erp-inventory-level">
+    <i class="fas fa-shopping-cart"></i>
+    <p style="margin: 5px 0 0; font-size: 12px;">Inventory</p>
+
+    <ul class="hover-dropdown-list" style="padding: 0; margin: 0;">
+        <li>
+            <a href="#">Class Assets</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Assign Assets</a></li>
+                <li><a href="#">Class Wise Assets</a></li>
+                <li><a href="#">Maintenance Log</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Product/Assets</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Add New Item</a></li>
+                <li><a href="#">Stock List</a></li>
+                <li><a href="#">Item Category</a></li>
+                <li><a href="#">Store Management</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Customer</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Customer List</a></li>
+                <li><a href="#">Sale History</a></li>
+                <li><a href="#">Credit Note</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Vendor</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Vendor Directory</a></li>
+                <li><a href="#">Purchase Order</a></li>
+                <li><a href="#">Vendor Payment</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script>
+    // Console log for click tracking (PHP ready)
+    document.querySelectorAll('.erp-inventory-level a').forEach(el => {
+        el.addEventListener('click', function() {
+            console.log("Inventory Action: " + this.innerText.trim());
+        });
+    });
+</script>
+            <!--yanha se double toolbar Inventory wala porsen poora  ho rha hai -->
+
+
+            <!--yanha se double toolbar Library wala prosen sure ho rha hai -->
+            <style>
+    /* Unique class to avoid any overlap */
+    .erp-library-level {
+        position: relative;
+    }
+
+    /* Sub-menu (Level 2) */
+    .nested-dropdown-list {
+        position: absolute;
+        top: 0;             
+        left: 100%;         
+        background: #ffffff;
+        list-style: none;
+        padding: 5px 0;
+        margin: 0;
+        min-width: 210px;
+        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
+        border-radius: 4px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        border: 1px solid #d1d5db;
+        z-index: 10001;
+    }
+
+    /* Zoom / Responsive Logic (Auto-flip to left side when space is tight) */
+    @media (max-width: 1350px) {
+        .nested-dropdown-list {
+            left: auto;
+            right: 100%;
+            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
+        }
+    }
+
+    /* List item container */
+    .hover-dropdown-list li {
+        position: relative; 
+        list-style: none;
+    }
+
+    /* Link Styling - Minimalist (No Arrows) */
+    .hover-dropdown-list li a {
+        display: block !important;
+        padding: 10px 20px !important; 
+        color: #4b5563 !important;
+        text-decoration: none;
+        font-size: 13px;
+        border-bottom: 1px solid #f3f4f6;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    /* Balanced Blue Hover */
+    .hover-dropdown-list li:hover > a {
+        background-color: #3a7cbd !important; 
+        color: #ffffff !important;           
+    }
+
+    /* Show sub-menu on hover */
+    .hover-dropdown-list li:hover > .nested-dropdown-list {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Nested items specific styling */
+    .nested-dropdown-list li a {
+        padding: 10px 15px !important;
+        border-bottom: 1px solid #f9fafb;
+    }
+
+    .nested-dropdown-list li:last-child a {
+        border-bottom: none;
+    }
+</style>
+
+<div class="toolbar-item erp-library-level">
+    <i class="fas fa-book"></i>
+    <p style="margin: 5px 0 0; font-size: 12px;">Library</p>
+
+    <ul class="hover-dropdown-list" style="padding: 0; margin: 0;">
+        <li>
+            <a href="#">Books</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Add New Book</a></li>
+                <li><a href="#">Book List</a></li>
+                <li><a href="#">Category Master</a></li>
+                <li><a href="#">Self/Rack Location</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Members</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Add Member</a></li>
+                <li><a href="#">Member List</a></li>
+                <li><a href="#">ID Card Print</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Book Request</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Pending Requests</a></li>
+                <li><a href="#">Approved Requests</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Issue History</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Student Issue Log</a></li>
+                <li><a href="#">Staff Issue Log</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Return Period Over</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Fine Management</a></li>
+                <li><a href="#">Overdue Notifications</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Circulation Setting</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Issue Rules</a></li>
+                <li><a href="#">Fine Rules</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script>
+    // Console log for click tracking (PHP ready)
+    document.querySelectorAll('.erp-library-level a').forEach(el => {
+        el.addEventListener('click', function() {
+            console.log("Library Action: " + this.innerText.trim());
+        });
+    });
+</script>
+            <!--yanha se double toolbar Library wala prosen sure ho rha hai -->
+
+            <!--yanha se double toolbar Attendance wala porsen sure ho rha hai-->
+            <style>
+    /* Unique class to avoid any overlap */
+    .erp-attendance-level {
+        position: relative;
+    }
+
+    /* Sub-menu (Level 2) */
+    .nested-dropdown-list {
+        position: absolute;
+        top: 0;             
+        left: 100%;         
+        background: #ffffff;
+        list-style: none;
+        padding: 5px 0;
+        margin: 0;
+        min-width: 200px;
+        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
+        border-radius: 4px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        border: 1px solid #d1d5db;
+        z-index: 10001;
+    }
+
+    /* Zoom / Responsive Logic (100% Zoom se upar jate hi auto-flip) */
+    @media (max-width: 1350px) {
+        .nested-dropdown-list {
+            left: auto;
+            right: 100%;
+            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
+        }
+    }
+
+    /* List item container */
+    .hover-dropdown-list li {
+        position: relative; 
+        list-style: none;
+    }
+
+    /* Link Styling - Clean & Minimal (No Arrows) */
+    .hover-dropdown-list li a {
+        display: block !important;
+        padding: 10px 20px !important; 
+        color: #4b5563 !important;
+        text-decoration: none;
+        font-size: 13px;
+        border-bottom: 1px solid #f3f4f6;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    /* Balanced Blue Hover */
+    .hover-dropdown-list li:hover > a {
+        background-color: #3a7cbd !important; 
+        color: #ffffff !important;           
+    }
+
+    /* Show sub-menu on hover */
+    .hover-dropdown-list li:hover > .nested-dropdown-list {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Nested items specific styling (Inner list) */
+    .nested-dropdown-list li a {
+        padding: 10px 15px !important;
+        border-bottom: 1px solid #f9fafb;
+    }
+
+    .nested-dropdown-list li:last-child a {
+        border-bottom: none;
+    }
+</style>
+
+<div class="toolbar-item erp-attendance-level">
+    <i class="fas fa-calendar-check"></i>
+    <p style="margin: 5px 0 0; font-size: 12px;">Attendance</p>
+
+    <ul class="hover-dropdown-list" style="padding: 0; margin: 0;">
+        <li>
+            <a href="#">Student Attendance</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Mark Attendance</a></li>
+                <li><a href="#">Attendance By Date</a></li>
+                <li><a href="#">Approve Leave</a></li>
+                <li><a href="#">Biometric Sync</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Staff Attendance</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Mark Staff Attendance</a></li>
+                <li><a href="#">Leave Request</a></li>
+                <li><a href="#">Holiday List</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Attendance Report</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Daily Report</a></li>
+                <li><a href="#">Absentees List</a></li>
+                <li><a href="#">Percentage Report</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Monthly Report</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Class Wise Monthly</a></li>
+                <li><a href="#">Staff Monthly Summary</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Monthly Calendar</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Academic Calendar</a></li>
+                <li><a href="#">Event Schedule</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script>
+    // Console log for click tracking (PHP ready)
+    document.querySelectorAll('.erp-attendance-level a').forEach(el => {
+        el.addEventListener('click', function() {
+            console.log("Attendance Action: " + this.innerText.trim());
+        });
+    });
+</script>
+            <!--yanha se double toolbar Attendance wala porsen sure ho rha hai-->
+
+            <!--yanha se double toolbar Exam wala prosen sure ho rha hai-->
+           <style>
+    /* Unique class to avoid any overlap */
+    .erp-exam-level {
+        position: relative;
+    }
+
+    /* Sub-menu (Level 2) */
+    .nested-dropdown-list {
+        position: absolute;
+        top: 0;             
+        left: 100%;         
+        background: #ffffff;
+        list-style: none;
+        padding: 5px 0;
+        margin: 0;
+        min-width: 210px;
+        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
+        border-radius: 4px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        border: 1px solid #d1d5db;
+        z-index: 10001;
+    }
+
+    /* Zoom / Responsive Logic (Auto-flip to left when space is tight) */
+    @media (max-width: 1350px) {
+        .nested-dropdown-list {
+            left: auto;
+            right: 100%;
+            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
+        }
+    }
+
+    /* List item container */
+    .hover-dropdown-list li {
+        position: relative; 
+        list-style: none;
+    }
+
+    /* Link Styling - Minimalist (No Arrows) */
+    .hover-dropdown-list li a {
+        display: block !important;
+        padding: 10px 20px !important; 
+        color: #4b5563 !important;
+        text-decoration: none;
+        font-size: 13px;
+        border-bottom: 1px solid #f3f4f6;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    /* Balanced Blue Hover */
+    .hover-dropdown-list li:hover > a {
+        background-color: #3a7cbd !important; 
+        color: #ffffff !important;           
+    }
+
+    /* Show sub-menu on hover */
+    .hover-dropdown-list li:hover > .nested-dropdown-list {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Nested items specific styling */
+    .nested-dropdown-list li a {
+        padding: 10px 15px !important;
+        border-bottom: 1px solid #f9fafb;
+    }
+
+    .nested-dropdown-list li:last-child a {
+        border-bottom: none;
+    }
+</style>
+
+<div class="toolbar-item erp-exam-level">
+    <i class="fas fa-chart-line"></i>
+    <p style="margin: 5px 0 0; font-size: 12px;">Exam</p>
+
+    <ul class="hover-dropdown-list" style="padding: 0; margin: 0;">
+        <li>
+            <a href="#">Offline-Manual Exam</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Exam Group</a></li>
+                <li><a href="#">Exam Schedule</a></li>
+                <li><a href="#">Admit Card Design</a></li>
+                <li><a href="#">Marks Entry</a></li>
+                <li><a href="#">Marks Grade</a></li>
+                <li><a href="#">Result Report</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script>
+    // Console log for click tracking (PHP ready)
+    document.querySelectorAll('.erp-exam-level a').forEach(el => {
+        el.addEventListener('click', function() {
+            console.log("Exam Action: " + this.innerText.trim());
+        });
+    });
+</script>
+             <!--yanha se double toolbar Exam wala prosen poora  ho rha hai-->
             <div class="toolbar-item">
                 <i class="fas fa-certificate"></i><p>Certificate</p>
                 <ul class="hover-dropdown-list">
@@ -583,35 +1294,365 @@
                     <li><a href="toolbarcertificatetemplate.html">Certificate template</a></li>
                 </ul>
             </div>
+             
 
-            <div class="toolbar-item">
-                <i class="fas fa-bed"></i><p>Hostel</p>
-                <ul class="hover-dropdown-list">
-                    <li><a href="#">Resident</a></li>
-                    <li><a href="#">Hostel</a></li>
-                    <li><a href="#">Food & Meal</a></li>
-                </ul>
-            </div>
+            <!--yanha se double toolbar Hostel wala porsen sure ho rha hai -->
+            <style>
+    /* Unique class to avoid any overlap */
+    .erp-hostel-level {
+        position: relative;
+    }
 
-            <div class="toolbar-item">
-                <i class="fas fa-bus"></i><p>Transport</p>
-                <ul class="hover-dropdown-list">
-                    <li><a href="#">Traveller/User</a></li>
-                    <li><a href="#">Route</a></li>
-                    <li><a href="#">Vehicle</a></li>
-                </ul>
-            </div>
+    /* Sub-menu (Level 2) */
+    .nested-dropdown-list {
+        position: absolute;
+        top: 0;             
+        left: 100%;         
+        background: #ffffff;
+        list-style: none;
+        padding: 5px 0;
+        margin: 0;
+        min-width: 200px;
+        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
+        border-radius: 4px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        border: 1px solid #d1d5db;
+        z-index: 10001;
+    }
 
-            <div class="toolbar-item">
-                <i class="fas fa-tasks"></i><p>Academic</p>
-                <ul class="hover-dropdown-list">
-                    <li><a href="#">Academic</a></li>
-                    <li><a href="#">Grading & SubjectList</a></li>
-                    <li><a href="#">Year & Month</a></li>
-                    <li><a href="#">Status Setting</a></li>
-                    <li><a href="#">Dynamic Gallery</a></li>
-                </ul>
-            </div>
+    /* Zoom / Responsive Logic (100% Zoom se upar jate hi auto-flip) */
+    @media (max-width: 1350px) {
+        .nested-dropdown-list {
+            left: auto;
+            right: 100%;
+            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
+        }
+    }
+
+    /* List item container */
+    .hover-dropdown-list li {
+        position: relative; 
+        list-style: none;
+    }
+
+    /* Link Styling - Clean & Uniform Padding */
+    .hover-dropdown-list li a {
+        display: block !important;
+        padding: 10px 20px !important; 
+        color: #4b5563 !important;
+        text-decoration: none;
+        font-size: 13px;
+        border-bottom: 1px solid #f3f4f6;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    /* Balanced Blue Hover */
+    .hover-dropdown-list li:hover > a {
+        background-color: #3a7cbd !important; 
+        color: #ffffff !important;           
+    }
+
+    /* Show sub-menu on hover */
+    .hover-dropdown-list li:hover > .nested-dropdown-list {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Nested items specific styling */
+    .nested-dropdown-list li a {
+        padding: 10px 15px !important;
+        border-bottom: 1px solid #f9fafb;
+    }
+
+    .nested-dropdown-list li:last-child a {
+        border-bottom: none;
+    }
+</style>
+
+<div class="toolbar-item erp-hostel-level">
+    <i class="fas fa-bed"></i>
+    <p style="margin: 5px 0 0; font-size: 12px;">Hostel</p>
+
+    <ul class="hover-dropdown-list" style="padding: 0; margin: 0;">
+        <li>
+            <a href="#">Resident</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Resident List</a></li>
+                <li><a href="#">Add New Resident</a></li>
+                <li><a href="#">Allocate Room</a></li>
+                <li><a href="#">Attendance</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Hostel</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Hostel List</a></li>
+                <li><a href="#">Room Type</a></li>
+                <li><a href="#">Room Master</a></li>
+                <li><a href="#">Fee Structure</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Food & Meal</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Mess Menu</a></li>
+                <li><a href="#">Meal Booking</a></li>
+                <li><a href="#">Kitchen Stock</a></li>
+                <li><a href="#">Feedback</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script>
+    // Console log for click tracking (PHP ready)
+    document.querySelectorAll('.erp-hostel-level a').forEach(el => {
+        el.addEventListener('click', function() {
+            console.log("Hostel Action: " + this.innerText.trim());
+        });
+    });
+</script>
+             <!--yanha se double toolbar Hostel wala porsen poora  ho rha hai -->
+
+             <!--yanha se double toolbar Transport wala porsen sure ho rha hai-->
+              <style>
+    /* Main Container */
+    .erp-transport-no-arrow {
+        position: relative;
+    }
+
+    /* Sub-menu (Level 2) */
+    .nested-dropdown-list {
+        position: absolute;
+        top: 0;
+        background: #ffffff;
+        list-style: none;
+        padding: 5px 0;
+        margin: 0;
+        min-width: 200px;
+        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
+        border-radius: 4px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        border: 1px solid #d1d5db;
+        z-index: 10001;
+        
+        /* DEFAULT (100% Zoom): Right side khulega */
+        left: 100%;
+        right: auto;
+    }
+
+    /* Zoom / Responsive Logic (100% Zoom se upar jate hi) */
+    @media (max-width: 1350px) {
+        .nested-dropdown-list {
+            left: auto;
+            right: 100%;
+            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
+        }
+    }
+
+    .hover-dropdown-list li {
+        position: relative;
+        list-style: none;
+    }
+
+    /* Link Styling - Minimal (No Arrows) */
+    .hover-dropdown-list li a {
+        display: block !important;
+        padding: 10px 20px !important; /* Uniform padding on both sides */
+        color: #4b5563 !important;
+        text-decoration: none;
+        font-size: 13px;
+        border-bottom: 1px solid #f3f4f6;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    /* Balanced Blue Hover */
+    .hover-dropdown-list li:hover > a {
+        background-color: #3a7cbd !important;
+        color: #ffffff !important;
+    }
+
+    /* Show sub-menu on hover */
+    .hover-dropdown-list li:hover > .nested-dropdown-list {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Sub-menu items (inner) */
+    .nested-dropdown-list li a {
+        border-bottom: 1px solid #f9fafb;
+    }
+    
+    .nested-dropdown-list li:last-child a {
+        border-bottom: none;
+    }
+</style>
+
+<div class="toolbar-item erp-transport-no-arrow">
+    <i class="fas fa-bus"></i>
+    <p style="margin: 5px 0 0; font-size: 12px;">Transport</p>
+
+    <ul class="hover-dropdown-list" style="padding: 0; margin: 0;">
+        <li>
+            <a href="#">Traveller/User</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Student List</a></li>
+                <li><a href="#">Staff List</a></li>
+                <li><a href="#">Assign Route</a></li>
+                <li><a href="#">Transport ID Card</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Route</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Route Master</a></li>
+                <li><a href="#">Stop Points</a></li>
+                <li><a href="#">Route Wise Fee</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Vehicle</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Vehicle List</a></li>
+                <li><a href="#">Driver Details</a></li>
+                <li><a href="#">Fuel Management</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script>
+    document.querySelectorAll('.erp-transport-no-arrow a').forEach(el => {
+        el.addEventListener('click', function() {
+            console.log("Transport Action: " + this.innerText.trim());
+        });
+    });
+</script>
+             <!--yanha se double toolbar Transport wala porsen poora ho rha hai-->
+
+             <!--yanha se double toolbar Academic wala porsen sure ho rha hai -->
+         <style>
+    /* Main Container */
+    .erp-zoom-nav-minimal {
+        position: relative;
+    }
+
+    /* Sub-menu (Level 2) */
+    .nested-dropdown-list {
+        position: absolute;
+        top: 0;
+        background: #ffffff;
+        list-style: none;
+        padding: 5px 0;
+        margin: 0;
+        min-width: 200px;
+        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
+        border-radius: 4px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        border: 1px solid #d1d5db;
+        z-index: 10001;
+        
+        /* DEFAULT (100% Zoom): Right side khulega */
+        left: 100%;
+        right: auto;
+    }
+
+    /* Zoom / Responsive Logic (Width kam hone par auto-flip) */
+    @media (max-width: 1350px) {
+        .nested-dropdown-list {
+            left: auto;
+            right: 100%;
+            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
+        }
+    }
+
+    .hover-dropdown-list li {
+        position: relative;
+        list-style: none;
+    }
+
+    /* Link Styling - Clean & Uniform Padding */
+    .hover-dropdown-list li a {
+        display: block !important;
+        padding: 10px 20px !important; /* Uniform spacing without arrows */
+        color: #4b5563 !important;
+        text-decoration: none;
+        font-size: 13px;
+        border-bottom: 1px solid #f3f4f6;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    /* Balanced Blue Hover */
+    .hover-dropdown-list li:hover > a {
+        background-color: #3a7cbd !important;
+        color: #ffffff !important;
+    }
+
+    /* Show sub-menu on hover */
+    .hover-dropdown-list li:hover > .nested-dropdown-list {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Sub-menu items (inner) */
+    .nested-dropdown-list li a {
+        padding: 10px 15px !important;
+        border-bottom: 1px solid #f9fafb;
+    }
+    
+    .nested-dropdown-list li:last-child a {
+        border-bottom: none;
+    }
+</style>
+
+<div class="toolbar-item erp-zoom-nav-minimal">
+    <i class="fas fa-tasks"></i>
+    <p style="margin: 5px 0 0; font-size: 12px;">Academic</p>
+
+    <ul class="hover-dropdown-list" style="padding: 0; margin: 0;">
+        <li>
+            <a href="#">Academic</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Class & Section</a></li>
+                <li><a href="#">Class Timetable</a></li>
+                <li><a href="#">Assign Teacher</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Grading</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Subject Master</a></li>
+                <li><a href="#">Grade Master</a></li>
+                <li><a href="#">Syllabus Status</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Status Setting</a>
+            <ul class="nested-dropdown-list">
+                <li><a href="#">Admission Status</a></li>
+                <li><a href="#">Custom Fields</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script>
+    document.querySelectorAll('.erp-zoom-nav-minimal a').forEach(el => {
+        el.addEventListener('click', function() {
+            console.log("Academic Action: " + this.innerText.trim());
+        });
+    });
+</script>
+            <!--yanha se double toolbar Academic wala porsen poora  ho rha hai -->
             <div class="toolbar-item" data-href="toolbaruploaddownload.html">
                 <i class="fas fa-upload"></i><p>Upload Download</p>
                 <!--
@@ -624,17 +1665,133 @@
                 </ul>
                 -->
             </div>
+        
+            <!--yanha se double toolbar more wala porsen sure ho rha hai-->
+            <style>
+    .erp-more-last {
+        position: relative;
+    }
 
-            <div class="toolbar-item">
-                <i class="fas fa-file-alt"></i><p>more</p>
-                <ul class="hover-dropdown-list">
-                    <li><a href="toolbarapplication.html">Application</a></li>
-                    <li><a href="toolbarmeeting.html">Meeting</a></li>
-                    <li><a href="#">Alart</a></li>
-                    <li><a href="toolbarassignment.html">Assignment</a></li>
-                </ul>
-                -->
-            </div>
+    /* Sub-menu (Level 2) - Permanent Left */
+    .nested-dropdown-list-left {
+        position: absolute;
+        top: 0;
+        right: 100%;
+        left: auto;
+        background: #ffffff;
+        list-style: none;
+        padding: 5px 0;
+        margin: 0;
+        min-width: 190px;
+        box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
+        border-radius: 4px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        border: 1px solid #d1d5db;
+        z-index: 10001;
+    }
+
+    .hover-dropdown-list li {
+        position: relative;
+        list-style: none;
+    }
+
+    /* Link Styling - Uniform Padding */
+    .hover-dropdown-list li a {
+        display: block !important;
+        position: relative; /* Arrow positioning ke liye */
+        padding: 10px 15px 10px 35px !important; /* Left mein space fix kar di arrow ke liye */
+        color: #4b5563 !important;
+        text-decoration: none;
+        font-size: 13px;
+        border-bottom: 1px solid #f3f4f6;
+        transition: all 0.2s;
+    }
+
+    /* Arrow Button - Precision Position & Small Size */
+    .sub-menu-arrow-left {
+        position: absolute;
+        left: 12px;         /* Left se bilkul barabar alignment */
+        top: 50%;
+        transform: translateY(-50%); /* Vertical center */
+        font-size: 7px;     /* Kaafi chota size */
+        color: #9ca3af;
+        transition: color 0.2s;
+    }
+
+    /* Balanced Blue Hover */
+    .hover-dropdown-list li:hover > a {
+        background-color: #3a7cbd !important;
+        color: #ffffff !important;
+    }
+
+    .hover-dropdown-list li:hover > a .sub-menu-arrow-left {
+        color: #ffffff;
+    }
+
+    .hover-dropdown-list li:hover > .nested-dropdown-list-left {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Inner sub-menu items - Simple Clean List */
+    .nested-dropdown-list-left li a {
+        padding: 10px 15px !important; /* Sub-items mein arrow nahi hai to normal padding */
+        border-bottom: 1px solid #f9fafb;
+    }
+
+    .nested-dropdown-list-left li:last-child a {
+        border-bottom: none;
+    }
+</style>
+
+<div class="toolbar-item erp-more-last">
+    <i class="fas fa-file-alt"></i>
+    <p style="margin: 5px 0 0; font-size: 12px;">More</p>
+
+    <ul class="hover-dropdown-list" style="padding: 0; margin: 0;">
+        <li>
+            <a href="toolbarapplication.html">
+                <i class="fas fa-chevron-left sub-menu-arrow-left"></i> 
+                Application
+            </a>
+            <ul class="nested-dropdown-list-left">
+                <li><a href="#">Leave Application</a></li>
+                <li><a href="#">TC Application</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="toolbarmeeting.html">
+                <i class="fas fa-chevron-left sub-menu-arrow-left"></i> 
+                Meeting
+            </a>
+            <ul class="nested-dropdown-list-left">
+                <li><a href="#">Parent-Teacher Meet</a></li>
+                <li><a href="#">Staff Meeting</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fas fa-chevron-left sub-menu-arrow-left"></i> 
+                Alert
+            </a>
+            <ul class="nested-dropdown-list-left">
+                <li><a href="#">Fee Alerts</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="toolbarassignment.html">
+                <i class="fas fa-chevron-left sub-menu-arrow-left"></i> 
+                Assignment
+            </a>
+            <ul class="nested-dropdown-list-left">
+                <li><a href="#">Daily Homework</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+            <!--yanha se double toolbar more wala porsen poora ho rha hai-->
         </div>
     </div>
     </section>
