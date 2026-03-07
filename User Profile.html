@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP 235 - User Manager Profile</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --erp-blue: #337ab7;
+            --erp-light-blue: #d9edf7;
+            --erp-orange: #f0ad4e;
+            --border-color: #ddd;
+        }
+
+        body { 
+            background-color: #fff; 
+            font-size: 13px; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            color: #333; 
+        }
+
+        /* Top Header Area */
+        .page-header { 
+            padding: 10px; 
+            text-align: center; 
+            border-bottom: 1px dotted #ccc; 
+            position: relative; 
+            margin-bottom: 20px;
+        }
+        .gear-icon { 
+            position: absolute; 
+            right: 15px; 
+            top: 8px; 
+            color: var(--erp-orange); 
+            font-size: 22px; 
+            cursor: pointer;
+            background: #fff;
+            padding: 4px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .title-text { font-size: 14px; }
+        .title-text strong { color: var(--erp-blue); }
+        .title-text span { color: #999; }
+
+        /* Profile Table Styling */
+        .profile-container {
+            margin: 0 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .erp-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .erp-table thead tr {
+            border-bottom: 2px solid #ff0000; /* Red line as seen in screenshot */
+        }
+
+        .erp-table th {
+            background-color: var(--erp-light-blue);
+            color: #31708f;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: bold;
+            border: 1px solid #bce8f1;
+            text-transform: uppercase;
+        }
+
+        .erp-table td {
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        .column-name {
+            width: 20%;
+            color: #555;
+        }
+
+        .column-value {
+            width: 80%;
+            color: #333;
+        }
+
+        /* Buttons */
+        .btn-change-password {
+            background-color: var(--erp-blue);
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 4px;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+
+        .btn-change-password:hover {
+            background-color: #286090;
+            color: white;
+        }
+
+        .status-active {
+            color: #333;
+        }
+
+        /* Utility */
+        .hidden { display: none; }
+        
+        /* Filter Toggle simulation (if needed in future) */
+        .filter-box {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 0 15px 15px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <div class="title-text">
+        <strong>User Manager</strong> <span>» Profile</span>
+    </div>
+    <i class="fa fa-cog gear-icon" onclick="erpLog('User Profile Settings Clicked')"></i>
+</div>
+
+<div class="main-content">
+    
+    <div class="profile-container">
+        <table class="erp-table">
+            <thead>
+                <tr>
+                    <th class="column-name">COLUMN</th>
+                    <th class="column-value">VALUE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Profile Image</td>
+                    <td>No image</td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>Super Admin</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>admin</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Contact Number</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td>
+                        <button class="btn-change-password" onclick="erpLog('Change Password Request Sent')">
+                            Change Password
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td class="status-active">Active</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    /**
+     * Professional ERP Logging Function
+     */
+    function erpLog(msg) {
+        const time = new Date().toLocaleTimeString();
+        console.log(`%c[ERP-235]%c ${time} - %c${msg}`, 
+            "color: white; background: #337ab7; padding: 2px 5px; border-radius: 3px;", 
+            "color: #888;", 
+            "color: #000; font-weight: bold;");
+        
+        // Agar aapko alert chahiye toh ye line uncomment karein:
+        // alert(msg);
+    }
+
+    /**
+     * Filter Toggle Logic
+     * Screenshot mein filter button nahi hai, lekin requirement ke mutabik 
+     * maine function bana diya hai agar aap aage add karein.
+     */
+    function toggleFilter() {
+        const filterSection = document.getElementById('filterSection');
+        if (filterSection) {
+            filterSection.classList.toggle('hidden');
+            erpLog("Profile Filter Toggled");
+        }
+    }
+
+    // Page Load Log
+    window.onload = function() {
+        erpLog("User Profile Page Loaded Successfully.");
+    };
+</script>
+
+</body>
+</html>
