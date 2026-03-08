@@ -266,6 +266,121 @@ body {
 
 /* --- yanha par navbar or toolbar wali css poori ho rhi hai  ---- */
 
+/*---- yanha se vo wali css sure ho rhi hai janha par toolbar ke sare hover ki alag alag css thi
+to maine ek hi master css bna di hai taki code chota ho ske --*/
+
+         /* ERP MASTER STYLESHEET 
+   Usage: Save this as erp-style.css and link in HTML 
+*/
+
+/* --- 1. CORE TOOLBAR ITEMS --- */
+.toolbar-item {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.toolbar-item i {
+    font-size: 18px;
+    color: #4b5563;
+}
+
+/* --- 2. MAIN DROPDOWN (Level 1) --- */
+.hover-dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #ffffff;
+    min-width: 190px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 4px;
+    z-index: 10000;
+    display: none; /* JS/Hover handles this */
+    padding: 0;
+    margin: 0;
+    border: 1px solid #d1d5db;
+    list-style: none;
+}
+
+.toolbar-item:hover .hover-dropdown-list {
+    display: block;
+}
+
+/* --- 3. NESTED DROPDOWN (Level 2) --- */
+.nested-dropdown-list, 
+.nested-dropdown-list-left {
+    position: absolute;
+    top: 0;
+    background: #ffffff;
+    min-width: 200px;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+    border: 1px solid #d1d5db;
+    z-index: 10001;
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+}
+
+/* Default Opening Directions */
+.nested-dropdown-list { left: 100%; }
+.nested-dropdown-list-left { right: 100%; }
+
+/* --- 4. LINKS & HOVER STATES --- */
+.hover-dropdown-list li { position: relative; }
+
+.hover-dropdown-list li a {
+    display: block !important;
+    padding: 8px 15px !important; /* Compact Padding */
+    color: #4b5563 !important;
+    text-decoration: none;
+    font-size: 13px;
+    border-bottom: 1px solid #f3f4f6;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.hover-dropdown-list li:hover > a {
+    background-color: #3a7cbd !important;
+    color: #ffffff !important;
+}
+
+.hover-dropdown-list li:hover > .nested-dropdown-list,
+.hover-dropdown-list li:hover > .nested-dropdown-list-left {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Last child border fix */
+.hover-dropdown-list li:last-child a { border-bottom: none; }
+
+/* --- 5. SMART ZOOM LOGIC (125% Protection) --- */
+@media (max-width: 1400px) {
+    /* Flip "Academic" style menus to Left if they open Right */
+    .erp-zoom-nav-minimal .nested-dropdown-list {
+        left: auto !important;
+        right: 100% !important;
+    }
+
+    /* Flip "More" style menus to Right if they open Left */
+    .erp-more-last .hover-dropdown-list {
+        left: auto;
+        right: 0;
+    }
+    .erp-more-last .nested-dropdown-list-left {
+        right: auto !important;
+        left: 100% !important;
+    }
+}
+/*---- yanha se vo wali css sure ho rhi hai janha par toolbar ke sare hover ki alag alag css thi
+to maine ek hi master css bna di hai taki code chota ho ske or yanha par ye poori ho rhi hai --*/
+
 /*---yanha se iframe jab kaam nhi kar rha tha link 
 page poora nhi khul rha tha to use solve karne ke liye lgai hai--*/
 #erp_frame {
