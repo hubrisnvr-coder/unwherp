@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Manager - ERP83</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        /* CSS Style Section - Exact properties from your code */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+        }
+
+        #assignment-manager-container {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f9;
+            padding: 20px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .header-section h4 {
+            color: #2e6da4;
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .header-section span {
+            color: #999;
+            font-weight: normal;
+        }
+
+        .nav-buttons {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-nav {
+            color: white !important;
+            padding: 6px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Filter Box */
+        .filter-box {
+            background: white;
+            border: 1px solid #c2cfd6;
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+
+        .filter-toggle {
+            text-align: center;
+            padding: 10px;
+            color: #2e6da4;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        #filter-body {
+            border-top: 1px solid #c2cfd6;
+            padding: 20px;
+            height: 40px;
+            background-color: #fff;
+            display: none; /* Default hidden as per logic */
+        }
+
+        /* List Table Section */
+        .list-box {
+            background: white;
+            border: 1px solid #c2cfd6;
+            border-radius: 2px;
+        }
+
+        .list-title {
+            padding: 10px;
+            color: #2e6da4;
+            font-weight: bold;
+            text-align: center;
+            font-size: 15px;
+            border-bottom: 1px solid #c2cfd6;
+        }
+
+        .bulk-actions {
+            padding: 10px;
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-bulk {
+            color: white !important;
+            padding: 5px 12px;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .info-strip {
+            background-color: #337ab7;
+            color: white;
+            padding: 8px 15px;
+            font-size: 13px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        thead tr {
+            background-color: #e4eaec;
+            color: #333;
+        }
+
+        th {
+            border: 1px solid #c2cfd6;
+            padding: 10px;
+            color: #2e6da4;
+        }
+
+        td {
+            border: 1px solid #c2cfd6;
+            padding: 15px;
+        }
+
+        .no-data {
+            text-align: left;
+            color: #666;
+            border-top: 2px solid red;
+        }
+    </style>
+</head>
+<body>
+
+<div id="assignment-manager-container">
+
+    <div class="header-section">
+        <h4>Assignment Manager » <span>Detail</span></h4>
+        <div class="nav-buttons">
+            <a href="javascript:void(0);" onclick="assignmentAction('VIEW_DETAIL')" class="btn-nav" style="background-color: #5cb85c;">
+                <i class="fa fa-list"></i> Assignment Detail
+            </a>
+            <a href="javascript:void(0);" onclick="assignmentAction('ADD_NEW')" class="btn-nav" style="background-color: #337ab7;">
+                <i class="fa fa-plus"></i> New Assignment
+            </a>
+        </div>
+    </div>
+
+    <div class="filter-box">
+        <div class="filter-toggle" onclick="assignmentAction('TOGGLE_FILTER')">
+            » Filter Assignment <i class="fa fa-filter"></i>
+        </div>
+        <div id="filter-body"></div>
+    </div>
+
+    <div class="list-box">
+        <div class="list-title">
+            <i class="fa fa-list-ul"></i> Assignment List
+        </div>
+
+        <div class="bulk-actions">
+            <a href="javascript:void(0);" onclick="bulkAction('ACTIVE')" class="btn-bulk" style="background-color: #337ab7;">
+                <i class="fa fa-check"></i> Active
+            </a>
+            <a href="javascript:void(0);" onclick="bulkAction('INACTIVE')" class="btn-bulk" style="background-color: #f0ad4e;">
+                <i class="fa fa-times"></i> In-Active
+            </a>
+            <a href="javascript:void(0);" onclick="bulkAction('DELETE')" class="btn-bulk" style="background-color: #d9534f;">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+
+        <div class="info-strip">
+            Assignment Record list on table. Filter Assignment using the filter.
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox"></th>
+                        <th>S.N.</th>
+                        <th>SEMESTER/SECTION</th>
+                        <th>SUBJECT</th>
+                        <th>QUESTION</th>
+                        <th>AVAILABLEON</th>
+                        <th>SUBMIT</th>
+                        <th>CREATED BY</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="9" class="no-data">
+                            No Assignment data found. Please Filter Assignment to show.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Exact same logic as provided
+    function assignmentAction(type) {
+        console.log("Global Action Triggered: " + type);
+        if(type === 'ADD_NEW') {
+            alert('Opening Add New Assignment Form...');
+        } else if(type === 'TOGGLE_FILTER') {
+            var f = document.getElementById('filter-body');
+            f.style.display = (f.style.display === 'none' || f.style.display === '') ? 'block' : 'none';
+        }
+    }
+
+    function bulkAction(statusType) {
+        console.log("Bulk Action Triggered: " + statusType);
+        var selected = [];
+        alert('Performing ' + statusType + ' on selected assignments.');
+    }
+</script>
+</body>
+</html>
