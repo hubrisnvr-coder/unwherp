@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Certificate Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f9f9f9; font-family: 'Segoe UI', sans-serif; min-height: 100vh; display: flex; flex-direction: column; margin: 0; }
+        .page-header-title { text-align: center; font-size: 14px; color: #337ab7; padding: 10px 0; background: #fff; font-weight: 600; border-bottom: 1px solid #eee; }
+        .page-header-title span { color: #777; font-weight: normal; }
+
+        /* Toolbar */
+        .certificate-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; padding: 15px; background: #fff; border-bottom: 1px solid #eee; }
+        .tab-btn { border: none; color: white; padding: 6px 14px; font-size: 13px; border-radius: 4px; text-decoration: none !important; display: flex; align-items: center; gap: 6px; cursor: pointer; background-color: #31708f; transition: all 0.3s; }
+        .tab-btn.active { background-color: #4cae4c !important; }
+
+        /* Main Content */
+        .main-content { flex-grow: 1; display: flex; flex-direction: column; align-items: center; padding-top: 40px; }
+        .search-title { color: #31708f; font-size: 19px; margin-bottom: 25px; font-weight: 500; }
+        .search-box-container { width: 90%; max-width: 1100px; background: white; padding: 25px; border: 1px solid #ddd; border-radius: 4px; }
+        .custom-select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; color: #666; }
+        .verify-btn { background-color: #337ab7; color: white; border: none; padding: 9px 25px; border-radius: 4px; float: right; margin-top: 20px; font-size: 14px; }
+
+        /* Premium Footer CSS (SoftSolution) */
+        .premium-erp-footer { background: #f8f9fc; border-top: 1px solid rgba(0,0,0,0.05); width: 100%; margin-top: auto; }
+        .footer-glass-wrap { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border-radius: 24px 24px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.04); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .footer-logo-circle { width: 38px; height: 38px; background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); color: white; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-weight: 800; font-size: 1.2rem; }
+        .status-pill { background: #f0fff4; color: #2f855a; padding: 6px 16px; border-radius: 50px; font-size: 11px; font-weight: 700; display: flex; align-items: center; border: 1px solid #c6f6d5; }
+        .live-dot { height: 8px; width: 8px; background-color: #38a169; border-radius: 50%; margin-right: 8px; position: relative; }
+        .live-dot::after { content: ''; position: absolute; width: 100%; height: 100%; background: inherit; border-radius: inherit; animation: status-ripple 1.5s ease-out infinite; }
+        @keyframes status-ripple { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2.5); opacity: 0; } }
+        .clock-display { font-family: monospace; font-weight: 700; color: #2d3748; background: #f7fafc; padding: 5px 12px; border-radius: 8px; border: 1px solid #edf2f7; }
+        .version-badge { background: #2d3748; color: #ffffff; padding: 4px 12px; border-radius: 7px; font-size: 10px; }
+        .support-item { font-size: 12.5px; color: #4a5568; font-weight: 600; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="page-header-title" id="breadcrumbText">
+        Issue Certificate Manager <span>» Issue</span>
+    </div>
+
+    <div class="certificate-tabs">
+        <button class="tab-btn active" onclick="callIssue(this)"><i class="fa-solid fa-circle-up"></i> Issue</button>
+        <button class="tab-btn" onclick="callAttendance(this)"><i class="fa-solid fa-sun"></i> Attendance</button>
+        <button class="tab-btn" onclick="callTransfer(this)"><i class="fa-solid fa-sun"></i> Transfer</button>
+        <button class="tab-btn" onclick="callCharacter(this)"><i class="fa-solid fa-sun"></i> Character</button>
+        <button class="tab-btn" onclick="callBonafide(this)"><i class="fa-solid fa-sun"></i> Bonafide</button>
+        <button class="tab-btn" onclick="callCourse(this)"><i class="fa-solid fa-sun"></i> Course Completion</button>
+        <button class="tab-btn" onclick="callNirgam(this)"><i class="fa-solid fa-sun"></i> Nirgam Utara</button>
+        <button class="tab-btn" onclick="callProvisional(this)"><i class="fa-solid fa-sun"></i> Provisional</button>
+        <button class="tab-btn" onclick="callTestimonial(this)"><i class="fa-solid fa-sun"></i> Testimonial</button>
+        <button class="tab-btn" onclick="callMOI(this)"><i class="fa-solid fa-sun"></i> MOI</button>
+        <button class="tab-btn" onclick="callTranscript(this)"><i class="fa-solid fa-sun"></i> Transcript</button>
+        <button class="tab-btn" onclick="callHistory(this)"><i class="fa-solid fa-sun"></i> History</button>
+        <button class="tab-btn" onclick="callCustom(this)"><i class="fa-solid fa-sun"></i> Custom</button>
+        <button class="tab-btn" onclick="callTemplate(this)"><i class="fa-solid fa-sun"></i> Template</button>
+    </div>
+
+    <div class="main-content">
+        <h2 class="search-title" id="mainHeading"><i class="fa fa-search"></i> Search & Verify Student Before Issue Certificate</h2>
+        <div class="search-box-container">
+            <select class="custom-select" id="studentID">
+                <option value="">Search Student...</option>
+                <option value="101">Aman Kumar (101)</option>
+                <option value="102">Suresh Raina (102)</option>
+            </select>
+            <button class="verify-btn" onclick="verifyData()">
+                <i class="fa fa-user"></i> Verify Student
+            </button>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+
+    <footer class="premium-erp-footer">
+        <div class="footer-glass-wrap container-fluid px-4 py-3">
+            <div class="row align-items-center g-3">
+                <div class="col-12 col-lg-3 text-center text-lg-start">
+                    <div class="d-flex align-items-center justify-content-center justify-content-lg-start">
+                        <div class="footer-logo-circle me-2">S</div>
+                        <div>
+                            <p class="mb-0 fw-bold text-dark">SoftSolution</p>
+                            <small class="text-muted">&copy; 2025-26 All Rights Reserved</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-5">
+                    <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+                        <div class="status-pill"><span class="live-dot"></span>SYSTEM LIVE</div>
+                        <div class="clock-display"><i class="far fa-clock me-2 text-primary"></i><span id="erpLiveTime">00:00:00 AM</span></div>
+                        <div class="version-badge">v4.0.2-Stable</div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 text-center text-lg-end">
+                    <a href="tel:+916396004079" class="support-item me-3"><i class="fas fa-phone-alt text-success"></i> +916396004079</a>
+                    <a href="mailto:Shubham@softsolution.com" class="support-item border-start ps-3"><i class="fas fa-envelope text-info"></i> Shubham@softsolution.com</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- UI Helper Function ---
+        function updateUI(mode, element) {
+            document.getElementById('breadcrumbText').innerHTML = `Issue Certificate Manager <span>» ${mode}</span>`;
+            document.getElementById('mainHeading').innerHTML = `<i class="fa fa-search"></i> Search & Verify Student Before ${mode} Certificate`;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // --- Individual Functions for PHP Integration ---
+        function callIssue(el) { 
+            updateUI('Issue', el);
+            console.log("PHP Call: fetching issue_data.php"); 
+        }
+        function callAttendance(el) { 
+            updateUI('Attendance', el);
+            console.log("PHP Call: fetching attendance_data.php"); 
+        }
+        function callTransfer(el) { 
+            updateUI('Transfer', el);
+            console.log("PHP Call: fetching transfer_data.php"); 
+        }
+        function callCharacter(el) { updateUI('Character', el); }
+        function callBonafide(el) { updateUI('Bonafide', el); }
+        function callCourse(el) { updateUI('Course Completion', el); }
+        function callNirgam(el) { updateUI('Nirgam Utara', el); }
+        function callProvisional(el) { updateUI('Provisional', el); }
+        function callTestimonial(el) { updateUI('Testimonial', el); }
+        function callMOI(el) { updateUI('MOI', el); }
+        function callTranscript(el) { updateUI('Transcript', el); }
+        function callHistory(el) { updateUI('History', el); }
+        function callCustom(el) { updateUI('Custom', el); }
+        function callTemplate(el) { updateUI('Template', el); }
+
+        // --- Verify Button Function ---
+        function verifyData() {
+            const id = document.getElementById('studentID').value;
+            if(!id) {
+                alert("Please select a student!");
+                return;
+            }
+            // Yahan aap apna AJAX call likhenge baad mein
+            alert("JS function called for ID: " + id + ". Now you can connect to PHP.");
+            console.log("Sending ID " + id + " to verify_student.php");
+        }
+
+        // --- Clock ---
+        setInterval(() => {
+            document.getElementById("erpLiveTime").textContent = new Date().toLocaleTimeString();
+        }, 1000);
+    </script>
+</body>
+</html>
