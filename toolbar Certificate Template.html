@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Template Manager - erp66</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f9f9f9; font-family: 'Segoe UI', Tahoma, sans-serif; font-size: 12px; }
+        
+        /* Top Navigation (14 Buttons) */
+        .top-header-title { text-align: center; color: #337ab7; font-weight: 600; padding: 10px; background: #fff; border-bottom: 1px solid #eee; }
+        .nav-tabs-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; padding: 10px; background: #fff; border-bottom: 1px solid #ddd; }
+        .nav-btn { text-decoration: none !important; color: white !important; padding: 5px 10px; font-size: 11px; border-radius: 4px; background: #31708f; display: flex; align-items: center; gap: 5px; }
+        .nav-btn.active { background: #4cae4c !important; }
+
+        /* Sub Navigation (Generate, Detail, New) */
+        .sub-nav { display: flex; justify-content: center; gap: 5px; margin: 15px 0; }
+        .btn-sub { text-decoration: none !important; color: white !important; padding: 4px 12px; border-radius: 4px; font-size: 11.5px; display: flex; align-items: center; gap: 5px; }
+        .bg-blue-dark { background: #286090; }
+        .bg-green-dark { background: #449d44; }
+        .bg-cyan-dark { background: #31b0d5; }
+
+        /* Action Icons Bar (Active, Delete, Tools) */
+        .tool-bar { width: 98%; margin: 10px auto; display: flex; justify-content: space-between; align-items: center; background: #f1f1f1; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        .action-group { display: flex; gap: 5px; }
+        .btn-act { padding: 3px 10px; font-size: 12px; color: white; border-radius: 3px; border: none; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+        .bg-primary { background: #337ab7; } .bg-warning { background: #f0ad4e; } .bg-danger { background: #d9534f; }
+        .tool-icons { display: flex; gap: 5px; }
+        .tool-btn { border: 1px solid #ccc; background: white; padding: 3px 8px; color: #337ab7; border-radius: 3px; cursor: pointer; }
+
+        /* Search & Display Section */
+        .search-row { width: 98%; margin: 5px auto; display: flex; justify-content: space-between; align-items: center; padding: 5px 0; color: #666; }
+        .search-box { border: 1px solid #ccc; padding: 3px 5px; width: 150px; }
+
+        /* Table Structure (erp66 Style) */
+        .table-box { width: 98%; margin: 0 auto 50px auto; background: white; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; }
+        .erp-table { width: 100%; border-collapse: collapse; }
+        .erp-table th { background: #eef7fd; color: #31708f; padding: 10px; border: 1px solid #ddd; text-align: center; }
+        .erp-table td { border: 1px solid #ddd; vertical-align: top; padding: 0; }
+        
+        /* Template Details Style */
+        .template-inner-table { width: 100%; border-collapse: collapse; }
+        .template-inner-table td { padding: 6px 10px; border: 1px solid #eee; font-size: 12px; }
+        .field-label { width: 45%; color: #333; font-weight: 500; }
+        .field-sep { width: 5%; text-align: center; }
+        .field-val { width: 50%; color: #333; font-weight: 600; }
+        
+        .img-placeholder { border: 1px solid #ddd; width: 100px; height: 120px; margin: 10px; background: #fafafa; display: flex; align-items: center; justify-content: center; }
+
+        /* Status Pills (Active, Edit, Delete) */
+        .status-cell { display: flex; gap: 4px; justify-content: center; padding: 10px; }
+        .btn-status { font-size: 11px; padding: 2px 6px; border-radius: 3px; color: white; text-decoration: none !important; display: flex; align-items: center; gap: 3px; }
+        .bg-edit { background: #5cb85c; } .bg-active-p { background: #2e6da4; }
+        /*---yanha se attendance wali css sure ho rhi hai */
+    .template-inner-table { width: 100%; border-collapse: collapse; }
+    .template-inner-table td { padding: 6px 10px; border-bottom: 1px solid #eee; font-size: 12px; }
+    .field-label { width: 35%; color: #333; font-weight: 500; text-align: left; }
+    .field-sep { width: 5%; text-align: center; font-weight: bold; }
+    .field-val { width: 60%; color: #000; font-weight: 600; text-align: left; }
+    .img-placeholder { border: 1px solid #ddd; width: 100px; height: 120px; margin-top: 10px; background: #fafafa; display: flex; align-items: center; justify-content: center; }
+    .status-cell { display: flex; gap: 4px; justify-content: center; padding: 10px; }
+    .btn-status { font-size: 11px; padding: 2px 6px; border-radius: 3px; color: white !important; text-decoration: none !important; display: flex; align-items: center; gap: 3px; }
+    .bg-active-p { background: #2e6da4; }
+    .bg-edit { background: #5cb85c; }
+    .bg-danger { background: #d9534f; }
+    /*---yanha se transfer-1 wali css sure ho rhi hai ---*/
+    /* --- Common CSS for Template Sections --- */
+
+/* Inner Table Layout */
+.template-inner-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 5px 0;
+}
+
+.template-inner-table td { 
+    padding: 6px 10px; 
+    border: 1px solid #f0f0f0; /* Light border jaisa screenshot mein hai */
+    font-size: 12px; 
+    vertical-align: middle;
+}
+
+/* Label, Separator and Value alignment */
+.field-label { 
+    width: 35%; 
+    color: #444; 
+    font-weight: 500; 
+    text-align: left; 
+}
+
+.field-sep { 
+    width: 3%; 
+    text-align: center; 
+    font-weight: bold; 
+    color: #333;
+}
+
+.field-val { 
+    width: 50%; 
+    color: #000; 
+    font-weight: 600; 
+    text-align: left; 
+}
+
+/* Image Box (Left Side) */
+.img-placeholder { 
+    border: 1px solid #ddd; 
+    width: 85px; 
+    height: 110px; 
+    margin-top: 10px; 
+    background: #f9f9f9; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+/* Action Buttons (Right Side) */
+.status-cell { 
+    display: flex; 
+    flex-direction: row; 
+    gap: 3px; 
+    justify-content: center; 
+    padding: 10px 5px; 
+}
+
+.btn-status { 
+    font-size: 10.5px; 
+    padding: 3px 8px; 
+    border-radius: 3px; 
+    color: white !important; 
+    text-decoration: none !important; 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 4px; 
+    font-weight: 500;
+}
+
+.bg-active-p { background-color: #2e6da4; border: 1px solid #285e8e; }
+.bg-edit { background-color: #5cb85c; border: 1px solid #4cae4c; }
+.bg-danger { background-color: #d9534f; border: 1px solid #d43f3a; }
+
+/* For erp68 Student Image placeholder in template */
+.student-img-box {
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 40px 10px;
+    text-align: center;
+    color: #999;
+    font-style: italic;
+}
+/*---yanha se transfer-2 wali css sure ho rhi hai ---*/
+    .template-inner-table { width: 100%; border-collapse: collapse; }
+    .template-inner-table td { padding: 4px 8px; border: 1px solid #f0f0f0; font-size: 11px; vertical-align: middle; }
+    .field-label { color: #444; font-weight: 500; text-align: left; }
+    .field-sep { width: 15px; text-align: center; font-weight: bold; }
+    .field-val { color: #000; font-weight: 600; }
+    .img-placeholder { border: 1px solid #ddd; width: 85px; height: 110px; margin-top: 10px; background: #f9f9f9; display: flex; align-items: center; justify-content: center; }
+    .status-cell { display: flex; gap: 4px; justify-content: center; }
+    .btn-status { font-size: 10px; padding: 2px 5px; border-radius: 3px; color: white !important; text-decoration: none !important; display: flex; align-items: center; gap: 3px; }
+    .bg-active-p { background: #2e6da4; } .bg-edit { background: #5cb85c; } .bg-danger { background: #d9534f; }
+    .header-row td { background-color: #fcfcfc; font-weight: bold; font-size: 10px; }
+    /*---yanha se transfer-3 wali css sure ho rhi hai ---*/
+    /* Table Main Structure */
+    .template-inner-table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        font-family: sans-serif;
+    }
+
+    /* Table Cells */
+    .template-inner-table td { 
+        padding: 5px 8px; 
+        border: 1px solid #e0e0e0; /* Light grey border as per erp70 */
+        font-size: 11.5px; 
+        line-height: 1.4;
+    }
+
+    /* Label Styling */
+    .field-label { 
+        color: #555; 
+        font-weight: 500; 
+        text-align: left; 
+    }
+
+    /* Separator (:) Styling */
+    .field-sep { 
+        width: 10px; 
+        text-align: center; 
+        font-weight: bold; 
+        border-left: none !important; 
+        border-right: none !important;
+    }
+
+    /* Value Styling */
+    .field-val { 
+        color: #000; 
+        font-weight: 600; 
+        text-align: left; 
+    }
+
+    /* Special Header Row for erp70 (TC No & Reg No) */
+    .header-info-row td {
+        background-color: #fafafa;
+        font-size: 11px;
+    }
+
+    /* Image Placeholder (Left Column) */
+    .img-placeholder { 
+        border: 1px solid #ccc; 
+        width: 90px; 
+        height: 115px; 
+        margin-top: 8px; 
+        background: #fdfdfd; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+    }
+
+    /* Action Buttons (Right Column) */
+    .status-cell { 
+        display: flex; 
+        gap: 5px; 
+        justify-content: center; 
+        align-items: center;
+    }
+
+    .btn-status { 
+        font-size: 10px; 
+        padding: 3px 7px; 
+        border-radius: 2px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 3px; 
+    }
+
+    .bg-active-p { background-color: #2e6da4; }
+    .bg-edit { background-color: #5cb85c; }
+    .bg-danger { background-color: #d9534f; }
+    /*---yanha se NIRGAMUTARA_1 wali css sure ho rhi hai ---*/
+    /* Main Table and Layout */
+    .template-inner-table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .template-inner-table td { 
+        padding: 6px 12px; 
+        border: 1px solid #e0e0e0; 
+        font-size: 12px; 
+        color: #333;
+    }
+
+    /* Labels & Values */
+    .field-label { 
+        font-weight: 500; 
+        color: #555; 
+        width: 30%; /* Balanced width for long labels like 'Reason for leaving school' */
+    }
+
+    .field-sep { 
+        width: 15px; 
+        text-align: center; 
+        font-weight: bold;
+    }
+
+    .field-val { 
+        font-weight: 600; 
+        color: #000;
+    }
+
+    /* Footer Section (Date, Place, Sign) */
+    .footer-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 20px 10px 10px 10px;
+    }
+
+    .signature-box {
+        text-align: center;
+        width: 180px;
+    }
+
+    .signature-line {
+        border-top: 1px solid #444;
+        margin-bottom: 5px;
+        width: 100%;
+    }
+
+    .footer-text {
+        font-size: 11px;
+        font-weight: bold;
+        color: #444;
+    }
+
+    /* Action Buttons */
+    .status-cell { display: flex; gap: 4px; justify-content: center; }
+    .btn-status { 
+        font-size: 10px; 
+        padding: 3px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+    }
+    .bg-active-p { background-color: #2e6da4; }
+    .bg-edit { background-color: #5cb85c; }
+    .bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .img-placeholder { 
+        border: 1px solid #ddd; 
+        width: 85px; 
+        height: 110px; 
+        margin-top: 10px; 
+        background: #f9f9f9; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+    }
+    /*---yanha se NIRGAMUTARA_2 wali css sure ho rhi hai ---*/
+    <style>
+    .template-inner-table { width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; }
+    .template-inner-table td { padding: 6px; border: 1px solid #ddd; font-size: 12px; }
+    
+    .field-label { color: #444; font-weight: 500; width: 40%; }
+    .field-sep { width: 15px; text-align: center; font-weight: bold; border: none !important; }
+    .field-val { font-weight: 600; color: #000; }
+
+    /* Header & Footer Specific */
+    .header-top-box { display: flex; justify-content: space-between; padding: 5px; background: #f9f9f9; font-weight: bold; border-bottom: 2px solid #eee; }
+    .footer-flex { display: flex; justify-content: space-between; padding: 20px 10px; margin-top: 10px; }
+    .sign-box { text-align: center; border-top: 1px solid #000; width: 150px; padding-top: 5px; font-size: 11px; }
+
+    /* Status Buttons */
+    .status-cell { display: flex; gap: 5px; justify-content: center; }
+    .btn-status { font-size: 10px; padding: 3px 8px; border-radius: 2px; color: #fff !important; text-decoration: none; }
+    .bg-active-p { background: #2e6da4; }
+    .bg-edit { background: #5cb85c; }
+    .bg-danger { background: #d9534f; }
+    /*---yanha se CHARACTER, BONAFIDE, COURSE COMPLETION, aur MEDIUM OF INSTRUCTION (MOI) wali css sure ho rhi hai ---*/
+    <style>
+    /* Table & Paragraph Styling */
+    .template-inner-table { width: 100%; border-collapse: collapse; font-family: 'Segoe UI', sans-serif; }
+    .cert-paragraph { 
+        font-size: 13px; 
+        line-height: 1.8; 
+        color: #333; 
+        text-align: justify; 
+        padding: 10px 0;
+    }
+    
+    /* Variables Highlight */
+    .cert-paragraph b { color: #000; font-weight: 700; border-bottom: 1px dotted #999; }
+
+    /* Footer Styling */
+    .cert-footer { margin-top: 15px; font-size: 12px; font-weight: 600; color: #444; }
+
+    /* Action Buttons */
+    .status-cell { display: flex; gap: 4px; justify-content: center; }
+    .btn-status { font-size: 10px; padding: 3px 8px; border-radius: 3px; color: #fff !important; text-decoration: none; display: inline-flex; align-items: center; gap: 3px; }
+    .bg-active-p { background: #2e6da4; }
+    .bg-edit { background: #5cb85c; }
+    .bg-danger { background: #d9534f; }
+</style>
+    </style>
+</head>
+<body>
+    <br>
+    <div class="top-header-title">Certificate Template Manager <span>» Detail</span></div>
+
+    <div class="nav-tabs-container">
+        <a href="#" class="nav-btn" onclick="consoleCall('ISSUE')"><i class="fa fa-circle-up"></i> Issue</a>
+        <a href="#" class="nav-btn" onclick="consoleCall('ATTENDANCE')"><i class="fa fa-sun"></i> Attendance</a>
+        <a href="#" class="nav-btn" onclick="consoleCall('TRANSFER')"><i class="fa fa-sun"></i> Transfer</a>
+        <a href="#" class="nav-btn" onclick="consoleCall('CHARACTER')"><i class="fa fa-sun"></i> Character</a>
+        <a href="#" class="nav-btn" onclick="consoleCall('BONAFIDE')"><i class="fa fa-sun"></i> Bonafide</a>
+        <a href="#" class="nav-btn" onclick="consoleCall('COURSE')"><i class="fa fa-sun"></i> Course Completion</a>
+        <a href="#" class="nav-btn" onclick="consoleCall('NIRGAM')"><i class="fa fa-sun"></i> Nirgam Utara</a>
+        <a href="#" class="nav-btn" onclick="consoleCall('PROVISIONAL')"><i class="fa fa-sun"></i> Provisional</a>
+        <a href="#" class="nav-btn" onclick="consoleCall('TESTIMONIAL')"><i class="fa fa-sun"></i> Testimonial</a>
+        <a href="#" class="nav-btn" onclick="consoleCall('MOI')"><i class="fa fa-sun"></i> MOI</a>
+        <a href="#" class="nav-btn" onclick="consoleCall('TRANSCRIPT')"><i class="fa fa-sun"></i> Transcript</a>
+        <a href="#" class="nav-btn" onclick="consoleCall('HISTORY')"><i class="fa fa-sun"></i> History</a>
+        <a href="#" class="nav-btn" onclick="consoleCall('CUSTOM')"><i class="fa fa-sun"></i> Custom</a>
+        <a href="#" class="nav-btn active" onclick="consoleCall('TEMPLATE')"><i class="fa fa-sun"></i> Template</a>
+    </div>
+
+    <div class="sub-nav">
+        <a href="#" class="btn-sub bg-blue-dark" onclick="consoleCall('GENERATE CERTIFICATE')"><i class="fa fa-gear"></i> Generate Certificate</a>
+        <a href="#" class="btn-sub bg-green-dark" onclick="consoleCall('TEMPLATE DETAIL')"><i class="fa fa-circle"></i> Template Detail</a>
+        <a href="#" class="btn-sub bg-cyan-dark" onclick="consoleCall('NEW TEMPLATE')"><i class="fa fa-plus"></i> New Template</a>
+    </div>
+
+    <div class="tool-bar">
+        <div class="action-group">
+            <button class="btn-act bg-primary" onclick="consoleCall('SET ACTIVE')"><i class="fa fa-check"></i> Active</button>
+            <button class="btn-act bg-warning" onclick="consoleCall('SET IN-ACTIVE')"><i class="fa fa-times"></i> In-Active</button>
+            <button class="btn-act bg-danger" onclick="consoleCall('DELETE RECORD')"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+        <div class="tool-icons">
+            <button class="tool-btn" title="Search"><i class="fa fa-search"></i></button>
+            <button class="tool-btn" onclick="window.location.reload()"><i class="fa fa-refresh"></i> Refresh</button>
+            <button class="tool-btn"><i class="fa fa-copy"></i></button>
+            <button class="tool-btn"><i class="fa fa-database"></i></button>
+            <button class="tool-btn"><i class="fa fa-print"></i></button>
+        </div>
+    </div>
+
+    <div class="search-row">
+        <div>Display <select><option>All</option></select> records</div>
+        <div>Search: <input type="text" class="search-box"></div>
+    </div>
+
+    <div class="table-box">
+        <table class="erp-table">
+            <thead>
+                <tr>
+                    <th width="30"><input type="checkbox"></th>
+                    <th width="50">S.N. <i class="fa fa-sort"></i></th>
+                    <th width="150">NAME OF CERTIFICATE <i class="fa fa-sort"></i></th>
+                    <th>TEMPLATE <i class="fa fa-sort"></i></th>
+                    <th width="120">STATUS <i class="fa fa-sort"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td style="text-align: center;">1</td>
+                    <td style="padding: 10px;">
+                        REGISTRATION FORM
+                        <div class="img-placeholder">
+                            <i class="fa fa-image fa-3x" style="color: #ddd;"></i>
+                        </div>
+                    </td>
+                    <td>
+                        <table class="template-inner-table">
+                            <tr><td class="field-label">Unique Id No</td><td class="field-sep">:</td><td class="field-val">{{reg_no}}</td></tr>
+                            <tr><td class="field-label">Student Name</td><td class="field-sep">:</td><td class="field-val">{{student_name}}</td></tr>
+                            <tr><td class="field-label">Father Name</td><td class="field-sep">:</td><td class="field-val">{{father_name}}</td></tr>
+                            <tr><td class="field-label">Mothers Name</td><td class="field-sep">:</td><td class="field-val">{{mother_name}}</td></tr>
+                            <tr><td class="field-label">Gender/Sex</td><td class="field-sep">:</td><td class="field-val">{{date_of_birth}}</td></tr>
+                            <tr><td class="field-label">Date of Birth</td><td class="field-sep">:</td><td class="field-val">{{gender}}</td></tr>
+                            <tr><td class="field-label">Address</td><td class="field-sep">:</td><td class="field-val">{{address}}</td></tr>
+                            <tr><td class="field-label">Department</td><td class="field-sep">:</td><td class="field-val">{{department}}</td></tr>
+                            <tr><td class="field-label">Program</td><td class="field-sep">:</td><td class="field-val">{{faculty}}</td></tr>
+                            <tr><td class="field-label">Faculty</td><td class="field-sep">:</td><td class="field-val">{{department}}</td></tr>
+                            <tr><td class="field-label">Duration</td><td class="field-sep">:</td><td class="field-val">{{faculty_duration}}</td></tr>
+                            <tr><td class="field-label">Session / Ad. Semester</td><td class="field-sep">:</td><td class="field-val">{{batch}}</td></tr>
+                            <tr><td class="field-label">Expiration Deadline</td><td class="field-sep">:</td><td class="field-val">{{registration_validate}}</td></tr>
+                        </table>
+                    </td>
+                    <td>
+                        <div class="status-cell">
+                            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+                            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT FORM')"><i class="fa fa-edit"></i> Edit</a>
+                            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE FORM')"><i class="fa fa-trash"></i> Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                <!--yanha se attendance wala porsen sure ho rha hai-->
+                <tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">2</td>
+    <td style="padding: 10px;">
+        ATTENDANCE
+        <div class="img-placeholder">
+            <i class="fa fa-image fa-3x" style="color: #ddd;"></i>
+        </div>
+    </td>
+    <td>
+        <table class="template-inner-table">
+            <tr><td class="field-label">01. Name of Student</td><td class="field-sep">:</td><td class="field-val">{{student_name}}</td></tr>
+            <tr><td class="field-label">02. Reg. No.</td><td class="field-sep">:</td><td class="field-val">{{reg_no}}</td></tr>
+            <tr><td class="field-label">03. University Reg. No.</td><td class="field-sep">:</td><td class="field-val">{{university_reg}}</td></tr>
+            <tr><td class="field-label">04. Faculty/Level</td><td class="field-sep">:</td><td class="field-val">{{faculty}}</td></tr>
+            <tr><td class="field-label">05. Batch</td><td class="field-sep">:</td><td class="field-val">{{batch}}</td></tr>
+            <tr><td class="field-label">06. Year of Study</td><td class="field-sep">:</td><td class="field-val">{{year_of_study}}</td></tr>
+            <tr><td class="field-label">07. Percentage of Attendance Secured</td><td class="field-sep">:</td><td class="field-val">{{percentage_of_attendance}}%</td></tr>
+        </table>
+    </td>
+    <td>
+    </tr>
+        <!--yanhse se transfer-1 wala section sure ho rha hai -->
+         <tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">3</td>
+    <td style="padding: 10px;">
+        TRANSFER_1
+        <div class="img-placeholder">
+            <i class="fa fa-image fa-3x" style="color: #ddd;"></i>
+        </div>
+    </td>
+    <td>
+        <table class="template-inner-table">
+            <tr>
+                <td class="field-label">TC No.</td>
+                <td class="field-sep">:</td>
+                <td class="field-val">{{tc_num}}</td>
+                <td rowspan="5" class="student-img-box">{{student_image}}</td>
+            </tr>
+            <tr>
+                <td class="field-label">Faculty/Level</td>
+                <td class="field-sep">:</td>
+                <td class="field-val">{{faculty}}</td>
+            </tr>
+            <tr>
+                <td class="field-label">Admission No./Reg.No.</td>
+                <td class="field-sep">:</td>
+                <td class="field-val">{{reg_no}}</td>
+            </tr>
+            <tr>
+                <td class="field-label">University Reg. No.</td>
+                <td class="field-sep">:</td>
+                <td class="field-val">{{university_reg}}</td>
+            </tr>
+            <tr>
+                <td class="field-label">Batch.</td>
+                <td class="field-sep">:</td>
+                <td class="field-val">{{batch}}</td>
+            </tr>
+            
+            <tr><td class="field-label">01. Name of Student</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{student_name}}</td></tr>
+            <tr><td class="field-label">02. Name of Father.</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{parents_name}}</td></tr>
+            <tr><td class="field-label">03. Date of Birth</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{date_of_birth}}</td></tr>
+            <tr><td class="field-label">04. Gender</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{gender}}</td></tr>
+            <tr><td class="field-label">05. Nationality</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{nationality}}</td></tr>
+            <tr><td class="field-label">06. Religion</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{religion}}</td></tr>
+            <tr><td class="field-label">07. Community & Caste</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{caste}}</td></tr>
+            <tr><td class="field-label">08. Date of Admission</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{reg_date}}</td></tr>
+            <tr><td class="field-label">09. Date of Leaving</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{date_of_leaving}}</td></tr>
+            <tr><td class="field-label">10. Class studied at the time of leaving</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{leaving_time_class}}</td></tr>
+            <tr><td class="field-label">11. Whether qualified for promotion to higher class</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{qualified_to_promote}}</td></tr>
+            <tr><td class="field-label">12. Whether the student has paid all Balance fees to the college</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{paid_fee_status}}</td></tr>
+            <tr><td class="field-label">13. Conduct and Character</td><td class="field-sep">:</td><td class="field-val" colspan="2">{{character}}</td></tr>
+        </table>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+        <!--yanhse se transfer-1 wala section poora ho rha hai -->
+
+        <!--yanhse se transfer-2 wala section sure ho rha hai -->
+          <tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">4</td>
+    <td style="padding: 10px;">
+        TRANSFER_2
+        <div class="img-placeholder">
+            <i class="fa fa-image fa-3x" style="color: #ddd;"></i>
+        </div>
+    </td>
+    <td>
+        <table class="template-inner-table">
+            <tr class="header-row">
+                <td colspan="2">TC No.: {{tc_num}}</td>
+                <td colspan="2">विद्यालय सं. / School No: {{school_no}}</td>
+                <td colspan="2">Affiliation No: {{affiliation_reg}}</td>
+                <td colspan="2">Renewal upto: -</td>
+                <td colspan="2">प्रवेश सं./Admission No.: -</td>
+            </tr>
+
+            <tr><td width="30">01.</td><td class="field-label">विद्यार्थी का नाम / Name of Student :</td><td class="field-val" colspan="8">{{student_name}}</td></tr>
+            <tr><td>02.</td><td class="field-label">माता का नाम / Mother's Name :</td><td class="field-val" colspan="8">{{mother_name}}</td></tr>
+            <tr><td>03.</td><td class="field-label">पिता का नाम / Name of Father's / Guardian's Name :</td><td class="field-val" colspan="8">{{father_name}}</td></tr>
+            <tr><td>04.</td><td class="field-label">Date of birth (in Christian Era) according to Admission & Withdrawal Register :</td><td class="field-val" colspan="8">In figures: {{date_of_birth}} <br> In words: {{date_of_birth_in_word}}</td></tr>
+            <tr><td>05.</td><td class="field-label">Proof for Date of Birth submitted at the time of admission :</td><td class="field-val" colspan="8">{{dob_certificate}}</td></tr>
+            <tr><td>06.</td><td class="field-label">राष्ट्रीयता / Nationality :</td><td class="field-val" colspan="8">{{nationality}}</td></tr>
+            <tr><td>07.</td><td class="field-label">Whether the candidate belongs to Scheduled Caste or Schedule Tribe or OBC :</td><td class="field-val" colspan="8">{{caste}}</td></tr>
+            <tr><td>08.</td><td class="field-label">Date of the first admission in the school with the class :</td><td class="field-val" colspan="8">{{reg_date}} Class Joined: {{join_time_class}}</td></tr>
+            <tr><td>09.</td><td class="field-label">Class in which the pupil last studied (in words) :</td><td class="field-val" colspan="8">{{leaving_time_class}}</td></tr>
+            <tr><td>10.</td><td class="field-label">School/Board Annual Examination last taken with the result :</td><td class="field-val" colspan="8">{{last_taken_exam_with_result}}</td></tr>
+            <tr><td>11.</td><td class="field-label">Whether failed, if so once/twice in the same class :</td><td class="field-val" colspan="8">{{exam_fail_status}}</td></tr>
+            <tr><td>12.</td><td class="field-label">विषय पढ़ाए / Subjects Studied :</td><td class="field-val" colspan="8">{{subject_studied}}</td></tr>
+            <tr><td>13.</td><td class="field-label">Whether qualified for promotion to the next higher class :</td><td class="field-val" colspan="8">{{qualified_to_promote}} ({{promoted_class}})</td></tr>
+            <tr><td>14.</td><td class="field-label">Total No. of working days in the academic session :</td><td class="field-val" colspan="8">{{school_college_open_total}}</td></tr>
+            <tr><td>15.</td><td class="field-label">Total No. of presence in the academic session :</td><td class="field-val" colspan="8">{{total_attendance}}</td></tr>
+            <tr><td>16.</td><td class="field-label">Month up to which the people has paid school dues :</td><td class="field-val" colspan="8">{{paid_fee_status}}</td></tr>
+            <tr><td>17.</td><td class="field-label">Any Fee concession availed of, if so, the nature of such concession :</td><td class="field-val" colspan="8">{{fee_concession_detail}}</td></tr>
+            <tr><td>18.</td><td class="field-label">Whether the pupil is NCC cadet / Boy Scout / Girl Guide (give details) :</td><td class="field-val" colspan="8">{{cadet_detail}}</td></tr>
+            <tr><td>19.</td><td class="field-label">Whether the school is under Govt/Minority/Independent Category :</td><td class="field-val" colspan="8">{{school_category}}</td></tr>
+            <tr><td>20.</td><td class="field-label">Games Played or extra-curricular activities in which the pupil usually took part :</td><td class="field-val" colspan="8">{{extra_activity_detail}}</td></tr>
+            <tr><td>21.</td><td class="field-label">Date of application for certificate :</td><td class="field-val" colspan="8">{{application_date}}</td></tr>
+            <tr><td>22.</td><td class="field-label">Date on which pupils name was struck off the rolls of the Vidyalaya :</td><td class="field-val" colspan="8">{{date_of_leaving}}</td></tr>
+            <tr><td>23.</td><td class="field-label">Date of issue of certificate :</td><td class="field-val" colspan="8">{{date_of_issue}}</td></tr>
+            <tr><td>24.</td><td class="field-label">कोई अन्य टिप्पणी / Any other remarks :</td><td class="field-val" colspan="8">{{any_other_remark}}</td></tr>
+        </table>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT TRANSFER_2')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE TRANSFER_2')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+        <!--yanhse se transfer-2 wala section poora ho rha hai -->
+
+        <!--yanhse se transfer-3 wala section sure ho rha hai -->
+        <tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">5</td>
+    <td style="padding: 10px;">
+        TRANSFER_3
+        <div class="img-placeholder">
+            <i class="fa fa-image fa-3x" style="color: #ddd;"></i>
+        </div>
+    </td>
+    <td>
+        <table class="template-inner-table">
+            <tr class="header-info-row">
+                <td class="field-label" style="width:12%">TC No.</td><td class="field-sep">:</td><td class="field-val">{{tc_num}}</td>
+                <td colspan="3" style="border:none;"></td> <td class="field-label" style="width:18%">Admission No./Reg.No.</td><td class="field-sep">:</td><td class="field-val">{{reg_no}}</td>
+            </tr>
+            <tr class="header-info-row">
+                <td class="field-label">{{national_id_1}}</td><td class="field-sep">:</td><td class="field-val">{{national_id_2}}</td>
+                <td colspan="3" style="border:none;"></td>
+                <td class="field-label">{{national_id_3}}</td><td class="field-sep">:</td><td class="field-val">{{national_id_4}}</td>
+            </tr>
+
+            <tr><td width="30" style="text-align:center">01.</td><td class="field-label" colspan="2">Name of Pupil</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{student_name}}</td></tr>
+            <tr><td style="text-align:center">02.</td><td class="field-label" colspan="2">Father's / Guardian's Name</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{guardian_name}}</td></tr>
+            <tr><td style="text-align:center">03.</td><td class="field-label" colspan="2">Mother's Name</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{father_name}}</td></tr>
+            <tr><td style="text-align:center">04.</td><td class="field-label" colspan="2">Place of Birth</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{birth_place}}</td></tr>
+            <tr><td style="text-align:center">05.</td><td class="field-label" colspan="2">Nationality</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{nationality}}</td></tr>
+            <tr><td style="text-align:center">06.</td><td class="field-label" colspan="2">Caste / Category</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{caste}}</td></tr>
+            <tr><td style="text-align:center">07.</td><td class="field-label" colspan="2">Date of the first admission in the School with the class</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{reg_date}}</td></tr>
+            <tr>
+                <td style="text-align:center">08.</td>
+                <td class="field-label" colspan="2">Date of birth (in Christian Era) according to Admission Register</td>
+                <td class="field-sep">:</td>
+                <td class="field-val" colspan="5">
+                    In figures: {{date_of_birth}}<br>
+                    In words: {{date_of_birth_in_word}}
+                </td>
+            </tr>
+            <tr><td style="text-align:center">09.</td><td class="field-label" colspan="2">Class in which the pupil last studied/studying</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{leaving_time_class}}</td></tr>
+            <tr><td style="text-align:center">10.</td><td class="field-label" colspan="2">School/Board Annual Examination last taken with the result</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{last_taken_exam_with_result}}</td></tr>
+            <tr><td style="text-align:center">11.</td><td class="field-label" colspan="2">Promoted Class</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{promoted_class}}</td></tr>
+            <tr><td style="text-align:center">12.</td><td class="field-label" colspan="2">General Conduct</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{character}}</td></tr>
+            <tr><td style="text-align:center">13.</td><td class="field-label" colspan="2">Date of application for Transfer certificate</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{date_of_issue}}</td></tr>
+            <tr><td style="text-align:center">14.</td><td class="field-label" colspan="2">Date of issue of Transfer certificate</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{date_of_issue}}</td></tr>
+            <tr><td style="text-align:center">15.</td><td class="field-label" colspan="2">Reason for leaving the school</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{qualified_to_promote}}</td></tr>
+            <tr><td style="text-align:center">16.</td><td class="field-label" colspan="2">Any other remarks</td><td class="field-sep">:</td><td class="field-val" colspan="5">{{any_other_remark}}</td></tr>
+        </table>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+        <!--yanhse se transfer-3 wala section poora ho rha hai -->
+
+        <!--yanhse se NIRGAMUTARA_1 wala section sure ho rha hai -->
+          <tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">6</td>
+    <td style="padding: 10px;">
+        NIRGAMUTARA_1
+        <div class="img-placeholder">
+            <i class="fa fa-image fa-3x" style="color: #ddd;"></i>
+        </div>
+    </td>
+    <td>
+        <table class="template-inner-table">
+            <tr><td width="30" style="text-align:center">01.</td><td class="field-label">Admission No</td><td class="field-sep">:</td><td class="field-val">{{reg_no}}</td></tr>
+            <tr><td style="text-align:center">02.</td><td class="field-label">Student Full Name</td><td class="field-sep">:</td><td class="field-val">{{student_name}}</td></tr>
+            <tr><td style="text-align:center">03.</td><td class="field-label">Parent Full Name</td><td class="field-sep">:</td><td class="field-val">{{parents_name}}</td></tr>
+            <tr><td style="text-align:center">04.</td><td class="field-label">Cast</td><td class="field-sep">:</td><td class="field-val">{{caste}}</td></tr>
+            <tr><td style="text-align:center">05.</td><td class="field-label">Parent Business</td><td class="field-sep">:</td><td class="field-val">{{father_occupation}} / {{mother_occupation}}</td></tr>
+            <tr><td style="text-align:center">06.</td><td class="field-label">Mother Tongue</td><td class="field-sep">:</td><td class="field-val">{{mother_tongue}}</td></tr>
+            <tr><td style="text-align:center">07.</td><td class="field-label">Admission Date</td><td class="field-sep">:</td><td class="field-val">{{reg_date}}</td></tr>
+            <tr><td style="text-align:center">08.</td><td class="field-label">Birth Date in number</td><td class="field-sep">:</td><td class="field-val">{{date_of_birth}}</td></tr>
+            <tr><td style="text-align:center">09.</td><td class="field-label">Birth Date in word</td><td class="field-sep">:</td><td class="field-val">{{date_of_birth_in_word}}</td></tr>
+            <tr><td style="text-align:center">10.</td><td class="field-label">Class while admission</td><td class="field-sep">:</td><td class="field-val">{{join_time_class}}</td></tr>
+            <tr><td style="text-align:center">11.</td><td class="field-label">Previous School Name</td><td class="field-sep">:</td><td class="field-val">{{previous_school_name}}</td></tr>
+            <tr><td style="text-align:center">12.</td><td class="field-label">Standard</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td style="text-align:center">13.</td><td class="field-label">Sign of Authority</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td style="text-align:center">14.</td><td class="field-label">The class while leaving school</td><td class="field-sep">:</td><td class="field-val">{{leaving_time_class}}</td></tr>
+            <tr><td style="text-align:center">15.</td><td class="field-label">Leaving Date</td><td class="field-sep">:</td><td class="field-val">{{date_of_leaving}}</td></tr>
+            <tr><td style="text-align:center">16.</td><td class="field-label">Reason for leaving School</td><td class="field-sep">:</td><td class="field-val">{{reason_to_leave}}</td></tr>
+            <tr><td style="text-align:center">17.</td><td class="field-label">Mention 2 Body Mark</td><td class="field-sep">:</td><td class="field-val">{{mention_body_mark}}</td></tr>
+            <tr><td style="text-align:center">18.</td><td class="field-label">Sign of Authority while leaving school</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td style="text-align:center">19.</td><td class="field-label">Head Master's Sign</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td style="text-align:center">20.</td><td class="field-label">Description</td><td class="field-sep">:</td><td class="field-val">{{any_other_remark}}</td></tr>
+
+            <tr>
+                <td colspan="4">
+                    <div class="footer-container">
+                        <div class="footer-text">Date: _________</div>
+                        <div class="footer-text">Place: _________</div>
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <div class="footer-text">Seal</div>
+                        </div>
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <div class="footer-text">Headmaster's Sign</div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT NIRGAMUTARA_1')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE NIRGAMUTARA_1')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+        <!--yanhse se NIRGAMUTARA_1 wala section poora ho rha hai -->
+
+        <!--yanhse se NIRGAMUTARA_2 wala section sure ho rha hai -->
+        <tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">7</td>
+    <td style="padding: 10px;">
+        NIRGAMUTARA_2
+        <div class="img-placeholder" style="border:1px solid #ccc; width:80px; height:100px; margin-top:5px; display:flex; align-items:center; justify-content:center;">
+            <i class="fa fa-image fa-3x" style="color: #ddd;"></i>
+        </div>
+    </td>
+    <td>
+        <div class="header-top-box">
+            <span>शाळेचे नाव: __________________________</span>
+            <span>रजिस्टर नं. ________________</span>
+        </div>
+
+        <table class="template-inner-table">
+            <tr><td width="30">१</td><td class="field-label">प्रवेश अनुक्रमांक</td><td class="field-sep">:</td><td class="field-val">{{reg_no}}</td></tr>
+            <tr><td>२</td><td class="field-label">विद्यार्थ्याचे संपूर्ण नाव आडनावासह</td><td class="field-sep">:</td><td class="field-val">{{student_name}}</td></tr>
+            <tr><td>३</td><td class="field-label">आई / वडिलांचे नाव / वडील हयात नसल्यास पालकांचे नाव</td><td class="field-sep">:</td><td class="field-val">{{parents_name}}</td></tr>
+            <tr><td>४</td><td class="field-label">जात</td><td class="field-sep">:</td><td class="field-val">{{caste}}</td></tr>
+            <tr><td>५</td><td class="field-label">वडील पालकांचा व्यवसाय</td><td class="field-sep">:</td><td class="field-val">{{father_occupation}} / {{mother_occupation}}</td></tr>
+            <tr><td>६</td><td class="field-label">मातृभाषा</td><td class="field-sep">:</td><td class="field-val">{{mother_tongue}}</td></tr>
+            <tr><td>७</td><td class="field-label">प्रवेश दिनांक</td><td class="field-sep">:</td><td class="field-val">{{reg_date}}</td></tr>
+            <tr><td>८</td><td class="field-label">जन्म दिनांक</td><td class="field-sep">:</td><td class="field-val">अंकात: {{date_of_birth}}<br>अक्षरात: {{date_of_birth_in_word}}</td></tr>
+            <tr><td>९</td><td class="field-label">प्रवेश समयीचा वर्ग</td><td class="field-sep">:</td><td class="field-val">{{join_time_class}}</td></tr>
+            <tr><td>१०</td><td class="field-label">पूर्वीच्या शाळेचे नाव</td><td class="field-sep">:</td><td class="field-val">{{previous_school_name}}</td></tr>
+            <tr><td>११</td><td class="field-label">इयत्ता</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td>१२</td><td class="field-label">प्रवेश देणाऱ्या अधिकाऱ्याची सही</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td>१३</td><td class="field-label">निर्गम समयी वर्ग</td><td class="field-sep">:</td><td class="field-val">{{leaving_time_class}}</td></tr>
+            <tr><td>१४</td><td class="field-label">निर्गम दिनांक</td><td class="field-sep">:</td><td class="field-val">{{date_of_leaving}}</td></tr>
+            <tr><td>१५</td><td class="field-label">शाळा सोडण्याचे कारण</td><td class="field-sep">:</td><td class="field-val">{{reason_to_leave}}</td></tr>
+            <tr><td>१६</td><td class="field-label">परिचय चिन्ह विद्यार्थ्याचे थोडक्यात दोन चिन्ह नोंदवावे</td><td class="field-sep">:</td><td class="field-val">{{mention_body_mark}}</td></tr>
+            <tr><td>१७</td><td class="field-label">निर्गम समयी निर्गामाची नोंद घेणाऱ्या अधिकाऱ्याची सही</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td>१८</td><td class="field-label">मुख्याध्यापकाची स्वाक्षरी</td><td class="field-sep">:</td><td class="field-val"></td></tr>
+            <tr><td>१९</td><td class="field-label">विवरण</td><td class="field-sep">:</td><td class="field-val">{{any_other_remark}}</td></tr>
+        </table>
+
+        <div class="footer-flex">
+            <div style="font-size: 11px;">दिनांक: ________<br>स्थळ: ________</div>
+            <div class="sign-box">शाळेचा शिक्का</div>
+            <div class="sign-box">मुख्याध्यापकाची स्वाक्षरी</div>
+        </div>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+        <!--yanhse se NIRGAMUTARA_2 wala section poora ho rha hai -->
+
+        <!--yanhse se CHARACTER, BONAFIDE, COURSE COMPLETION, aur MEDIUM OF INSTRUCTION (MOI) wala section suru ho rha hai -->
+          <tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">8</td>
+    <td style="padding: 10px;">
+        CHARACTER
+        <div class="img-placeholder" style="border:1px solid #ddd; width:80px; height:60px; margin-top:5px; display:flex; align-items:center; justify-content:center;">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+    <td>
+        <div class="cert-paragraph">
+            This is to certify that <b>{{student_name}}</b> Son of <b>{{father_name}}</b> & <b>{{mother_name}}</b>, Permanent Address <b>{{address}}</b>, is known to me for about <b>{{year}}</b> years. He is a citizen of <b>{{country}}</b> by birth.
+            <br><br>
+            To the best of my knowledge, he bears a <b>{{character}}</b> character and is not involved in such activities which are against the state freedom and peace. I wish all success and prosperity in his life.
+        </div>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+
+<tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">9</td>
+    <td style="padding: 10px;">
+        BONAFIDE
+        <div class="img-placeholder" style="border:1px solid #ddd; width:80px; height:60px; margin-top:5px; display:flex; align-items:center; justify-content:center;">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+    <td>
+        <div class="cert-paragraph">
+            This is to certify that <b>{{student_name}}</b> Reg No. <b>{{reg_no}}</b> Son of <b>{{parents_name}}</b> is a bonafide student of this College in the <b>{{course}}</b> course during the period <b>{{period}}</b>. His/Her Date of Birth as per our School/College record is <b>{{date_of_birth}}</b>. His/Her Conduct and Character are <b>{{character}}</b>.
+        </div>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+
+<tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">10</td>
+    <td style="padding: 10px;">
+        COURSE COMPLETION
+        <div class="img-placeholder" style="border:1px solid #ddd; width:80px; height:60px; margin-top:5px; display:flex; align-items:center; justify-content:center;">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+    <td>
+        <div class="cert-paragraph">
+            This is to certify that <b>{{student_name}}</b> Reg No. <b>{{reg_no}}</b> Son of <b>{{parents_name}}</b> has studied <b>{{course}}</b> in our college during the <b>{{period}}</b>. His/Her Date of Birth as per our School/College record is <b>{{date_of_birth}}</b>. His/Her Conduct and Character are <b>{{character}}</b> during the tenure of his studies.
+        </div>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+
+<tr>
+    <td><input type="checkbox"></td>
+    <td style="text-align: center;">11</td>
+    <td style="padding: 10px;">
+        MEDIUM OF INSTRUCTION
+        <div class="img-placeholder" style="border:1px solid #ddd; width:80px; height:60px; margin-top:5px; display:flex; align-items:center; justify-content:center;">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+    <td>
+        <div class="cert-paragraph">
+            This is to certify that <b>{{student_name}}</b> is a regular student of <b>{{reg_no}}</b> under the Depart of <b>{{department}}</b> of this University. It is to be mentioned that the medium of instruction and examination at this university is English.
+            <br><br>
+            He / She is an intelligent and hardworking student with a charming personality. To the best of my knowledge, he/she bears a good moral character.
+            <br><br>
+            I wish his / her every success in life.
+        </div>
+        <div class="cert-footer">
+            (.........)<br>
+            Deputy Controller of Examination(Additional Charge)
+        </div>
+    </td>
+    <td>
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+        <!--yanhse se  CHARACTER, BONAFIDE, COURSE COMPLETION, aur MEDIUM OF INSTRUCTION (MOI)wala section poora ho rha hai -->
+
+        <div class="status-cell">
+            <a href="#" class="btn-status bg-active-p">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="btn-status bg-edit" onclick="consoleCall('EDIT ATTENDANCE')"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="btn-status bg-danger" onclick="consoleCall('DELETE ATTENDANCE')"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </td>
+</tr>
+<!--yanha se provissional wala areya sure ho rha hai -->
+<style>
+    /* CSS specifically for ERP75 to ensure fixed borders and layout */
+    .e75-main-table-row td {
+        border: 1px solid #dee2e6 !important; /* Fixed outer borders */
+        vertical-align: top;
+        padding: 12px;
+        background-color: #fff;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* Content Styling - Matches the image layout */
+    .e75-content-box {
+        text-align: center; /* Provisional is usually centered */
+        line-height: 1.6;
+        color: #333;
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .e75-variable {
+        font-weight: bold;
+    }
+
+    /* Signature Section */
+    .e75-sig-wrap {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding: 0 30px;
+        font-weight: bold;
+    }
+
+    /* Metadata at the bottom */
+    .e75-meta-info {
+        text-align: left;
+        margin-top: 30px;
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    /* Action Buttons */
+    .e75-status-cell { 
+        display: flex; 
+        gap: 4px; 
+        justify-content: flex-end; 
+    }
+
+    .e75-btn-status { 
+        font-size: 10px; 
+        padding: 4px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+        font-weight: bold;
+    }
+
+    .e75-bg-active { background-color: #2e6da4; }
+    .e75-bg-edit { background-color: #5cb85c; }
+    .e75-bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .e75-img-placeholder {
+        border: 1px solid #ddd;
+        width: 80px;
+        height: 60px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fcfcfc;
+    }
+</style>
+
+<tr class="e75-main-table-row">
+    <td style="width: 30px; text-align: center;">
+        <input type="checkbox">
+    </td>
+
+    <td style="width: 40px; text-align: center; font-weight: bold;">
+        12
+    </td>
+
+    <td style="width: 160px;">
+        <div style="font-weight: bold; font-size: 12px; text-transform: uppercase;">PROVISIONAL</div>
+        <div class="e75-img-placeholder">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <div class="e75-content-box">
+            <div style="font-style: italic;">This is to certify that</div>
+            <div class="e75-variable" style="font-size: 15px; margin: 5px 0;">{{student_name}}</div>
+            
+            <div style="font-style: italic;">Unique Student ID# <span class="e75-variable">{{reg_no}}</span></div>
+            
+            <div style="margin-top: 10px;">
+                has passed the examination for <span class="e75-variable">{{batch}}</span> at this university<br>
+                and obtained a degree of<br>
+                <span class="e75-variable">{{faculty}}</span>
+            </div>
+
+            <div style="margin-top: 10px;">
+                with a cumulative GPA of <span class="e75-variable">{{gpa}}</span> in a scale of <span class="e75-variable">{{scale}}</span><br>
+                from the <span class="e75-variable">{{department}}</span>
+            </div>
+
+            <div style="margin-top: 15px; font-weight: 500;">
+                The medium of instruction of the program was English.
+            </div>
+
+            <div style="font-size: 11px; margin-top: 10px; font-style: italic; color: #666;">
+                In testimony where this provisional certificate is issued until such times when a<br>
+                convocation is held and a degree certificate is issued.
+            </div>
+
+            <div class="e75-sig-wrap">
+                <span>Registrar</span>
+                <span>Deputy Controller of Examination</span>
+            </div>
+
+            <div class="e75-meta-info">
+                Issued On: <strong>{{date_of_issue}}</strong><br>
+                for Online Verification: ...<br>
+                Date of Publication of Results: <strong>{{result_publish_date}}</strong><br>
+                Verification Code: <strong>{{reg_no}}</strong>
+            </div>
+        </div>
+    </td>
+
+    <td style="width: 160px;">
+        <div class="e75-status-cell">
+            <a href="#" class="e75-btn-status e75-bg-active">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e75-btn-status e75-bg-edit" onclick="consoleCall('EDIT PROVISIONAL')">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+            <a href="#" class="e75-btn-status e75-bg-danger" onclick="consoleCall('DELETE PROVISIONAL')">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </td>
+</tr>
+<!--yanha se provissional wala areya poora ho rha hai -->
+
+<!--yanha se terminiol wala areya sure ho rha hai -->
+<style>
+    /* CSS specifically for ERP77 to ensure fixed borders and layout */
+    .e77-main-table-row td {
+        border: 1px solid #dee2e6 !important; /* Fixed outer borders */
+        vertical-align: top;
+        padding: 12px;
+        background-color: #fff;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* Inner Content Styling */
+    .e77-content-box {
+        line-height: 1.8;
+        color: #333;
+        font-size: 13px;
+        text-align: justify;
+    }
+
+    .e77-variable {
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    .e77-footer-sig {
+        margin-top: 30px;
+        font-weight: bold;
+    }
+
+    /* Action Buttons (Aligned to the Right Column) */
+    .e77-status-cell { 
+        display: flex; 
+        gap: 4px; 
+        justify-content: flex-end; 
+    }
+
+    .e77-btn-status { 
+        font-size: 10px; 
+        padding: 4px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+        font-weight: bold;
+    }
+
+    .e77-bg-active { background-color: #2e6da4; }
+    .e77-bg-edit { background-color: #5cb85c; }
+    .e77-bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .e77-img-placeholder {
+        border: 1px solid #ddd;
+        width: 80px;
+        height: 60px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fcfcfc;
+    }
+</style>
+
+<tr class="e77-main-table-row">
+    <td style="width: 30px; text-align: center;">
+        <input type="checkbox">
+    </td>
+
+    <td style="width: 40px; text-align: center; font-weight: bold;">
+        13
+    </td>
+
+    <td style="width: 160px;">
+        <div style="font-weight: bold; font-size: 12px; text-transform: uppercase;">TESTIMONIAL</div>
+        <div class="e77-img-placeholder">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <div class="e77-content-box">
+            This is to certify that <span class="e77-variable">{{student_name}}</span> Son / Daughter of 
+            <span class="e77-variable">{{father_name}}</span> and <span class="e77-variable">{{mother_name}}</span> 
+            was a student in the Department of <span class="e77-variable">{{department}}</span> 
+            Session <span class="e77-variable">{{batch}}</span> bearing Unique Student ID# 
+            <span class="e77-variable">{{reg_no}}</span> under the Faculty of <span class="e77-variable">{{department}}</span> 
+            at CCN University of Science and Technology. He/She has successfully completed 
+            <span class="e77-variable">{{program_duration}}</span> in <span class="e77-variable">{{year}}</span> 
+            and obtained CGPA of <span class="e77-variable">{{gpa}}</span> on a scale of <span class="e77-variable">{{scale}}</span> 
+            with an Average Grade <span class="e77-variable">{{average_grade}}</span>. 
+            The medium of the program was English.
+            <br><br>
+            He/She bears a good moral character and did not participate in any activities subversive to the state or discipline of the university.
+            <br><br>
+            I wish his/her every success in life.
+            
+            <div class="e77-footer-sig">
+                (Professor Dr........ )<br>
+                Registrar
+            </div>
+        </div>
+    </td>
+
+    <td style="width: 160px;">
+        <div class="e77-status-cell">
+            <a href="#" class="e77-btn-status e77-bg-active">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e77-btn-status e77-bg-edit" onclick="consoleCall('EDIT TESTIMONIAL')">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+            <a href="#" class="e77-btn-status e77-bg-danger" onclick="consoleCall('DELETE TESTIMONIAL')">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </td>
+</tr>
+<!--yanha se terminiol wala areya poora  ho rha hai -->
+
+<!--yanha seTRANSCRIPT wala porsen sure ho rha hai  -->
+<style>
+    /* CSS specifically for ERP78 to ensure fixed borders and layout */
+    .e78-main-table-row td {
+        border: 1px solid #dee2e6 !important; /* Fixed outer borders */
+        vertical-align: top;
+        padding: 12px;
+        background-color: #fff;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* Inner Table for Transcript Data */
+    .e78-inner-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .e78-inner-table td {
+        padding: 6px 8px;
+        font-size: 13px;
+        border: none !important; /* Inner fields don't need borders */
+    }
+
+    /* Field Styles */
+    .e78-label {
+        width: 25%;
+        color: #333;
+        font-weight: 400;
+    }
+
+    .e78-sep {
+        width: 20px;
+        text-align: center;
+    }
+
+    .e78-val {
+        font-weight: bold;
+        color: #000;
+    }
+
+    /* Action Buttons */
+    .e78-status-cell { 
+        display: flex; 
+        gap: 4px; 
+        justify-content: flex-end; 
+    }
+
+    .e78-btn-status { 
+        font-size: 10px; 
+        padding: 4px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+        font-weight: bold;
+    }
+
+    .e78-bg-active { background-color: #2e6da4; }
+    .e78-bg-edit { background-color: #5cb85c; }
+    .e78-bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .e78-img-placeholder {
+        border: 1px solid #ddd;
+        width: 80px;
+        height: 60px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fcfcfc;
+    }
+</style>
+
+<tr class="e78-main-table-row">
+    <td style="width: 30px; text-align: center;">
+        <input type="checkbox">
+    </td>
+
+    <td style="width: 40px; text-align: center; font-weight: bold;">
+        14
+    </td>
+
+    <td style="width: 160px;">
+        <div style="font-weight: bold; font-size: 12px; text-transform: uppercase;">TRANSCRIPT</div>
+        <div class="e78-img-placeholder">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <table class="e78-inner-table">
+            <tr>
+                <td class="e78-label">Name of Student</td>
+                <td class="e78-sep">:</td>
+                <td class="e78-val">{{student_name}}</td>
+            </tr>
+            <tr>
+                <td class="e78-label">Unique Student ID#</td>
+                <td class="e78-sep">:</td>
+                <td class="e78-val">{{reg_no}}</td>
+            </tr>
+            <tr>
+                <td class="e78-label">Program</td>
+                <td class="e78-sep">:</td>
+                <td class="e78-val">{{faculty}}</td>
+            </tr>
+            <tr>
+                <td class="e78-label">Credit Required</td>
+                <td class="e78-sep">:</td>
+                <td class="e78-val">{{credit_required}}</td>
+            </tr>
+            <tr>
+                <td class="e78-label">Passing Year</td>
+                <td class="e78-sep">:</td>
+                <td class="e78-val">{{year}}</td>
+            </tr>
+            <tr>
+                <td class="e78-label">Duration</td>
+                <td class="e78-sep">:</td>
+                <td class="e78-val">{{duration}}</td>
+            </tr>
+        </table>
+    </td>
+
+    <td style="width: 160px;">
+        <div class="e78-status-cell">
+            <a href="#" class="e78-btn-status e78-bg-active">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e78-btn-status e78-bg-edit" onclick="consoleCall('EDIT TRANSCRIPT')">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+            <a href="#" class="e78-btn-status e78-bg-danger" onclick="consoleCall('DELETE TRANSCRIPT')">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </td>
+</tr>
+<!--yanha se TRANSCRIPT wala porsen poora ho rha hai-->
+
+<!--yanha se SEMESTER WISE FINAL RESULT wala porsen poora ho rha hai-->
+<style>
+    /* CSS for ERP79 to ensure fixed borders and consistent layout */
+    .e79-main-table-row td {
+        border: 1px solid #dee2e6 !important; /* Fixed outer borders */
+        vertical-align: top;
+        padding: 12px;
+        background-color: #fff;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* Content Styling */
+    .e79-content-box {
+        line-height: 1.8;
+        color: #333;
+        font-size: 13px;
+        text-align: justify;
+    }
+
+    .e79-variable {
+        font-weight: bold;
+        color: #000;
+    }
+
+    /* Metadata List Styling */
+    .e79-meta-list {
+        margin-top: 15px;
+        list-style: none;
+        padding: 0;
+    }
+
+    .e79-meta-list li {
+        margin-bottom: 5px;
+    }
+
+    /* Action Buttons Styling */
+    .e79-status-cell { 
+        display: flex; 
+        gap: 4px; 
+        justify-content: flex-end; 
+    }
+
+    .e79-btn-status { 
+        font-size: 10px; 
+        padding: 4px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+        font-weight: bold;
+    }
+
+    .e79-bg-active { background-color: #2e6da4; }
+    .e79-bg-edit { background-color: #5cb85c; }
+    .e79-bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .e79-img-placeholder {
+        border: 1px solid #ddd;
+        width: 80px;
+        height: 60px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fcfcfc;
+    }
+</style>
+
+<tr class="e79-main-table-row">
+    <td style="width: 30px; text-align: center;">
+        <input type="checkbox">
+    </td>
+
+    <td style="width: 40px; text-align: center; font-weight: bold;">
+        15
+    </td>
+
+    <td style="width: 160px;">
+        <div style="font-weight: bold; font-size: 11px; text-transform: uppercase;">SEMESTER WISE FINAL RESULT</div>
+        <div class="e79-img-placeholder">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <div class="e79-content-box">
+            Student Name: <span class="e79-variable">{{student_name}}</span> 
+            Unique Student ID# <span class="e79-variable">{{reg_no}}</span> 
+            Admitted Year <span class="e79-variable">{{batch}}</span> 
+            Passing Year <span class="e79-variable">{{year}}</span> 
+            Under the Faculty of <span class="e79-variable">{{department}}</span> 
+            got a CGPA of <span class="e79-variable">{{gpa}}</span> and passed. 
+            Documents were submitted for permission to issue his or her Testimonial, Mark Sheet, and Provisional Certificate.
+            
+            <ul class="e79-meta-list">
+                <li>Verification Code: <span class="e79-variable">{{verification_code}}</span></li>
+                <li>Serial Number of Mark Sheet: <span class="e79-variable">{{mark_sheet_sn}}</span></li>
+                <li>Serial Number of Provisional Certificate: <span class="e79-variable">{{provisional_certificate_num}}</span></li>
+            </ul>
+        </div>
+    </td>
+
+    <td style="width: 160px;">
+        <div class="e79-status-cell">
+            <a href="#" class="e79-btn-status e79-bg-active">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e79-btn-status e79-bg-edit" onclick="consoleCall('EDIT FINAL RESULT')">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+            <a href="#" class="e79-btn-status e79-bg-danger" onclick="consoleCall('DELETE FINAL RESULT')">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </td>
+</tr>
+<!--yanha se SEMESTER WISE FINAL RESULT wala porsen poora ho rha hai-->
+
+<!--yanha se GENERAL TEMPLATE wala porsen sure ho rha hai-->
+<style>
+    /* Fixed border layout specifically for ERP80 */
+    .e80-main-table-row td {
+        border: 1px solid #dee2e6 !important; /* Fixed outer borders */
+        vertical-align: top;
+        padding: 12px;
+        background-color: #fff;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* Header Reg Info Styling */
+    .e80-header-info {
+        display: flex;
+        justify-content: space-around;
+        font-weight: bold;
+        font-size: 13px;
+        margin-bottom: 25px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    /* Content Body - Centered as per screenshot */
+    .e80-content-box {
+        text-align: center;
+        line-height: 2.2;
+        color: #333;
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    .e80-variable {
+        font-weight: bold;
+        text-decoration: none; /* Screenshot mein underline nahi hai, sirf bold hai */
+    }
+
+    /* Action Buttons (Right Aligned) */
+    .e80-status-cell { 
+        display: flex; 
+        gap: 4px; 
+        justify-content: flex-end; 
+    }
+
+    .e80-btn-status { 
+        font-size: 10px; 
+        padding: 4px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+        font-weight: bold;
+    }
+
+    .e80-bg-active { background-color: #2e6da4; }
+    .e80-bg-edit { background-color: #5cb85c; }
+    .e80-bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .e80-img-placeholder {
+        border: 1px solid #ddd;
+        width: 80px;
+        height: 60px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fcfcfc;
+    }
+</style>
+
+<tr class="e80-main-table-row">
+    <td style="width: 30px; text-align: center;">
+        <input type="checkbox">
+    </td>
+
+    <td style="width: 40px; text-align: center; font-weight: bold;">
+        16
+    </td>
+
+    <td style="width: 160px;">
+        <div style="font-weight: bold; font-size: 12px; text-transform: uppercase;">GENERAL TEMPLATE</div>
+        <div class="e80-img-placeholder">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <div class="e80-header-info">
+            <span>REG.NO.: <span class="e80-variable">{{reg_no}}</span></span>
+            <span>REG.DATE: <span class="e80-variable">{{reg_date}}</span></span>
+        </div>
+
+        <div class="e80-content-box">
+            This is to certify that <span class="e80-variable">{{student_name}}</span> 
+            son/daughter of <span class="e80-variable">{{parents_name}}</span> 
+            Residing at <span class="e80-variable">{{address}}</span> is bonafide Student of our school.
+            <br>
+            He/She is /was very obedient, sincere and hardworking.
+            <br>
+            He/She bears a good moral character. His/Her Date of Birth is 
+            <span class="e80-variable">{{date_of_birth}}</span> and Place of Birth is 
+            <span class="e80-variable">{{address}}</span>.
+        </div>
+    </td>
+
+    <td style="width: 160px;">
+        <div class="e80-status-cell">
+            <a href="#" class="e80-btn-status e80-bg-active">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e80-btn-status e80-bg-edit" onclick="consoleCall('EDIT GENERAL TEMPLATE')">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+            <a href="#" class="e80-btn-status e80-bg-danger" onclick="consoleCall('DELETE GENERAL TEMPLATE')">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </td>
+</tr>
+<!--yanha se GENERAL TEMPLATE wala porsen poora ho rha hai-->
+<!--yanha se IDENTITY CARD wala porsen poora ho rha hai-->
+<style>
+    /* Fixed border layout for ERP81 */
+    .e81-main-table-row td {
+        border: 1px solid #dee2e6 !important; /* Fixed outer borders */
+        vertical-align: top;
+        padding: 12px;
+        background-color: #fff;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* ID Card Content Styling */
+    .e81-content-box {
+        position: relative;
+        line-height: 1.8;
+        color: #333;
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    /* Student Header (Centered) */
+    .e81-student-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .e81-name {
+        font-size: 16px;
+        font-weight: bold;
+        display: block;
+    }
+
+    .e81-faculty {
+        font-weight: bold;
+        color: #555;
+    }
+
+    /* Details Styling (Left Aligned) */
+    .e81-details {
+        text-align: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .e81-variable {
+        color: #000;
+    }
+
+    /* Action Buttons (Right Aligned) */
+    .e81-status-cell { 
+        display: flex; 
+        gap: 4px; 
+        justify-content: flex-end; 
+    }
+
+    .e81-btn-status { 
+        font-size: 10px; 
+        padding: 4px 8px; 
+        border-radius: 3px; 
+        color: white !important; 
+        text-decoration: none !important; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 4px; 
+        font-weight: bold;
+    }
+
+    .e81-bg-active { background-color: #2e6da4; }
+    .e81-bg-edit { background-color: #5cb85c; }
+    .e81-bg-danger { background-color: #d9534f; }
+
+    /* Image Placeholder */
+    .e81-img-placeholder {
+        border: 1px solid #ddd;
+        width: 80px;
+        height: 60px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fcfcfc;
+    }
+</style>
+
+<tr class="e81-main-table-row">
+    <td style="width: 30px; text-align: center;">
+        <input type="checkbox">
+    </td>
+
+    <td style="width: 40px; text-align: center; font-weight: bold;">
+        17
+    </td>
+
+    <td style="width: 160px;">
+        <div style="font-weight: bold; font-size: 12px; text-transform: uppercase;">IDENTITY CARD</div>
+        <div class="e81-img-placeholder">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <div class="e81-content-box">
+            <div class="e81-student-header">
+                <span class="e81-name">{{student_name}}</span>
+                <span class="e81-faculty">{{faculty}}-{{semester}}</span>
+            </div>
+
+            <div class="e81-details">
+                <div>PARENT : <span class="e81-variable">{{parents_name}}</span></div>
+                <div>ADDRESS : <span class="e81-variable">{{address}}</span></div>
+                <div>CONTACT : <span class="e81-variable">{{guardian_mobile_1}}</span></div>
+                <div style="margin-top: 5px;">VALID DATE : <span class="e81-variable">JAN 2019 - FEB 2020</span></div>
+            </div>
+        </div>
+    </td>
+
+    <td style="width: 160px;">
+        <div class="e81-status-cell">
+            <a href="#" class="e81-btn-status e81-bg-active">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e81-btn-status e81-bg-edit" onclick="consoleCall('EDIT IDENTITY CARD')">
+                <i class="fa fa-edit"></i> Edit
+            </a>
+            <a href="#" class="e81-btn-status e81-bg-danger" onclick="consoleCall('DELETE IDENTITY CARD')">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </td>
+</tr>
+<!--yanha se IDENTITY CARD wala porsen sure ho rha hai-->
+
+<!--yanha se FEE VOUCHER wala porsen sure ho rha hai-->
+<style>
+    .e82-main-row td {
+        border: 1px solid #dee2e6 !important;
+        vertical-align: top;
+        padding: 10px;
+        background-color: #fff;
+    }
+
+    .e82-flex-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .e82-voucher {
+        flex: 1;
+        border: 1px solid #000;
+        padding: 5px;
+        font-family: Arial, sans-serif;
+        font-size: 8.5px; /* Slightly smaller to fit all text */
+        color: #000;
+    }
+
+    .e82-header { text-align: center; margin-bottom: 5px; }
+    .e82-header h2 { font-size: 13px; margin: 0; font-weight: bold; }
+    .e82-header div { font-size: 9px; }
+    
+    .e82-info-table { width: 100%; border-collapse: collapse; margin-bottom: 5px; }
+    .e82-info-table td { border: 1px solid #000 !important; padding: 1px 3px; }
+    .e82-label { width: 45%; font-weight: bold; }
+
+    .e82-challan-title { text-align: center; font-weight: bold; background: #fff; border: 1px solid #000; margin: 2px 0; padding: 1px; }
+
+    .e82-fee-table { width: 100%; border-collapse: collapse; }
+    .e82-fee-table td { border: 1px solid #000 !important; padding: 2px; height: 13px; }
+    .e82-fee-table .th { font-weight: bold; text-align: center; }
+
+    .e82-payment-terms { font-size: 7.5px; margin-top: 5px; line-height: 1.1; }
+    
+    .e82-footer-stamps {
+        margin-top: 10px;
+        text-align: center;
+        border-top: 1px solid #000;
+        padding-top: 5px;
+    }
+    .e82-stamp-box { margin-top: 10px; font-weight: bold; display: flex; justify-content: space-between; padding: 0 5px; }
+
+    .e82-btn-group { display: flex; gap: 3px; justify-content: flex-end; }
+    .e82-btn { padding: 3px 6px; color: #fff !important; font-size: 10px; border-radius: 2px; text-decoration: none; font-weight: bold; }
+</style>
+
+<tr class="e82-main-row">
+    <td style="width: 30px; text-align: center;"><input type="checkbox"></td>
+    <td style="width: 40px; text-align: center; font-weight: bold;">18</td>
+    <td style="width: 130px;">
+        <div style="font-weight: bold; font-size: 11px;">FEE VOUCHER</div>
+        <div style="border: 1px solid #ddd; width: 80px; height: 100px; margin-top: 10px; display: flex; align-items: center; justify-content: center; background: #fcfcfc;">
+            <i class="fa fa-image fa-2x" style="color: #eee;"></i>
+        </div>
+    </td>
+
+    <td>
+        <div class="e82-flex-container">
+            <div class="e82-voucher">
+                <div class="e82-header">
+                    <h2>UnlimitedEduFirm</h2>
+                    <div>School & College IMS</div>
+                    <div>From Nepal</div>
+                    <div style="margin-top:2px;">Rajbiraj, Saptari (Nepal)</div>
+                    <div style="font-weight:bold; border-top:1px solid #000; margin-top:2px;">ACCOUNT # : {{reg_no}}</div>
+                </div>
+                <table class="e82-info-table">
+                    <tr><td class="e82-label">Student Name :</td><td>{{student_name}}</td></tr>
+                    <tr><td class="e82-label">Father Name :</td><td>{{father_name}}</td></tr>
+                    <tr><td class="e82-label">Faculty/Program/Class :</td><td>{{faculty}}</td></tr>
+                    <tr><td class="e82-label">Sec / Group :</td><td>{{semester}}</td></tr>
+                    <tr><td class="e82-label">Roll No:</td><td>{{university_reg}}</td></tr>
+                    <tr><td class="e82-label">Reg No :</td><td>{{reg_no}}</td></tr>
+                    <tr><td class="e82-label">Issue Date :</td><td>{{date_of_issue}}</td></tr>
+                    <tr><td class="e82-label">Due Date :</td><td>{{date_of_due}}</td></tr>
+                    <tr><td class="e82-label">Fee Month :</td><td>{{month}}</td></tr>
+                </table>
+                <div class="e82-challan-title">FEE CHALLAN</div>
+                <table class="e82-fee-table">
+                    <tr class="th"><td>DESCRIPTION</td><td style="width:30%;">AMOUNT</td></tr>
+                    <tr><td>Admission Fee :</td><td>{{fee}}</td></tr>
+                    <tr><td>Security Fee :</td><td></td></tr>
+                    <tr><td>Examination Fee :</td><td></td></tr>
+                    <tr><td>Board Reg. Fee :</td><td></td></tr>
+                    <tr><td>Misc. Funds :</td><td></td></tr>
+                    <tr><td>Tuition Fee :</td><td></td></tr>
+                    <tr><td>Arrear :</td><td></td></tr>
+                    <tr><td>Fine :</td><td></td></tr>
+                    <tr style="font-weight:bold;"><td>Total Payment by date</td><td>{{total}}</td></tr>
+                </table>
+                <div class="e82-payment-terms">
+                    <b>PAYMENT TERMS:</b><br>
+                    1.) Fee must be paid by 15th of the Month. 2.) Late Fee fine will be charged Rs.20/- per day. 3.) Arrear of the last month will be charged with Rs.300/- as fine. 4.) In case fee is not deposited two months, the name of the student will be struck off from the college rolls automatically. The student will have to get re-admission by paying the 50% of admission fee.
+                </div>
+                <div class="e82-footer-stamps">Bank Copy</div>
+                <div class="e82-stamp-box"><span>________________</span><span>BANK STAMP</span></div>
+            </div>
+
+            <div class="e82-voucher">
+                <div class="e82-header">
+                    <h2>UnlimitedEduFirm</h2>
+                    <div>School & College IMS</div>
+                    <div>From Nepal</div>
+                    <div style="margin-top:2px;">Rajbiraj, Saptari (Nepal)</div>
+                    <div style="font-weight:bold; border-top:1px solid #000; margin-top:2px;">ACCOUNT # : {{reg_no}}</div>
+                </div>
+                <table class="e82-info-table">
+                    <tr><td class="e82-label">Student Name :</td><td>{{student_name}}</td></tr>
+                    <tr><td class="e82-label">Father Name :</td><td>{{father_name}}</td></tr>
+                    <tr><td class="e82-label">Faculty/Program/Class :</td><td>{{faculty}}</td></tr>
+                    <tr><td class="e82-label">Sec / Group :</td><td>{{semester}}</td></tr>
+                    <tr><td class="e82-label">Roll No:</td><td></td></tr>
+                    <tr><td class="e82-label">Reg No :</td><td></td></tr>
+                    <tr><td class="e82-label">Issue Date :</td><td></td></tr>
+                    <tr><td class="e82-label">Due Date :</td><td></td></tr>
+                    <tr><td class="e82-label">Fee Month :</td><td></td></tr>
+                </table>
+                <div class="e82-challan-title">FEE CHALLAN</div>
+                <table class="e82-fee-table">
+                    <tr class="th"><td>DESCRIPTION</td><td>AMOUNT</td></tr>
+                    <tr><td>Registration Fee</td><td></td></tr>
+                    <tr><td>Admission Fee</td><td></td></tr>
+                    <tr><td>Tuition Fee</td><td></td></tr>
+                    <tr><td>Board /University /Exam Fee</td><td></td></tr>
+                    <tr><td>Misc. Charges</td><td></td></tr>
+                    <tr><td>Re-Mid Fee</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr style="font-weight:bold;"><td>Total Payment by date</td><td></td></tr>
+                </table>
+                <div class="e82-payment-terms">
+                    <b>PAYMENT TERMS:</b><br>
+                    1.) Fee must be paid by 15th of the Month. 2.) Late Fee fine will be charged Rs.20/- per day. 3.) Arrear of the last month will be charged with Rs.300/- as fine. 4.) In case fee is not deposited two months, the name of the student will be struck off...
+                </div>
+                <div class="e82-footer-stamps">College Copy</div>
+                <div class="e82-stamp-box"><span>________________</span><span>BANK STAMP</span></div>
+            </div>
+
+            <div class="e82-voucher">
+                <div class="e82-header">
+                    <h2>UnlimitedEduFirm</h2>
+                    <div>School & College IMS</div>
+                    <div>From Nepal</div>
+                    <div style="margin-top:2px;">Rajbiraj, Saptari (Nepal)</div>
+                    <div style="font-weight:bold; border-top:1px solid #000; margin-top:2px;">ACCOUNT # : {{reg_no}}</div>
+                </div>
+                <table class="e82-info-table">
+                    <tr><td class="e82-label">Student Name :</td><td>{{student_name}}</td></tr>
+                    <tr><td class="e82-label">Father Name :</td><td>{{father_name}}</td></tr>
+                    <tr><td class="e82-label">Faculty/Program/Class :</td><td>{{faculty}}</td></tr>
+                    <tr><td class="e82-label">Sec / Group :</td><td>{{semester}}</td></tr>
+                    <tr><td class="e82-label">Roll No:</td><td></td></tr>
+                    <tr><td class="e82-label">Reg No :</td><td></td></tr>
+                    <tr><td class="e82-label">Issue Date :</td><td></td></tr>
+                    <tr><td class="e82-label">Due Date :</td><td></td></tr>
+                    <tr><td class="e82-label">Fee Month :</td><td></td></tr>
+                </table>
+                <div class="e82-challan-title">FEE CHALLAN</div>
+                <table class="e82-fee-table">
+                    <tr class="th"><td>DESCRIPTION</td><td>AMOUNT</td></tr>
+                    <tr><td>Registration Fee</td><td></td></tr>
+                    <tr><td>Admission Fee</td><td></td></tr>
+                    <tr><td>Tuition Fee</td><td></td></tr>
+                    <tr><td>Board /University /Exam Fee</td><td></td></tr>
+                    <tr><td>Misc. Charges</td><td></td></tr>
+                    <tr><td>Re-Mid Fee</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr style="font-weight:bold;"><td>Total Payment by date</td><td></td></tr>
+                </table>
+                <div class="e82-payment-terms">
+                    <b>PAYMENT TERMS:</b><br>
+                    1.) Fee must be paid by 15th of the Month. 2.) Late Fee fine will be charged Rs.20/- per day. 3.) Arrear of the last month will be charged with Rs.300/- as fine. 4.) In case fee is not deposited two months, the name of the student...
+                </div>
+                <div class="e82-footer-stamps">Student Copy</div>
+                <div class="e82-stamp-box"><span>________________</span><span>BANK STAMP</span></div>
+            </div>
+        </div>
+    </td>
+
+    <td style="width: 150px;">
+        <div class="e82-btn-group">
+            <a href="#" class="e82-btn" style="background:#2e6da4;">Active <i class="fa fa-caret-down"></i></a>
+            <a href="#" class="e82-btn" style="background:#5cb85c;"><i class="fa fa-edit"></i> Edit</a>
+            <a href="#" class="e82-btn" style="background:#d9534f;"><i class="fa fa-trash"></i></a>
+        </div>
+    </td>
+</tr>
+<!--yanha se FEE VOUCHER wala porsen sure ho rha hai-->
+</tbody>
+    <script>
+        function consoleCall(action) {
+            console.log("----------------------------");
+            console.log(`%c JS ACTION: ${action} triggered`, "background: #222; color: #bada55; padding: 5px;");
+            alert(action + " button logic called!");
+        }
+
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('erpTime').innerText = now.toLocaleTimeString();
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>
