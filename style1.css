@@ -266,9 +266,8 @@ body {
 
 /* --- yanha par navbar or toolbar wali css poori ho rhi hai  ---- */
 
-/*---- yanha se vo wali css sure ho rhi hai janha par toolbar ke sare hover ki alag alag css thi
-to maine ek hi master css bna di hai taki code chota ho ske --*/
 
+/*--yanha par mai testing kar rha hu toolbar css ko ek karne ki --*/
          /* ERP MASTER STYLESHEET 
    Usage: Save this as erp-style.css and link in HTML 
 */
@@ -378,8 +377,8 @@ to maine ek hi master css bna di hai taki code chota ho ske --*/
         left: 100% !important;
     }
 }
-/*---- yanha se vo wali css sure ho rhi hai janha par toolbar ke sare hover ki alag alag css thi
-to maine ek hi master css bna di hai taki code chota ho ske or yanha par ye poori ho rhi hai --*/
+        /*--yanha par mai testing kar rha hu toolbar css ko ek karne ki --*/
+       
 
 /*---yanha se iframe jab kaam nhi kar rha tha link 
 page poora nhi khul rha tha to use solve karne ke liye lgai hai--*/
