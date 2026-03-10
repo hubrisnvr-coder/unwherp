@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Manager - ERP87</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        /* Base Styles */
+        body { 
+            margin: 0; 
+            padding: 20px; 
+            background-color: #f4f7f9; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Header Section */
+        .header-section { 
+            text-align: center; 
+            margin-bottom: 15px; 
+        }
+        .header-section h4 { 
+            color: #2e6da4; 
+            margin: 0; 
+            font-size: 16px; 
+            font-weight: bold; 
+        }
+        .header-section span { 
+            color: #999; 
+            font-weight: normal; 
+        }
+        .nav-buttons { 
+            margin-top: 10px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 5px; 
+        }
+        
+        .btn-nav {
+            color: white !important;
+            padding: 6px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Filter Box */
+        .filter-box { 
+            background: white; 
+            border: 1px solid #c2cfd6; 
+            margin-bottom: 20px; 
+            border-radius: 2px; 
+        }
+        .filter-toggle { 
+            text-align: center; 
+            padding: 10px; 
+            color: #2e6da4; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 15px; 
+        }
+        #filter-body { 
+            border-top: 1px solid #c2cfd6; 
+            padding: 20px; 
+            background-color: #fff; 
+            display: none; 
+        }
+
+        /* List Box */
+        .list-box { 
+            background: white; 
+            border: 1px solid #c2cfd6; 
+            border-radius: 2px; 
+        }
+        .list-title { 
+            padding: 10px; 
+            color: #2e6da4; 
+            font-weight: bold; 
+            text-align: center; 
+            font-size: 15px; 
+            border-bottom: 1px solid #c2cfd6; 
+        }
+        .bulk-actions { 
+            padding: 10px; 
+            display: flex; 
+            gap: 5px; 
+        }
+        
+        .btn-bulk {
+            color: white !important;
+            padding: 5px 12px;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .info-strip { 
+            background-color: #337ab7; 
+            color: white; 
+            padding: 8px 15px; 
+            font-size: 13px; 
+        }
+
+        /* Table Style */
+        .table-responsive { 
+            overflow-x: auto; 
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            font-size: 12px; 
+            text-align: center; 
+        }
+        thead tr { 
+            background-color: #e4eaec; 
+        }
+        th { 
+            border: 1px solid #c2cfd6; 
+            padding: 10px; 
+            color: #2e6da4; 
+            text-transform: uppercase; 
+        }
+        td { 
+            border: 1px solid #c2cfd6; 
+            padding: 12px; 
+            color: #333; 
+        }
+        .no-data { 
+            text-align: left; 
+            color: #666; 
+            border-top: 2px solid red; 
+            padding: 15px; 
+        }
+    </style>
+</head>
+<body>
+
+<div id="assignment-manager-container">
+    <div class="header-section">
+        <h4>Meeting Manager » <span>Detail</span></h4>
+        <div class="nav-buttons">
+            <a href="javascript:void(0);" onclick="meetingAction('VIEW_DETAIL')" class="btn-nav" style="background-color: #5cb85c;">
+                <i class="fa fa-list"></i> Meeting Detail
+            </a>
+            <a href="javascript:void(0);" onclick="meetingAction('ADD_NEW')" class="btn-nav" style="background-color: #337ab7;">
+                <i class="fa fa-plus"></i> New Meeting
+            </a>
+            <a href="javascript:void(0);" onclick="meetingAction('ZOOM_INDEX')" class="btn-nav" style="background-color: #337ab7;">
+                <i class="fa fa-video-camera"></i> Zoom Index
+            </a>
+        </div>
+    </div>
+
+    <div class="filter-box">
+        <div class="filter-toggle" onclick="meetingAction('TOGGLE_FILTER')">
+            » Filter Meeting <i class="fa fa-filter"></i>
+        </div>
+        <div id="filter-body">
+            </div>
+    </div>
+
+    <div class="list-box">
+        <div class="list-title">
+            <i class="fa fa-calendar-check-o"></i> Meeting List
+        </div>
+
+        <div class="bulk-actions">
+            <a href="javascript:void(0);" onclick="bulkMeetingAction('COMPLETE')" class="btn-bulk" style="background-color: #337ab7;">
+                <i class="fa fa-check"></i> Complete
+            </a>
+            <a href="javascript:void(0);" onclick="bulkMeetingAction('PENDING')" class="btn-bulk" style="background-color: #f0ad4e;">
+                <i class="fa fa-clock-o"></i> Pending
+            </a>
+            <a href="javascript:void(0);" onclick="bulkMeetingAction('DELETE')" class="btn-bulk" style="background-color: #d9534f;">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+
+        <div class="info-strip">
+            Meeting Record list on table. Filter Meeting using the filter.
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox" id="selectAll"></th>
+                        <th>S.N.</th>
+                        <th>SEMESTER/SECTION</th>
+                        <th>SUBJECT/COURSE</th>
+                        <th>TOPIC</th>
+                        <th>START TIME</th>
+                        <th>MIN</th>
+                        <th>SCHEDULE BY</th>
+                        <th>STATUS</th>
+                        <th>LINK</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="11" class="no-data">
+                            No Meeting data found. Please Filter Meeting to show.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Meeting Manager Actions
+    function meetingAction(type) {
+        console.log("Meeting Action: " + type);
+        if(type === 'TOGGLE_FILTER') {
+            const f = document.getElementById('filter-body');
+            f.style.display = (f.style.display === 'none' || f.style.display === '') ? 'block' : 'none';
+        } else {
+            alert("Action Triggered: " + type);
+        }
+    }
+
+    function bulkMeetingAction(statusType) {
+        console.log("Bulk Action: " + statusType);
+        alert('Performing ' + statusType + ' on selected meetings.');
+    }
+
+    // Select All Checkbox Logic
+    document.getElementById('selectAll').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
+</script>
+
+</body>
+</html>
