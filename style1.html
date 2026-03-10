@@ -106,6 +106,8 @@
         .hover-dropdown-list {
             min-width: 160px;                   /* छोटा mobile पर */
         }
+
+        
     </style>
 </head>
 <body>
@@ -504,81 +506,6 @@
             </div>
 
             <!---yanhse se double toolbar wala prosen sure ho rha hai -->
-             <style>
-    /* Unique class to avoid any overlap */
-    .erp-multi-level {
-        position: relative;
-    }
-
-    /* Sub-menu (Level 2) alignment */
-    .nested-dropdown-list {
-        position: absolute;
-        top: 0;             
-        left: 100%;         
-        background: #ffffff;
-        list-style: none;
-        padding: 5px 0;
-        margin: 0;
-        min-width: 200px;
-        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
-        border-radius: 4px;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease;
-        border: 1px solid #d1d5db;
-        z-index: 10001;
-    }
-
-    /* Zoom-Responsive: Flip to left if space is tight */
-    @media (max-width: 1350px) {
-        .nested-dropdown-list {
-            left: auto;
-            right: 100%;
-            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
-        }
-    }
-
-    /* List item container */
-    .hover-dropdown-list li {
-        position: relative; 
-        list-style: none;
-    }
-
-    /* Link Styling - Clean & Minimal (No Arrows) */
-    .hover-dropdown-list li a {
-        display: block !important;
-        padding: 10px 20px !important; 
-        color: #4b5563 !important;
-        text-decoration: none;
-        font-size: 13px;
-        border-bottom: 1px solid #f3f4f6;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-    }
-
-    /* Professional Blue Hover */
-    .hover-dropdown-list li:hover > a {
-        background-color: #3a7cbd !important; 
-        color: #ffffff !important;           
-    }
-
-    /* Show sub-menu on hover */
-    .hover-dropdown-list li:hover > .nested-dropdown-list {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* Nested items specific styling */
-    .nested-dropdown-list li a {
-        padding: 10px 15px !important;
-        border-bottom: 1px solid #f9fafb;
-    }
-
-    .nested-dropdown-list li:last-child a {
-        border-bottom: none;
-    }
-</style>
-
 <div class="toolbar-item erp-multi-level">
     <i class="fas fa-users"></i>
     <p style="margin: 5px 0 0; font-size: 12px;">Student & Staff</p>
@@ -629,80 +556,7 @@
             <!---yanhse se double toolbar student and staff wala prosen poora  ho rha hai -->
 
             <!--yanhse se double toolbar account wala prosen sure ho rha hai -->
-             <style>
-    /* Unique class to avoid any overlap */
-    .erp-account-level {
-        position: relative;
-    }
-
-    /* Sub-menu (Level 2) */
-    .nested-dropdown-list {
-        position: absolute;
-        top: 0;             
-        left: 100%;         
-        background: #ffffff;
-        list-style: none;
-        padding: 5px 0;
-        margin: 0;
-        min-width: 210px;
-        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
-        border-radius: 4px;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease;
-        border: 1px solid #d1d5db;
-        z-index: 10001;
-    }
-
-    /* Zoom / Responsive Logic (Auto-flip to left when space is tight) */
-    @media (max-width: 1350px) {
-        .nested-dropdown-list {
-            left: auto;
-            right: 100%;
-            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
-        }
-    }
-
-    /* List item container */
-    .hover-dropdown-list li {
-        position: relative; 
-        list-style: none;
-    }
-
-    /* Link Styling - Clean & Minimal (No Arrows) */
-    .hover-dropdown-list li a {
-        display: block !important;
-        padding: 10px 20px !important; 
-        color: #4b5563 !important;
-        text-decoration: none;
-        font-size: 13px;
-        border-bottom: 1px solid #f3f4f6;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-    }
-
-    /* Balanced Blue Hover */
-    .hover-dropdown-list li:hover > a {
-        background-color: #3a7cbd !important; 
-        color: #ffffff !important;           
-    }
-
-    /* Show sub-menu on hover */
-    .hover-dropdown-list li:hover > .nested-dropdown-list {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* Nested items specific styling */
-    .nested-dropdown-list li a {
-        padding: 10px 15px !important;
-        border-bottom: 1px solid #f9fafb;
-    }
-
-    .nested-dropdown-list li:last-child a {
-        border-bottom: none;
-    }
-</style>
+             
 
 <div class="toolbar-item erp-account-level">
     <i class="fas fa-calculator"></i>
@@ -784,80 +638,7 @@
             <!--yanhse se double toolbar account wala prosen poora  ho rha hai -->
 
             <!--yanha se double toolbar Inventory wala porsen sure ho rha hai -->
-             <style>
-    /* Unique class to avoid any overlap */
-    .erp-inventory-level {
-        position: relative;
-    }
-
-    /* Sub-menu (Level 2) alignment */
-    .nested-dropdown-list {
-        position: absolute;
-        top: 0;             
-        left: 100%;         
-        background: #ffffff;
-        list-style: none;
-        padding: 5px 0;
-        margin: 0;
-        min-width: 200px;
-        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
-        border-radius: 4px;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease;
-        border: 1px solid #d1d5db;
-        z-index: 10001;
-    }
-
-    /* Zoom / Responsive Logic (Auto-flip to left when space is tight) */
-    @media (max-width: 1350px) {
-        .nested-dropdown-list {
-            left: auto;
-            right: 100%;
-            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
-        }
-    }
-
-    /* List item container */
-    .hover-dropdown-list li {
-        position: relative; 
-        list-style: none;
-    }
-
-    /* Link Styling - Clean & Minimal (No Arrows) */
-    .hover-dropdown-list li a {
-        display: block !important;
-        padding: 10px 20px !important; 
-        color: #4b5563 !important;
-        text-decoration: none;
-        font-size: 13px;
-        border-bottom: 1px solid #f3f4f6;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-    }
-
-    /* Balanced Blue Hover */
-    .hover-dropdown-list li:hover > a {
-        background-color: #3a7cbd !important; 
-        color: #ffffff !important;           
-    }
-
-    /* Show sub-menu on hover */
-    .hover-dropdown-list li:hover > .nested-dropdown-list {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* Nested items specific styling (Inner list) */
-    .nested-dropdown-list li a {
-        padding: 10px 15px !important;
-        border-bottom: 1px solid #f9fafb;
-    }
-
-    .nested-dropdown-list li:last-child a {
-        border-bottom: none;
-    }
-</style>
+             
 
 <div class="toolbar-item erp-inventory-level">
     <i class="fas fa-shopping-cart"></i>
@@ -913,80 +694,7 @@
 
 
             <!--yanha se double toolbar Library wala prosen sure ho rha hai -->
-            <style>
-    /* Unique class to avoid any overlap */
-    .erp-library-level {
-        position: relative;
-    }
-
-    /* Sub-menu (Level 2) */
-    .nested-dropdown-list {
-        position: absolute;
-        top: 0;             
-        left: 100%;         
-        background: #ffffff;
-        list-style: none;
-        padding: 5px 0;
-        margin: 0;
-        min-width: 210px;
-        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
-        border-radius: 4px;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease;
-        border: 1px solid #d1d5db;
-        z-index: 10001;
-    }
-
-    /* Zoom / Responsive Logic (Auto-flip to left side when space is tight) */
-    @media (max-width: 1350px) {
-        .nested-dropdown-list {
-            left: auto;
-            right: 100%;
-            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
-        }
-    }
-
-    /* List item container */
-    .hover-dropdown-list li {
-        position: relative; 
-        list-style: none;
-    }
-
-    /* Link Styling - Minimalist (No Arrows) */
-    .hover-dropdown-list li a {
-        display: block !important;
-        padding: 10px 20px !important; 
-        color: #4b5563 !important;
-        text-decoration: none;
-        font-size: 13px;
-        border-bottom: 1px solid #f3f4f6;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-    }
-
-    /* Balanced Blue Hover */
-    .hover-dropdown-list li:hover > a {
-        background-color: #3a7cbd !important; 
-        color: #ffffff !important;           
-    }
-
-    /* Show sub-menu on hover */
-    .hover-dropdown-list li:hover > .nested-dropdown-list {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* Nested items specific styling */
-    .nested-dropdown-list li a {
-        padding: 10px 15px !important;
-        border-bottom: 1px solid #f9fafb;
-    }
-
-    .nested-dropdown-list li:last-child a {
-        border-bottom: none;
-    }
-</style>
+            
 
 <div class="toolbar-item erp-library-level">
     <i class="fas fa-book"></i>
@@ -1058,80 +766,7 @@
             <!--yanha se double toolbar Library wala prosen sure ho rha hai -->
 
             <!--yanha se double toolbar Attendance wala porsen sure ho rha hai-->
-            <style>
-    /* Unique class to avoid any overlap */
-    .erp-attendance-level {
-        position: relative;
-    }
-
-    /* Sub-menu (Level 2) */
-    .nested-dropdown-list {
-        position: absolute;
-        top: 0;             
-        left: 100%;         
-        background: #ffffff;
-        list-style: none;
-        padding: 5px 0;
-        margin: 0;
-        min-width: 200px;
-        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
-        border-radius: 4px;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease;
-        border: 1px solid #d1d5db;
-        z-index: 10001;
-    }
-
-    /* Zoom / Responsive Logic (100% Zoom se upar jate hi auto-flip) */
-    @media (max-width: 1350px) {
-        .nested-dropdown-list {
-            left: auto;
-            right: 100%;
-            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
-        }
-    }
-
-    /* List item container */
-    .hover-dropdown-list li {
-        position: relative; 
-        list-style: none;
-    }
-
-    /* Link Styling - Clean & Minimal (No Arrows) */
-    .hover-dropdown-list li a {
-        display: block !important;
-        padding: 10px 20px !important; 
-        color: #4b5563 !important;
-        text-decoration: none;
-        font-size: 13px;
-        border-bottom: 1px solid #f3f4f6;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-    }
-
-    /* Balanced Blue Hover */
-    .hover-dropdown-list li:hover > a {
-        background-color: #3a7cbd !important; 
-        color: #ffffff !important;           
-    }
-
-    /* Show sub-menu on hover */
-    .hover-dropdown-list li:hover > .nested-dropdown-list {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* Nested items specific styling (Inner list) */
-    .nested-dropdown-list li a {
-        padding: 10px 15px !important;
-        border-bottom: 1px solid #f9fafb;
-    }
-
-    .nested-dropdown-list li:last-child a {
-        border-bottom: none;
-    }
-</style>
+            
 
 <div class="toolbar-item erp-attendance-level">
     <i class="fas fa-calendar-check"></i>
@@ -1188,80 +823,7 @@
             <!--yanha se double toolbar Attendance wala porsen sure ho rha hai-->
 
             <!--yanha se double toolbar Exam wala prosen sure ho rha hai-->
-           <style>
-    /* Unique class to avoid any overlap */
-    .erp-exam-level {
-        position: relative;
-    }
-
-    /* Sub-menu (Level 2) */
-    .nested-dropdown-list {
-        position: absolute;
-        top: 0;             
-        left: 100%;         
-        background: #ffffff;
-        list-style: none;
-        padding: 5px 0;
-        margin: 0;
-        min-width: 210px;
-        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
-        border-radius: 4px;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease;
-        border: 1px solid #d1d5db;
-        z-index: 10001;
-    }
-
-    /* Zoom / Responsive Logic (Auto-flip to left when space is tight) */
-    @media (max-width: 1350px) {
-        .nested-dropdown-list {
-            left: auto;
-            right: 100%;
-            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
-        }
-    }
-
-    /* List item container */
-    .hover-dropdown-list li {
-        position: relative; 
-        list-style: none;
-    }
-
-    /* Link Styling - Minimalist (No Arrows) */
-    .hover-dropdown-list li a {
-        display: block !important;
-        padding: 10px 20px !important; 
-        color: #4b5563 !important;
-        text-decoration: none;
-        font-size: 13px;
-        border-bottom: 1px solid #f3f4f6;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-    }
-
-    /* Balanced Blue Hover */
-    .hover-dropdown-list li:hover > a {
-        background-color: #3a7cbd !important; 
-        color: #ffffff !important;           
-    }
-
-    /* Show sub-menu on hover */
-    .hover-dropdown-list li:hover > .nested-dropdown-list {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* Nested items specific styling */
-    .nested-dropdown-list li a {
-        padding: 10px 15px !important;
-        border-bottom: 1px solid #f9fafb;
-    }
-
-    .nested-dropdown-list li:last-child a {
-        border-bottom: none;
-    }
-</style>
+           
 
 <div class="toolbar-item erp-exam-level">
     <i class="fas fa-chart-line"></i>
@@ -1313,81 +875,7 @@
              
 
             <!--yanha se double toolbar Hostel wala porsen sure ho rha hai -->
-            <style>
-    /* Unique class to avoid any overlap */
-    .erp-hostel-level {
-        position: relative;
-    }
-
-    /* Sub-menu (Level 2) */
-    .nested-dropdown-list {
-        position: absolute;
-        top: 0;             
-        left: 100%;         
-        background: #ffffff;
-        list-style: none;
-        padding: 5px 0;
-        margin: 0;
-        min-width: 200px;
-        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
-        border-radius: 4px;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease;
-        border: 1px solid #d1d5db;
-        z-index: 10001;
-    }
-
-    /* Zoom / Responsive Logic (100% Zoom se upar jate hi auto-flip) */
-    @media (max-width: 1350px) {
-        .nested-dropdown-list {
-            left: auto;
-            right: 100%;
-            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
-        }
-    }
-
-    /* List item container */
-    .hover-dropdown-list li {
-        position: relative; 
-        list-style: none;
-    }
-
-    /* Link Styling - Clean & Uniform Padding */
-    .hover-dropdown-list li a {
-        display: block !important;
-        padding: 10px 20px !important; 
-        color: #4b5563 !important;
-        text-decoration: none;
-        font-size: 13px;
-        border-bottom: 1px solid #f3f4f6;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-    }
-
-    /* Balanced Blue Hover */
-    .hover-dropdown-list li:hover > a {
-        background-color: #3a7cbd !important; 
-        color: #ffffff !important;           
-    }
-
-    /* Show sub-menu on hover */
-    .hover-dropdown-list li:hover > .nested-dropdown-list {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* Nested items specific styling */
-    .nested-dropdown-list li a {
-        padding: 10px 15px !important;
-        border-bottom: 1px solid #f9fafb;
-    }
-
-    .nested-dropdown-list li:last-child a {
-        border-bottom: none;
-    }
-</style>
-
+            
 <div class="toolbar-item erp-hostel-level">
     <i class="fas fa-bed"></i>
     <p style="margin: 5px 0 0; font-size: 12px;">Hostel</p>
@@ -1432,82 +920,7 @@
              <!--yanha se double toolbar Hostel wala porsen poora  ho rha hai -->
 
              <!--yanha se double toolbar Transport wala porsen sure ho rha hai-->
-              <style>
-    /* Main Container */
-    .erp-transport-no-arrow {
-        position: relative;
-    }
-
-    /* Sub-menu (Level 2) */
-    .nested-dropdown-list {
-        position: absolute;
-        top: 0;
-        background: #ffffff;
-        list-style: none;
-        padding: 5px 0;
-        margin: 0;
-        min-width: 200px;
-        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
-        border-radius: 4px;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease;
-        border: 1px solid #d1d5db;
-        z-index: 10001;
-        
-        /* DEFAULT (100% Zoom): Right side khulega */
-        left: 100%;
-        right: auto;
-    }
-
-    /* Zoom / Responsive Logic (100% Zoom se upar jate hi) */
-    @media (max-width: 1350px) {
-        .nested-dropdown-list {
-            left: auto;
-            right: 100%;
-            box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
-        }
-    }
-
-    .hover-dropdown-list li {
-        position: relative;
-        list-style: none;
-    }
-
-    /* Link Styling - Minimal (No Arrows) */
-    .hover-dropdown-list li a {
-        display: block !important;
-        padding: 10px 20px !important; /* Uniform padding on both sides */
-        color: #4b5563 !important;
-        text-decoration: none;
-        font-size: 13px;
-        border-bottom: 1px solid #f3f4f6;
-        transition: all 0.2s;
-        white-space: nowrap;
-    }
-
-    /* Balanced Blue Hover */
-    .hover-dropdown-list li:hover > a {
-        background-color: #3a7cbd !important;
-        color: #ffffff !important;
-    }
-
-    /* Show sub-menu on hover */
-    .hover-dropdown-list li:hover > .nested-dropdown-list {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* Sub-menu items (inner) */
-    .nested-dropdown-list li a {
-        border-bottom: 1px solid #f9fafb;
-    }
-    
-    .nested-dropdown-list li:last-child a {
-        border-bottom: none;
-    }
-</style>
-
+              
 <div class="toolbar-item erp-transport-no-arrow">
     <i class="fas fa-bus"></i>
     <p style="margin: 5px 0 0; font-size: 12px;">Transport</p>
@@ -1554,76 +967,7 @@
              <!--yanha se double toolbar Transport wala porsen poora ho rha hai-->
 
              <!--yanha se double toolbar Academic wala porsen sure ho rha hai -->
-         <style>
-    /* 1. Base Styling (Same Rahegi) */
-    .erp-zoom-nav-minimal {
-        position: relative;
-    }
-
-    /* Academic specific sub-menu */
-    .erp-zoom-nav-minimal .nested-dropdown-list {
-        position: absolute;
-        top: 0;
-        background: #ffffff;
-        list-style: none;
-        padding: 5px 0;
-        margin: 0;
-        min-width: 200px;
-        box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
-        border-radius: 4px;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease;
-        border: 1px solid #d1d5db;
-        z-index: 10001;
-        
-        /* 90% Display / Badi screen par: RIGHT side khulega */
-        left: 100%;
-        right: auto;
-    }
-
-    /* 2. SPECIFIC ZOOM LOGIC: Sirf Academic ke liye */
-    /* Humne yahan class add kar di hai (.erp-zoom-nav-minimal) */
-    @media (max-width: 1550px) { 
-        .erp-zoom-nav-minimal .nested-dropdown-list {
-            left: auto !important;
-            right: 100% !important; /* Ab 100% zoom par ye LEFT ho jayega */
-            box-shadow: -4px 4px 12px rgba(0,0,0,0.12) !important;
-        }
-    }
-
-    /* Baki common styling jo overlap nahi karegi */
-    .hover-dropdown-list li {
-        position: relative;
-        list-style: none;
-    }
-
-    .hover-dropdown-list li a {
-        display: block !important;
-        padding: 10px 20px !important;
-        color: #4b5563 !important;
-        text-decoration: none;
-        font-size: 13px;
-        border-bottom: 1px solid #f3f4f6;
-        transition: all 0.2s;
-        white-space: nowrap;
-    }
-
-    .hover-dropdown-list li:hover > a {
-        background-color: #3a7cbd !important;
-        color: #ffffff !important;
-    }
-
-    .hover-dropdown-list li:hover > .nested-dropdown-list {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .nested-dropdown-list li a {
-        padding: 10px 15px !important;
-        border-bottom: 1px solid #f9fafb;
-    }
-</style>
+         
 
 <div class="toolbar-item erp-zoom-nav-minimal">
     <i class="fas fa-tasks"></i>
@@ -1703,69 +1047,7 @@
             </div>
         
             <!--yanha se double toolbar more wala porsen sure ho rha hai-->
-            <style>
-    .erp-more-last {
-        position: relative;
-    }
-
-    /* Sub-menu (Level 2) - Permanent Left */
-    .nested-dropdown-list-left {
-        position: absolute;
-        top: 0;
-        right: 100%;
-        left: auto;
-        background: #ffffff;
-        list-style: none;
-        padding: 5px 0;
-        margin: 0;
-        min-width: 190px;
-        box-shadow: -4px 4px 12px rgba(0,0,0,0.12);
-        border-radius: 4px;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease;
-        border: 1px solid #d1d5db;
-        z-index: 10001;
-    }
-
-    .hover-dropdown-list li {
-        position: relative;
-        list-style: none;
-    }
-
-    /* Link Styling - Arrow space removed, padding normalized */
-    .hover-dropdown-list li a {
-        display: block !important;
-        position: relative;
-        padding: 10px 15px !important; /* Padding normal kar di hai */
-        color: #4b5563 !important;
-        text-decoration: none;
-        font-size: 13px;
-        border-bottom: 1px solid #f3f4f6;
-        transition: all 0.2s;
-    }
-
-    /* Balanced Blue Hover */
-    .hover-dropdown-list li:hover > a {
-        background-color: #3a7cbd !important;
-        color: #ffffff !important;
-    }
-
-    .hover-dropdown-list li:hover > .nested-dropdown-list-left {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* Inner sub-menu items - Simple Clean List */
-    .nested-dropdown-list-left li a {
-        padding: 10px 15px !important;
-        border-bottom: 1px solid #f9fafb;
-    }
-
-    .nested-dropdown-list-left li:last-child a {
-        border-bottom: none;
-    }
-</style>
+            
 
 <div class="toolbar-item erp-more-last">
     <i class="fas fa-file-alt"></i>
@@ -1898,7 +1180,7 @@ document.querySelectorAll('.dropdown-item').forEach(item => {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- ynaha se hover ko or click karne par turant hide karne ke liye js lgayi hai -->
      <!--
-<script id="dropdown-close-fix">
+     <script id="dropdown-close-fix">
 document.addEventListener("DOMContentLoaded", function () {
 
     const dropdownItems = document.querySelectorAll(".hover-dropdown-list a, .nested-dropdown-list a");
@@ -1919,7 +1201,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 -->
-    <!-- ynaha se hover ko or click karne par turant hide karne ke liye js lgayi hai or 
+    <!--ynaha se hover ko or click karne par turant hide karne ke liye js lgayi hai or 
      yanha par poori ho gyi hai js  -->
 </body>
 </html>
